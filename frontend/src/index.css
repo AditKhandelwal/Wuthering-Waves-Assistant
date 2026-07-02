@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0d0d0f;
+  --color-panel: #161618;
+  --color-panel-alt: #1c1c1f;
+  --color-border: #2a2a2e;
+  --color-gold: #c9a24b;
+  --color-gold-soft: #d4af6a;
+  --color-text: #eaeaea;
+  --color-text-muted: #8a8a8f;
+
+  --color-element-glacio: #6fb7e8;
+  --color-element-fusion: #e2643c;
+  --color-element-electro: #b47cf0;
+  --color-element-aero: #5fd6b0;
+  --color-element-spectro: #e8c25f;
+  --color-element-havoc: #b4467a;
+
+  --font-sans: "Segoe UI", system-ui, Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* small angular corner clip, used sparingly on major panels */
+.clip-corner {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
