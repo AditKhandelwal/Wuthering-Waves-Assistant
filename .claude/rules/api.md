@@ -20,18 +20,31 @@ Without these headers, the API returns `{"code": 200, "data": null}`.
 - `GET /introduction/list?roleGbId={id}` — list of guide entries for a character
 - `GET /introduction/info?roleGbId={id}&id={guide_id}` — full build data for a guide entry
 
-**All 46 valid character roleGbIds:**
+**All 54 valid character roleGbIds (verified 2026-07-02 — element ID blocks
+correspond to 1=Glacio, 2=Fusion, 3=Electro, 4=Aero, 5=Spectro, 6=Havoc; the
+1600s block is the newest and entirely Havoc):**
 ```python
 VALID_IDS = [
     1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109,
     1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211,
     1301, 1302, 1303, 1304, 1305, 1306, 1307, 1308,
     1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410, 1411, 1412,
-    1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510, 1511
+    1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510, 1511,
+    1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608
 ]
 ```
 
-**Re-indexing:** Use `modifiedAt` Unix timestamp field from the API response to detect stale entries.
+**Known API quirk:** for Rover gender-variant pairs (e.g. 1406/1408,
+1501/1502, 1604/1605), the API's own `role.roleGbId` field in the response
+body has been observed out of sync with the `roleGbId` you queried by —
+one variant in each pair reports its sibling's ID instead of its own.
+Always key data by the `roleGbId` you requested, never by the response
+body's internal `role.roleGbId` field.
+
+**Re-indexing:** Use `modifiedAt` Unix timestamp field from the API response
+to detect stale entries. Since new ID blocks get added entirely outside the
+existing range (as with 1601-1608), periodically re-probe a few IDs past the
+current max — don't assume `VALID_IDS` stays complete forever.
 
 ## FastAPI conventions
 - All endpoints async
