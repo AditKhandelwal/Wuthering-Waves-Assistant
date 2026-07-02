@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getCharacters } from "../lib/characters";
+import { loadRoster } from "../lib/characters";
 import type { Character } from "../types/character";
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
@@ -20,8 +20,8 @@ export function BuildScreenPage() {
   const [level, setLevel] = useState(1);
 
   useEffect(() => {
-    getCharacters().then((all) => {
-      setCharacter(all.find((c) => c.roleGbId === characterId) ?? null);
+    loadRoster().then(({ characters }) => {
+      setCharacter(characters.find((c) => c.roleGbId === characterId) ?? null);
     });
   }, [characterId]);
 

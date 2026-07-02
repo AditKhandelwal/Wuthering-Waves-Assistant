@@ -17,11 +17,25 @@ export const ELEMENT_BY_GB_ID: Record<string, ElementName> = {
   "6": "Havoc",
 };
 
+export type WeaponTypeName =
+  | "Broadblade"
+  | "Sword"
+  | "Pistols"
+  | "Gauntlets"
+  | "Rectifier";
+
 export interface Character {
   roleGbId: string;
   name: string;
   star: number;
   element: ElementName;
+  weaponType: WeaponTypeName;
   cardPictureUrl: string;
   illustrationPictureUrl: string;
+}
+
+export interface RosterData {
+  characters: Character[];
+  elementIcons: Record<ElementName, string>;
+  weaponTypeIcons: Record<WeaponTypeName, string>;
 }
