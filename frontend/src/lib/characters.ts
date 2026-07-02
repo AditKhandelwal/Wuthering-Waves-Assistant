@@ -42,17 +42,11 @@ const WEAPON_TYPE_BY_GB_ID: Record<string, WeaponTypeName> = {
 };
 
 // Kuro's guide API returns byte-identical content (including portrait) for
-// both IDs in each Rover gender pair — it doesn't expose which is which, or
-// the gender-specific art. Confirmed via the raw datamined RoleInfo.json's
-// `RoleBody` field (MaleM/FemaleM), not derivable from wuwa_characters.json.
-const ROVER_GENDER_BY_ID: Record<string, "M" | "F"> = {
-  "1406": "M",
-  "1408": "F",
-  "1501": "M",
-  "1502": "F",
-  "1604": "F",
-  "1605": "M",
-};
+// both IDs in each Rover gender pair (1406/1408 Aero, 1501/1502 Spectro,
+// 1604/1605 Havoc) — no way to tell them apart or get gender-specific art.
+// Rather than show two identical-looking cards, collapse each pair down to
+// one entry using the shared portrait (which already depicts both genders).
+const ROVER_DUPLICATE_IDS_TO_DROP = new Set(["1408", "1502", "1604"]);
 
 // Temporary static data source standing in for a future `/api/characters`
 // backend endpoint (see docs/DATA_REQUIREMENTS.md) — swap the fetch URL
@@ -65,11 +59,10 @@ export async function loadRoster(): Promise<RosterData> {
   const weaponTypeIcons = {} as Record<WeaponTypeName, string>;
 
   const characters = Object.entries(raw)
+    .filter(([outerKey]) => !ROVER_DUPLICATE_IDS_TO_DROP.has(outerKey))
     .map(([outerKey, entry]) => {
       const en = entry.role.texts.find((t) => t.language === "en");
-      const baseName = en?.name ?? "Unknown";
-      const gender = ROVER_GENDER_BY_ID[outerKey];
-      const name = gender ? `${baseName} (${gender})` : baseName;
+      const name = en?.name ?? "Unknown";
       const element = ELEMENT_BY_GB_ID[entry.role.element.gbId] ?? "Spectro";
       elementIcons[element] ??= entry.role.element.pictureUrl;
 
