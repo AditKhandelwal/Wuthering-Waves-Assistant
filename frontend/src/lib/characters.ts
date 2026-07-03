@@ -7,28 +7,38 @@ import {
 } from "../types/character";
 
 // box-shadow-based rings/glows don't follow clip-path -- they'd render as a
-// plain rectangle around the angular clipped corners. `border` and
-// `filter: drop-shadow` both respect clip-path, so use those instead to get
-// a border+glow that actually hugs the clipped shape. Each class string is
+// plain rectangle around the angular clipped corners, so `border` +
+// `filter: drop-shadow` is used instead. BUT: `filter` and `clip-path` on
+// the *same* element don't work either -- confirmed by isolated test
+// (2026-07-03), clip-path clips the filter's rendered output too, so a
+// drop-shadow glow on a clip-path'd element barely shows at all (this
+// contradicted what an earlier comment here claimed). The fix: put the glow
+// animation on an outer wrapper that has NO clip-path, with the actual
+// clipped/bordered box nested inside it -- the wrapper's filter then glows
+// around the composited (already-clipped) shape instead of being clipped
+// itself. ELEMENT_PORTRAIT_BORDER_CLASS goes on the inner clipped element,
+// ELEMENT_PORTRAIT_GLOW_CLASS goes on the outer wrapper. Each class string is
 // spelled out fully (not built via template-literal interpolation) because
 // Tailwind statically scans source text for complete class names -- a
-// dynamically-assembled string never generates any CSS. Shared by
-// BuildScreenPage and BuildCard so the portrait glow stays consistent. Uses
-// the milder glow-portrait-* keyframes (not the stronger glow-* ones used by
-// CharacterCard's ring) -- still an actual pulsing glow, not a static color,
-// just less dramatic on a large portrait than on the small select-grid ring.
-export const ELEMENT_PORTRAIT_CLASS: Record<ElementName, string> = {
-  Glacio:
-    "[border-color:var(--color-element-glacio)] [animation:glow-portrait-glacio_2.4s_ease-in-out_infinite]",
-  Fusion:
-    "[border-color:var(--color-element-fusion)] [animation:glow-portrait-fusion_2.4s_ease-in-out_infinite]",
-  Electro:
-    "[border-color:var(--color-element-electro)] [animation:glow-portrait-electro_2.4s_ease-in-out_infinite]",
-  Aero: "[border-color:var(--color-element-aero)] [animation:glow-portrait-aero_2.4s_ease-in-out_infinite]",
-  Spectro:
-    "[border-color:var(--color-element-spectro)] [animation:glow-portrait-spectro_2.4s_ease-in-out_infinite]",
-  Havoc:
-    "[border-color:var(--color-element-havoc)] [animation:glow-portrait-havoc_2.4s_ease-in-out_infinite]",
+// dynamically-assembled string never generates any CSS.
+export const ELEMENT_PORTRAIT_BORDER_CLASS: Record<ElementName, string> = {
+  Glacio: "[border-color:var(--color-element-glacio)]",
+  Fusion: "[border-color:var(--color-element-fusion)]",
+  Electro: "[border-color:var(--color-element-electro)]",
+  Aero: "[border-color:var(--color-element-aero)]",
+  Spectro: "[border-color:var(--color-element-spectro)]",
+  Havoc: "[border-color:var(--color-element-havoc)]",
+};
+
+// Uses the glow-portrait-* keyframes (not the stronger glow-* ones used by
+// CharacterCard's ring).
+export const ELEMENT_PORTRAIT_GLOW_CLASS: Record<ElementName, string> = {
+  Glacio: "[animation:glow-portrait-glacio_2.4s_ease-in-out_infinite]",
+  Fusion: "[animation:glow-portrait-fusion_2.4s_ease-in-out_infinite]",
+  Electro: "[animation:glow-portrait-electro_2.4s_ease-in-out_infinite]",
+  Aero: "[animation:glow-portrait-aero_2.4s_ease-in-out_infinite]",
+  Spectro: "[animation:glow-portrait-spectro_2.4s_ease-in-out_infinite]",
+  Havoc: "[animation:glow-portrait-havoc_2.4s_ease-in-out_infinite]",
 };
 
 // Just the pulsing-glow animation (no border-color), for elements that get

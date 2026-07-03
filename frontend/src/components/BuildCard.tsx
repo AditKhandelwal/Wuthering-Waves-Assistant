@@ -3,7 +3,7 @@ import { EchoCardTile } from "./EchoCardTile";
 import { ElementIcon } from "./ElementIcon";
 import { FinalStatsGrid } from "./FinalStatsGrid";
 import { StatIcon } from "./StatIcon";
-import { ELEMENT_PORTRAIT_CLASS } from "../lib/characters";
+import { ELEMENT_PORTRAIT_BORDER_CLASS, ELEMENT_PORTRAIT_GLOW_CLASS } from "../lib/characters";
 import { computeActiveSetBonuses, formatStatValue } from "../lib/echoes";
 import { computeFinalStats } from "../lib/finalStats";
 import { computeWeaponAtk, computeWeaponSecondaryStat } from "../lib/weapons";
@@ -255,14 +255,16 @@ export function BuildCard({
     >
       <div className="grid grid-cols-[240px_1fr] gap-4">
         <div className="min-w-0 flex flex-col gap-3">
-          <div
-            className={`clip-corner min-h-0 flex-1 overflow-hidden border-2 bg-panel-alt ${ELEMENT_PORTRAIT_CLASS[character.element]}`}
-          >
-            <img
-              src={character.illustrationPictureUrl}
-              alt={character.name}
-              className="h-full w-full object-cover"
-            />
+          <div className={`min-h-0 flex-1 ${ELEMENT_PORTRAIT_GLOW_CLASS[character.element]}`}>
+            <div
+              className={`clip-corner h-full w-full overflow-hidden border-2 bg-panel-alt ${ELEMENT_PORTRAIT_BORDER_CLASS[character.element]}`}
+            >
+              <img
+                src={character.illustrationPictureUrl}
+                alt={character.name}
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
 
           <CompactSequenceRow nodes={sequenceNodes} unlockedCount={unlockedCount} />

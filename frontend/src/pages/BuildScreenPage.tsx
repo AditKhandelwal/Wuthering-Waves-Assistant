@@ -7,7 +7,7 @@ import { StatBox } from "../components/StatBox";
 import { StatIcon } from "../components/StatIcon";
 import { TalentGrid } from "../components/TalentGrid";
 import { WeaponPicker } from "../components/WeaponPicker";
-import { ELEMENT_PORTRAIT_CLASS, loadRoster } from "../lib/characters";
+import { ELEMENT_PORTRAIT_BORDER_CLASS, ELEMENT_PORTRAIT_GLOW_CLASS, loadRoster } from "../lib/characters";
 import {
   availableSubStatNames,
   computeActiveSetBonuses,
@@ -450,14 +450,16 @@ export function BuildScreenPage() {
       <div className="grid grid-cols-[240px_1fr] gap-8">
         {/* Left: portrait + level */}
         <div className="flex flex-col gap-4">
-          <div
-            className={`clip-corner overflow-hidden border-2 bg-panel ${ELEMENT_PORTRAIT_CLASS[character.element]}`}
-          >
-            <img
-              src={character.illustrationPictureUrl}
-              alt={character.name}
-              className="h-72 w-full object-cover"
-            />
+          <div className={ELEMENT_PORTRAIT_GLOW_CLASS[character.element]}>
+            <div
+              className={`clip-corner overflow-hidden border-2 bg-panel ${ELEMENT_PORTRAIT_BORDER_CLASS[character.element]}`}
+            >
+              <img
+                src={character.illustrationPictureUrl}
+                alt={character.name}
+                className="h-72 w-full object-cover"
+              />
+            </div>
           </div>
           <div>
             <h1 className="text-xl font-semibold text-gold-soft">{character.name}</h1>
