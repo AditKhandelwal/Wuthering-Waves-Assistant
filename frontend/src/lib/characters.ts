@@ -26,6 +26,18 @@ export const ELEMENT_PORTRAIT_CLASS: Record<ElementName, string> = {
   Havoc: "[border-color:var(--color-element-havoc)] [animation:glow-havoc_2.4s_ease-in-out_infinite]",
 };
 
+// Just the pulsing-glow animation (no border-color), for elements that get
+// their color from something other than `border` -- e.g. CharacterCard's
+// ring, which is already colored via ELEMENT_RING_CLASS below.
+export const ELEMENT_GLOW_ANIMATION_CLASS: Record<ElementName, string> = {
+  Glacio: "[animation:glow-glacio_2.4s_ease-in-out_infinite]",
+  Fusion: "[animation:glow-fusion_2.4s_ease-in-out_infinite]",
+  Electro: "[animation:glow-electro_2.4s_ease-in-out_infinite]",
+  Aero: "[animation:glow-aero_2.4s_ease-in-out_infinite]",
+  Spectro: "[animation:glow-spectro_2.4s_ease-in-out_infinite]",
+  Havoc: "[animation:glow-havoc_2.4s_ease-in-out_infinite]",
+};
+
 // Subtle radial tint behind the build card, reflecting the character's own
 // element color -- a UI-only design choice (not a game-data claim), same
 // dynamic-class-string caveat as above (each value fully spelled out).
@@ -41,6 +53,24 @@ export const ELEMENT_CARD_BG_CLASS: Record<ElementName, string> = {
     "bg-[radial-gradient(ellipse_120%_100%_at_15%_0%,color-mix(in_srgb,var(--color-element-spectro)_16%,transparent),transparent_65%),var(--color-panel)]",
   Havoc:
     "bg-[radial-gradient(ellipse_120%_100%_at_15%_0%,color-mix(in_srgb,var(--color-element-havoc)_16%,transparent),transparent_65%),var(--color-panel)]",
+};
+
+// Same idea as ELEMENT_CARD_BG_CLASS but centered and tighter, for the small
+// square tile behind each character-select portrait rather than a big
+// rectangular card -- gives the roster grid some color/life instead of every
+// tile floating on the same flat page background.
+export const ELEMENT_TILE_BG_CLASS: Record<ElementName, string> = {
+  Glacio:
+    "bg-[radial-gradient(circle_at_50%_35%,color-mix(in_srgb,var(--color-element-glacio)_32%,transparent),transparent_72%),var(--color-panel)]",
+  Fusion:
+    "bg-[radial-gradient(circle_at_50%_35%,color-mix(in_srgb,var(--color-element-fusion)_32%,transparent),transparent_72%),var(--color-panel)]",
+  Electro:
+    "bg-[radial-gradient(circle_at_50%_35%,color-mix(in_srgb,var(--color-element-electro)_32%,transparent),transparent_72%),var(--color-panel)]",
+  Aero: "bg-[radial-gradient(circle_at_50%_35%,color-mix(in_srgb,var(--color-element-aero)_32%,transparent),transparent_72%),var(--color-panel)]",
+  Spectro:
+    "bg-[radial-gradient(circle_at_50%_35%,color-mix(in_srgb,var(--color-element-spectro)_32%,transparent),transparent_72%),var(--color-panel)]",
+  Havoc:
+    "bg-[radial-gradient(circle_at_50%_35%,color-mix(in_srgb,var(--color-element-havoc)_32%,transparent),transparent_72%),var(--color-panel)]",
 };
 
 interface RawText {
