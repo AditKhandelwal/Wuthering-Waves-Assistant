@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { SequenceNodeRow } from "../components/SequenceNodeRow";
 import { StatBox } from "../components/StatBox";
+import { TalentGrid } from "../components/TalentGrid";
 import { WeaponPicker } from "../components/WeaponPicker";
 import { loadRoster } from "../lib/characters";
 import { loadSequenceNodes } from "../lib/sequenceNodes";
 import { loadStatIcons } from "../lib/statIcons";
 import { computeStats, loadStatCurves } from "../lib/stats";
+import { loadTalents } from "../lib/talents";
 import { renderRankScaledText } from "../lib/text";
 import {
   computeWeaponAtk,
@@ -17,6 +19,7 @@ import {
 import type { Character } from "../types/character";
 import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
+import type { Talent } from "../types/talent";
 import type { WeaponCatalog } from "../lib/weapons";
 import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
 
@@ -75,6 +78,9 @@ export function BuildScreenPage() {
   const [sequenceNodes, setSequenceNodes] = useState<SequenceNode[]>([]);
   const [unlockedCount, setUnlockedCount] = useState(0);
 
+  const [talents, setTalents] = useState<Talent[]>([]);
+  const [talentLevels, setTalentLevels] = useState<number[]>([]);
+
   useEffect(() => {
     loadRoster().then(({ characters }) => {
       setCharacter(characters.find((c) => c.roleGbId === characterId) ?? null);
@@ -85,7 +91,13 @@ export function BuildScreenPage() {
     setWeaponLevel(1);
     setWeaponRank(1);
     setUnlockedCount(0);
-    if (characterId) loadSequenceNodes(characterId).then(setSequenceNodes);
+    if (characterId) {
+      loadSequenceNodes(characterId).then(setSequenceNodes);
+      loadTalents(characterId).then((loaded) => {
+        setTalents(loaded);
+        setTalentLevels(loaded.map(() => 1));
+      });
+    }
   }, [characterId]);
 
   useEffect(() => {
@@ -282,10 +294,15 @@ export function BuildScreenPage() {
           </Panel>
 
           <Panel title="Talents">
-            <p className="text-sm text-text-muted">
-              Normal Attack, Resonance Skill, Forte Circuit, Resonance Liberation,
-              Intro Skill — leveling coming soon.
-            </p>
+            <TalentGrid
+              talents={talents}
+              levels={talentLevels}
+              onChange={(index, newLevel) =>
+                setTalentLevels((current) =>
+                  current.map((lvl, i) => (i === index ? Math.min(10, Math.max(1, newLevel)) : lvl)),
+                )
+              }
+            />
           </Panel>
 
           <Panel title="Echoes">
