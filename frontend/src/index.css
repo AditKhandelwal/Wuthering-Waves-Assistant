@@ -64,33 +64,33 @@ body {
 }
 
 /* Version of the glow-* pulse above for the large character portraits
-   (build card + build screen) -- tuned to read clearly as glowing/alive
-   (bumped up from an initial too-subtle pass), while staying just under the
-   small character-select ring's glow-* intensity per an explicit "not as
-   much as character select" preference. */
+   (build card + build screen). Went through several rounds of "more glow" --
+   now stronger than the character-select ring's own glow-* keyframes above,
+   not capped under it (an earlier pass deliberately stayed under the ring's
+   intensity; later feedback asked for more than that ceiling too). */
 @keyframes glow-portrait-glacio {
-  0%, 100% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--color-element-glacio) 42%, transparent)); }
-  50% { filter: drop-shadow(0 0 22px color-mix(in srgb, var(--color-element-glacio) 78%, transparent)); }
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-glacio) 55%, transparent)); }
+  50% { filter: drop-shadow(0 0 34px color-mix(in srgb, var(--color-element-glacio) 95%, transparent)); }
 }
 @keyframes glow-portrait-fusion {
-  0%, 100% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--color-element-fusion) 42%, transparent)); }
-  50% { filter: drop-shadow(0 0 22px color-mix(in srgb, var(--color-element-fusion) 78%, transparent)); }
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-fusion) 55%, transparent)); }
+  50% { filter: drop-shadow(0 0 34px color-mix(in srgb, var(--color-element-fusion) 95%, transparent)); }
 }
 @keyframes glow-portrait-electro {
-  0%, 100% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--color-element-electro) 42%, transparent)); }
-  50% { filter: drop-shadow(0 0 22px color-mix(in srgb, var(--color-element-electro) 78%, transparent)); }
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-electro) 55%, transparent)); }
+  50% { filter: drop-shadow(0 0 34px color-mix(in srgb, var(--color-element-electro) 95%, transparent)); }
 }
 @keyframes glow-portrait-aero {
-  0%, 100% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--color-element-aero) 42%, transparent)); }
-  50% { filter: drop-shadow(0 0 22px color-mix(in srgb, var(--color-element-aero) 78%, transparent)); }
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-aero) 55%, transparent)); }
+  50% { filter: drop-shadow(0 0 34px color-mix(in srgb, var(--color-element-aero) 95%, transparent)); }
 }
 @keyframes glow-portrait-spectro {
-  0%, 100% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--color-element-spectro) 42%, transparent)); }
-  50% { filter: drop-shadow(0 0 22px color-mix(in srgb, var(--color-element-spectro) 78%, transparent)); }
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-spectro) 55%, transparent)); }
+  50% { filter: drop-shadow(0 0 34px color-mix(in srgb, var(--color-element-spectro) 95%, transparent)); }
 }
 @keyframes glow-portrait-havoc {
-  0%, 100% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--color-element-havoc) 42%, transparent)); }
-  50% { filter: drop-shadow(0 0 22px color-mix(in srgb, var(--color-element-havoc) 78%, transparent)); }
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-havoc) 55%, transparent)); }
+  50% { filter: drop-shadow(0 0 34px color-mix(in srgb, var(--color-element-havoc) 95%, transparent)); }
 }
 
 /* Atmospheric background for the build card: a soft starfield plus a wash
