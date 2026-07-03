@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Modal } from "./Modal";
-import type { EchoCatalog } from "../lib/echoes";
+import { COST_DISC_CLASS, type EchoCatalog } from "../lib/echoes";
 import type { EchoCatalogEntry, EchoSet } from "../types/echo";
 
 interface EchoPickerProps {
@@ -11,22 +11,17 @@ interface EchoPickerProps {
   onClose: () => void;
 }
 
-// Cost tier has no in-game color convention sourced from this app's data --
-// this is a UI-only design choice (gold = rarest/highest cost), not a game
-// data claim. Spelled out literally per Tailwind v4's dynamic-class-string
-// gotcha (see .claude/rules/frontend.md).
-const COST_DISC_CLASS: Record<1 | 3 | 4, string> = {
-  4: "border-gold text-gold-soft",
-  3: "border-gold-soft/60 text-text",
-  1: "border-border text-text-muted",
-};
-
 // Slots aren't fixed to a cost -- real builds vary (4-3-3-1-1, 4-4-1-1-1,
 // etc.) -- so every cost tier is always offered. Echoes are grouped by cost
 // within the list (highest first) so a specific tier is still easy to scan.
 const COST_TIERS = [4, 3, 1] as const;
 
 const ALL_SETS = "all";
+
+function SetIcon({ set }: { set: EchoSet | undefined }) {
+  if (!set?.iconUrl) return null;
+  return <img src={set.iconUrl} alt={set.name} className="h-4 w-4 shrink-0" />;
+}
 
 function EchoIcon({ echo }: { echo: EchoCatalogEntry }) {
   if (echo.pictureUrl) {
@@ -97,6 +92,9 @@ export function EchoPicker({
           className="flex w-full items-center justify-between gap-2 rounded-sm border border-border px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-text transition hover:border-gold-soft"
         >
           <span className="flex items-center gap-1.5">
+            {activeFilter !== ALL_SETS && (
+              <SetIcon set={sets.find((s) => s.name === activeFilter)} />
+            )}
             {activeFilterLabel}
             {activeFilterIsRecommended && <span className="text-gold-soft">★</span>}
           </span>
@@ -136,6 +134,7 @@ export function EchoPicker({
                     activeFilter === setName ? "text-gold-soft" : "text-text-muted"
                   }`}
                 >
+                  <SetIcon set={set} />
                   {setName}
                   {isRecommended && <span className="text-gold-soft">★</span>}
                 </button>
@@ -174,7 +173,15 @@ export function EchoPicker({
                           </span>
                         )}
                       </div>
-                      <p className="mt-1 text-xs text-text-muted">{echo.setNames.join(" / ")}</p>
+                      <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+                        {echo.setNames.map((setName, i) => (
+                          <span key={setName} className="flex items-center gap-1 text-xs text-text-muted">
+                            <SetIcon set={sets.find((s) => s.name === setName)} />
+                            {setName}
+                            {i < echo.setNames.length - 1 && <span className="text-text-muted">/</span>}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </button>
                 ))}

@@ -24,6 +24,10 @@ export interface EchoSetEffect {
 export interface EchoSet {
   name: string;
   effects: EchoSetEffect[];
+  // Real icon: Kuro's own CDN where a recommended-build character references
+  // this set (27/34), game8.co's icon as fallback for the rest -- see
+  // extract_kuro_set_icons in scripts/fetch_echo_data.py.
+  iconUrl: string | null;
 }
 
 export interface SubStatOption {
@@ -34,7 +38,12 @@ export interface SubStatOption {
 }
 
 export interface EchoStatCurves {
+  // The player-selectable main stat per cost tier (excludes the static one).
   mainStatOptionsByCost: Record<1 | 3 | 4, EchoMainStatOption[]>;
+  // Every echo's second, fixed/non-selectable main stat: flat ATK for cost
+  // 3/4, flat HP for cost 1 -- always present regardless of the variable
+  // pick, confirmed against a real echo card (see docs/DATA_REQUIREMENTS.md).
+  staticMainStatByCost: Record<1 | 3 | 4, EchoMainStatOption>;
   subStatOptions: SubStatOption[];
 }
 

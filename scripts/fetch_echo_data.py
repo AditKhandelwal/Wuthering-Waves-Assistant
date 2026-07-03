@@ -284,21 +284,18 @@ GROUP_A_LADDERS = {
     "HP": ([320, 360, 390, 430, 470, 510, 540, 580], 1),
 }
 
-# The "DMG %" row shares Group A's ladder across 10 distinct real stat names:
-# 6 elemental + 4 attack-type DMG Bonus stats.
+# CORRECTED (user, real in-game knowledge, 2026-07-03): none of these 10
+# DMG Bonus names (6 elemental + 4 attack-type) are actually valid ECHO
+# SUBSTATS -- elemental DMG Bonus is only ever a variable MAIN stat (cost-3
+# echoes only, see staticMainStatByCost below), and attack-type DMG Bonus
+# doesn't appear on echoes at all. The infographic's "DMG %" row apparently
+# doesn't map onto the substat pool the way it was originally assumed to.
+# GROUP_A_DMG_LADDER/GROUP_A_DMG_STAT_NAMES are kept here as a record of what
+# was transcribed and then found wrong -- build_substat_options() no longer
+# emits them. Real substat pool is exactly the 9 GROUP_A_LADDERS + GROUP_B_LADDERS
+# names. Don't resurrect without new evidence.
 GROUP_A_DMG_LADDER = [6.4, 7.1, 7.9, 8.6, 9.4, 10.1, 10.9, 11.6]
-GROUP_A_DMG_STAT_NAMES = [
-    "Glacio DMG Bonus",
-    "Fusion DMG Bonus",
-    "Electro DMG Bonus",
-    "Aero DMG Bonus",
-    "Spectro DMG Bonus",
-    "Havoc DMG Bonus",
-    "Basic Attack DMG Bonus",
-    "Heavy Attack DMG Bonus",
-    "Resonance Skill DMG Bonus",
-    "Resonance Liberation DMG Bonus",
-]
+GROUP_A_DMG_STAT_NAMES: list[str] = []
 
 GROUP_B_LADDERS = {
     "DEF": ([40, 50, 60, 70], 1),
@@ -473,6 +470,10 @@ def parse_game8_sonata_sets(html: str) -> list[dict]:
         name = cell_text or alt_text
         if not name:
             continue
+        # game8 lazy-loads images: the real URL is in data-src, not src (src is
+        # a 1x1 placeholder gif). Used only as a fallback icon source -- see
+        # extract_kuro_set_icons for the preferred real Kuro CDN icon.
+        game8_icon_url = (img.get("data-src") or img.get("src")) if img else None
 
         # effect cell: <b>N-pc</b>: description <hr/> <b>M-pc</b>: description ...
         effects = []
@@ -501,8 +502,27 @@ def parse_game8_sonata_sets(html: str) -> list[dict]:
             description = re.sub(r"\s+", " ", description).strip()
             effects.append({"pieceCount": piece_count, "description": description})
 
-        sets.append({"name": name, "effects": effects})
+        sets.append({"name": name, "effects": effects, "game8IconUrl": game8_icon_url})
     return sets
+
+
+# Real Kuro CDN icon for a sonata set, sourced from wuwa_characters.json's
+# echo.main.echoSetEffects[] (the same field every character's recommended-set
+# data already carries a pictureUrl on). Only covers sets that are at least
+# one of the 54 characters' recommended set (27/34 confirmed) -- same
+# real-data-first, game8-fallback pattern already used for echo pictureUrl in
+# cross_link_signature_echoes. Icon is identical across piece-count tiers for
+# a given set (confirmed: zero sets had >1 distinct URL), so first-seen wins.
+def extract_kuro_set_icons(characters_data: dict) -> dict[str, str]:
+    icons: dict[str, str] = {}
+    for char in characters_data.values():
+        effects = char.get("echo", {}).get("main", {}).get("echoSetEffects", [])
+        for eff in effects:
+            name = next((t["name"] for t in eff.get("texts", []) if t.get("language") == "en"), None)
+            url = eff.get("pictureUrl")
+            if name and url and name not in icons:
+                icons[name] = url
+    return icons
 
 
 # ---------------------------------------------------------------------------
@@ -844,8 +864,8 @@ def build_substat_options() -> list[dict]:
 def verify_substat_transcription() -> list[str]:
     errors = []
     options = build_substat_options()
-    if len(options) != 19:
-        errors.append(f"Expected 19 substat entries, got {len(options)}")
+    if len(options) != 9:
+        errors.append(f"Expected 9 substat entries, got {len(options)}")
     for opt in options:
         if len(opt["values"]) != len(opt["chances"]):
             errors.append(f"{opt['statName']}: values/chances length mismatch")
@@ -933,20 +953,17 @@ def run_verification(
                     if t.get("language") == "en" and t.get("name"):
                         real_names_by_cost[cost].add(t["name"])
 
+    # `attribute`/`attribute2` in echoAttributes[] are exactly the
+    # variable/static pair confirmed by the user (2026-07-03) -- so the full
+    # covered name-set per cost is the selectable options plus the one static
+    # stat, no more special-casing needed.
     curve_names_by_cost = {
         cost: {opt["statName"] for opt in curves["mainStatOptionsByCost"][str(cost)]}
+        | {curves["staticMainStatByCost"][str(cost)]["statName"]}
         for cost in (1, 3, 4)
     }
     for cost in (1, 3, 4):
-        # "ATK" (attribute2, the always-present secondary main-stat display) is
-        # not itself a *selectable* main stat option on echoes other than the
-        # dedicated flat-ATK slot roll; only check that every real selectable
-        # name we've seen is covered, allowing ATK to appear as attribute2 noise.
-        real = real_names_by_cost[cost] - {"ATK"} if cost != 3 and cost != 4 else real_names_by_cost[cost] - set()
-        missing = real_names_by_cost[cost] - curve_names_by_cost[cost] - {"ATK"}
-        # ATK is a legitimate flat main stat for cost 3/4, so don't drop it there
-        if cost in (3, 4):
-            missing = real_names_by_cost[cost] - curve_names_by_cost[cost]
+        missing = real_names_by_cost[cost] - curve_names_by_cost[cost]
         if missing:
             log(f"  [FAIL] cost {cost}: real stat names missing from curve data: {missing}")
             all_ok = False
@@ -1020,13 +1037,18 @@ def run_verification(
             log(f"    - {n}")
         all_ok = False
 
-    # (d) exactly 19 substat entries
+    # (d) exactly 9 substat entries -- corrected from an earlier assumed 19
+    # (see GROUP_A_DMG_STAT_NAMES comment): DMG Bonus names (elemental and
+    # attack-type) aren't real substats, confirmed against real in-game data.
+    # Arikatsu's phantomsubproperty.json (19 rows) is no longer expected to
+    # match this count -- it's not a reliable "confirmed active substat pool"
+    # source on its own, just cross-referenced for the 9 real ones.
     sub_count = len(curves["subStatOptions"])
-    if sub_count != 19:
-        log(f"  [FAIL] expected 19 substat entries, got {sub_count}")
+    if sub_count != 9:
+        log(f"  [FAIL] expected 9 substat entries, got {sub_count}")
         all_ok = False
     else:
-        log(f"  [OK] subStatOptions has exactly 19 entries, matching Arikatsu's phantomsubproperty.json count")
+        log("  [OK] subStatOptions has exactly 9 entries (the real substat pool)")
 
     log(f"\n=== VERIFICATION {'PASSED' if all_ok else 'FAILED'} ===")
     return all_ok
@@ -1063,6 +1085,16 @@ def main():
     sonata_html = fetch_html(GAME8_SONATA_URL, "sonata", cache_dir)
     sets = parse_game8_sonata_sets(sonata_html)
     log(f"  parsed {len(sets)} sonata sets")
+
+    kuro_set_icons = extract_kuro_set_icons(load_characters_json())
+    kuro_icon_count = sum(1 for s in sets if s["name"] in kuro_set_icons)
+    for s in sets:
+        game8_icon = s.pop("game8IconUrl", None)
+        s["iconUrl"] = kuro_set_icons.get(s["name"]) or game8_icon
+    log(
+        f"  set icons: {kuro_icon_count}/{len(sets)} from real Kuro CDN (wuwa_characters.json), "
+        f"{len(sets) - kuro_icon_count} falling back to game8's own icon"
+    )
 
     log("\n=== Step 2: main-stat values (game8 primary, wutheringlab cross-check) ===")
     game8_main_stats_by_cost: dict[int, dict[str, list[float]]] = {}
@@ -1155,11 +1187,12 @@ def main():
         for e in substat_errors:
             log(f"  [FAIL] {e}")
     else:
-        log(f"  [OK] 19 entries transcribed, values/chances lengths match, both groups' chances sum to ~100%")
-    if substat_count != 19:
-        log(f"  [WARN] Arikatsu count ({substat_count}) does not match transcribed count (19)")
-    else:
-        log(f"  [OK] transcribed count (19) matches Arikatsu's phantomsubproperty.json row count ({substat_count})")
+        log("  [OK] 9 entries transcribed, values/chances lengths match, both groups' chances sum to ~100%")
+    log(
+        f"  [INFO] Arikatsu's phantomsubproperty.json has {substat_count} rows -- no longer expected to "
+        "match (that file isn't a reliable confirmed-substat-pool source on its own, see "
+        "GROUP_A_DMG_STAT_NAMES comment)"
+    )
 
     log("\n=== Step 6: cross-link signature echoes ===")
     characters = load_characters_json()
@@ -1170,27 +1203,32 @@ def main():
         log(f"  unmatched ({len(unmatched)}): {unmatched}")
 
     log("\n=== Building main-stat option curves ===")
+    # Confirmed against a real echo card (user, 2026-07-03): every echo has
+    # TWO main stats, not one -- a fixed/non-selectable "static" one plus the
+    # player-selectable "variable" one this app already modeled. The static
+    # one is always flat ATK for cost-3/cost-4 echoes, and always flat HP for
+    # cost-1 echoes (cost-1 has no variable/selectable second stat choice
+    # beyond that). Previously this script just dropped flat ATK entirely
+    # (wrongly assuming it was a scrape bleed-over from a substat table) --
+    # it's real, just not swappable. Routed into staticMainStatByCost instead
+    # of mainStatOptionsByCost (the swappable-options list).
+    STATIC_MAIN_STAT_NAME = {1: "HP", 3: "ATK", 4: "ATK"}
     main_stat_options_by_cost: dict[int, list[dict]] = {1: [], 3: [], 4: []}
+    static_main_stat_by_cost: dict[int, dict] = {}
     for cost in (1, 3, 4):
         for stat_name, rank_values in resolved_main_stats_by_cost[cost].items():
-            if stat_name == "ATK":
-                # Confirmed against real in-game echo main-stat menus: flat ATK is
-                # never an actual main-stat option at any cost tier, only ATK% is.
-                # game8/wutheringlab's tables list a flat-ATK row anyway (likely
-                # bleed-over from a substat table) -- drop it rather than trust
-                # the scrape. Flat ATK is still a legitimate substat, see
-                # build_substat_options().
-                continue
             prop_id, add_type = STAT_PROP_INFO.get(stat_name, (None, 2 if "%" in stat_name or "Bonus" in stat_name or "Rate" in stat_name or "Regen" in stat_name else 1))
             values_by_level = interpolate_curve(stat_name, rank_values, growth_curve)
-            main_stat_options_by_cost[cost].append(
-                {
-                    "propId": prop_id,
-                    "statName": stat_name,
-                    "addType": add_type,
-                    "valuesByLevel": {str(k): v for k, v in values_by_level.items()},
-                }
-            )
+            option = {
+                "propId": prop_id,
+                "statName": stat_name,
+                "addType": add_type,
+                "valuesByLevel": {str(k): v for k, v in values_by_level.items()},
+            }
+            if stat_name == STATIC_MAIN_STAT_NAME[cost]:
+                static_main_stat_by_cost[cost] = option
+            else:
+                main_stat_options_by_cost[cost].append(option)
 
     substat_options = build_substat_options()
 
@@ -1210,6 +1248,7 @@ def main():
     sets_out = {"sets": sets}
     curves_out = {
         "mainStatOptionsByCost": {str(c): main_stat_options_by_cost[c] for c in (1, 3, 4)},
+        "staticMainStatByCost": {str(c): static_main_stat_by_cost[c] for c in (1, 3, 4)},
         "subStatOptions": substat_options,
     }
 

@@ -31,7 +31,7 @@ either get content pasted in directly, or find another path.
 - **`roleSkill.addPointTarget[]`** = the 5 leveled talents (Normal Attack, Resonance Skill, Forte Circuit, Resonance Liberation, Intro Skill), real names/icons/descriptions/`recommendLevel`. ✅ Reliable.
 - **`roleSkill.fixedSkills[]`** = the 2 "Inherent Skill" passives (explicitly labeled in `skillType.texts[].name`). ✅ Reliable, always exactly 2 entries.
 - **`roleSkill.addPointSequence[]`** — looks like it should map sequence nodes to boosted skills, but inspection showed it's just a near-duplicate of `addPointTarget` with a `linkNextType` field (UI graph hint, not a sequence-number link). Not useful for node→skill mapping.
-- **Which sequence node / which Inherent Skill boosts which of the 5 talent columns**: ❌ **confirmed not derivable** from any source checked. Tried: raw `resonantchain.json` (all 6 nodes per character have identical `NodeType`, no skill link), text-matching a node's description against the 5 skill names (disproved by a real screenshot — Carlotta's "Flawless Purity" describes triggering off "Resonance Skill" but is positioned above "Forte Circuit" in-game). Current UI handles this by stacking both Inherent Skills above Forte Circuit unconditionally as a labeled simplification — don't try to make this "accurate" without new data.
+- **Which sequence node / which Inherent Skill boosts which of the 5 talent columns**: ❌ **confirmed not derivable** from any source checked. Tried: raw `resonantchain.json` (all 6 nodes per character have identical `NodeType`, no skill link), text-matching a node's description against the 5 skill names (disproved by a real screenshot — Carlotta's "Flawless Purity" describes triggering off "Resonance Skill" but is positioned above "Forte Circuit" in-game). **Layout note (2026-07-03):** a real in-game Forte-tree screenshot showed the 2 Inherent Skills ("Outro Skill"/"Tune Break" for that character) as unaffiliated circular nodes in their own row *below* the whole 5-column tree, not stacked above any one column — the build card's `TalentTree` (`frontend/src/components/BuildCard.tsx`) now matches that layout. This doesn't resolve the earlier "positioned above Forte Circuit" screenshot observation (possibly a different in-game view/mode) — still no derivable column-affiliation, don't try to make this "accurate" without new data, just match the tree-view layout.
 - **Weapon secondary-stat property IDs**: traced one down to a raw buff ID (`1102901001`) which turned out to reference a multi-hop `ExtraEffectParameters` chain ending in an unlabeled `GameAttributeID` enum — a real reverse-engineering task, not a quick lookup. Didn't finish; the propId-name mapping above is good enough for now.
 
 ## Echoes (Phase 0 complete — `scripts/fetch_echo_data.py`)
@@ -94,17 +94,53 @@ game8 won 16/18 disagreements, wutheringlab won 1 (Healing Bonus), and 1 stat
 disagreement is logged in the script's normal run output, not silently
 resolved.
 
-### Flat ATK is not a real main-stat option (user correction, 2026-07-03)
+### Every echo has 2 main stats: one static, one variable (superseded, 2026-07-03)
 
-Both game8 and wutheringlab's cost-3/cost-4 tables include a flat "ATK" row
-alongside "ATK%", and `reconcile_main_stats()` happily resolved it like any
-other stat (see the 3-cost ATK progression `31/44/63/100` above). The user
-(real in-game knowledge) confirmed no echo main-stat menu at any cost tier
-actually offers flat ATK — only ATK%. Likely bleed-over from a substat table
-on one or both source sites (flat ATK **is** a legitimate substat, see
-`build_substat_options()`). Fixed by excluding `stat_name == "ATK"` when
-building `mainStatOptionsByCost` in `fetch_echo_data.py` — don't re-add it
-without new evidence.
+Earlier correction below turned out to be half right: flat ATK genuinely
+isn't a *selectable* main-stat option, but it **is** a real main stat — just
+a fixed, always-present second one, not a swappable choice. The user (real
+in-game knowledge, confirmed against an actual echo card screenshot showing
+two un-bulleted top lines: a chosen "Crit. Rate 22.0%" and a fixed
+"ATK 150") clarified the real structure: **every echo has two main stats**,
+one static/non-selectable and one variable/player-chosen:
+
+- Cost 4 and cost 3: static = flat ATK, variable = the existing selectable
+  menu (Crit Rate/Crit DMG/Energy Regen/Healing Bonus/ATK%/HP%/DEF% for
+  cost 4; ATK%/HP%/DEF%/Energy Regen/elemental DMG Bonus for cost 3).
+- Cost 1: static = flat HP, variable = ATK%/HP%/DEF% (previously HP was
+  wrongly modeled as one of the *selectable* cost-1 options — it's always
+  present instead, cost-1 never had HP% as its only choice-free stat).
+
+`echo_stat_curves.json` now has a third top-level key, `staticMainStatByCost`
+(`Record<1|3|4, EchoMainStatOption>`), alongside the existing
+`mainStatOptionsByCost` (now the *variable-only* menu per cost). Both
+`data/echo_stat_curves.json` and its frontend mirror were patched directly
+(flat ATK values for cost 3/4 recovered from git history — they'd been fully
+deleted by the original, incomplete fix); `fetch_echo_data.py`'s main-stat
+loop now routes `STATIC_MAIN_STAT_NAME[cost]` into `staticMainStatByCost`
+instead of dropping/keeping it in the selectable list.
+
+This also resolves a question the original script's own verification gate
+was already flagging (`echoAttributes[].attribute`/`attribute2` in
+`wuwa_characters.json` — `attribute2` is exactly this static stat).
+
+### Echo substats never include any DMG Bonus (user correction, 2026-07-03)
+
+Also corrected in the same pass: neither elemental DMG Bonus (Glacio/Fusion/
+Electro/Aero/Spectro/Havoc) nor attack-type DMG Bonus (Basic Attack/Heavy
+Attack/Resonance Skill/Resonance Liberation) are real echo **substats** —
+elemental DMG Bonus is only ever a *variable main stat*, and only on cost-3
+echoes (see above); attack-type DMG Bonus doesn't appear on echoes at all.
+The community substat infographic's "DMG %" row, previously assumed to cover
+all 10 of these names off one shared ladder, doesn't actually apply to the
+substat pool this way. Real substat pool is exactly 9: HP, HP%, ATK, ATK%,
+DEF, DEF%, Crit. Rate, Crit. DMG, Energy Regen. `subStatOptions` in
+`echo_stat_curves.json` is down from 19 to 9 entries; `build_substat_options()`
+no longer emits `GROUP_A_DMG_STAT_NAMES` (kept as an empty list, with a
+comment, as a record of what was wrong rather than deleted outright).
+Arikatsu's `phantomsubproperty.json` (19 rows) is no longer treated as
+confirming the substat count — it isn't a reliable source for that on its
+own.
 
 ### Rank → level derivation (confirmed, not guessed)
 
