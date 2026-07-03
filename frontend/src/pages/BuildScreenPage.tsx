@@ -1,15 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { EchoPicker } from "../components/EchoPicker";
 import { SequenceNodeRow } from "../components/SequenceNodeRow";
 import { StatBox } from "../components/StatBox";
 import { TalentGrid } from "../components/TalentGrid";
 import { WeaponPicker } from "../components/WeaponPicker";
 import { loadRoster } from "../lib/characters";
+import {
+  availableSubStatNames,
+  computeActiveSetBonuses,
+  computeEchoMainStatValue,
+  isFlatStat,
+  loadEchoCatalog,
+  loadEchoRecommendation,
+  loadEchoSets,
+  loadEchoStatCurves,
+} from "../lib/echoes";
 import { loadSequenceNodes } from "../lib/sequenceNodes";
 import { loadStatIcons } from "../lib/statIcons";
 import { computeStats, loadStatCurves } from "../lib/stats";
 import { loadInherentSkills, loadTalents } from "../lib/talents";
-import { renderRankScaledText } from "../lib/text";
+import { renderRankScaledText, stripHtml } from "../lib/text";
 import {
   computeWeaponAtk,
   computeWeaponSecondaryStat,
@@ -17,11 +28,40 @@ import {
   loadWeaponStatCurves,
 } from "../lib/weapons";
 import type { Character } from "../types/character";
+import type {
+  EchoCatalogEntry,
+  EchoMainStatOption,
+  EchoSet,
+  EchoStatCurves,
+  EquippedEcho,
+} from "../types/echo";
 import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, Talent } from "../types/talent";
+import type { EchoCatalog, EchoRecommendation } from "../lib/echoes";
 import type { WeaponCatalog } from "../lib/weapons";
 import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
+
+const ECHO_SLOT_COSTS = [4, 3, 3, 1, 1] as const;
+
+function emptyEquippedEchoes(): EquippedEcho[] {
+  return ECHO_SLOT_COSTS.map((_, i) => ({
+    slotIndex: i,
+    echo: null,
+    chosenSetName: null,
+    mainStatPropId: null,
+    level: 0,
+    substats: Array.from({ length: 5 }, () => ({ statName: null, value: null })),
+  }));
+}
+
+// Cost tier has no in-game color convention sourced from this app's data --
+// UI-only design choice (gold = rarest/highest cost), not a game data claim.
+const COST_DISC_CLASS: Record<1 | 3 | 4, string> = {
+  4: "border-gold text-gold-soft",
+  3: "border-gold-soft/60 text-text",
+  1: "border-border text-text-muted",
+};
 
 function StatIcon({ icons, name }: { icons: Record<string, string> | null; name: string }) {
   const url = icons?.[name];
@@ -61,6 +101,164 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
+function formatStatValue(value: number, statName: string): string {
+  return isFlatStat(statName) ? String(Math.round(value)) : `${value.toFixed(1)}%`;
+}
+
+function EchoSlotCard({
+  slot,
+  cost,
+  curves,
+  onOpenPicker,
+  onUpdate,
+  onSubStatChange,
+}: {
+  slot: EquippedEcho;
+  cost: 1 | 3 | 4;
+  curves: EchoStatCurves | null;
+  onOpenPicker: () => void;
+  onUpdate: (patch: Partial<EquippedEcho>) => void;
+  onSubStatChange: (subIndex: number, statName: string | null, value: number | null) => void;
+}) {
+  const mainStatOptions: EchoMainStatOption[] = curves?.mainStatOptionsByCost[cost] ?? [];
+  const selectedMainOption = mainStatOptions.find((o) => o.propId === slot.mainStatPropId) ?? null;
+  const mainStatValue = selectedMainOption
+    ? computeEchoMainStatValue(selectedMainOption, slot.level)
+    : null;
+
+  return (
+    <div className="border border-border bg-panel-alt p-3">
+      <div className="flex gap-4">
+        <div
+          className={`flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border bg-panel ${COST_DISC_CLASS[cost]}`}
+        >
+          {slot.echo?.pictureUrl ? (
+            <img src={slot.echo.pictureUrl} alt={slot.echo.name} className="h-full w-full object-contain" />
+          ) : (
+            <span className="text-xs font-semibold">{cost}</span>
+          )}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center justify-between gap-2">
+            <span className="truncate text-sm font-semibold text-gold-soft">
+              {slot.echo?.name ?? `Empty Slot (Cost ${cost})`}
+            </span>
+            <button
+              onClick={onOpenPicker}
+              className="shrink-0 rounded-sm border border-gold-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt"
+            >
+              {slot.echo ? "Change" : "Select"}
+            </button>
+          </div>
+
+          {slot.echo && curves && (
+            <>
+              <div className="mt-3 flex items-center gap-3">
+                <input
+                  type="range"
+                  min={0}
+                  max={25}
+                  value={slot.level}
+                  onChange={(e) => onUpdate({ level: Number(e.target.value) })}
+                  className="w-32 accent-gold"
+                />
+                <span className="w-16 shrink-0 whitespace-nowrap text-right text-sm text-gold-soft">
+                  {slot.level} / 25
+                </span>
+              </div>
+
+              <div className="mt-3 flex items-center gap-2">
+                <span className="shrink-0 text-[10px] uppercase tracking-wide text-text-muted">Main</span>
+                <select
+                  value={slot.mainStatPropId ?? ""}
+                  onChange={(e) => onUpdate({ mainStatPropId: Number(e.target.value) })}
+                  className="min-w-0 flex-1 rounded-sm border border-border bg-panel px-2 py-1 text-xs text-text"
+                >
+                  {mainStatOptions.map((o) => (
+                    <option key={o.propId} value={o.propId}>
+                      {o.statName}
+                    </option>
+                  ))}
+                </select>
+                {mainStatValue !== null && selectedMainOption && (
+                  <span className="shrink-0 whitespace-nowrap text-xs tabular-nums text-gold-soft">
+                    {formatStatValue(mainStatValue, selectedMainOption.statName)}
+                  </span>
+                )}
+              </div>
+
+              {slot.echo.setNames.length > 1 && (
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="shrink-0 text-[10px] uppercase tracking-wide text-text-muted">Set</span>
+                  <select
+                    value={slot.chosenSetName ?? ""}
+                    onChange={(e) => onUpdate({ chosenSetName: e.target.value })}
+                    className="min-w-0 flex-1 rounded-sm border border-border bg-panel px-2 py-1 text-xs text-text"
+                  >
+                    {slot.echo.setNames.map((sn) => (
+                      <option key={sn} value={sn}>
+                        {sn}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <div className="mt-3">
+                <span className="text-[10px] uppercase tracking-wide text-text-muted">Substats</span>
+                <div className="mt-1 flex flex-col gap-1">
+                  {slot.substats.map((sub, subIndex) => {
+                    const available = availableSubStatNames(curves, slot, subIndex);
+                    const chosenOption = curves.subStatOptions.find((o) => o.statName === sub.statName) ?? null;
+                    return (
+                      <div key={subIndex} className="flex items-center gap-2">
+                        <select
+                          value={sub.statName ?? ""}
+                          onChange={(e) => onSubStatChange(subIndex, e.target.value || null, null)}
+                          className="min-w-0 flex-1 rounded-sm border border-border bg-panel px-2 py-1 text-xs text-text"
+                        >
+                          <option value="">-- Stat --</option>
+                          {sub.statName && !available.some((o) => o.statName === sub.statName) && (
+                            <option value={sub.statName}>{sub.statName}</option>
+                          )}
+                          {available.map((o) => (
+                            <option key={o.statName} value={o.statName}>
+                              {o.statName}
+                            </option>
+                          ))}
+                        </select>
+                        <select
+                          value={sub.value ?? ""}
+                          disabled={!chosenOption}
+                          onChange={(e) =>
+                            onSubStatChange(
+                              subIndex,
+                              sub.statName,
+                              e.target.value ? Number(e.target.value) : null,
+                            )
+                          }
+                          className="w-24 shrink-0 rounded-sm border border-border bg-panel px-2 py-1 text-xs text-text disabled:opacity-40"
+                        >
+                          <option value="">--</option>
+                          {chosenOption?.values.map((v) => (
+                            <option key={v} value={v}>
+                              {chosenOption ? formatStatValue(v, chosenOption.statName) : v}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function BuildScreenPage() {
   const { characterId } = useParams();
   const [character, setCharacter] = useState<Character | null>(null);
@@ -83,6 +281,13 @@ export function BuildScreenPage() {
   const [inherentSkills, setInherentSkills] = useState<InherentSkill[]>([]);
   const [inherentActive, setInherentActive] = useState<boolean[]>([]);
 
+  const [echoCatalog, setEchoCatalog] = useState<EchoCatalog | null>(null);
+  const [echoSets, setEchoSets] = useState<EchoSet[]>([]);
+  const [echoCurves, setEchoCurves] = useState<EchoStatCurves | null>(null);
+  const [echoRecommendation, setEchoRecommendation] = useState<EchoRecommendation | null>(null);
+  const [equippedEchoes, setEquippedEchoes] = useState<EquippedEcho[]>(emptyEquippedEchoes());
+  const [echoPickerSlot, setEchoPickerSlot] = useState<number | null>(null);
+
   useEffect(() => {
     loadRoster().then(({ characters }) => {
       setCharacter(characters.find((c) => c.roleGbId === characterId) ?? null);
@@ -93,6 +298,8 @@ export function BuildScreenPage() {
     setWeaponLevel(1);
     setWeaponRank(1);
     setUnlockedCount(0);
+    setEquippedEchoes(emptyEquippedEchoes());
+    setEchoRecommendation(null);
     if (characterId) {
       loadSequenceNodes(characterId).then(setSequenceNodes);
       loadTalents(characterId).then((loaded) => {
@@ -103,6 +310,7 @@ export function BuildScreenPage() {
         setInherentSkills(loaded);
         setInherentActive(loaded.map(() => true));
       });
+      loadEchoRecommendation(characterId).then(setEchoRecommendation);
     }
   }, [characterId]);
 
@@ -110,6 +318,9 @@ export function BuildScreenPage() {
     loadWeaponCatalog().then(setWeaponCatalog);
     loadWeaponStatCurves().then(setWeaponCurves);
     loadStatIcons().then(setStatIcons);
+    loadEchoCatalog().then(setEchoCatalog);
+    loadEchoSets().then(setEchoSets);
+    loadEchoStatCurves().then(setEchoCurves);
   }, []);
 
   // Default to the character's own top recommended weapon once both the
@@ -121,6 +332,89 @@ export function BuildScreenPage() {
     const defaultWeapon = weapons.find((w) => w.gbId === recommendedIds[0]) ?? null;
     if (defaultWeapon) setSelectedWeapon(defaultWeapon);
   }, [character, weaponCatalog, selectedWeapon]);
+
+  // Default slot 0 to the character's real signature echo (the only
+  // concrete recommended item the data actually gives us -- slots 1-4 stay
+  // empty rather than fabricating 4 more picks).
+  useEffect(() => {
+    if (!echoCatalog || !echoCurves || !echoRecommendation) return;
+    if (equippedEchoes[0].echo) return;
+    const name = echoRecommendation.signatureEchoName;
+    if (!name) return;
+    const match = echoCatalog.byCost[4].find((e) => e.name === name);
+    if (!match) return;
+    const defaultMainOption = echoCurves.mainStatOptionsByCost[4][0];
+    setEquippedEchoes((current) =>
+      current.map((slot, i) =>
+        i === 0
+          ? {
+              ...slot,
+              echo: match,
+              chosenSetName:
+                match.setNames.find((s) => echoRecommendation.recommendedSetNames.includes(s)) ??
+                match.setNames[0] ??
+                null,
+              mainStatPropId: defaultMainOption?.propId ?? null,
+            }
+          : slot,
+      ),
+    );
+  }, [echoCatalog, echoCurves, echoRecommendation, equippedEchoes]);
+
+  function updateEquippedEcho(index: number, patch: Partial<EquippedEcho>) {
+    setEquippedEchoes((current) =>
+      current.map((slot, i) => {
+        if (i !== index) return slot;
+        const updated = { ...slot, ...patch };
+        if (patch.mainStatPropId !== undefined && echoCurves) {
+          const newMainOption = echoCurves.mainStatOptionsByCost[ECHO_SLOT_COSTS[index]].find(
+            (o) => o.propId === patch.mainStatPropId,
+          );
+          if (newMainOption) {
+            updated.substats = updated.substats.map((s) =>
+              s.statName === newMainOption.statName ? { statName: null, value: null } : s,
+            );
+          }
+        }
+        return updated;
+      }),
+    );
+  }
+
+  function updateEchoSubStat(
+    slotIndex: number,
+    subIndex: number,
+    statName: string | null,
+    value: number | null,
+  ) {
+    setEquippedEchoes((current) =>
+      current.map((slot, i) =>
+        i === slotIndex
+          ? { ...slot, substats: slot.substats.map((s, j) => (j === subIndex ? { statName, value } : s)) }
+          : slot,
+      ),
+    );
+  }
+
+  function handleEchoSelect(slotIndex: number, echo: EchoCatalogEntry, chosenSetName: string) {
+    const cost = ECHO_SLOT_COSTS[slotIndex];
+    const defaultMainOption = echoCurves?.mainStatOptionsByCost[cost][0];
+    setEquippedEchoes((current) =>
+      current.map((slot, i) =>
+        i === slotIndex
+          ? {
+              ...slot,
+              echo,
+              chosenSetName,
+              mainStatPropId: defaultMainOption?.propId ?? null,
+              level: 0,
+              substats: Array.from({ length: 5 }, () => ({ statName: null, value: null })),
+            }
+          : slot,
+      ),
+    );
+    setEchoPickerSlot(null);
+  }
 
   const stats = character && curves ? computeStats(curves, character.roleGbId, level) : null;
   const weaponAtk =
@@ -319,16 +613,56 @@ export function BuildScreenPage() {
           </Panel>
 
           <Panel title="Echoes">
-            <div className="flex gap-3">
-              {Array.from({ length: 5 }, (_, i) => (
-                <span
+            <div className="flex flex-col gap-3">
+              {equippedEchoes.map((slot, i) => (
+                <EchoSlotCard
                   key={i}
-                  className="flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-border text-2xl text-text-muted"
-                >
-                  +
-                </span>
+                  slot={slot}
+                  cost={ECHO_SLOT_COSTS[i]}
+                  curves={echoCurves}
+                  onOpenPicker={() => setEchoPickerSlot(i)}
+                  onUpdate={(patch) => updateEquippedEcho(i, patch)}
+                  onSubStatChange={(subIndex, statName, value) =>
+                    updateEchoSubStat(i, subIndex, statName, value)
+                  }
+                />
               ))}
             </div>
+
+            <div className="mt-4 border-t border-border pt-3">
+              <span className="text-[10px] uppercase tracking-wide text-text-muted">
+                Active Set Bonuses
+              </span>
+              <div className="mt-2 flex flex-col gap-2">
+                {computeActiveSetBonuses(equippedEchoes, echoSets).length === 0 && (
+                  <p className="text-xs text-text-muted">No echoes equipped yet.</p>
+                )}
+                {computeActiveSetBonuses(equippedEchoes, echoSets).map((bonus) => (
+                  <div key={bonus.setName} className="text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-text">{bonus.setName}</span>
+                      <span className="text-text-muted">{bonus.count}/5</span>
+                    </div>
+                    {bonus.activeEffects.map((eff) => (
+                      <p key={eff.pieceCount} className="mt-0.5 text-gold-soft">
+                        {eff.pieceCount}pc: {eff.description}
+                      </p>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {echoRecommendation?.recommendDescriptionHtml && (
+              <div className="mt-3 border-t border-border pt-3">
+                <span className="text-[10px] uppercase tracking-wide text-text-muted">
+                  Substat Priority
+                </span>
+                <p className="mt-1 text-xs text-text-muted">
+                  {stripHtml(echoRecommendation.recommendDescriptionHtml)}
+                </p>
+              </div>
+            )}
           </Panel>
         </div>
       </div>
@@ -344,6 +678,17 @@ export function BuildScreenPage() {
             setPickerOpen(false);
           }}
           onClose={() => setPickerOpen(false)}
+        />
+      )}
+
+      {echoPickerSlot !== null && echoCatalog && (
+        <EchoPicker
+          catalog={echoCatalog}
+          sets={echoSets}
+          slotCost={ECHO_SLOT_COSTS[echoPickerSlot]}
+          recommendedSetNames={echoRecommendation?.recommendedSetNames ?? []}
+          onSelect={(echo, chosenSetName) => handleEchoSelect(echoPickerSlot, echo, chosenSetName)}
+          onClose={() => setEchoPickerSlot(null)}
         />
       )}
     </div>

@@ -29,3 +29,15 @@ export function renderRankScaledText(text: string, rank: number): ReactNode[] {
   parts.push(text.slice(lastIndex));
   return parts;
 }
+
+// Kuro's recommendDescription text is simple markup (<p>...&gt;...</p>) --
+// strip tags and decode the handful of entities it actually uses rather
+// than pulling in an HTML renderer for one line of text.
+export function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, "")
+    .replace(/&gt;/g, ">")
+    .replace(/&lt;/g, "<")
+    .replace(/&amp;/g, "&")
+    .trim();
+}

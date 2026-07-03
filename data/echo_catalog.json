@@ -1,0 +1,1978 @@
+{
+  "meta": {
+    "game8FetchDate": "2026-07-02",
+    "wutheringlabFetchDate": "2026-07-02",
+    "arikatsuSource": "https://github.com/Arikatsu/WutheringWaves_Data",
+    "substatInfographicAttribution": "youtube.com/catalystonline, Discord .LowPriority (user-provided, 2026-07-02)"
+  },
+  "echoes": [
+    {
+      "name": "Reminiscence: Nightmare Adam Smasher",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Shadow of Shattered Dreams"
+      ],
+      "kuroGbId": "60002015",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/54f91f2af554b82b370dad3b91ceffc9/a76b654595406510d1e9848cd7410e7c.png"
+    },
+    {
+      "name": "Myriad Snare: Rustfire Chassis",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Heart of Evil's Purge",
+        "Lamp of Nether Road"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543953/c8c5e35c2290152c2e2418105be50f72.png/show"
+    },
+    {
+      "name": "Thousand-Puppet Pavilion",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Song of Feathered Trace"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543949/5e1e64c6bbd82b7a1dbdbbb039ffaa96.png/show"
+    },
+    {
+      "name": "Feilian Beringal",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Sierra Gale"
+      ],
+      "kuroGbId": "60000435",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/b4aa7bc23b055188b9fa730134c8aad6.png"
+    },
+    {
+      "name": "Nightmare: Feilian Beringal",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Sierra Gale"
+      ],
+      "kuroGbId": "60000865",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/af9af2b2f76e00cb4fd8d16499c8f57d.png"
+    },
+    {
+      "name": "Impermanence Heron",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": "60000525",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/cbb3e9ccc7ba7463e69e84649d270d89.png"
+    },
+    {
+      "name": "Nightmare: Impermanence Heron",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Midnight Veil"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305807/3d61962c3053a6ef5dd93ef335995798.png/show"
+    },
+    {
+      "name": "Mourning Aix",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303300/80903c8dbfbb66b0e0687d09c7d0a054.png/show"
+    },
+    {
+      "name": "Nightmare: Mourning Aix",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Eternal Radiance"
+      ],
+      "kuroGbId": "60000925",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/9aadf508ea76f4577c22141efe8d39d9.png"
+    },
+    {
+      "name": "Lampylumen Myriad",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Freezing Frost"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303274/6f9985f0e8d3a27e474bf391fcc8a858.png/show"
+    },
+    {
+      "name": "Nightmare: Crownless",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": "60000905",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/ce1f2d7954dcddf9e4e16eb2b5ffcf10.png"
+    },
+    {
+      "name": "Crownless",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305744/b0e22697f3cd9f75c5a101b9a6868f52.png/show"
+    },
+    {
+      "name": "Dreamless",
+      "cost": 4,
+      "category": "Calamity",
+      "setNames": [
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": "60000535",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/b443559b4fda50bccff40fbe8b9e8aef.png"
+    },
+    {
+      "name": "Dragon of Dirge",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Tidebreaking Courage"
+      ],
+      "kuroGbId": "60000845",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/d7b9fe0723a538032c71685ff675501a.png"
+    },
+    {
+      "name": "Bell-Borne Geochelone",
+      "cost": 4,
+      "category": "Calamity",
+      "setNames": [
+        "Rejuvenating Glow",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": "60000375",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/45220b36fdf02fbbefa9272c26837db5.png"
+    },
+    {
+      "name": "Nightmare: Lampylumen Myriad",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Frosty Resolve",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305777/fa13eb97d73d1e84ad90ac595b92addb.png/show"
+    },
+    {
+      "name": "Mech Abomination",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305795/d708a26ed11c9456c779464af62863e2.png/show"
+    },
+    {
+      "name": "Hyvatia",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Pact of Neonlight Leap",
+        "Rite of Gilded Revelation"
+      ],
+      "kuroGbId": "60001895",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/fb999546dfb46ffe46987bd52b0810d3/388735477a69f8673e761783cd96a358.png"
+    },
+    {
+      "name": "Reactor Husk",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Halo of Starry Radiance",
+        "Chromatic Foam"
+      ],
+      "kuroGbId": "60001905",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/fb999546dfb46ffe46987bd52b0810d3/226275363edc607f126957093227335f.png"
+    },
+    {
+      "name": "Nightmare: Tempest Mephis",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Void Thunder",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303295/02a01af63c1d8c9fe5e658297f4e7fc8.png/show"
+    },
+    {
+      "name": "Tempest Mephis",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Void Thunder"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303299/2d70807576259fc772eb4ceb4bfa881f.png/show"
+    },
+    {
+      "name": "Thundering Mephis",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Void Thunder"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303304/b87e9a806df2becf9275133b62c66599.png/show"
+    },
+    {
+      "name": "Nightmare: Thundering Mephis",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Void Thunder"
+      ],
+      "kuroGbId": "60000885",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/a01dd069a584a959af6692a4e47fd176.png"
+    },
+    {
+      "name": "Nightmare: Inferno Rider",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Molten Rift"
+      ],
+      "kuroGbId": "60000915",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/f7e254be0eacd91a0f0f1d26fa471317.png"
+    },
+    {
+      "name": "Inferno Rider",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Molten Rift"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303276/913556794499a8f9f15bbd17bd4c7a16.png/show"
+    },
+    {
+      "name": "Lorelei",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Midnight Veil"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305799/e093d520bd1869bbbe91684f8401ea70.png/show"
+    },
+    {
+      "name": "Sentry Construct",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Frosty Resolve"
+      ],
+      "kuroGbId": "60000835",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/381a49f5bba1c253180192c8f8472512.png"
+    },
+    {
+      "name": "Lioness of Glory",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": "60001145",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/aaa57ef8003da1dc7f657c2bdd2dddc1/ce2ea44491888f7cf71f8654dfc3fc42.png"
+    },
+    {
+      "name": "Nightmare: Kelpie",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Gusts of Welkin",
+        "Windward Pilgrimage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305766/bd3fd7a0d8ea7fbe9288976971456f03.png/show"
+    },
+    {
+      "name": "The False Sovereign",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Crown of Valor"
+      ],
+      "kuroGbId": "60001215",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4c864dae50bc3d969d24d8f67a302edd/7f2bc47910cdc10d346b241f5b877b14.png"
+    },
+    {
+      "name": "Lady of the Sea",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Crown of Valor"
+      ],
+      "kuroGbId": "60001605",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4c864dae50bc3d969d24d8f67a302edd/540e316703a090b5b7db0357ec0a2e9c.png"
+    },
+    {
+      "name": "Nameless Explorer",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Sound of True Name",
+        "Reel of Spliced Memories"
+      ],
+      "kuroGbId": "60001925",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/94d1a1a3f3bbec1f2f2276bbe8f458ac/d683f29db2518d21dd77489aaa799f50.png"
+    },
+    {
+      "name": "Nightmare: Hecate",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Dream of the Lost"
+      ],
+      "kuroGbId": "60001155",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/c95a4a33202d2d96c0507f06760f87bb/5db5bd41dd3723edb098bab92a90cdf1.png"
+    },
+    {
+      "name": "Hecate",
+      "cost": 4,
+      "category": "Calamity",
+      "setNames": [
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305794/da828176c3b725a0c5e702f5823c0df3.png/show"
+    },
+    {
+      "name": "Fallacy of No Return",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Rejuvenating Glow"
+      ],
+      "kuroGbId": "60000605",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/d908f5ddd741a499100fe82a8e54a021.png"
+    },
+    {
+      "name": "Reminiscence: Fenrico",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Dream of the Lost",
+        "Law of Harmony"
+      ],
+      "kuroGbId": "60001165",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/c95a4a33202d2d96c0507f06760f87bb/3b43fc28971eb65284b84d52a1f28885.png"
+    },
+    {
+      "name": "Jué",
+      "cost": 4,
+      "category": "Calamity",
+      "setNames": [
+        "Celestial Light"
+      ],
+      "kuroGbId": "60000595",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/2c25dd7af6bb973507a34f5936790026.png"
+    },
+    {
+      "name": "Reminiscence: Fleurdelys",
+      "cost": 4,
+      "category": "Calamity",
+      "setNames": [
+        "Gusts of Welkin",
+        "Windward Pilgrimage"
+      ],
+      "kuroGbId": "60001065",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/9c313cbc186fdc76481456664dfb73ad.png"
+    },
+    {
+      "name": "Reminiscence: Threnodian - Leviathan",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Flamewing's Shadow",
+        "Thread of Severed Fate"
+      ],
+      "kuroGbId": "60001675",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5c79e7083baf81a45843e44ff0bdf7f4/4aa2b1b96c341e14619702f63df0a922.png"
+    },
+    {
+      "name": "Sigillum",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Trailblazing Star"
+      ],
+      "kuroGbId": "60001915",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/94d1a1a3f3bbec1f2f2276bbe8f458ac/21020714a1b037e2dd29663553120d03.png"
+    },
+    {
+      "name": "Reminiscence: Denia",
+      "cost": 4,
+      "category": "Calamity",
+      "setNames": [
+        "Chromatic Foam"
+      ],
+      "kuroGbId": "60002005",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/04082f72b98685d77b2c17dcf63417e2/da36120870e6a1929c33a3eb1430b552.png"
+    },
+    {
+      "name": "Reminiscence: Threnodian - Voidborne Construct",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Wishes of Quiet Snowfall"
+      ],
+      "kuroGbId": "60001995",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/04082f72b98685d77b2c17dcf63417e2/8081238c0445080be0decacbf34552f0.png"
+    },
+    {
+      "name": "Abyssal Gladius",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Midnight Veil",
+        "Tidebreaking Courage",
+        "Thread of Severed Fate"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305767/6b69230fd897fadb90054a306308b68f.png/show"
+    },
+    {
+      "name": "Abyssal Mercator",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Frosty Resolve",
+        "Eternal Radiance"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305810/a9a1027f0ab228bd7f2c71578baaea1f.png/show"
+    },
+    {
+      "name": "Abyssal Patricius",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Frosty Resolve",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305808/e92be322d2d6565f4a0aa8ce7988637d.png/show"
+    },
+    {
+      "name": "Autopuppet Scout",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Freezing Frost",
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303312/037f498ca483f11e463ad7c2bfaa24c9.png/show"
+    },
+    {
+      "name": "Capitaneus",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Eternal Radiance",
+        "Gusts of Welkin",
+        "Windward Pilgrimage"
+      ],
+      "kuroGbId": "60001045",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/6d59aa2889d24dafff97a562feb44f82.png"
+    },
+    {
+      "name": "Carapace",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Sierra Gale",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303261/228cca7faf8b09c1394bdf5ab2af1e41.png/show"
+    },
+    {
+      "name": "Chasm Guardian",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Rejuvenating Glow",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305805/21c002ae07e235ab637c8077ef6a7e52.png/show"
+    },
+    {
+      "name": "Chop Chop",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Empyrean Anthem",
+        "Tidebreaking Courage",
+        "Dream of the Lost"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305772/2c13e3721c072238391e965c012fc1ba.png/show"
+    },
+    {
+      "name": "Corrosaurus",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Flaming Clawprint",
+        "Flamewing's Shadow"
+      ],
+      "kuroGbId": "60001205",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4c864dae50bc3d969d24d8f67a302edd/ef00cbbeceb5476cc419943d2d55fdaa.png"
+    },
+    {
+      "name": "Cuddle Wuddle",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Frosty Resolve",
+        "Midnight Veil"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305785/23c28de9b36cf359af2960a481514705.png/show"
+    },
+    {
+      "name": "Cyan-Feathered Heron",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Sierra Gale",
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303264/0ebd52af6d262e7a555a1d876a72937d.png/show"
+    },
+    {
+      "name": "Diurnus Knight",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Eternal Radiance",
+        "Tidebreaking Courage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305784/793467fc3e83e526fe807bee1da1f6a1.png/show"
+    },
+    {
+      "name": "Flautist",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Void Thunder",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303275/785869e3eb35d2c43ceb4cd6184b82a0.png/show"
+    },
+    {
+      "name": "Flora Reindeer",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Rite of Gilded Revelation",
+        "Reel of Spliced Memories"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364349/0fd293da2aa8785b5c45486091fce181.png/show"
+    },
+    {
+      "name": "Fog Lionarch",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Song of Feathered Trace",
+        "Heart of Evil's Purge",
+        "Lamp of Nether Road"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543943/9bb23745524a76e14633235d53e0e0cb.png/show"
+    },
+    {
+      "name": "Forbidden Bastion",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Song of Feathered Trace",
+        "Heart of Evil's Purge",
+        "Lamp of Nether Road"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543960/d51021a7d2c8d8befface69e681cc92d.png/show"
+    },
+    {
+      "name": "Frostbite Coleoid",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Halo of Starry Radiance",
+        "Wishes of Quiet Snowfall"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364355/94c6fc8ab645f9e118c6d04663d927f1.png/show"
+    },
+    {
+      "name": "Glacio Dreadmane",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Freezing Frost",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303291/0779e9c7a09a7d155505bcb9c07c16f0.png/show"
+    },
+    {
+      "name": "Glommoth",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Trailblazing Star",
+        "Wishes of Quiet Snowfall"
+      ],
+      "kuroGbId": "60001955",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/94d1a1a3f3bbec1f2f2276bbe8f458ac/afb0fd0ae89cbe6e52930d0f0a75e7fa.png"
+    },
+    {
+      "name": "Havoc Dreadmane",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Molten Rift",
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303283/e5253f4a59d78af5d55bc5c085dafd78.png/show"
+    },
+    {
+      "name": "Hoochief",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Sierra Gale",
+        "Rejuvenating Glow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303273/4ebf268ac00f92c1da9b957ed5653a44.png/show"
+    },
+    {
+      "name": "Hurriclaw",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Tidebreaking Courage",
+        "Gusts of Welkin",
+        "Crown of Valor"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305752/e66f30f9936734b6972e7c4b2be32edc.png/show"
+    },
+    {
+      "name": "Ironhoof",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Pact of Neonlight Leap",
+        "Wishes of Quiet Snowfall",
+        "Reel of Spliced Memories"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364350/5b611ff8fad4afca74eba1157788f078.png/show"
+    },
+    {
+      "name": "Kerasaur",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Windward Pilgrimage",
+        "Flaming Clawprint",
+        "Flamewing's Shadow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305775/2a9937d834064352e6e88203287e605b.png/show"
+    },
+    {
+      "name": "Kronablight",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Trailblazing Star",
+        "Chromatic Foam"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4403556/2ab83f2924f4f8d98fbb973416502b7c.png/show"
+    },
+    {
+      "name": "Lightcrusher",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303303/fa346e8c5884b1cb8344127a194412cf.png/show"
+    },
+    {
+      "name": "Lumiscale Construct",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Freezing Frost",
+        "Void Thunder"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303287/3193ef2a13b959dee40ab1a58a2e7d94.png/show"
+    },
+    {
+      "name": "Mining Reindeer",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Pact of Neonlight Leap",
+        "Reel of Spliced Memories"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364348/8b16ac59e4c1799fad14d3aaa1fad42a.png/show"
+    },
+    {
+      "name": "Nightmare: Cyan-Feathered Heron",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Law of Harmony"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305753/dfa9c8452ecbf64454767bd2c8db08d7.png/show"
+    },
+    {
+      "name": "Nightmare: Roseshroom",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Thread of Severed Fate"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4334463/d41a366f91e13807f409976fe4491936.png/show"
+    },
+    {
+      "name": "Nightmare: Tambourinist",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Dream of the Lost"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305745/be24ae489bb662046ffc7fde65f71e47.png/show"
+    },
+    {
+      "name": "Nightmare: Violet-Feathered Heron",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Crown of Valor"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305756/792059463ec2e8586443647b2a378866.png/show"
+    },
+    {
+      "name": "Nightmare: Viridblaze Saurian",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Flamewing's Shadow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305738/89e801dd114a101e7b66c7ad38a1540e.png/show"
+    },
+    {
+      "name": "Nocturnus Knight",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Midnight Veil",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305786/1930daf31b09a3700d7b58fb3f6b7b1b.png/show"
+    },
+    {
+      "name": "Pilgrim's Shell",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Windward Pilgrimage",
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305883/c9616fcbebc20f932f626f9db7dcd523.png/show"
+    },
+    {
+      "name": "Questless Knight",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Frosty Resolve",
+        "Midnight Veil"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305790/012535b3c7b03c5d1b0f43ac43975790.png/show"
+    },
+    {
+      "name": "Rage Against the Statue",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Eternal Radiance",
+        "Gusts of Welkin",
+        "Law of Harmony"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305780/4516d6e50c7fab95922ba1dd8ba47744.png/show"
+    },
+    {
+      "name": "Reminiscence - Kronaclaw",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Trailblazing Star",
+        "Chromatic Foam"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4403555/b6f0faeb4981807c546cf2f0b9b80d39.png/show"
+    },
+    {
+      "name": "Rocksteady Guardian",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Celestial Light",
+        "Rejuvenating Glow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303282/7fa962dfdbb4ed3f559dba0a9bf5e3bd.png/show"
+    },
+    {
+      "name": "Roseshroom",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Freezing Frost",
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303306/f87eca6b78bd4c7b01fffde595a12868.png/show"
+    },
+    {
+      "name": "Sabercat Prowler",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Pact of Neonlight Leap",
+        "Rite of Gilded Revelation",
+        "Sound of True Name"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364353/221e9e1d65e5d482e3faf1800a0951c4.png/show"
+    },
+    {
+      "name": "Sabercat Reaver",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Pact of Neonlight Leap",
+        "Rite of Gilded Revelation",
+        "Sound of True Name"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364352/38622c6067e4d79d4ca30eb9cf61be8c.png/show"
+    },
+    {
+      "name": "Spacetrek Explorer",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Halo of Starry Radiance",
+        "Chromatic Foam",
+        "Sound of True Name"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364351/562d030947d24b8c355492ee1a3e909a.png/show"
+    },
+    {
+      "name": "Spearback",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Moonlit Clouds",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305793/3fee3ccd649ac19aa5ef79a7632f0c4f.png/show"
+    },
+    {
+      "name": "Stonewall Bracer",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Rejuvenating Glow",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305812/f6c93c1a852571b015fe51c618424513.png/show"
+    },
+    {
+      "name": "Tambourinist",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Freezing Frost",
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303309/c6ef49dd42ac2f5b273ee27072b67813.png/show"
+    },
+    {
+      "name": "Twin Nova - Collapsar Blade",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Rite of Gilded Revelation",
+        "Trailblazing Star",
+        "Sound of True Name"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4414844/f2ac2870d61d8aa8a74adbf879943147.png/show"
+    },
+    {
+      "name": "Twin Nova - Nebulous Cannon",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Rite of Gilded Revelation",
+        "Chromatic Foam"
+      ],
+      "kuroGbId": "60001795",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/059b5e1c81ea6c250dc095bb9c0ee331/3e2c57c6b608690aeac5a97eb359d0c5.png"
+    },
+    {
+      "name": "Violet-Feathered Heron",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Molten Rift",
+        "Void Thunder"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303285/42b043f25560d5fe055d21f48d782b6c.png/show"
+    },
+    {
+      "name": "Viridblaze Saurian",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Molten Rift",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303310/40689be18e0eae5f293a7722d0782e09.png/show"
+    },
+    {
+      "name": "Vitreum Dancer",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Eternal Radiance",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305792/e9a832c94f4b4701eaddf44067ddae88.png/show"
+    },
+    {
+      "name": "Voidwing Moth",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Reel of Spliced Memories"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4485573/626a5bb722aa1acd8986381ac8ce809c.png/show"
+    },
+    {
+      "name": "Windlash Coleoid",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Rite of Gilded Revelation",
+        "Wishes of Quiet Snowfall"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364356/07c76031bb5766cf562bb1e7a5d56b47.png/show"
+    },
+    {
+      "name": "Aero Drake",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Tidebreaking Courage",
+        "Gusts of Welkin",
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305770/2bcd484cfe338e0798e33864ea82bfb5.png/show"
+    },
+    {
+      "name": "Aero Predator",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Void Thunder",
+        "Sierra Gale"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303281/feda044fe09e73ac1b23336d073666f8.png/show"
+    },
+    {
+      "name": "Aero Prism",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Eternal Radiance",
+        "Tidebreaking Courage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305800/c3c9aaa67edeb04abfb16ef4571971d4.png/show"
+    },
+    {
+      "name": "Aureate Picket",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Heart of Evil's Purge"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543944/c656031b72d5866a6ce59ad9f0ff19c0.png/show"
+    },
+    {
+      "name": "Baby Viridblaze Saurian",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Molten Rift",
+        "Void Thunder",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303262/01a543c0df96f4aa67fbcb45379d026d.png/show"
+    },
+    {
+      "name": "Calcified Junrock",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Empyrean Anthem",
+        "Tidebreaking Courage",
+        "Crown of Valor"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305764/a708e012818802fd40684863e94b0fb0.png/show"
+    },
+    {
+      "name": "Chest Mimic",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Frosty Resolve",
+        "Midnight Veil",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305791/cc79017134fe20611e528991367220fd.png/show"
+    },
+    {
+      "name": "Chirpuff",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Sierra Gale",
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303263/ffb3aff9e9b008d0e4b15390943314bb.png/show"
+    },
+    {
+      "name": "Chop Chop: Headless",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Eternal Radiance",
+        "Tidebreaking Courage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305801/3f72ab675c990ad7598152c1f4fd1bf7.png/show"
+    },
+    {
+      "name": "Chop Chop: Leftless",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Frosty Resolve",
+        "Tidebreaking Courage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305782/c3521925c52d59f11be5981ba42670a5.png/show"
+    },
+    {
+      "name": "Chop Chop: Rightless",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Frosty Resolve",
+        "Tidebreaking Courage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305771/d9365393f07410f21c00c79b70887d78.png/show"
+    },
+    {
+      "name": "Clang Bang",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Freezing Frost",
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303266/f3193b6cea1e7a8946e56253a38bc2c0.png/show"
+    },
+    {
+      "name": "Cruisewing",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Celestial Light",
+        "Rejuvenating Glow",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303288/ab070862c0a15605c10344303f60b1aa.png/show"
+    },
+    {
+      "name": "Devotee's Flesh",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Gusts of Welkin",
+        "Windward Pilgrimage",
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305769/ea6be7cfb6b6bbb2f0c80d87271d03db.png/show"
+    },
+    {
+      "name": "Diamondclaw",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Moonlit Clouds",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305803/2a1654517a6d87a47d14cd9b345606bd.png/show"
+    },
+    {
+      "name": "Diggy Duggy",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Eternal Radiance",
+        "Tidebreaking Courage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305804/6e587900dad1a79a760771345bd1a200.png/show"
+    },
+    {
+      "name": "Dwarf Cassowary",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Sierra Gale",
+        "Rejuvenating Glow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303265/c091e8af6a6967d36f4e1a0a21cc3b88.png/show"
+    },
+    {
+      "name": "Electro Drake",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Midnight Veil",
+        "Gusts of Welkin",
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305798/924234864c9173b516c1108955d54ccb.png/show"
+    },
+    {
+      "name": "Electro Predator",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Molten Rift",
+        "Void Thunder"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303269/ba72e17beb70ae44f82adbe4a42569a3.png/show"
+    },
+    {
+      "name": "Excarat",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Freezing Frost",
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303267/6124f38f3dc47a7301152ba0629b47a4.png/show"
+    },
+    {
+      "name": "Fae Ignis",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Eternal Radiance",
+        "Midnight Veil",
+        "Dream of the Lost"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305809/532e248a71b4bc101c403da4a96e37dc.png/show"
+    },
+    {
+      "name": "Fission Junrock",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Void Thunder",
+        "Rejuvenating Glow",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303270/1a25a73b7e6845b8b2dd0adbe9a73ce2.png/show"
+    },
+    {
+      "name": "Flora Drone",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Pact of Neonlight Leap",
+        "Rite of Gilded Revelation",
+        "Sound of True Name",
+        "Reel of Spliced Memories"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364341/c32ef2d365453950620817a52147bae5.png/show"
+    },
+    {
+      "name": "Fog Lionarch: Body",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Song of Feathered Trace"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543948/d21562055c1edba9331bd32828f47f97.png/show"
+    },
+    {
+      "name": "Fog Lionarch: Head",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Song of Feathered Trace"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543942/17cf53411de7e3ce4366d67e9fa61edc.png/show"
+    },
+    {
+      "name": "Frostscourge Stalker",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Eternal Radiance",
+        "Midnight Veil"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305781/b29a2bba054a4c69a722e5695e2ba824.png/show"
+    },
+    {
+      "name": "Fusion Drake",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Windward Pilgrimage",
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305773/64d8803bf5da4ede528dd68a90cece26.png/show"
+    },
+    {
+      "name": "Fusion Dreadmane",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Molten Rift",
+        "Rejuvenating Glow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303272/21c79426c061f9d08cab2a1d7cf27f52.png/show"
+    },
+    {
+      "name": "Fusion Prism",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Freezing Frost",
+        "Molten Rift",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303271/06e5216bb6ae104dc419eba2e0e15da9.png/show"
+    },
+    {
+      "name": "Fusion Warrior",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Molten Rift",
+        "Void Thunder",
+        "Sierra Gale"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303280/b5ffb5c82e1a643c2bb11c4e2dbfe5f5.png/show"
+    },
+    {
+      "name": "Galescourge Stalker",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Frosty Resolve",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305796/09e3f1303bd3236b92518fc161707f83.png/show"
+    },
+    {
+      "name": "Geospider S4",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Pact of Neonlight Leap",
+        "Halo of Starry Radiance",
+        "Trailblazing Star"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364343/c22885c4564c9c51b3959fc2fba8b930.png/show"
+    },
+    {
+      "name": "Glacio Drake",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Gusts of Welkin",
+        "Windward Pilgrimage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305778/124022d039f98f0c5cbc4c7426a788b9.png/show"
+    },
+    {
+      "name": "Glacio Predator",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Freezing Frost",
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303286/061856fb612a4c6049f239233d8b7f43.png/show"
+    },
+    {
+      "name": "Glacio Prism",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Freezing Frost",
+        "Havoc Eclipse",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303292/5545cc215877cccc1d11e11714a75b73.png/show"
+    },
+    {
+      "name": "Golden Junrock",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Frosty Resolve",
+        "Eternal Radiance",
+        "Law of Harmony"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305811/c4fc2fd60f5cf285a879acfda06d845c.png/show"
+    },
+    {
+      "name": "Gulpuff",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Freezing Frost",
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303278/52cde6906ed2b5f371d405dc51f88219.png/show"
+    },
+    {
+      "name": "Havoc Drake",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Windward Pilgrimage",
+        "Flaming Clawprint",
+        "Thread of Severed Fate"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305751/9dc8d90b7cd72c4ee3de8eb94bc6f6fb.png/show"
+    },
+    {
+      "name": "Havoc Prism",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Void Thunder",
+        "Celestial Light",
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303301/20447ba108d4470eecc8c7f2e6b661f1.png/show"
+    },
+    {
+      "name": "Havoc Warrior",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Celestial Light",
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303296/ba01d091a4dfe8d58d6cf0d3ac5e9852.png/show"
+    },
+    {
+      "name": "Hoartoise",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Freezing Frost",
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303307/9941ec7fb7db07694f09610051dc62da.png/show"
+    },
+    {
+      "name": "Hocus Pocus",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Frosty Resolve",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305797/634cd07343f6da85b4af02179af07d19.png/show"
+    },
+    {
+      "name": "Hooscamp",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Sierra Gale",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303277/314351b4ec0b95a96bba63a63b0fa5d6.png/show"
+    },
+    {
+      "name": "Iceglint Dancer",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Trailblazing Star",
+        "Wishes of Quiet Snowfall",
+        "Reel of Spliced Memories"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4403552/3a2c7cc8fd58aa262026ef0bf5133dfc.png/show"
+    },
+    {
+      "name": "Kernel Puppet: Anger",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Heart of Evil's Purge"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543952/08eb89a2e743ddbb14a77f4d76444602.png/show"
+    },
+    {
+      "name": "Kernel Puppet: Fright",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Lamp of Nether Road"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543950/7853d5d965b326d7dd5d335bdfb29b26.png/show"
+    },
+    {
+      "name": "Kernel Puppet: Grief",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Lamp of Nether Road"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543946/6d79a02e83e95fe4a182fe9598dfdd4d.png/show"
+    },
+    {
+      "name": "Kernel Puppet: Joy",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Song of Feathered Trace"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543947/b596923ca510c57ceb9a2ba1ec907dc0.png/show"
+    },
+    {
+      "name": "Kernel Puppet: Reflection",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Heart of Evil's Purge"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543956/e63822663b5982c72ba40475d1da8bee.png/show"
+    },
+    {
+      "name": "Kernel Puppet: Worry",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Heart of Evil's Purge"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543945/b3466ea5d52ee0ded1ab47d4bf992c3a.png/show"
+    },
+    {
+      "name": "La Guardia",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Midnight Veil",
+        "Gusts of Welkin",
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305776/838f6774f4f3fa0e1e59f93bff435df0.png/show"
+    },
+    {
+      "name": "Lava Larva",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Molten Rift",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303289/fc0be3bc33971a8e95d0d7fdc2e1d6e1.png/show"
+    },
+    {
+      "name": "Lottie Lost",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Frosty Resolve",
+        "Tidebreaking Courage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305787/92d67756b3c7491bb2304b0bded4608a.png/show"
+    },
+    {
+      "name": "Mining Drone",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Halo of Starry Radiance",
+        "Rite of Gilded Revelation",
+        "Sound of True Name",
+        "Reel of Spliced Memories"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364342/c80ebfeac86bdd492082fabf0052d80e.png/show"
+    },
+    {
+      "name": "Nightmare: Aero Predator",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Crown of Valor"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305747/3e235bf6954693135e5e07aaac380462.png/show"
+    },
+    {
+      "name": "Nightmare: Baby Roseshroom",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Flamewing's Shadow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305740/eb8cbe4d8155f6eb10855531f936a1bb.png/show"
+    },
+    {
+      "name": "Nightmare: Baby Viridblaze Saurian",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Flamewing's Shadow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305748/8182337ef2be094f7749533aedaa2aff.png/show"
+    },
+    {
+      "name": "Nightmare: Chirpuff",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Law of Harmony"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305760/ec558685c4e0e3fc4df6fd565d45c900.png/show"
+    },
+    {
+      "name": "Nightmare: Dwarf Cassowary",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Thread of Severed Fate"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4334462/30eec083f51927ac2341e9db0851f5ac.png/show"
+    },
+    {
+      "name": "Nightmare: Electro Predator",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Crown of Valor"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305750/adf70c0c25b866f6e17ef5e510b3cea6.png/show"
+    },
+    {
+      "name": "Nightmare: Glacio Predator",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Dream of the Lost"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305754/5a021128d7e68c582d460628ef5bfda6.png/show"
+    },
+    {
+      "name": "Nightmare: Gulpuff",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Law of Harmony"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305749/841fa42b29e0a7cf369143d549140862.png/show"
+    },
+    {
+      "name": "Nightmare: Havoc Warrior",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Dream of the Lost"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305757/b1b1f964537ca4e13f88b4dc9fa2932a.png/show"
+    },
+    {
+      "name": "Nightmare: Tick Tack",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Thread of Severed Fate"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4334464/4c5d7dff23e607393475603a8a41ee36.png/show"
+    },
+    {
+      "name": "Nimbus Wraith",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Midnight Veil",
+        "Empyrean Anthem",
+        "Flamewing's Shadow"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305887/c71f3d3ac51d3225ccf59b8c765d74c5.png/show"
+    },
+    {
+      "name": "Porcelain Picket",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Lamp of Nether Road"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543941/462e71d3b2f5eb839e9097fdcdbfc3d6.png/show"
+    },
+    {
+      "name": "Sabyr Boar",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Freezing Frost",
+        "Sierra Gale",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303305/db1828938538d4d755471c597bcb6339.png/show"
+    },
+    {
+      "name": "Sacerdos",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Gusts of Welkin",
+        "Windward Pilgrimage"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305779/7168f763aaa62738dd46244bfcfacb35.png/show"
+    },
+    {
+      "name": "Sagittario",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Eternal Radiance",
+        "Gusts of Welkin",
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305768/f9a39fea4de6983e948c72ae84704322.png/show"
+    },
+    {
+      "name": "Shadow Stepper",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Trailblazing Star",
+        "Chromatic Foam",
+        "Wishes of Quiet Snowfall"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4403558/e406de7211da9d249b2aaee3dbda455c.png/show"
+    },
+    {
+      "name": "Smiter",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Song of Feathered Trace"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543951/55cf018ab06570681ef61dfb2b917908.png/show"
+    },
+    {
+      "name": "Smolder",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Song of Feathered Trace"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543954/79081aa30ae22db6f038742162e3ff13.png/show"
+    },
+    {
+      "name": "Snip Snap",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Molten Rift",
+        "Rejuvenating Glow",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303297/2f36280ae223c9e7e06bfcc64ecc40c2.png/show"
+    },
+    {
+      "name": "Spectro Drake",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Windward Pilgrimage",
+        "Flaming Clawprint"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305762/b12e9d1440704a6868cb099e24d217dc.png/show"
+    },
+    {
+      "name": "Spectro Prism",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Molten Rift",
+        "Void Thunder",
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303302/ac5cf90ce56b93b1e91422210ba2efa6.png/show"
+    },
+    {
+      "name": "Stone Picket",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Lamp of Nether Road"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4543955/b7c7ecc545b0c76b1de65291e29acc2a.png/show"
+    },
+    {
+      "name": "Tick Tack",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Havoc Eclipse",
+        "Rejuvenating Glow",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305742/a239a529b761706c9934cf4ec8a88a65.png/show"
+    },
+    {
+      "name": "Traffic Illuminator",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Molten Rift",
+        "Void Thunder",
+        "Sierra Gale"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303294/252a23197751db3b022eeaddcaaf1b3a.png/show"
+    },
+    {
+      "name": "Tremor Warrior",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Halo of Starry Radiance",
+        "Chromatic Foam",
+        "Sound of True Name",
+        "Wishes of Quiet Snowfall"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364339/afdc6e62d6f231b90ca9a5c5e7a67cc9.png/show"
+    },
+    {
+      "name": "Vanguard Junrock",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Void Thunder",
+        "Rejuvenating Glow",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303298/265474440d976b5b0aad403efac68c4a.png/show"
+    },
+    {
+      "name": "Voltscourge Stalker",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Midnight Veil",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305774/b9361061e17b8820efa2129807d7568b.png/show"
+    },
+    {
+      "name": "Whiff Whaff",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Sierra Gale",
+        "Rejuvenating Glow",
+        "Moonlit Clouds"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303311/306fd14b8d64b74cc47b5e6235087d8e.png/show"
+    },
+    {
+      "name": "Young Roseshroom",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Sierra Gale",
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4305886/0921f8fb1504541d60f2e857af9bd735.png/show"
+    },
+    {
+      "name": "Zig Zag",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Celestial Light",
+        "Moonlit Clouds",
+        "Lingering Tunes"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4303308/c8d5783d4811caed3d88ba6355811739.png/show"
+    },
+    {
+      "name": "Zip Zap",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Pact of Neonlight Leap",
+        "Rite of Gilded Revelation",
+        "Chromatic Foam"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "https://img.game8.co/4364344/fed78614a8806a0ab3d110144a66ab86.png/show"
+    }
+  ]
+}
