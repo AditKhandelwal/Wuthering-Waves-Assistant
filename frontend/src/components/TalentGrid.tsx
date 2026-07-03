@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { InherentSkill, Talent } from "../types/talent";
 
 interface TalentGridProps {
@@ -10,7 +11,7 @@ interface TalentGridProps {
 }
 
 function Connector() {
-  return <div className="h-2 w-px bg-border" />;
+  return <div className="h-4 w-px bg-border" />;
 }
 
 export function TalentGrid({
@@ -21,8 +22,14 @@ export function TalentGrid({
   inherentActive,
   onToggleInherent,
 }: TalentGridProps) {
+  // Placeholder nodes have no real data/icon yet -- togglable now so the
+  // interaction is already in place once real pngs replace these circles.
+  const [placeholderActive, setPlaceholderActive] = useState<Record<string, boolean>>({});
+  const togglePlaceholder = (key: string) =>
+    setPlaceholderActive((current) => ({ ...current, [key]: !current[key] }));
+
   return (
-    <div className="flex items-end justify-between gap-2">
+    <div className="flex items-end justify-between gap-4">
       {talents.map((talent, i) => {
         const level = levels[i] ?? 1;
         const isForteCircuit = talent.skillType === "Forte Circuit";
@@ -43,13 +50,13 @@ export function TalentGrid({
                       <button
                         onClick={() => onToggleInherent(index)}
                         title={`${skill.name}${active ? "" : " (inactive)"}`}
-                        className={`flex h-8 w-8 shrink-0 rotate-45 items-center justify-center border bg-panel transition ${
+                        className={`flex h-10 w-10 shrink-0 rotate-45 items-center justify-center border bg-panel transition ${
                           active
                             ? "border-gold shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
                             : "border-border opacity-50 hover:border-gold-soft"
                         }`}
                       >
-                        <span className="relative h-5 w-5 -rotate-45">
+                        <span className="relative h-6 w-6 -rotate-45">
                           <img
                             src={skill.pictureUrl}
                             alt={skill.name}
@@ -67,14 +74,27 @@ export function TalentGrid({
                     </div>
                   );
                 })
-              : // Decorative placeholders -- no data source for these, so
-                // they're inert (not clickable, no value) rather than faked.
-                [0, 1].map((j) => (
-                  <div key={j} className="flex flex-col items-center">
-                    <span className="h-4 w-4 rounded-full border border-border opacity-40" />
-                    <Connector />
-                  </div>
-                ))}
+              : // Decorative placeholders -- no real icon/data yet, but
+                // togglable so the interaction is ready for when real pngs
+                // replace these plain circles.
+                [0, 1].map((j) => {
+                  const key = `${talent.skillType}-${j}`;
+                  const active = placeholderActive[key] ?? false;
+                  return (
+                    <div key={j} className="flex flex-col items-center">
+                      <button
+                        onClick={() => togglePlaceholder(key)}
+                        title="Placeholder node -- no data yet"
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-panel transition ${
+                          active
+                            ? "border-gold shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
+                            : "border-border opacity-50 hover:border-gold-soft"
+                        }`}
+                      />
+                      <Connector />
+                    </div>
+                  );
+                })}
 
             <span
               title={talent.name}
