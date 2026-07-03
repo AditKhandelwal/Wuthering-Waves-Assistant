@@ -117,7 +117,7 @@ export function TalentGrid({
                 />
               </span>
             </span>
-            <span className="mt-1.5 text-center text-[9px] leading-tight uppercase tracking-wide text-text-muted">
+            <span className="mt-4 text-center text-[9px] leading-tight uppercase tracking-wide text-text-muted">
               {talent.skillType}
             </span>
             <div className="mt-1 flex items-center gap-1">
