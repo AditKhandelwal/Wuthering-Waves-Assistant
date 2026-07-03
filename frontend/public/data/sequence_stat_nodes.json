@@ -1,0 +1,581 @@
+{
+  "_note": "User-provided, not independently verified against an authoritative source. Values may be inaccurate.",
+  "nodes": {
+    "1403": {
+      "left": {
+        "stat": "Aero DMG Bonus",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Aero DMG Bonus",
+        "value": 1.2
+      }
+    },
+    "1103": {
+      "left": {
+        "stat": "HP",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "HP",
+        "value": 1.2
+      }
+    },
+    "1301": {
+      "left": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      }
+    },
+    "1603": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1107": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1205": {
+      "left": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      }
+    },
+    "1202": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1602": {
+      "left": {
+        "stat": "ATK",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "Havoc DMG",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "Havoc DMG",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "ATK",
+        "value": 1.2
+      }
+    },
+    "1211": {
+      "left": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      }
+    },
+    "1203": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1108": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1304": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1404": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1104": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1109": {
+      "left": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      }
+    },
+    "1504": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1207": {
+      "left": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      }
+    },
+    "1204": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1506": {
+      "left": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      }
+    },
+    "1606": {
+      "left": {
+        "stat": "DEF",
+        "value": 1.5
+      },
+      "leftMid": {
+        "stat": "Havoc DMG",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "Havoc DMG",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "DEF",
+        "value": 1.5
+      }
+    },
+    "1605": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1501": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1102": {
+      "left": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      }
+    },
+    "1505": {
+      "left": {
+        "stat": "HP",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "Healing Bonus",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "Healing Bonus",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "HP",
+        "value": 1.2
+      }
+    },
+    "1412": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1601": {
+      "left": {
+        "stat": "DEF",
+        "value": 1.5
+      },
+      "leftMid": {
+        "stat": "HP",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "HP",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "DEF",
+        "value": 1.5
+      }
+    },
+    "1503": {
+      "left": {
+        "stat": "ATK",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "Healing Bonus",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "Healing Bonus",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "ATK",
+        "value": 1.2
+      }
+    },
+    "1305": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1302": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    },
+    "1303": {
+      "left": {
+        "stat": "DEF",
+        "value": 1.5
+      },
+      "leftMid": {
+        "stat": "Electro DMG",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "Electro DMG",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "DEF",
+        "value": 1.5
+      }
+    },
+    "1507": {
+      "left": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit DMG",
+        "value": 2.4
+      }
+    },
+    "1105": {
+      "left": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      },
+      "leftMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "rightMid": {
+        "stat": "ATK",
+        "value": 1.8
+      },
+      "right": {
+        "stat": "Crit Rate",
+        "value": 1.2
+      }
+    }
+  }
+}
