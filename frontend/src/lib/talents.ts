@@ -1,4 +1,4 @@
-import type { Talent } from "../types/talent";
+import type { InherentSkill, Talent } from "../types/talent";
 
 interface RawText {
   language: string;
@@ -13,7 +13,15 @@ interface RawTalentItem {
   skillType: { texts: RawText[] };
 }
 
-type RawMap = Record<string, { roleSkill?: { addPointTarget?: RawTalentItem[] } }>;
+interface RawFixedSkillItem {
+  pictureUrl: string;
+  texts: RawText[];
+}
+
+type RawMap = Record<
+  string,
+  { roleSkill?: { addPointTarget?: RawTalentItem[]; fixedSkills?: RawFixedSkillItem[] } }
+>;
 
 // Temporary static data source standing in for a future backend endpoint,
 // same pattern as lib/characters.ts.
@@ -32,5 +40,23 @@ export async function loadTalents(characterId: string): Promise<Talent[]> {
       pictureUrl: item.pictureUrl,
       recommendLevel: item.recommendLevel,
     } satisfies Talent;
+  });
+}
+
+// roleSkill.fixedSkills[] -- explicitly labeled "Inherent Skill" in the
+// source data (skillType.texts[].name), always-active passive bonuses (not
+// leveled, unlike addPointTarget). Exactly 2 per character.
+export async function loadInherentSkills(characterId: string): Promise<InherentSkill[]> {
+  const res = await fetch("/data/wuwa_characters.json");
+  const raw: RawMap = await res.json();
+  const items = raw[characterId]?.roleSkill?.fixedSkills ?? [];
+
+  return items.map((item) => {
+    const en = item.texts.find((t) => t.language === "en");
+    return {
+      name: en?.name ?? "Unknown",
+      description: en?.description ?? "",
+      pictureUrl: item.pictureUrl,
+    } satisfies InherentSkill;
   });
 }

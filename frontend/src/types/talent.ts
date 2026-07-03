@@ -5,3 +5,9 @@ export interface Talent {
   pictureUrl: string;
   recommendLevel: number;
 }
+
+export interface InherentSkill {
+  name: string;
+  description: string;
+  pictureUrl: string;
+}

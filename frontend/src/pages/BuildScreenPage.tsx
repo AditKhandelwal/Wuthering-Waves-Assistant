@@ -8,7 +8,7 @@ import { loadRoster } from "../lib/characters";
 import { loadSequenceNodes } from "../lib/sequenceNodes";
 import { loadStatIcons } from "../lib/statIcons";
 import { computeStats, loadStatCurves } from "../lib/stats";
-import { loadTalents } from "../lib/talents";
+import { loadInherentSkills, loadTalents } from "../lib/talents";
 import { renderRankScaledText } from "../lib/text";
 import {
   computeWeaponAtk,
@@ -19,7 +19,7 @@ import {
 import type { Character } from "../types/character";
 import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
-import type { Talent } from "../types/talent";
+import type { InherentSkill, Talent } from "../types/talent";
 import type { WeaponCatalog } from "../lib/weapons";
 import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
 
@@ -80,6 +80,7 @@ export function BuildScreenPage() {
 
   const [talents, setTalents] = useState<Talent[]>([]);
   const [talentLevels, setTalentLevels] = useState<number[]>([]);
+  const [inherentSkills, setInherentSkills] = useState<InherentSkill[]>([]);
 
   useEffect(() => {
     loadRoster().then(({ characters }) => {
@@ -97,6 +98,7 @@ export function BuildScreenPage() {
         setTalents(loaded);
         setTalentLevels(loaded.map(() => 1));
       });
+      loadInherentSkills(characterId).then(setInherentSkills);
     }
   }, [characterId]);
 
@@ -303,6 +305,36 @@ export function BuildScreenPage() {
                 )
               }
             />
+
+            {inherentSkills.length > 0 && (
+              <div className="mt-4 border-t border-border pt-4">
+                <span className="text-[10px] uppercase tracking-wide text-text-muted">
+                  Inherent Skills
+                </span>
+                <div className="mt-2 flex gap-4">
+                  {inherentSkills.map((skill) => (
+                    <div key={skill.name} title={skill.description} className="flex items-center gap-2">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-gold bg-panel shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]">
+                        <span className="relative h-4 w-4">
+                          <img
+                            src={skill.pictureUrl}
+                            alt={skill.name}
+                            className="absolute inset-0 h-full w-full brightness-0 invert"
+                          />
+                          <img
+                            src={skill.pictureUrl}
+                            alt=""
+                            aria-hidden="true"
+                            className="absolute inset-0 h-full w-full brightness-0 invert"
+                          />
+                        </span>
+                      </span>
+                      <span className="text-xs text-gold-soft">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </Panel>
 
           <Panel title="Echoes">
