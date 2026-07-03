@@ -23,14 +23,25 @@ export function SequenceNodeRow({ nodes, unlockedCount, onToggle }: SequenceNode
               className={`flex h-8 w-8 rotate-45 items-center justify-center border bg-panel transition ${
                 unlocked
                   ? "border-gold shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
-                  : "border-border opacity-60 hover:border-gold-soft"
+                  : "border-border opacity-70 hover:border-gold-soft"
               }`}
             >
-              <img
-                src={node.pictureUrl}
-                alt={node.name}
-                className={`h-4 w-4 -rotate-45 brightness-0 invert ${unlocked ? "" : "opacity-50"}`}
-              />
+              {/* Two stacked copies compound the icon's semi-transparent pixels
+                  (soft glow/anti-aliased edges in the source art) into a
+                  solid-looking white symbol instead of a faint one. */}
+              <span className="relative h-5 w-5 -rotate-45">
+                <img
+                  src={node.pictureUrl}
+                  alt={node.name}
+                  className="absolute inset-0 h-full w-full brightness-0 invert"
+                />
+                <img
+                  src={node.pictureUrl}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 h-full w-full brightness-0 invert"
+                />
+              </span>
             </span>
             <span className={`text-[10px] ${unlocked ? "text-gold-soft" : "text-text-muted"}`}>
               {node.sequence}

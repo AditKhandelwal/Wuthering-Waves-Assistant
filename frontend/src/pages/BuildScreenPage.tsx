@@ -280,21 +280,6 @@ export function BuildScreenPage() {
                 setUnlockedCount((current) => (sequence === current ? sequence - 1 : sequence))
               }
             />
-
-            {unlockedCount > 0 && (
-              <div className="mt-4 flex flex-col gap-2">
-                {sequenceNodes
-                  .filter((node) => node.sequence <= unlockedCount)
-                  .map((node) => (
-                    <div key={node.sequence} className="text-xs">
-                      <span className="font-semibold text-gold-soft">
-                        S{node.sequence} · {node.name}
-                      </span>
-                      <p className="mt-0.5 text-text-muted">{node.description}</p>
-                    </div>
-                  ))}
-              </div>
-            )}
           </Panel>
 
           <Panel title="Talents">
