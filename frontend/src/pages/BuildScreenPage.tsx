@@ -19,12 +19,15 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 export function BuildScreenPage() {
   const { characterId } = useParams();
   const [character, setCharacter] = useState<Character | null>(null);
+  const [elementIcon, setElementIcon] = useState<string | null>(null);
   const [curves, setCurves] = useState<StatCurveData | null>(null);
   const [level, setLevel] = useState(1);
 
   useEffect(() => {
-    loadRoster().then(({ characters }) => {
-      setCharacter(characters.find((c) => c.roleGbId === characterId) ?? null);
+    loadRoster().then(({ characters, elementIcons }) => {
+      const found = characters.find((c) => c.roleGbId === characterId) ?? null;
+      setCharacter(found);
+      setElementIcon(found ? elementIcons[found.element] : null);
     });
     loadStatCurves().then(setCurves);
     setLevel(1);
@@ -60,7 +63,12 @@ export function BuildScreenPage() {
             />
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-gold-soft">{character.name}</h1>
+            <div className="flex items-center gap-2">
+              {elementIcon && (
+                <img src={elementIcon} alt={character.element} className="h-6 w-6" />
+              )}
+              <h1 className="text-xl font-semibold text-gold-soft">{character.name}</h1>
+            </div>
             <p className="text-sm text-text-muted">{character.element}</p>
           </div>
           <Panel title="Level">
@@ -71,9 +79,11 @@ export function BuildScreenPage() {
                 max={90}
                 value={level}
                 onChange={(e) => setLevel(Number(e.target.value))}
-                className="w-full accent-gold"
+                className="min-w-0 flex-1 accent-gold"
               />
-              <span className="w-14 text-right text-sm text-gold-soft">{level} / 90</span>
+              <span className="w-16 shrink-0 whitespace-nowrap text-right text-sm text-gold-soft">
+                {level} / 90
+              </span>
             </div>
 
             {stats && (
