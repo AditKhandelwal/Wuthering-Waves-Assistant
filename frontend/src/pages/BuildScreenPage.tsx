@@ -10,6 +10,7 @@ import {
   availableSubStatNames,
   computeActiveSetBonuses,
   computeEchoMainStatValue,
+  computeEchoStatSummary,
   isFlatStat,
   loadEchoCatalog,
   loadEchoRecommendation,
@@ -42,10 +43,13 @@ import type { EchoCatalog, EchoRecommendation } from "../lib/echoes";
 import type { WeaponCatalog } from "../lib/weapons";
 import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
 
-const ECHO_SLOT_COSTS = [4, 3, 3, 1, 1] as const;
+// Real builds vary in which slot holds which cost tier (4-3-3-1-1, 4-4-1-1-1,
+// etc.) -- so slots aren't pinned to a fixed cost. Each slot's cost is
+// whatever echo the user puts in it.
+const ECHO_SLOT_COUNT = 5;
 
 function emptyEquippedEchoes(): EquippedEcho[] {
-  return ECHO_SLOT_COSTS.map((_, i) => ({
+  return Array.from({ length: ECHO_SLOT_COUNT }, (_, i) => ({
     slotIndex: i,
     echo: null,
     chosenSetName: null,
@@ -107,20 +111,19 @@ function formatStatValue(value: number, statName: string): string {
 
 function EchoSlotCard({
   slot,
-  cost,
   curves,
   onOpenPicker,
   onUpdate,
   onSubStatChange,
 }: {
   slot: EquippedEcho;
-  cost: 1 | 3 | 4;
   curves: EchoStatCurves | null;
   onOpenPicker: () => void;
   onUpdate: (patch: Partial<EquippedEcho>) => void;
   onSubStatChange: (subIndex: number, statName: string | null, value: number | null) => void;
 }) {
-  const mainStatOptions: EchoMainStatOption[] = curves?.mainStatOptionsByCost[cost] ?? [];
+  const cost = slot.echo?.cost ?? null;
+  const mainStatOptions: EchoMainStatOption[] = cost && curves ? curves.mainStatOptionsByCost[cost] : [];
   const selectedMainOption = mainStatOptions.find((o) => o.propId === slot.mainStatPropId) ?? null;
   const mainStatValue = selectedMainOption
     ? computeEchoMainStatValue(selectedMainOption, slot.level)
@@ -130,18 +133,20 @@ function EchoSlotCard({
     <div className="border border-border bg-panel-alt p-3">
       <div className="flex gap-4">
         <div
-          className={`flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border bg-panel ${COST_DISC_CLASS[cost]}`}
+          className={`flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border bg-panel ${cost ? COST_DISC_CLASS[cost] : "border-border text-text-muted"}`}
         >
           {slot.echo?.pictureUrl ? (
             <img src={slot.echo.pictureUrl} alt={slot.echo.name} className="h-full w-full object-contain" />
-          ) : (
+          ) : cost ? (
             <span className="text-xs font-semibold">{cost}</span>
+          ) : (
+            <span className="text-lg">+</span>
           )}
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
             <span className="truncate text-sm font-semibold text-gold-soft">
-              {slot.echo?.name ?? `Empty Slot (Cost ${cost})`}
+              {slot.echo?.name ?? "Empty Slot"}
             </span>
             <button
               onClick={onOpenPicker}
@@ -343,7 +348,7 @@ export function BuildScreenPage() {
     if (!name) return;
     const match = echoCatalog.byCost[4].find((e) => e.name === name);
     if (!match) return;
-    const defaultMainOption = echoCurves.mainStatOptionsByCost[4][0];
+    const defaultMainOption = echoCurves.mainStatOptionsByCost[match.cost][0];
     setEquippedEchoes((current) =>
       current.map((slot, i) =>
         i === 0
@@ -363,21 +368,7 @@ export function BuildScreenPage() {
 
   function updateEquippedEcho(index: number, patch: Partial<EquippedEcho>) {
     setEquippedEchoes((current) =>
-      current.map((slot, i) => {
-        if (i !== index) return slot;
-        const updated = { ...slot, ...patch };
-        if (patch.mainStatPropId !== undefined && echoCurves) {
-          const newMainOption = echoCurves.mainStatOptionsByCost[ECHO_SLOT_COSTS[index]].find(
-            (o) => o.propId === patch.mainStatPropId,
-          );
-          if (newMainOption) {
-            updated.substats = updated.substats.map((s) =>
-              s.statName === newMainOption.statName ? { statName: null, value: null } : s,
-            );
-          }
-        }
-        return updated;
-      }),
+      current.map((slot, i) => (i === index ? { ...slot, ...patch } : slot)),
     );
   }
 
@@ -397,8 +388,7 @@ export function BuildScreenPage() {
   }
 
   function handleEchoSelect(slotIndex: number, echo: EchoCatalogEntry, chosenSetName: string) {
-    const cost = ECHO_SLOT_COSTS[slotIndex];
-    const defaultMainOption = echoCurves?.mainStatOptionsByCost[cost][0];
+    const defaultMainOption = echoCurves?.mainStatOptionsByCost[echo.cost][0];
     setEquippedEchoes((current) =>
       current.map((slot, i) =>
         i === slotIndex
@@ -618,7 +608,6 @@ export function BuildScreenPage() {
                 <EchoSlotCard
                   key={i}
                   slot={slot}
-                  cost={ECHO_SLOT_COSTS[i]}
                   curves={echoCurves}
                   onOpenPicker={() => setEchoPickerSlot(i)}
                   onUpdate={(patch) => updateEquippedEcho(i, patch)}
@@ -628,6 +617,27 @@ export function BuildScreenPage() {
                 />
               ))}
             </div>
+
+            {echoCurves && (
+              <div className="mt-4 border-t border-border pt-3">
+                <span className="text-[10px] uppercase tracking-wide text-text-muted">
+                  Echo Stat Summary
+                </span>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {computeEchoStatSummary(equippedEchoes, echoCurves).length === 0 && (
+                    <p className="text-xs text-text-muted">No stats gained yet.</p>
+                  )}
+                  {computeEchoStatSummary(equippedEchoes, echoCurves).map((total) => (
+                    <StatBox
+                      key={total.statName}
+                      icon={<StatIcon icons={statIcons} name={total.statName} />}
+                      label={total.statName}
+                      value={formatStatValue(total.value, total.statName)}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="mt-4 border-t border-border pt-3">
               <span className="text-[10px] uppercase tracking-wide text-text-muted">
@@ -685,7 +695,6 @@ export function BuildScreenPage() {
         <EchoPicker
           catalog={echoCatalog}
           sets={echoSets}
-          slotCost={ECHO_SLOT_COSTS[echoPickerSlot]}
           recommendedSetNames={echoRecommendation?.recommendedSetNames ?? []}
           onSelect={(echo, chosenSetName) => handleEchoSelect(echoPickerSlot, echo, chosenSetName)}
           onClose={() => setEchoPickerSlot(null)}

@@ -1173,6 +1173,14 @@ def main():
     main_stat_options_by_cost: dict[int, list[dict]] = {1: [], 3: [], 4: []}
     for cost in (1, 3, 4):
         for stat_name, rank_values in resolved_main_stats_by_cost[cost].items():
+            if stat_name == "ATK":
+                # Confirmed against real in-game echo main-stat menus: flat ATK is
+                # never an actual main-stat option at any cost tier, only ATK% is.
+                # game8/wutheringlab's tables list a flat-ATK row anyway (likely
+                # bleed-over from a substat table) -- drop it rather than trust
+                # the scrape. Flat ATK is still a legitimate substat, see
+                # build_substat_options().
+                continue
             prop_id, add_type = STAT_PROP_INFO.get(stat_name, (None, 2 if "%" in stat_name or "Bonus" in stat_name or "Rate" in stat_name or "Regen" in stat_name else 1))
             values_by_level = interpolate_curve(stat_name, rank_values, growth_curve)
             main_stat_options_by_cost[cost].append(

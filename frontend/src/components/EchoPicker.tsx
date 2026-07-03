@@ -6,7 +6,6 @@ import type { EchoCatalogEntry, EchoSet } from "../types/echo";
 interface EchoPickerProps {
   catalog: EchoCatalog;
   sets: EchoSet[];
-  slotCost: 1 | 3 | 4;
   recommendedSetNames: string[];
   onSelect: (echo: EchoCatalogEntry, chosenSetName: string) => void;
   onClose: () => void;
@@ -21,6 +20,13 @@ const COST_DISC_CLASS: Record<1 | 3 | 4, string> = {
   3: "border-gold-soft/60 text-text",
   1: "border-border text-text-muted",
 };
+
+// Slots aren't fixed to a cost -- real builds vary (4-3-3-1-1, 4-4-1-1-1,
+// etc.) -- so every cost tier is always offered. Echoes are grouped by cost
+// within the list (highest first) so a specific tier is still easy to scan.
+const COST_TIERS = [4, 3, 1] as const;
+
+const ALL_SETS = "all";
 
 function EchoIcon({ echo }: { echo: EchoCatalogEntry }) {
   if (echo.pictureUrl) {
@@ -44,20 +50,18 @@ function EchoIcon({ echo }: { echo: EchoCatalogEntry }) {
 export function EchoPicker({
   catalog,
   sets,
-  slotCost,
   recommendedSetNames,
   onSelect,
   onClose,
 }: EchoPickerProps) {
-  const [activeFilter, setActiveFilter] = useState<string | "all">(
-    recommendedSetNames.length > 0 ? recommendedSetNames[0] : "all",
+  const [activeFilter, setActiveFilter] = useState<string>(
+    recommendedSetNames.length > 0 ? recommendedSetNames[0] : ALL_SETS,
   );
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const echoesForCost = catalog.byCost[slotCost] ?? [];
+  const allEchoes = [...catalog.byCost[4], ...catalog.byCost[3], ...catalog.byCost[1]];
 
-  const setNamesForCost = [
-    ...new Set(echoesForCost.flatMap((e) => e.setNames)),
-  ].sort((a, b) => {
+  const allSetNames = Object.keys(catalog.bySetName).sort((a, b) => {
     const rank = (name: string) => (recommendedSetNames.includes(name) ? 0 : 1);
     const rankDiff = rank(a) - rank(b);
     if (rankDiff !== 0) return rankDiff;
@@ -65,74 +69,119 @@ export function EchoPicker({
   });
 
   const visibleEchoes =
-    activeFilter === "all"
-      ? echoesForCost
-      : echoesForCost.filter((e) => e.setNames.includes(activeFilter));
+    activeFilter === ALL_SETS ? allEchoes : allEchoes.filter((e) => e.setNames.includes(activeFilter));
+
+  function selectEcho(echo: EchoCatalogEntry) {
+    const chosenSetName = activeFilter !== ALL_SETS ? activeFilter : echo.setNames[0];
+    onSelect(echo, chosenSetName);
+  }
+
+  const activeFilterLabel = activeFilter === ALL_SETS ? "All Sets" : activeFilter;
+  const activeFilterIsRecommended = recommendedSetNames.includes(activeFilter);
 
   return (
-    <Modal onClose={onClose}>
-      <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-text-muted">
+    <Modal onClose={onClose} panelClassName="flex h-[42rem] w-[36rem] max-w-[90vw] flex-col">
+      <h2 className="mb-4 shrink-0 text-xs font-semibold uppercase tracking-widest text-text-muted">
         Select Echo
       </h2>
 
-      <div className="mb-4 flex flex-wrap gap-1.5">
+      <div
+        className="relative mb-4 shrink-0"
+        tabIndex={-1}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget)) setIsFilterOpen(false);
+        }}
+      >
         <button
-          onClick={() => setActiveFilter("all")}
-          className={`rounded-sm border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide transition ${
-            activeFilter === "all"
-              ? "border-gold text-gold-soft"
-              : "border-border text-text-muted hover:border-gold-soft"
-          }`}
+          onClick={() => setIsFilterOpen((open) => !open)}
+          className="flex w-full items-center justify-between gap-2 rounded-sm border border-border px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-text transition hover:border-gold-soft"
         >
-          All Sets
+          <span className="flex items-center gap-1.5">
+            {activeFilterLabel}
+            {activeFilterIsRecommended && <span className="text-gold-soft">★</span>}
+          </span>
+          <svg
+            viewBox="0 0 20 20"
+            className={`h-3 w-3 shrink-0 fill-text-muted transition-transform ${isFilterOpen ? "rotate-180" : ""}`}
+          >
+            <path d="M5 7l5 6 5-6z" />
+          </svg>
         </button>
-        {setNamesForCost.map((setName) => {
-          const set = sets.find((s) => s.name === setName);
-          const isRecommended = recommendedSetNames.includes(setName);
-          return (
+
+        {isFilterOpen && (
+          <div className="absolute z-10 mt-1 max-h-64 w-full overflow-y-auto border border-border bg-panel-alt">
             <button
-              key={setName}
-              onClick={() => setActiveFilter(setName)}
-              title={set?.effects.map((e) => `${e.pieceCount}pc: ${e.description}`).join("\n")}
-              className={`rounded-sm border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide transition ${
-                activeFilter === setName
-                  ? "border-gold text-gold-soft"
-                  : "border-border text-text-muted hover:border-gold-soft"
+              onClick={() => {
+                setActiveFilter(ALL_SETS);
+                setIsFilterOpen(false);
+              }}
+              className={`block w-full px-3 py-1.5 text-left text-[11px] font-semibold uppercase tracking-wide transition hover:bg-panel ${
+                activeFilter === ALL_SETS ? "text-gold-soft" : "text-text-muted"
               }`}
             >
-              {setName}
-              {isRecommended && <span className="ml-1 text-gold-soft">★</span>}
+              All Sets
             </button>
-          );
-        })}
+            {allSetNames.map((setName) => {
+              const set = sets.find((s) => s.name === setName);
+              const isRecommended = recommendedSetNames.includes(setName);
+              return (
+                <button
+                  key={setName}
+                  onClick={() => {
+                    setActiveFilter(setName);
+                    setIsFilterOpen(false);
+                  }}
+                  title={set?.effects.map((e) => `${e.pieceCount}pc: ${e.description}`).join("\n")}
+                  className={`flex w-full items-center gap-1.5 px-3 py-1.5 text-left text-[11px] font-semibold uppercase tracking-wide transition hover:bg-panel ${
+                    activeFilter === setName ? "text-gold-soft" : "text-text-muted"
+                  }`}
+                >
+                  {setName}
+                  {isRecommended && <span className="text-gold-soft">★</span>}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
-      <div className="flex flex-col gap-2">
-        {visibleEchoes.map((echo) => (
-          <button
-            key={`${echo.name}-${activeFilter}`}
-            onClick={() =>
-              onSelect(echo, activeFilter === "all" ? echo.setNames[0] : activeFilter)
-            }
-            className="flex items-center gap-3 rounded-sm border border-border p-3 text-left transition hover:border-gold-soft hover:bg-panel-alt"
-          >
-            <EchoIcon echo={echo} />
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-text">{echo.name}</span>
-                <span className="shrink-0 rounded-sm border border-border px-1.5 py-0.5 text-[10px] text-text-muted">
-                  Cost {echo.cost}
-                </span>
-                {recommendedSetNames.some((s) => echo.setNames.includes(s)) && (
-                  <span className="shrink-0 rounded-sm border border-gold px-1.5 py-0.5 text-[10px] text-gold-soft">
-                    ★ Recommended
-                  </span>
-                )}
+      <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+        {visibleEchoes.length === 0 && (
+          <p className="text-xs text-text-muted">No echoes match this filter.</p>
+        )}
+        {COST_TIERS.map((tier) => {
+          const group = visibleEchoes.filter((e) => e.cost === tier);
+          if (group.length === 0) return null;
+          return (
+            <div key={tier} className="mb-4">
+              <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-widest text-text-muted">
+                Cost {tier}
+              </p>
+              <div className="flex flex-col gap-2">
+                {group.map((echo) => (
+                  <button
+                    key={echo.name}
+                    onClick={() => selectEcho(echo)}
+                    className="flex items-center gap-3 rounded-sm border border-border p-3 text-left transition hover:border-gold-soft hover:bg-panel-alt"
+                  >
+                    <EchoIcon echo={echo} />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-text">{echo.name}</span>
+                        {recommendedSetNames.some((s) => echo.setNames.includes(s)) && (
+                          <span className="shrink-0 rounded-sm border border-gold px-1.5 py-0.5 text-[10px] text-gold-soft">
+                            ★ Recommended
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-1 text-xs text-text-muted">{echo.setNames.join(" / ")}</p>
+                    </div>
+                  </button>
+                ))}
               </div>
-              <p className="mt-1 text-xs text-text-muted">{echo.setNames.join(" / ")}</p>
             </div>
-          </button>
-        ))}
+          );
+        })}
       </div>
     </Modal>
   );

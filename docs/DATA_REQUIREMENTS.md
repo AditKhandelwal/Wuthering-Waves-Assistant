@@ -94,6 +94,18 @@ game8 won 16/18 disagreements, wutheringlab won 1 (Healing Bonus), and 1 stat
 disagreement is logged in the script's normal run output, not silently
 resolved.
 
+### Flat ATK is not a real main-stat option (user correction, 2026-07-03)
+
+Both game8 and wutheringlab's cost-3/cost-4 tables include a flat "ATK" row
+alongside "ATK%", and `reconcile_main_stats()` happily resolved it like any
+other stat (see the 3-cost ATK progression `31/44/63/100` above). The user
+(real in-game knowledge) confirmed no echo main-stat menu at any cost tier
+actually offers flat ATK — only ATK%. Likely bleed-over from a substat table
+on one or both source sites (flat ATK **is** a legitimate substat, see
+`build_substat_options()`). Fixed by excluding `stat_name == "ATK"` when
+building `mainStatOptionsByCost` in `fetch_echo_data.py` — don't re-add it
+without new evidence.
+
 ### Rank → level derivation (confirmed, not guessed)
 
 **Rank 2 = level 10, Rank 3 = level 15, Rank 4 = level 20, Rank 5 = level

@@ -116,25 +116,71 @@ export function computeActiveSetBonuses(
   return results.sort((a, b) => b.count - a.count);
 }
 
-// Real game rule: a given echo's 5 substats can't repeat a stat, and can't
-// duplicate that echo's own main stat.
+export interface EchoStatTotal {
+  statName: string;
+  value: number;
+}
+
+// Requested display order. Flat and % variants of the same base stat (e.g.
+// "HP" and "HP%") are kept as separate rows -- they're different units and
+// can't be summed together -- but placed adjacent so they read as one group.
+const SUMMARY_STAT_ORDER = [
+  "HP",
+  "HP%",
+  "ATK",
+  "ATK%",
+  "DEF",
+  "DEF%",
+  "Energy Regen",
+  "Crit. Rate",
+  "Crit. DMG",
+];
+
+// Sums every equipped echo's main stat + rolled substats by exact stat name,
+// then returns only the non-zero totals in SUMMARY_STAT_ORDER.
+export function computeEchoStatSummary(
+  equipped: EquippedEcho[],
+  curves: EchoStatCurves,
+): EchoStatTotal[] {
+  const totals = new Map<string, number>();
+  const add = (statName: string, value: number) => {
+    totals.set(statName, (totals.get(statName) ?? 0) + value);
+  };
+
+  for (const slot of equipped) {
+    if (!slot.echo) continue;
+    const mainOption = curves.mainStatOptionsByCost[slot.echo.cost].find(
+      (o) => o.propId === slot.mainStatPropId,
+    );
+    if (mainOption) {
+      const value = computeEchoMainStatValue(mainOption, slot.level);
+      if (value !== null) add(mainOption.statName, value);
+    }
+    for (const sub of slot.substats) {
+      if (sub.statName && sub.value !== null) add(sub.statName, sub.value);
+    }
+  }
+
+  return SUMMARY_STAT_ORDER.map((statName) => ({ statName, value: totals.get(statName) ?? 0 })).filter(
+    (t) => t.value !== 0,
+  );
+}
+
+// Real game rule: a given echo's 5 substats can't repeat a stat among
+// themselves. They CAN duplicate that echo's own main stat -- confirmed by a
+// real echo card (Nightmare: Kelpie, main stat Crit. Rate 22.0%, substats
+// including a second independent Crit. Rate 7.5% roll).
 export function availableSubStatNames(
   curves: EchoStatCurves,
   equippedEcho: EquippedEcho,
   slotIndex: number,
 ): SubStatOption[] {
-  const mainStatOption =
-    equippedEcho.echo &&
-    curves.mainStatOptionsByCost[equippedEcho.echo.cost].find(
-      (o) => o.propId === equippedEcho.mainStatPropId,
-    );
   const usedNames = new Set(
     equippedEcho.substats
       .filter((_, i) => i !== slotIndex)
       .map((s) => s.statName)
       .filter((n): n is string => n !== null),
   );
-  if (mainStatOption) usedNames.add(mainStatOption.statName);
 
   return curves.subStatOptions.filter((o) => !usedNames.has(o.statName));
 }
