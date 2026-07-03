@@ -267,8 +267,6 @@ export function BuildCard({
             </div>
           </div>
 
-          <CompactSequenceRow nodes={sequenceNodes} unlockedCount={unlockedCount} />
-
           <div className="flex items-center gap-2">
             {elementIconUrl && (
               <ElementIcon element={character.element} iconUrl={elementIconUrl} className="h-5 w-5" />
@@ -278,28 +276,28 @@ export function BuildCard({
           </div>
 
           {selectedWeapon && (
-            <div className="flex items-center gap-2 border border-border bg-panel-alt px-2.5 py-2">
+            <div className="flex items-center gap-3 border border-border bg-panel-alt px-3 py-3">
               <img
                 src={selectedWeapon.pictureUrl}
                 alt={selectedWeapon.name}
-                className="h-9 w-9 shrink-0 object-contain"
+                className="h-16 w-16 shrink-0 object-contain"
               />
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[11px] font-semibold text-gold-soft">
+                <p className="truncate text-sm font-semibold text-gold-soft">
                   {selectedWeapon.name}
                 </p>
-                <p className="text-[9px] text-text-muted">
+                <p className="text-xs text-text-muted">
                   Lv.{weaponLevel} &middot; Rank {weaponRank}
                 </p>
-                <div className="mt-1 flex flex-wrap gap-x-2.5 gap-y-0.5">
+                <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
                   {weaponAtk !== null && (
-                    <span className="flex items-center gap-1 text-[10px] text-text">
+                    <span className="flex items-center gap-1 text-xs text-text">
                       <StatIcon icons={statIcons} name="ATK" />
                       {weaponAtk}
                     </span>
                   )}
                   {weaponSecondaryStat && (
-                    <span className="flex items-center gap-1 text-[10px] text-text">
+                    <span className="flex items-center gap-1 text-xs text-text">
                       <StatIcon icons={statIcons} name={weaponSecondaryStat.name} />
                       {formatStatValue(weaponSecondaryStat.value, weaponSecondaryStat.name)}
                     </span>
@@ -323,6 +321,8 @@ export function BuildCard({
               />
             </div>
           </div>
+
+          <CompactSequenceRow nodes={sequenceNodes} unlockedCount={unlockedCount} />
 
           {activeSetBonuses.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
