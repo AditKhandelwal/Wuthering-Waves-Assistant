@@ -8,14 +8,14 @@ interface StatBoxProps {
 
 export function StatBox({ icon, label, value }: StatBoxProps) {
   return (
-    <div className="flex w-24 flex-col gap-1 rounded-sm border border-border bg-panel-alt px-2 py-1.5">
-      <span className="truncate text-[9px] uppercase tracking-wide text-text-muted">{label}</span>
-      <div className="flex items-center gap-1.5 text-gold-soft">
-        <span className="shrink-0">{icon}</span>
-        <span className="min-w-0 flex-1 text-right text-xs whitespace-nowrap tabular-nums text-text">
-          {value}
-        </span>
-      </div>
+    <div className="flex w-40 items-center gap-1.5 rounded-sm border border-border bg-panel-alt px-2 py-1.5">
+      <span className="shrink-0 text-gold-soft">{icon}</span>
+      <span className="min-w-0 flex-1 truncate text-[10px] uppercase tracking-wide text-text-muted">
+        {label}
+      </span>
+      <span className="shrink-0 whitespace-nowrap text-right text-xs tabular-nums text-text">
+        {value}
+      </span>
     </div>
   );
 }
