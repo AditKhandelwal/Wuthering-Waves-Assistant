@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { SequenceNodeRow } from "../components/SequenceNodeRow";
 import { StatBox } from "../components/StatBox";
 import { WeaponPicker } from "../components/WeaponPicker";
 import { loadRoster } from "../lib/characters";
+import { loadSequenceNodes } from "../lib/sequenceNodes";
 import { loadStatIcons } from "../lib/statIcons";
 import { computeStats, loadStatCurves } from "../lib/stats";
 import { renderRankScaledText } from "../lib/text";
@@ -13,6 +15,7 @@ import {
   loadWeaponStatCurves,
 } from "../lib/weapons";
 import type { Character } from "../types/character";
+import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
 import type { WeaponCatalog } from "../lib/weapons";
 import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
@@ -69,6 +72,9 @@ export function BuildScreenPage() {
   const [weaponRank, setWeaponRank] = useState(1);
   const [pickerOpen, setPickerOpen] = useState(false);
 
+  const [sequenceNodes, setSequenceNodes] = useState<SequenceNode[]>([]);
+  const [unlockedCount, setUnlockedCount] = useState(0);
+
   useEffect(() => {
     loadRoster().then(({ characters }) => {
       setCharacter(characters.find((c) => c.roleGbId === characterId) ?? null);
@@ -78,6 +84,8 @@ export function BuildScreenPage() {
     setSelectedWeapon(null);
     setWeaponLevel(1);
     setWeaponRank(1);
+    setUnlockedCount(0);
+    if (characterId) loadSequenceNodes(characterId).then(setSequenceNodes);
   }, [characterId]);
 
   useEffect(() => {
@@ -265,16 +273,28 @@ export function BuildScreenPage() {
           </Panel>
 
           <Panel title="Sequence Nodes">
-            <div className="flex gap-2">
-              {Array.from({ length: 6 }, (_, i) => (
-                <span
-                  key={i}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-xs text-text-muted"
-                >
-                  {i + 1}
-                </span>
-              ))}
-            </div>
+            <SequenceNodeRow
+              nodes={sequenceNodes}
+              unlockedCount={unlockedCount}
+              onToggle={(sequence) =>
+                setUnlockedCount((current) => (sequence === current ? sequence - 1 : sequence))
+              }
+            />
+
+            {unlockedCount > 0 && (
+              <div className="mt-4 flex flex-col gap-2">
+                {sequenceNodes
+                  .filter((node) => node.sequence <= unlockedCount)
+                  .map((node) => (
+                    <div key={node.sequence} className="text-xs">
+                      <span className="font-semibold text-gold-soft">
+                        S{node.sequence} · {node.name}
+                      </span>
+                      <p className="mt-0.5 text-text-muted">{node.description}</p>
+                    </div>
+                  ))}
+              </div>
+            )}
           </Panel>
 
           <Panel title="Talents">
