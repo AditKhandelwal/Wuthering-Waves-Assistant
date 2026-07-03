@@ -29,7 +29,7 @@ export function SequenceNodeRow({ nodes, unlockedCount, onToggle }: SequenceNode
               <img
                 src={node.pictureUrl}
                 alt={node.name}
-                className={`h-4 w-4 -rotate-45 ${unlocked ? "" : "opacity-50 grayscale"}`}
+                className={`h-4 w-4 -rotate-45 brightness-0 invert ${unlocked ? "" : "opacity-50"}`}
               />
             </span>
             <span className={`text-[10px] ${unlocked ? "text-gold-soft" : "text-text-muted"}`}>
