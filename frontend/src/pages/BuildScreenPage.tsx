@@ -161,14 +161,17 @@ export function BuildScreenPage() {
               <div className="mt-4 flex flex-wrap gap-2">
                 <StatBox
                   icon={<StatIcon icons={statIcons} name="HP" />}
+                  label="HP"
                   value={stats.hp.toLocaleString()}
                 />
                 <StatBox
                   icon={<StatIcon icons={statIcons} name="ATK" />}
+                  label="ATK"
                   value={stats.atk.toLocaleString()}
                 />
                 <StatBox
                   icon={<StatIcon icons={statIcons} name="DEF" />}
+                  label="DEF"
                   value={stats.def.toLocaleString()}
                 />
               </div>
@@ -220,12 +223,14 @@ export function BuildScreenPage() {
                     {weaponAtk !== null && (
                       <StatBox
                         icon={<StatIcon icons={statIcons} name="ATK" />}
+                        label="ATK"
                         value={String(weaponAtk)}
                       />
                     )}
                     {weaponSecondaryStat && (
                       <StatBox
                         icon={<StatIcon icons={statIcons} name={weaponSecondaryStat.name} />}
+                        label={weaponSecondaryStat.name}
                         value={weaponSecondaryStat.displayValue}
                       />
                     )}
