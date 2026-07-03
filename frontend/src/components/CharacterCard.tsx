@@ -1,4 +1,4 @@
-import { ELEMENT_GLOW_ANIMATION_CLASS, ELEMENT_TILE_BG_CLASS } from "../lib/characters";
+import { ELEMENT_GLOW_ANIMATION_CLASS } from "../lib/characters";
 import type { Character } from "../types/character";
 
 export const ELEMENT_RING_CLASS: Record<Character["element"], string> = {
@@ -22,18 +22,14 @@ export function CharacterCard({ character, onSelect }: CharacterCardProps) {
       className="group flex flex-col items-center gap-2 focus:outline-none"
     >
       <span
-        className={`flex h-24 w-24 items-center justify-center rounded-2xl border border-border transition group-hover:border-gold-soft ${ELEMENT_TILE_BG_CLASS[character.element]}`}
+        className={`h-20 w-20 overflow-hidden rounded-full ring-2 transition ${ELEMENT_RING_CLASS[character.element]} ${ELEMENT_GLOW_ANIMATION_CLASS[character.element]} group-hover:ring-gold group-focus-visible:ring-gold`}
       >
-        <span
-          className={`h-16 w-16 overflow-hidden rounded-full ring-2 transition ${ELEMENT_RING_CLASS[character.element]} ${ELEMENT_GLOW_ANIMATION_CLASS[character.element]} group-hover:ring-gold group-focus-visible:ring-gold`}
-        >
-          <img
-            src={character.cardPictureUrl}
-            alt={character.name}
-            className="h-full w-full object-cover"
-            loading="lazy"
-          />
-        </span>
+        <img
+          src={character.cardPictureUrl}
+          alt={character.name}
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
       </span>
       <span className="text-sm text-text group-hover:text-gold-soft transition">
         {character.name}

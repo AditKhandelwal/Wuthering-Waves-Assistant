@@ -62,3 +62,28 @@ body {
   0%, 100% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-element-havoc) 40%, transparent)); }
   50% { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-element-havoc) 80%, transparent)); }
 }
+
+/* Atmospheric background for the build card: a soft starfield plus a wash
+   of the character's own element color, evoking a night-sky feel (closer to
+   WUWAFLEX's card look) instead of a flat panel. --card-glow-color is set
+   inline per element (see BuildCard.tsx) so the star-dot layer -- identical
+   for every element -- only needs to be written once instead of repeated
+   per element like the glow-* keyframes above. */
+.card-atmosphere {
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(1px 1px at 6% 18%, rgba(255, 255, 255, 0.85), transparent 60%),
+    radial-gradient(1px 1px at 18% 62%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(1.5px 1.5px at 34% 12%, rgba(255, 255, 255, 0.8), transparent 60%),
+    radial-gradient(1px 1px at 46% 75%, rgba(255, 255, 255, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 58% 32%, rgba(255, 255, 255, 0.7), transparent 60%),
+    radial-gradient(1.5px 1.5px at 68% 58%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 78% 20%, rgba(255, 255, 255, 0.75), transparent 60%),
+    radial-gradient(1px 1px at 88% 68%, rgba(255, 255, 255, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 94% 40%, rgba(255, 255, 255, 0.65), transparent 60%),
+    radial-gradient(1.5px 1.5px at 12% 88%, rgba(255, 255, 255, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 40% 92%, rgba(255, 255, 255, 0.5), transparent 60%),
+    radial-gradient(1px 1px at 82% 90%, rgba(255, 255, 255, 0.5), transparent 60%),
+    radial-gradient(ellipse 140% 100% at 20% -10%, color-mix(in srgb, var(--card-glow-color) 45%, transparent), transparent 70%),
+    linear-gradient(165deg, color-mix(in srgb, var(--card-glow-color) 26%, var(--color-bg)) 0%, var(--color-bg) 85%);
+}

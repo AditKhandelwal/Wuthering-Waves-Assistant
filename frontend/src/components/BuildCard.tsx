@@ -3,7 +3,7 @@ import { EchoCardTile } from "./EchoCardTile";
 import { ElementIcon } from "./ElementIcon";
 import { FinalStatsGrid } from "./FinalStatsGrid";
 import { StatIcon } from "./StatIcon";
-import { ELEMENT_CARD_BG_CLASS, ELEMENT_PORTRAIT_CLASS } from "../lib/characters";
+import { ELEMENT_PORTRAIT_CLASS } from "../lib/characters";
 import { computeActiveSetBonuses, formatStatValue } from "../lib/echoes";
 import { computeFinalStats } from "../lib/finalStats";
 import { computeWeaponAtk, computeWeaponSecondaryStat } from "../lib/weapons";
@@ -249,7 +249,10 @@ export function BuildCard({
   const elementIconUrl = elementIcons?.[character.element];
 
   return (
-    <div className={`clip-corner border border-border p-4 ${ELEMENT_CARD_BG_CLASS[character.element]}`}>
+    <div
+      className="card-atmosphere clip-corner border border-border p-4"
+      style={{ "--card-glow-color": `var(--color-element-${character.element.toLowerCase()})` } as React.CSSProperties}
+    >
       <div className="grid grid-cols-[240px_1fr] gap-4">
         <div className="min-w-0 flex flex-col gap-3">
           <div
