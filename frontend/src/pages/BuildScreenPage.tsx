@@ -113,9 +113,8 @@ export function BuildScreenPage() {
     selectedWeapon && weaponCurves
       ? computeWeaponSecondaryStat(weaponCurves, selectedWeapon.gbId, weaponLevel)
       : null;
-  const recommendedWeaponIds = new Set(
-    character && weaponCatalog ? (weaponCatalog.recommendedByCharacter[character.roleGbId] ?? []) : [],
-  );
+  const recommendedWeaponOrder =
+    character && weaponCatalog ? (weaponCatalog.recommendedByCharacter[character.roleGbId] ?? []) : [];
 
   if (!character) {
     return (
@@ -307,7 +306,7 @@ export function BuildScreenPage() {
       {pickerOpen && weaponCatalog && character && (
         <WeaponPicker
           weapons={weaponCatalog.byType[character.weaponType] ?? []}
-          recommendedIds={recommendedWeaponIds}
+          recommendedOrder={recommendedWeaponOrder}
           onSelect={(weapon) => {
             setSelectedWeapon(weapon);
             setWeaponLevel(1);
