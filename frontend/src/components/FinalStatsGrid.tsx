@@ -10,8 +10,8 @@ interface StatRow {
 
 function Row({ statIcons, row }: { statIcons: Record<string, string> | null; row: StatRow }) {
   return (
-    <div className="flex items-center gap-1.5 py-0.5 text-[11px]">
-      <span className="flex w-[6.5rem] shrink-0 items-center gap-1 truncate text-text-muted">
+    <div className="flex items-center gap-2 py-2 text-xs">
+      <span className="flex w-[7rem] shrink-0 items-center gap-1.5 truncate text-text-muted">
         <StatIcon icons={statIcons} name={row.statName} />
         {row.label}
       </span>
@@ -57,7 +57,7 @@ export function FinalStatsGrid({
   ];
 
   return (
-    <div className="inline-grid w-fit grid-cols-2 gap-x-4 self-start border border-border bg-panel-alt px-3 py-1">
+    <div className="inline-grid w-fit grid-cols-2 gap-x-5 self-start border border-border bg-panel-alt px-4 py-2">
       <div className="divide-y divide-border/60">
         {left.map((row) => (
           <Row key={row.statName} statIcons={statIcons} row={row} />
