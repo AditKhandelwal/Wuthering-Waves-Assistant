@@ -1,9 +1,5 @@
 import type { ComputedStats, StatCurveData } from "../types/stats";
 
-// Ascension ("breach") level caps, confirmed against the raw datamined
-// rolebreach.json — universal across every character, not per-character.
-export const ASCENSION_BREAKPOINTS = [20, 40, 50, 60, 70, 80, 90] as const;
-
 // Temporary static data source standing in for a future backend endpoint,
 // same pattern as lib/characters.ts. Sourced from Arikatsu/WutheringWaves_Data
 // (property/baseproperty.json + property/rolepropertygrowth.json) since
@@ -13,20 +9,18 @@ export async function loadStatCurves(): Promise<StatCurveData> {
   return res.json();
 }
 
-export function maxLevelForBreach(breachLevel: number): number {
-  return ASCENSION_BREAKPOINTS[breachLevel];
-}
-
+// Ascension breakpoint levels (20/40/50/60/70/80) each have two growth-curve
+// entries (pre- and post-ascend). Always use the higher (ascended) one, since
+// there's no separate ascend step in this UI.
 export function computeStats(
   curves: StatCurveData,
   roleGbId: string,
   level: number,
-  breachLevel: number,
 ): ComputedStats | null {
   const base = curves.baseStats[roleGbId];
-  const point = curves.growthCurve.find(
-    (g) => g.level === level && g.breachLevel === breachLevel,
-  );
+  const point = curves.growthCurve
+    .filter((g) => g.level === level)
+    .sort((a, b) => b.breachLevel - a.breachLevel)[0];
   if (!base || !point) return null;
 
   return {

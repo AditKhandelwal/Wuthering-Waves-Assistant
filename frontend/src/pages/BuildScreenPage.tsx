@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { loadRoster } from "../lib/characters";
-import { ASCENSION_BREAKPOINTS, computeStats, loadStatCurves, maxLevelForBreach } from "../lib/stats";
+import { computeStats, loadStatCurves } from "../lib/stats";
 import type { Character } from "../types/character";
 import type { StatCurveData } from "../types/stats";
 
@@ -21,7 +21,6 @@ export function BuildScreenPage() {
   const [character, setCharacter] = useState<Character | null>(null);
   const [curves, setCurves] = useState<StatCurveData | null>(null);
   const [level, setLevel] = useState(1);
-  const [breachLevel, setBreachLevel] = useState(0);
 
   useEffect(() => {
     loadRoster().then(({ characters }) => {
@@ -29,13 +28,9 @@ export function BuildScreenPage() {
     });
     loadStatCurves().then(setCurves);
     setLevel(1);
-    setBreachLevel(0);
   }, [characterId]);
 
-  const maxLevel = maxLevelForBreach(breachLevel);
-  const canAscend = level === maxLevel && breachLevel < ASCENSION_BREAKPOINTS.length - 1;
-  const stats =
-    character && curves ? computeStats(curves, character.roleGbId, level, breachLevel) : null;
+  const stats = character && curves ? computeStats(curves, character.roleGbId, level) : null;
 
   if (!character) {
     return (
@@ -73,24 +68,13 @@ export function BuildScreenPage() {
               <input
                 type="range"
                 min={1}
-                max={maxLevel}
+                max={90}
                 value={level}
                 onChange={(e) => setLevel(Number(e.target.value))}
                 className="w-full accent-gold"
               />
-              <span className="w-14 text-right text-sm text-gold-soft">
-                {level} / {maxLevel}
-              </span>
+              <span className="w-14 text-right text-sm text-gold-soft">{level} / 90</span>
             </div>
-
-            {canAscend && (
-              <button
-                onClick={() => setBreachLevel((b) => b + 1)}
-                className="mt-3 w-full rounded-sm border border-gold py-1.5 text-xs font-semibold tracking-wide text-gold-soft transition hover:bg-panel-alt"
-              >
-                ASCEND
-              </button>
-            )}
 
             {stats && (
               <dl className="mt-4 grid grid-cols-3 gap-2 text-center">
