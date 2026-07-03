@@ -13,17 +13,22 @@ import {
 // spelled out fully (not built via template-literal interpolation) because
 // Tailwind statically scans source text for complete class names -- a
 // dynamically-assembled string never generates any CSS. Shared by
-// BuildScreenPage and BuildCard so the portrait glow stays consistent. The
-// glow itself pulses (see the glow-* keyframes in index.css) rather than
-// sitting at one static intensity, to read as an actual glow instead of a
-// flat colored outline.
+// BuildScreenPage and BuildCard so the portrait glow stays consistent. Uses
+// the milder glow-portrait-* keyframes (not the stronger glow-* ones used by
+// CharacterCard's ring) -- still an actual pulsing glow, not a static color,
+// just less dramatic on a large portrait than on the small select-grid ring.
 export const ELEMENT_PORTRAIT_CLASS: Record<ElementName, string> = {
-  Glacio: "[border-color:var(--color-element-glacio)] [animation:glow-glacio_2.4s_ease-in-out_infinite]",
-  Fusion: "[border-color:var(--color-element-fusion)] [animation:glow-fusion_2.4s_ease-in-out_infinite]",
-  Electro: "[border-color:var(--color-element-electro)] [animation:glow-electro_2.4s_ease-in-out_infinite]",
-  Aero: "[border-color:var(--color-element-aero)] [animation:glow-aero_2.4s_ease-in-out_infinite]",
-  Spectro: "[border-color:var(--color-element-spectro)] [animation:glow-spectro_2.4s_ease-in-out_infinite]",
-  Havoc: "[border-color:var(--color-element-havoc)] [animation:glow-havoc_2.4s_ease-in-out_infinite]",
+  Glacio:
+    "[border-color:var(--color-element-glacio)] [animation:glow-portrait-glacio_2.4s_ease-in-out_infinite]",
+  Fusion:
+    "[border-color:var(--color-element-fusion)] [animation:glow-portrait-fusion_2.4s_ease-in-out_infinite]",
+  Electro:
+    "[border-color:var(--color-element-electro)] [animation:glow-portrait-electro_2.4s_ease-in-out_infinite]",
+  Aero: "[border-color:var(--color-element-aero)] [animation:glow-portrait-aero_2.4s_ease-in-out_infinite]",
+  Spectro:
+    "[border-color:var(--color-element-spectro)] [animation:glow-portrait-spectro_2.4s_ease-in-out_infinite]",
+  Havoc:
+    "[border-color:var(--color-element-havoc)] [animation:glow-portrait-havoc_2.4s_ease-in-out_infinite]",
 };
 
 // Just the pulsing-glow animation (no border-color), for elements that get

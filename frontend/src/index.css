@@ -63,6 +63,35 @@ body {
   50% { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-element-havoc) 80%, transparent)); }
 }
 
+/* Milder version of the glow-* pulse above, for the large character
+   portraits (build card + build screen) -- those borders should still read
+   as glowing/alive, not a static color, but less dramatically than the
+   small character-select ring (which uses the stronger glow-* keyframes). */
+@keyframes glow-portrait-glacio {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--color-element-glacio) 30%, transparent)); }
+  50% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-glacio) 55%, transparent)); }
+}
+@keyframes glow-portrait-fusion {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--color-element-fusion) 30%, transparent)); }
+  50% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-fusion) 55%, transparent)); }
+}
+@keyframes glow-portrait-electro {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--color-element-electro) 30%, transparent)); }
+  50% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-electro) 55%, transparent)); }
+}
+@keyframes glow-portrait-aero {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--color-element-aero) 30%, transparent)); }
+  50% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-aero) 55%, transparent)); }
+}
+@keyframes glow-portrait-spectro {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--color-element-spectro) 30%, transparent)); }
+  50% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-spectro) 55%, transparent)); }
+}
+@keyframes glow-portrait-havoc {
+  0%, 100% { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--color-element-havoc) 30%, transparent)); }
+  50% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-element-havoc) 55%, transparent)); }
+}
+
 /* Atmospheric background for the build card: a soft starfield plus a wash
    of the character's own element color, evoking a night-sky feel (closer to
    WUWAFLEX's card look) instead of a flat panel. --card-glow-color is set
