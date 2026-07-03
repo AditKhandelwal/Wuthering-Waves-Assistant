@@ -2,15 +2,26 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { StatBox } from "../components/StatBox";
 import { WeaponPicker } from "../components/WeaponPicker";
-import { AtkIcon, DefIcon, HpIcon } from "../components/icons";
 import { loadRoster } from "../lib/characters";
+import { loadStatIcons } from "../lib/statIcons";
 import { computeStats, loadStatCurves } from "../lib/stats";
 import { renderRankScaledText } from "../lib/text";
-import { computeWeaponAtk, loadWeaponCatalog, loadWeaponStatCurves } from "../lib/weapons";
+import {
+  computeWeaponAtk,
+  computeWeaponSecondaryStat,
+  loadWeaponCatalog,
+  loadWeaponStatCurves,
+} from "../lib/weapons";
 import type { Character } from "../types/character";
 import type { StatCurveData } from "../types/stats";
 import type { WeaponCatalog } from "../lib/weapons";
 import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
+
+function StatIcon({ icons, name }: { icons: Record<string, string> | null; name: string }) {
+  const url = icons?.[name];
+  if (!url) return null;
+  return <img src={url} alt={name} className="h-3.5 w-3.5" />;
+}
 
 // box-shadow-based rings/glows don't follow clip-path -- they'd render as a
 // plain rectangle around the angular clipped corners. `border` and
@@ -48,6 +59,7 @@ export function BuildScreenPage() {
   const { characterId } = useParams();
   const [character, setCharacter] = useState<Character | null>(null);
   const [curves, setCurves] = useState<StatCurveData | null>(null);
+  const [statIcons, setStatIcons] = useState<Record<string, string> | null>(null);
   const [level, setLevel] = useState(1);
 
   const [weaponCatalog, setWeaponCatalog] = useState<WeaponCatalog | null>(null);
@@ -71,6 +83,7 @@ export function BuildScreenPage() {
   useEffect(() => {
     loadWeaponCatalog().then(setWeaponCatalog);
     loadWeaponStatCurves().then(setWeaponCurves);
+    loadStatIcons().then(setStatIcons);
   }, []);
 
   // Default to the character's own top recommended weapon once both the
@@ -87,6 +100,10 @@ export function BuildScreenPage() {
   const weaponAtk =
     selectedWeapon && weaponCurves
       ? computeWeaponAtk(weaponCurves, selectedWeapon.gbId, weaponLevel)
+      : null;
+  const weaponSecondaryStat =
+    selectedWeapon && weaponCurves
+      ? computeWeaponSecondaryStat(weaponCurves, selectedWeapon.gbId, weaponLevel)
       : null;
   const recommendedWeaponIds = new Set(
     character && weaponCatalog ? (weaponCatalog.recommendedByCharacter[character.roleGbId] ?? []) : [],
@@ -142,9 +159,18 @@ export function BuildScreenPage() {
 
             {stats && (
               <div className="mt-4 flex flex-wrap gap-2">
-                <StatBox icon={<HpIcon className="h-3.5 w-3.5" />} value={stats.hp.toLocaleString()} />
-                <StatBox icon={<AtkIcon className="h-3.5 w-3.5" />} value={stats.atk.toLocaleString()} />
-                <StatBox icon={<DefIcon className="h-3.5 w-3.5" />} value={stats.def.toLocaleString()} />
+                <StatBox
+                  icon={<StatIcon icons={statIcons} name="HP" />}
+                  value={stats.hp.toLocaleString()}
+                />
+                <StatBox
+                  icon={<StatIcon icons={statIcons} name="ATK" />}
+                  value={stats.atk.toLocaleString()}
+                />
+                <StatBox
+                  icon={<StatIcon icons={statIcons} name="DEF" />}
+                  value={stats.def.toLocaleString()}
+                />
               </div>
             )}
           </Panel>
@@ -188,8 +214,20 @@ export function BuildScreenPage() {
                     <span className="w-16 shrink-0 whitespace-nowrap text-right text-sm text-gold-soft">
                       {weaponLevel} / 90
                     </span>
+                  </div>
+
+                  <div className="mt-2 flex flex-wrap gap-2">
                     {weaponAtk !== null && (
-                      <StatBox icon={<AtkIcon className="h-3.5 w-3.5" />} value={String(weaponAtk)} />
+                      <StatBox
+                        icon={<StatIcon icons={statIcons} name="ATK" />}
+                        value={String(weaponAtk)}
+                      />
+                    )}
+                    {weaponSecondaryStat && (
+                      <StatBox
+                        icon={<StatIcon icons={statIcons} name={weaponSecondaryStat.name} />}
+                        value={weaponSecondaryStat.displayValue}
+                      />
                     )}
                   </div>
 

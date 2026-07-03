@@ -18,8 +18,11 @@ export function renderRankScaledText(text: string, rank: number): ReactNode[] {
     }
     const values = match[1].split("/");
     const value = values[rank - 1] ?? values[0];
+    const variesByRank = new Set(values).size > 1;
     parts.push(
-      createElement("span", { key: key++, className: "font-semibold text-gold-soft" }, value),
+      variesByRank
+        ? createElement("span", { key: key++, className: "font-semibold text-gold-soft" }, value)
+        : value,
     );
     lastIndex = match.index + match[0].length;
   }
