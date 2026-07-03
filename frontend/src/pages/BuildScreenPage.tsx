@@ -1,21 +1,29 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ELEMENT_RING_CLASS } from "../components/CharacterCard";
 import { loadRoster } from "../lib/characters";
 import { computeStats, loadStatCurves } from "../lib/stats";
 import type { Character } from "../types/character";
 import type { StatCurveData } from "../types/stats";
 
-const glow = (color: string) =>
-  `shadow-[0_0_12px_color-mix(in_srgb,${color}_35%,transparent)]`;
-
-const ELEMENT_GLOW_CLASS: Record<Character["element"], string> = {
-  Glacio: glow("var(--color-element-glacio)"),
-  Fusion: glow("var(--color-element-fusion)"),
-  Electro: glow("var(--color-element-electro)"),
-  Aero: glow("var(--color-element-aero)"),
-  Spectro: glow("var(--color-element-spectro)"),
-  Havoc: glow("var(--color-element-havoc)"),
+// box-shadow-based rings/glows don't follow clip-path -- they'd render as a
+// plain rectangle around the angular clipped corners. `border` and
+// `filter: drop-shadow` both respect clip-path, so use those instead to get
+// a border+glow that actually hugs the clipped shape. Each class string is
+// spelled out fully (not built via template-literal interpolation) because
+// Tailwind statically scans source text for complete class names -- a
+// dynamically-assembled string never generates any CSS.
+const ELEMENT_PORTRAIT_CLASS: Record<Character["element"], string> = {
+  Glacio:
+    "[border-color:var(--color-element-glacio)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-glacio)_45%,transparent))]",
+  Fusion:
+    "[border-color:var(--color-element-fusion)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-fusion)_45%,transparent))]",
+  Electro:
+    "[border-color:var(--color-element-electro)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-electro)_45%,transparent))]",
+  Aero: "[border-color:var(--color-element-aero)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-aero)_45%,transparent))]",
+  Spectro:
+    "[border-color:var(--color-element-spectro)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-spectro)_45%,transparent))]",
+  Havoc:
+    "[border-color:var(--color-element-havoc)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-havoc)_45%,transparent))]",
 };
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
@@ -66,15 +74,13 @@ export function BuildScreenPage() {
         {/* Left: portrait + level */}
         <div className="flex flex-col gap-4">
           <div
-            className={`rounded-md ring-2 ring-offset-2 ring-offset-bg ${ELEMENT_RING_CLASS[character.element]} ${ELEMENT_GLOW_CLASS[character.element]}`}
+            className={`clip-corner overflow-hidden border-2 bg-panel ${ELEMENT_PORTRAIT_CLASS[character.element]}`}
           >
-            <div className="clip-corner overflow-hidden border border-border bg-panel">
-              <img
-                src={character.illustrationPictureUrl}
-                alt={character.name}
-                className="h-72 w-full object-cover"
-              />
-            </div>
+            <img
+              src={character.illustrationPictureUrl}
+              alt={character.name}
+              className="h-72 w-full object-cover"
+            />
           </div>
           <div>
             <h1 className="text-xl font-semibold text-gold-soft">{character.name}</h1>
