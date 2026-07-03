@@ -33,7 +33,7 @@ interface RawCharacterEntry {
 
 type RawCharacterMap = Record<string, RawCharacterEntry>;
 
-const WEAPON_TYPE_BY_GB_ID: Record<string, WeaponTypeName> = {
+export const WEAPON_TYPE_BY_GB_ID: Record<string, WeaponTypeName> = {
   "1": "Broadblade",
   "2": "Sword",
   "3": "Pistols",

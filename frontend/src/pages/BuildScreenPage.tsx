@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { WeaponPicker } from "../components/WeaponPicker";
 import { loadRoster } from "../lib/characters";
 import { computeStats, loadStatCurves } from "../lib/stats";
+import { computeWeaponAtk, loadWeaponCatalog, loadWeaponStatCurves } from "../lib/weapons";
 import type { Character } from "../types/character";
 import type { StatCurveData } from "../types/stats";
+import type { WeaponCatalog } from "../lib/weapons";
+import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
 
 // box-shadow-based rings/glows don't follow clip-path -- they'd render as a
 // plain rectangle around the angular clipped corners. `border` and
@@ -43,15 +47,49 @@ export function BuildScreenPage() {
   const [curves, setCurves] = useState<StatCurveData | null>(null);
   const [level, setLevel] = useState(1);
 
+  const [weaponCatalog, setWeaponCatalog] = useState<WeaponCatalog | null>(null);
+  const [weaponCurves, setWeaponCurves] = useState<WeaponStatCurves | null>(null);
+  const [selectedWeapon, setSelectedWeapon] = useState<WeaponCatalogEntry | null>(null);
+  const [weaponLevel, setWeaponLevel] = useState(1);
+  const [weaponRank, setWeaponRank] = useState(1);
+  const [pickerOpen, setPickerOpen] = useState(false);
+
   useEffect(() => {
     loadRoster().then(({ characters }) => {
       setCharacter(characters.find((c) => c.roleGbId === characterId) ?? null);
     });
     loadStatCurves().then(setCurves);
     setLevel(1);
+    setSelectedWeapon(null);
+    setWeaponLevel(1);
+    setWeaponRank(1);
   }, [characterId]);
 
+  useEffect(() => {
+    loadWeaponCatalog().then(setWeaponCatalog);
+    loadWeaponStatCurves().then(setWeaponCurves);
+  }, []);
+
+  // Default to the character's own top recommended weapon once both the
+  // character and catalog have loaded.
+  useEffect(() => {
+    if (!character || !weaponCatalog || selectedWeapon) return;
+    const recommendedIds = weaponCatalog.recommendedByCharacter[character.roleGbId] ?? [];
+    const weapons = weaponCatalog.byType[character.weaponType] ?? [];
+    const defaultWeapon = weapons.find((w) => w.gbId === recommendedIds[0]) ?? null;
+    if (defaultWeapon) setSelectedWeapon(defaultWeapon);
+  }, [character, weaponCatalog, selectedWeapon]);
+
   const stats = character && curves ? computeStats(curves, character.roleGbId, level) : null;
+  const weaponAtk =
+    selectedWeapon && weaponCurves
+      ? computeWeaponAtk(weaponCurves, selectedWeapon.gbId, weaponLevel)
+      : null;
+  const weaponRankValue =
+    selectedWeapon && weaponCurves ? weaponCurves.rankValues[selectedWeapon.gbId]?.[weaponRank - 1] : null;
+  const recommendedWeaponIds = new Set(
+    character && weaponCatalog ? (weaponCatalog.recommendedByCharacter[character.roleGbId] ?? []) : [],
+  );
 
   if (!character) {
     return (
@@ -123,7 +161,74 @@ export function BuildScreenPage() {
         {/* Right: build sections (stubs for now) */}
         <div className="flex flex-col gap-6">
           <Panel title="Weapon">
-            <p className="text-sm text-text-muted">Weapon picker — coming soon.</p>
+            {selectedWeapon ? (
+              <div className="flex gap-4">
+                <img
+                  src={selectedWeapon.pictureUrl}
+                  alt={selectedWeapon.name}
+                  className="h-16 w-16 shrink-0 object-contain"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-sm font-semibold text-gold-soft">
+                      {selectedWeapon.name}
+                    </span>
+                    <button
+                      onClick={() => setPickerOpen(true)}
+                      className="shrink-0 rounded-sm border border-border px-2 py-1 text-[10px] uppercase tracking-wide text-text-muted transition hover:border-gold-soft hover:text-gold-soft"
+                    >
+                      Change
+                    </button>
+                  </div>
+                  <p className="mt-1 text-xs text-text-muted">{selectedWeapon.effectDescription}</p>
+
+                  <div className="mt-3 flex items-center gap-3">
+                    <input
+                      type="range"
+                      min={1}
+                      max={90}
+                      value={weaponLevel}
+                      onChange={(e) => setWeaponLevel(Number(e.target.value))}
+                      className="min-w-0 flex-1 accent-gold"
+                    />
+                    <span className="w-16 shrink-0 whitespace-nowrap text-right text-sm text-gold-soft">
+                      {weaponLevel} / 90
+                    </span>
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      {[1, 2, 3, 4, 5].map((rank) => (
+                        <button
+                          key={rank}
+                          onClick={() => setWeaponRank(rank)}
+                          className={`flex h-6 w-6 items-center justify-center rounded-sm border text-[10px] transition ${
+                            rank === weaponRank
+                              ? "border-gold text-gold-soft"
+                              : "border-border text-text-muted hover:border-gold-soft"
+                          }`}
+                        >
+                          {rank}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="text-right text-xs">
+                      {weaponAtk !== null && <span className="text-text">ATK {weaponAtk}</span>}
+                      {weaponRankValue && (
+                        <span className="ml-2 text-gold-soft">{weaponRankValue}</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={() => setPickerOpen(true)}
+                className="text-sm text-text-muted hover:text-gold-soft transition"
+              >
+                Select Weapon
+              </button>
+            )}
           </Panel>
 
           <Panel title="Sequence Nodes">
@@ -160,6 +265,20 @@ export function BuildScreenPage() {
           </Panel>
         </div>
       </div>
+
+      {pickerOpen && weaponCatalog && character && (
+        <WeaponPicker
+          weapons={weaponCatalog.byType[character.weaponType] ?? []}
+          recommendedIds={recommendedWeaponIds}
+          onSelect={(weapon) => {
+            setSelectedWeapon(weapon);
+            setWeaponLevel(1);
+            setWeaponRank(1);
+            setPickerOpen(false);
+          }}
+          onClose={() => setPickerOpen(false)}
+        />
+      )}
     </div>
   );
 }
