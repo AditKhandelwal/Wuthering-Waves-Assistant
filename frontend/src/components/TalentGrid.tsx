@@ -11,7 +11,7 @@ interface TalentGridProps {
 }
 
 function Connector() {
-  return <div className="h-4 w-px bg-border" />;
+  return <div className="h-9 w-px bg-border" />;
 }
 
 export function TalentGrid({
