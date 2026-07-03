@@ -105,10 +105,13 @@ wuwa-agent/
 │   │   ├── models/              # SQLAlchemy models
 │   │   └── core/                # config, auth, db
 │   └── requirements.txt
-└── frontend/
+└── frontend/                     # everything that actually exists today (Phase 1)
+    ├── public/data/              # frontend's own copy of data/*.json — see frontend.md
     ├── src/
-    │   ├── components/
-    │   ├── pages/
-    │   └── hooks/
+    │   ├── components/           # BuildCard, TalentGrid, EchoPicker, FinalStatsGrid, etc.
+    │   ├── pages/                # CharacterSelectPage, BuildScreenPage
+    │   ├── lib/                  # per-domain loaders (characters/weapons/echoes/talents/...)
+    │   │                         #   + finalStats.ts (stat aggregation)
+    │   └── types/                # one file per domain, mirrors lib/
     └── package.json
 ```
