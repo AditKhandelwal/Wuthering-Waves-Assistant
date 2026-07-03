@@ -1,6 +1,6 @@
 import type { Character } from "../types/character";
 
-const ELEMENT_RING_CLASS: Record<Character["element"], string> = {
+export const ELEMENT_RING_CLASS: Record<Character["element"], string> = {
   Glacio: "ring-element-glacio",
   Fusion: "ring-element-fusion",
   Electro: "ring-element-electro",

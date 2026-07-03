@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { ELEMENT_RING_CLASS } from "../components/CharacterCard";
 import { loadRoster } from "../lib/characters";
 import { computeStats, loadStatCurves } from "../lib/stats";
 import type { Character } from "../types/character";
 import type { StatCurveData } from "../types/stats";
+
+const ELEMENT_GLOW_CLASS: Record<Character["element"], string> = {
+  Glacio: "shadow-[0_0_24px_var(--color-element-glacio)]",
+  Fusion: "shadow-[0_0_24px_var(--color-element-fusion)]",
+  Electro: "shadow-[0_0_24px_var(--color-element-electro)]",
+  Aero: "shadow-[0_0_24px_var(--color-element-aero)]",
+  Spectro: "shadow-[0_0_24px_var(--color-element-spectro)]",
+  Havoc: "shadow-[0_0_24px_var(--color-element-havoc)]",
+};
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -19,15 +29,12 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 export function BuildScreenPage() {
   const { characterId } = useParams();
   const [character, setCharacter] = useState<Character | null>(null);
-  const [elementIcon, setElementIcon] = useState<string | null>(null);
   const [curves, setCurves] = useState<StatCurveData | null>(null);
   const [level, setLevel] = useState(1);
 
   useEffect(() => {
-    loadRoster().then(({ characters, elementIcons }) => {
-      const found = characters.find((c) => c.roleGbId === characterId) ?? null;
-      setCharacter(found);
-      setElementIcon(found ? elementIcons[found.element] : null);
+    loadRoster().then(({ characters }) => {
+      setCharacter(characters.find((c) => c.roleGbId === characterId) ?? null);
     });
     loadStatCurves().then(setCurves);
     setLevel(1);
@@ -55,20 +62,19 @@ export function BuildScreenPage() {
       <div className="grid grid-cols-[240px_1fr] gap-8">
         {/* Left: portrait + level */}
         <div className="flex flex-col gap-4">
-          <div className="clip-corner overflow-hidden border border-border bg-panel">
-            <img
-              src={character.illustrationPictureUrl}
-              alt={character.name}
-              className="h-72 w-full object-cover"
-            />
+          <div
+            className={`rounded-md ring-2 ring-offset-2 ring-offset-bg ${ELEMENT_RING_CLASS[character.element]} ${ELEMENT_GLOW_CLASS[character.element]}`}
+          >
+            <div className="clip-corner overflow-hidden border border-border bg-panel">
+              <img
+                src={character.illustrationPictureUrl}
+                alt={character.name}
+                className="h-72 w-full object-cover"
+              />
+            </div>
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              {elementIcon && (
-                <img src={elementIcon} alt={character.element} className="h-6 w-6" />
-              )}
-              <h1 className="text-xl font-semibold text-gold-soft">{character.name}</h1>
-            </div>
+            <h1 className="text-xl font-semibold text-gold-soft">{character.name}</h1>
             <p className="text-sm text-text-muted">{character.element}</p>
           </div>
           <Panel title="Level">
