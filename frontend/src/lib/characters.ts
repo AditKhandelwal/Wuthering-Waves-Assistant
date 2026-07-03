@@ -33,12 +33,12 @@ export const ELEMENT_PORTRAIT_BORDER_CLASS: Record<ElementName, string> = {
 // A fixed (non-pulsing) glow, by request -- unlike CharacterCard's ring
 // (ELEMENT_GLOW_ANIMATION_CLASS below), which stays animated on purpose.
 export const ELEMENT_PORTRAIT_GLOW_CLASS: Record<ElementName, string> = {
-  Glacio: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-glacio)_75%,transparent))]",
-  Fusion: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-fusion)_75%,transparent))]",
-  Electro: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-electro)_75%,transparent))]",
-  Aero: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-aero)_75%,transparent))]",
-  Spectro: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-spectro)_75%,transparent))]",
-  Havoc: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-havoc)_75%,transparent))]",
+  Glacio: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-glacio)_65%,transparent))]",
+  Fusion: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-fusion)_65%,transparent))]",
+  Electro: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-electro)_65%,transparent))]",
+  Aero: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-aero)_65%,transparent))]",
+  Spectro: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-spectro)_65%,transparent))]",
+  Havoc: "[filter:drop-shadow(0_0_20px_color-mix(in_srgb,var(--color-element-havoc)_65%,transparent))]",
 };
 
 // Just the pulsing-glow animation (no border-color), for elements that get
