@@ -91,6 +91,7 @@ export function BuildScreenPage() {
   const [talents, setTalents] = useState<Talent[]>([]);
   const [talentLevels, setTalentLevels] = useState<number[]>([]);
   const [inherentSkills, setInherentSkills] = useState<InherentSkill[]>([]);
+  const [inherentActive, setInherentActive] = useState<boolean[]>([]);
 
   useEffect(() => {
     loadRoster().then(({ characters }) => {
@@ -110,7 +111,10 @@ export function BuildScreenPage() {
         setTalents(loaded);
         setTalentLevels(loaded.map(() => 1));
       });
-      loadInherentSkills(characterId).then(setInherentSkills);
+      loadInherentSkills(characterId).then((loaded) => {
+        setInherentSkills(loaded);
+        setInherentActive(loaded.map(() => true));
+      });
     }
   }, [characterId]);
 
@@ -326,37 +330,14 @@ export function BuildScreenPage() {
                   current.map((lvl, i) => (i === index ? Math.min(10, Math.max(1, newLevel)) : lvl)),
                 )
               }
+              inherentSkills={inherentSkills}
+              inherentActive={inherentActive}
+              onToggleInherent={(index) =>
+                setInherentActive((current) =>
+                  current.map((active, i) => (i === index ? !active : active)),
+                )
+              }
             />
-
-            {inherentSkills.length > 0 && (
-              <div className="mt-4 border-t border-border pt-4">
-                <span className="text-[10px] uppercase tracking-wide text-text-muted">
-                  Inherent Skills
-                </span>
-                <div className="mt-2 flex gap-4">
-                  {inherentSkills.map((skill) => (
-                    <div key={skill.name} title={skill.description} className="flex items-center gap-2">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-gold bg-panel shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]">
-                        <span className="relative h-4 w-4">
-                          <img
-                            src={skill.pictureUrl}
-                            alt={skill.name}
-                            className="absolute inset-0 h-full w-full brightness-0 invert"
-                          />
-                          <img
-                            src={skill.pictureUrl}
-                            alt=""
-                            aria-hidden="true"
-                            className="absolute inset-0 h-full w-full brightness-0 invert"
-                          />
-                        </span>
-                      </span>
-                      <span className="text-xs text-gold-soft">{skill.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </Panel>
 
           <Panel title="Echoes">
