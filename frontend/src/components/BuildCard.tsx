@@ -310,7 +310,10 @@ export function BuildCard({
 
         <div className="min-w-0 flex flex-col gap-3">
           <div className="flex items-start gap-4 border-b border-border pb-3">
-            {finalStats && <FinalStatsGrid stats={finalStats} statIcons={statIcons} />}
+            <div className="flex flex-col gap-3">
+              {finalStats && <FinalStatsGrid stats={finalStats} statIcons={statIcons} />}
+              <CompactSequenceRow nodes={sequenceNodes} unlockedCount={unlockedCount} />
+            </div>
             <div className="min-w-0 flex-1 border-l border-border pl-4">
               <TalentTree
                 talents={talents}
@@ -321,8 +324,6 @@ export function BuildCard({
               />
             </div>
           </div>
-
-          <CompactSequenceRow nodes={sequenceNodes} unlockedCount={unlockedCount} />
 
           {activeSetBonuses.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
