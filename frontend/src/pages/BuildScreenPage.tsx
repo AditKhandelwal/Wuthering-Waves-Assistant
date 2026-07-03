@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { SequenceNodeRow } from "../components/SequenceNodeRow";
 import { StatBox } from "../components/StatBox";
-import { StatNodeToggleRow } from "../components/StatNodeToggleRow";
 import { TalentGrid } from "../components/TalentGrid";
 import { WeaponPicker } from "../components/WeaponPicker";
 import { loadRoster } from "../lib/characters";
 import { loadSequenceNodes } from "../lib/sequenceNodes";
-import { loadSequenceStatNodes } from "../lib/sequenceStatNodes";
 import { loadStatIcons } from "../lib/statIcons";
 import { computeStats, loadStatCurves } from "../lib/stats";
 import { loadInherentSkills, loadTalents } from "../lib/talents";
@@ -20,7 +18,6 @@ import {
 } from "../lib/weapons";
 import type { Character } from "../types/character";
 import type { SequenceNode } from "../types/sequenceNode";
-import type { SequenceStatNodes, StatNodePosition } from "../types/sequenceStatNode";
 import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, Talent } from "../types/talent";
 import type { WeaponCatalog } from "../lib/weapons";
@@ -80,13 +77,6 @@ export function BuildScreenPage() {
 
   const [sequenceNodes, setSequenceNodes] = useState<SequenceNode[]>([]);
   const [unlockedCount, setUnlockedCount] = useState(0);
-  const [statNodes, setStatNodes] = useState<SequenceStatNodes | null>(null);
-  const [statNodeToggles, setStatNodeToggles] = useState<Record<StatNodePosition, boolean>>({
-    left: false,
-    leftMid: false,
-    rightMid: false,
-    right: false,
-  });
 
   const [talents, setTalents] = useState<Talent[]>([]);
   const [talentLevels, setTalentLevels] = useState<number[]>([]);
@@ -103,10 +93,8 @@ export function BuildScreenPage() {
     setWeaponLevel(1);
     setWeaponRank(1);
     setUnlockedCount(0);
-    setStatNodeToggles({ left: false, leftMid: false, rightMid: false, right: false });
     if (characterId) {
       loadSequenceNodes(characterId).then(setSequenceNodes);
-      loadSequenceStatNodes(characterId).then(setStatNodes);
       loadTalents(characterId).then((loaded) => {
         setTalents(loaded);
         setTalentLevels(loaded.map(() => 1));
@@ -309,16 +297,6 @@ export function BuildScreenPage() {
                 setUnlockedCount((current) => (sequence === current ? sequence - 1 : sequence))
               }
             />
-
-            {statNodes && (
-              <StatNodeToggleRow
-                nodes={statNodes}
-                toggled={statNodeToggles}
-                onToggle={(position) =>
-                  setStatNodeToggles((current) => ({ ...current, [position]: !current[position] }))
-                }
-              />
-            )}
           </Panel>
 
           <Panel title="Talents">
