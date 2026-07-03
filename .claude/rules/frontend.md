@@ -27,12 +27,31 @@ and causes silent stale-data bugs (the app keeps working, just on old data).
   it *looks* right when inspected) but has no effect. Fix: spell out each
   variant's class string fully and literally, one per case (see
   `ELEMENT_PORTRAIT_CLASS`/`ELEMENT_RING_CLASS` for the working pattern).
-- **`clip-path` clips away box-shadow-based effects entirely** — a
-  Tailwind `ring-*` or `shadow-*` on an element that also has `clip-path`
-  (e.g. the `.clip-corner` utility) won't render, because box-shadow paints
-  outside the clipped region. Use `border-color` + `filter: drop-shadow(...)`
-  instead — both respect `clip-path` and will hug the actual clipped shape,
-  angular corners included.
+- **`clip-path` clips away box-shadow AND filter effects on the same
+  element** (corrected 2026-07-03 — an earlier version of this note claimed
+  `filter: drop-shadow` was the fix and "respects" clip-path; isolated
+  side-by-side test proved that wrong). A Tailwind `ring-*`/`shadow-*` *or*
+  `filter:drop-shadow(...)` on an element that also has `clip-path` (e.g.
+  `.clip-corner`) barely shows any outward glow — clip-path clips the
+  filter's rendered output too, cutting off the blur right at the shape's
+  own edge. The actual fix: put `filter`/`animation` on an **outer wrapper
+  div with no clip-path of its own**, nesting the clipped/bordered element
+  inside it — the wrapper's filter then glows around the already-clipped
+  shape instead of being clipped itself. See `ELEMENT_PORTRAIT_BORDER_CLASS`
+  (inner, clipped) vs `ELEMENT_PORTRAIT_GLOW_CLASS` (outer wrapper) in
+  `frontend/src/lib/characters.ts`, used in `BuildCard.tsx` and
+  `BuildScreenPage.tsx`. Don't trust "does the computed `filter` value
+  change over time" (e.g. via `getComputedStyle` in a script) as proof a
+  glow is *visible* — it can be technically animating and still be entirely
+  invisible on screen if this wrapper structure is missing; confirm with an
+  actual before/after screenshot crop around the element's edge instead.
+- **Static vs. animated glow, same element, different classes**: this
+  project deliberately keeps the character-select ring's glow *animated*
+  (pulsing, `glow-glacio` etc. keyframes in `index.css`) while the larger
+  build-card/build-screen portraits use a *fixed, non-pulsing*
+  `filter:drop-shadow(...)` (`ELEMENT_PORTRAIT_GLOW_CLASS`) — this was an
+  explicit user preference, not an oversight. Don't unify them without
+  being asked.
 
 ## Common layout bug: numeric readouts resizing
 

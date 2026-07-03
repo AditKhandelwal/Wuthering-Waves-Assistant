@@ -14,7 +14,8 @@ Done:
 - Reverse engineered Kuro's guide API; roster corrected from 46 → **54**
   characters (brute-force scan originally missed a whole newer ID block,
   1601-1608, all Havoc — see `.claude/rules/api.md`)
-- Character-select screen: grid + element/weapon-type filters, all real data
+- Character-select screen: grid + element/weapon-type filters, all real
+  data, element-tinted glow on each portrait ring
 - Build screen (`frontend/src/pages/BuildScreenPage.tsx`), built one section
   at a time, each verified visually in a running browser, not just
   type-checked:
@@ -22,16 +23,28 @@ Done:
   - **Weapon** — full per-weapon-type catalog (not just recommended),
     real computed ATK + secondary stat, rank-scaled passive text
   - **Sequence Nodes** — real per-node names/icons, sequential toggle
-  - **Talents** — real 5-skill steppers (1-10) + Inherent Skills (togglable,
-    positioned above Forte Circuit as a deliberate simplification — see
-    `docs/DATA_REQUIREMENTS.md` for why exact per-skill placement isn't
-    derivable from available data)
-- Not started: **Echoes** (most data-blocked section — see
-  `docs/DATA_REQUIREMENTS.md`)
+  - **Talents** (`TalentGrid.tsx`) — real 5-skill steppers (1-10) in a
+    cascading arc layout (Forte Circuit raised, tapering outward, matching
+    a real in-game screenshot), Inherent Skills togglable above Forte
+    Circuit (column placement is a deliberate simplification, not
+    derivable — see `docs/DATA_REQUIREMENTS.md`), plus a real Outro
+    Skill/Tune Break row below (`roleSkill.keynoteSkills[]`)
+  - **Echoes** — flexible per-slot cost (any of 1/3/4 in any slot, not
+    pinned by position), real catalog/sonata-set picker with real set
+    icons, real main-stat model (every echo has a fixed *static* main stat
+    — flat ATK for cost 3/4, flat HP for cost 1 — plus the existing
+    player-chosen *variable* one), real 9-entry substat pool
+- **Build Card** — a read-only, shareable "character card" view toggled
+  from the same build screen (same live state, no route/data reload since
+  there's no persistence yet). Real final-stat aggregation (character base
+  + weapon + all equipped echoes → HP/ATK/DEF/Energy Regen/Crit Rate/Crit
+  DMG/DMG-bonus categories, see `frontend/src/lib/finalStats.ts`), an
+  atmospheric starfield + element-colored background, and the same
+  cascading Forte tree as the edit view
 
 See `docs/DATA_REQUIREMENTS.md` for exactly what's confirmed vs. inferred
-vs. still blocked in the underlying game data before touching Echoes or
-revisiting the weapon secondary-stat inference.
+vs. still blocked in the underlying game data (the per-hit damage formula
+and structured echo set-bonus effects are the main remaining gaps).
 
 @.claude/rules/architecture.md
 @.claude/rules/api.md
