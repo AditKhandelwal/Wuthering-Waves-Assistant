@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { StatBox } from "../components/StatBox";
 import { WeaponPicker } from "../components/WeaponPicker";
+import { AtkIcon, DefIcon, HpIcon } from "../components/icons";
 import { loadRoster } from "../lib/characters";
 import { computeStats, loadStatCurves } from "../lib/stats";
+import { renderRankScaledText } from "../lib/text";
 import { computeWeaponAtk, loadWeaponCatalog, loadWeaponStatCurves } from "../lib/weapons";
 import type { Character } from "../types/character";
 import type { StatCurveData } from "../types/stats";
@@ -85,8 +88,6 @@ export function BuildScreenPage() {
     selectedWeapon && weaponCurves
       ? computeWeaponAtk(weaponCurves, selectedWeapon.gbId, weaponLevel)
       : null;
-  const weaponRankValue =
-    selectedWeapon && weaponCurves ? weaponCurves.rankValues[selectedWeapon.gbId]?.[weaponRank - 1] : null;
   const recommendedWeaponIds = new Set(
     character && weaponCatalog ? (weaponCatalog.recommendedByCharacter[character.roleGbId] ?? []) : [],
   );
@@ -132,7 +133,7 @@ export function BuildScreenPage() {
                 max={90}
                 value={level}
                 onChange={(e) => setLevel(Number(e.target.value))}
-                className="min-w-0 flex-1 accent-gold"
+                className="w-32 accent-gold"
               />
               <span className="w-16 shrink-0 whitespace-nowrap text-right text-sm text-gold-soft">
                 {level} / 90
@@ -140,20 +141,11 @@ export function BuildScreenPage() {
             </div>
 
             {stats && (
-              <dl className="mt-4 grid grid-cols-3 gap-2 text-center">
-                <div>
-                  <dt className="text-[10px] uppercase tracking-wide text-text-muted">HP</dt>
-                  <dd className="text-sm text-text">{stats.hp.toLocaleString()}</dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] uppercase tracking-wide text-text-muted">ATK</dt>
-                  <dd className="text-sm text-text">{stats.atk.toLocaleString()}</dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] uppercase tracking-wide text-text-muted">DEF</dt>
-                  <dd className="text-sm text-text">{stats.def.toLocaleString()}</dd>
-                </div>
-              </dl>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <StatBox icon={<HpIcon className="h-3.5 w-3.5" />} value={stats.hp.toLocaleString()} />
+                <StatBox icon={<AtkIcon className="h-3.5 w-3.5" />} value={stats.atk.toLocaleString()} />
+                <StatBox icon={<DefIcon className="h-3.5 w-3.5" />} value={stats.def.toLocaleString()} />
+              </div>
             )}
           </Panel>
         </div>
@@ -175,12 +167,14 @@ export function BuildScreenPage() {
                     </span>
                     <button
                       onClick={() => setPickerOpen(true)}
-                      className="shrink-0 rounded-sm border border-border px-2 py-1 text-[10px] uppercase tracking-wide text-text-muted transition hover:border-gold-soft hover:text-gold-soft"
+                      className="shrink-0 rounded-sm border border-gold-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt"
                     >
                       Change
                     </button>
                   </div>
-                  <p className="mt-1 text-xs text-text-muted">{selectedWeapon.effectDescription}</p>
+                  <p className="mt-1 text-xs text-text-muted">
+                    {renderRankScaledText(selectedWeapon.effectDescription, weaponRank)}
+                  </p>
 
                   <div className="mt-3 flex items-center gap-3">
                     <input
@@ -189,35 +183,31 @@ export function BuildScreenPage() {
                       max={90}
                       value={weaponLevel}
                       onChange={(e) => setWeaponLevel(Number(e.target.value))}
-                      className="min-w-0 flex-1 accent-gold"
+                      className="w-32 accent-gold"
                     />
                     <span className="w-16 shrink-0 whitespace-nowrap text-right text-sm text-gold-soft">
                       {weaponLevel} / 90
                     </span>
+                    {weaponAtk !== null && (
+                      <StatBox icon={<AtkIcon className="h-3.5 w-3.5" />} value={String(weaponAtk)} />
+                    )}
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((rank) => (
-                        <button
-                          key={rank}
-                          onClick={() => setWeaponRank(rank)}
-                          className={`flex h-6 w-6 items-center justify-center rounded-sm border text-[10px] transition ${
-                            rank === weaponRank
-                              ? "border-gold text-gold-soft"
-                              : "border-border text-text-muted hover:border-gold-soft"
-                          }`}
-                        >
-                          {rank}
-                        </button>
-                      ))}
-                    </div>
-                    <div className="text-right text-xs">
-                      {weaponAtk !== null && <span className="text-text">ATK {weaponAtk}</span>}
-                      {weaponRankValue && (
-                        <span className="ml-2 text-gold-soft">{weaponRankValue}</span>
-                      )}
-                    </div>
+                  <div className="mt-3 flex items-center gap-2">
+                    <span className="text-[10px] uppercase tracking-wide text-text-muted">Rank</span>
+                    {[1, 2, 3, 4, 5].map((rank) => (
+                      <button
+                        key={rank}
+                        onClick={() => setWeaponRank(rank)}
+                        className={`flex h-6 w-6 items-center justify-center rounded-sm border text-[10px] transition ${
+                          rank === weaponRank
+                            ? "border-gold text-gold-soft"
+                            : "border-border text-text-muted hover:border-gold-soft"
+                        }`}
+                      >
+                        {rank}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
