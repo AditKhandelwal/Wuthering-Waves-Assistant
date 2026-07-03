@@ -6,13 +6,16 @@ import { computeStats, loadStatCurves } from "../lib/stats";
 import type { Character } from "../types/character";
 import type { StatCurveData } from "../types/stats";
 
+const glow = (color: string) =>
+  `shadow-[0_0_12px_color-mix(in_srgb,${color}_35%,transparent)]`;
+
 const ELEMENT_GLOW_CLASS: Record<Character["element"], string> = {
-  Glacio: "shadow-[0_0_24px_var(--color-element-glacio)]",
-  Fusion: "shadow-[0_0_24px_var(--color-element-fusion)]",
-  Electro: "shadow-[0_0_24px_var(--color-element-electro)]",
-  Aero: "shadow-[0_0_24px_var(--color-element-aero)]",
-  Spectro: "shadow-[0_0_24px_var(--color-element-spectro)]",
-  Havoc: "shadow-[0_0_24px_var(--color-element-havoc)]",
+  Glacio: glow("var(--color-element-glacio)"),
+  Fusion: glow("var(--color-element-fusion)"),
+  Electro: glow("var(--color-element-electro)"),
+  Aero: glow("var(--color-element-aero)"),
+  Spectro: glow("var(--color-element-spectro)"),
+  Havoc: glow("var(--color-element-havoc)"),
 };
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
