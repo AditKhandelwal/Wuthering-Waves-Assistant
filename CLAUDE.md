@@ -4,20 +4,37 @@ A personalized Wuthering Waves AI agent that reasons over a user's actual roster
 
 ## Project Status
 
-**Current phase: Phase 1 — Project Setup**
+**Current phase: Phase 1 — character build screen (frontend-first, mock/local state, no auth or persistence yet)**
 
-Completed pre-work:
-- Reverse engineered Kuro Games' official guide API (`guide-server.aki-game.net`)
-- Discovered all 46 character IDs via brute force scan
-- Fetched complete build data for all 46 characters (English + translated Chinese entries)
-- Validated and cleaned dataset — 0 issues, all characters have guide, stats, and weapon data
-- Saved to `data/wuwa_characters.json`
+Done:
+- Reverse engineered Kuro's guide API; roster corrected from 46 → **54**
+  characters (brute-force scan originally missed a whole newer ID block,
+  1601-1608, all Havoc — see `.claude/rules/api.md`)
+- Character-select screen: grid + element/weapon-type filters, all real data
+- Build screen (`frontend/src/pages/BuildScreenPage.tsx`), built one section
+  at a time, each verified visually in a running browser, not just
+  type-checked:
+  - **Character Level** — real HP/ATK/DEF via a sourced level-scaling curve
+  - **Weapon** — full per-weapon-type catalog (not just recommended),
+    real computed ATK + secondary stat, rank-scaled passive text
+  - **Sequence Nodes** — real per-node names/icons, sequential toggle
+  - **Talents** — real 5-skill steppers (1-10) + Inherent Skills (togglable,
+    positioned above Forte Circuit as a deliberate simplification — see
+    `docs/DATA_REQUIREMENTS.md` for why exact per-skill placement isn't
+    derivable from available data)
+- Not started: **Echoes** (most data-blocked section — see
+  `docs/DATA_REQUIREMENTS.md`)
+
+See `docs/DATA_REQUIREMENTS.md` for exactly what's confirmed vs. inferred
+vs. still blocked in the underlying game data before touching Echoes or
+revisiting the weapon secondary-stat inference.
 
 @.claude/rules/architecture.md
 @.claude/rules/api.md
 @.claude/rules/database.md
 @.claude/rules/agent.md
 @.claude/rules/conventions.md
+@.claude/rules/frontend.md
 
 ## Commands
 

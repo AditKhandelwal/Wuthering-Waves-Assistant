@@ -88,3 +88,19 @@ CREATE TABLE conversation_history (
 - Row Level Security (RLS) must be enabled on all user tables
 - Never embed raw JSON from `wuwa_characters.json` — parse into clean text first
 - `role_gb_id` is the foreign key linking everything to Kuro's character system
+
+## Known schema gap (deferred intentionally)
+
+The frontend build screen (character level, weapon, sequence nodes, talents)
+is built and working against local component state only — no persistence
+yet. When a "save build" feature gets scoped, `user_characters` will need:
+- **Per-skill talent levels** (5 skills × 1-10 each) — no column for this at
+  all currently, `addPointTarget` skill order is Normal Attack/Resonance
+  Skill/Forte Circuit/Resonance Liberation/Intro Skill.
+- **Inherent Skill toggle state** (2 per character, on/off) — also no
+  column.
+- `resonance_level INTEGER` (0-6) is probably still fine for sequence nodes
+  as long as nodes only ever unlock in order 1→6 (not confirmed out-of-order
+  unlock is impossible, but the frontend already assumes sequential).
+
+Not fixing this now — flagging so it's not rediscovered from scratch later.
