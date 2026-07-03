@@ -54,20 +54,20 @@ function SolidIcon({ src, alt, className }: { src: string; alt: string; classNam
 
 function CompactSequenceRow({ nodes, unlockedCount }: { nodes: SequenceNode[]; unlockedCount: number }) {
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex w-full flex-wrap items-center justify-center gap-5">
       {nodes.map((node) => {
         const unlocked = node.sequence <= unlockedCount;
         return (
           <span
             key={node.sequence}
             title={node.name}
-            className={`flex h-8 w-8 shrink-0 rotate-45 items-center justify-center border bg-panel-alt ${
+            className={`flex h-11 w-11 shrink-0 rotate-45 items-center justify-center border bg-panel-alt ${
               unlocked
                 ? "border-gold shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
-                : "border-border opacity-50"
+                : "border-border opacity-80"
             }`}
           >
-            <SolidIcon src={node.pictureUrl} alt={node.name} className="-rotate-45 h-5 w-5" />
+            <SolidIcon src={node.pictureUrl} alt={node.name} className="-rotate-45 h-7 w-7" />
           </span>
         );
       })}
