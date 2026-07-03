@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { BuildCard } from "../components/BuildCard";
 import { EchoPicker } from "../components/EchoPicker";
 import { SequenceNodeRow } from "../components/SequenceNodeRow";
 import { StatBox } from "../components/StatBox";
+import { StatIcon } from "../components/StatIcon";
 import { TalentGrid } from "../components/TalentGrid";
 import { WeaponPicker } from "../components/WeaponPicker";
-import { loadRoster } from "../lib/characters";
+import { ELEMENT_PORTRAIT_CLASS, loadRoster } from "../lib/characters";
 import {
   availableSubStatNames,
   computeActiveSetBonuses,
   computeEchoMainStatValue,
   computeEchoStatSummary,
-  isFlatStat,
+  COST_DISC_CLASS,
+  formatStatValue,
   loadEchoCatalog,
   loadEchoRecommendation,
   loadEchoSets,
@@ -20,7 +23,7 @@ import {
 import { loadSequenceNodes } from "../lib/sequenceNodes";
 import { loadStatIcons } from "../lib/statIcons";
 import { computeStats, loadStatCurves } from "../lib/stats";
-import { loadInherentSkills, loadTalents } from "../lib/talents";
+import { loadInherentSkills, loadKeynoteSkills, loadTalents } from "../lib/talents";
 import { renderRankScaledText, stripHtml } from "../lib/text";
 import {
   computeWeaponAtk,
@@ -28,7 +31,7 @@ import {
   loadWeaponCatalog,
   loadWeaponStatCurves,
 } from "../lib/weapons";
-import type { Character } from "../types/character";
+import type { Character, ElementName } from "../types/character";
 import type {
   EchoCatalogEntry,
   EchoMainStatOption,
@@ -38,7 +41,7 @@ import type {
 } from "../types/echo";
 import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
-import type { InherentSkill, Talent } from "../types/talent";
+import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
 import type { EchoCatalog, EchoRecommendation } from "../lib/echoes";
 import type { WeaponCatalog } from "../lib/weapons";
 import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
@@ -59,41 +62,6 @@ function emptyEquippedEchoes(): EquippedEcho[] {
   }));
 }
 
-// Cost tier has no in-game color convention sourced from this app's data --
-// UI-only design choice (gold = rarest/highest cost), not a game data claim.
-const COST_DISC_CLASS: Record<1 | 3 | 4, string> = {
-  4: "border-gold text-gold-soft",
-  3: "border-gold-soft/60 text-text",
-  1: "border-border text-text-muted",
-};
-
-function StatIcon({ icons, name }: { icons: Record<string, string> | null; name: string }) {
-  const url = icons?.[name];
-  if (!url) return null;
-  return <img src={url} alt={name} className="h-3.5 w-3.5" />;
-}
-
-// box-shadow-based rings/glows don't follow clip-path -- they'd render as a
-// plain rectangle around the angular clipped corners. `border` and
-// `filter: drop-shadow` both respect clip-path, so use those instead to get
-// a border+glow that actually hugs the clipped shape. Each class string is
-// spelled out fully (not built via template-literal interpolation) because
-// Tailwind statically scans source text for complete class names -- a
-// dynamically-assembled string never generates any CSS.
-const ELEMENT_PORTRAIT_CLASS: Record<Character["element"], string> = {
-  Glacio:
-    "[border-color:var(--color-element-glacio)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-glacio)_45%,transparent))]",
-  Fusion:
-    "[border-color:var(--color-element-fusion)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-fusion)_45%,transparent))]",
-  Electro:
-    "[border-color:var(--color-element-electro)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-electro)_45%,transparent))]",
-  Aero: "[border-color:var(--color-element-aero)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-aero)_45%,transparent))]",
-  Spectro:
-    "[border-color:var(--color-element-spectro)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-spectro)_45%,transparent))]",
-  Havoc:
-    "[border-color:var(--color-element-havoc)] [filter:drop-shadow(0_0_10px_color-mix(in_srgb,var(--color-element-havoc)_45%,transparent))]",
-};
-
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="clip-corner border border-border bg-panel p-5">
@@ -103,10 +71,6 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
       {children}
     </section>
   );
-}
-
-function formatStatValue(value: number, statName: string): string {
-  return isFlatStat(statName) ? String(Math.round(value)) : `${value.toFixed(1)}%`;
 }
 
 function EchoSlotCard({
@@ -128,6 +92,11 @@ function EchoSlotCard({
   const mainStatValue = selectedMainOption
     ? computeEchoMainStatValue(selectedMainOption, slot.level)
     : null;
+  // Every echo has 2 main stats: this fixed one (flat ATK for cost 3/4, flat
+  // HP for cost 1) is always present alongside the player-chosen one above --
+  // confirmed against a real echo card, see docs/DATA_REQUIREMENTS.md.
+  const staticOption = cost && curves ? curves.staticMainStatByCost[cost] : null;
+  const staticValue = staticOption ? computeEchoMainStatValue(staticOption, slot.level) : null;
 
   return (
     <div className="border border-border bg-panel-alt p-3">
@@ -172,7 +141,16 @@ function EchoSlotCard({
                 </span>
               </div>
 
-              <div className="mt-3 flex items-center gap-2">
+              {staticOption && staticValue !== null && (
+                <div className="mt-3 flex items-center gap-2">
+                  <span className="min-w-0 flex-1 text-xs text-text">{staticOption.statName}</span>
+                  <span className="shrink-0 whitespace-nowrap text-xs tabular-nums text-gold-soft">
+                    {formatStatValue(staticValue, staticOption.statName)}
+                  </span>
+                </div>
+              )}
+
+              <div className="mt-1 flex items-center gap-2">
                 <span className="shrink-0 text-[10px] uppercase tracking-wide text-text-muted">Main</span>
                 <select
                   value={slot.mainStatPropId ?? ""}
@@ -285,6 +263,7 @@ export function BuildScreenPage() {
   const [talentLevels, setTalentLevels] = useState<number[]>([]);
   const [inherentSkills, setInherentSkills] = useState<InherentSkill[]>([]);
   const [inherentActive, setInherentActive] = useState<boolean[]>([]);
+  const [keynoteSkills, setKeynoteSkills] = useState<KeynoteSkill[]>([]);
 
   const [echoCatalog, setEchoCatalog] = useState<EchoCatalog | null>(null);
   const [echoSets, setEchoSets] = useState<EchoSet[]>([]);
@@ -292,6 +271,9 @@ export function BuildScreenPage() {
   const [echoRecommendation, setEchoRecommendation] = useState<EchoRecommendation | null>(null);
   const [equippedEchoes, setEquippedEchoes] = useState<EquippedEcho[]>(emptyEquippedEchoes());
   const [echoPickerSlot, setEchoPickerSlot] = useState<number | null>(null);
+
+  const [cardView, setCardView] = useState(false);
+  const [elementIcons, setElementIcons] = useState<Record<ElementName, string> | null>(null);
 
   useEffect(() => {
     loadRoster().then(({ characters }) => {
@@ -315,11 +297,13 @@ export function BuildScreenPage() {
         setInherentSkills(loaded);
         setInherentActive(loaded.map(() => true));
       });
+      loadKeynoteSkills(characterId).then(setKeynoteSkills);
       loadEchoRecommendation(characterId).then(setEchoRecommendation);
     }
   }, [characterId]);
 
   useEffect(() => {
+    loadRoster().then(({ elementIcons }) => setElementIcons(elementIcons));
     loadWeaponCatalog().then(setWeaponCatalog);
     loadWeaponStatCurves().then(setWeaponCurves);
     loadStatIcons().then(setStatIcons);
@@ -428,13 +412,41 @@ export function BuildScreenPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-8 py-10">
-      <Link
-        to="/"
-        className="mb-6 inline-block text-sm text-text-muted hover:text-gold-soft transition"
-      >
-        &larr; Characters
-      </Link>
+      <div className="mb-6 flex items-center justify-between">
+        <Link to="/" className="text-sm text-text-muted hover:text-gold-soft transition">
+          &larr; Characters
+        </Link>
+        <button
+          onClick={() => setCardView((current) => !current)}
+          className="rounded-sm border border-gold-soft px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt"
+        >
+          {cardView ? "Edit Build" : "View Card"}
+        </button>
+      </div>
 
+      {cardView ? (
+        <BuildCard
+          character={character}
+          level={level}
+          curves={curves}
+          statIcons={statIcons}
+          elementIcons={elementIcons}
+          selectedWeapon={selectedWeapon}
+          weaponLevel={weaponLevel}
+          weaponRank={weaponRank}
+          weaponCurves={weaponCurves}
+          sequenceNodes={sequenceNodes}
+          unlockedCount={unlockedCount}
+          talents={talents}
+          talentLevels={talentLevels}
+          inherentSkills={inherentSkills}
+          inherentActive={inherentActive}
+          keynoteSkills={keynoteSkills}
+          equippedEchoes={equippedEchoes}
+          echoCurves={echoCurves}
+          echoSets={echoSets}
+        />
+      ) : (
       <div className="grid grid-cols-[240px_1fr] gap-8">
         {/* Left: portrait + level */}
         <div className="flex flex-col gap-4">
@@ -599,6 +611,7 @@ export function BuildScreenPage() {
                   current.map((active, i) => (i === index ? !active : active)),
                 )
               }
+              keynoteSkills={keynoteSkills}
             />
           </Panel>
 
@@ -624,10 +637,10 @@ export function BuildScreenPage() {
                   Echo Stat Summary
                 </span>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {computeEchoStatSummary(equippedEchoes, echoCurves).length === 0 && (
+                  {computeEchoStatSummary(equippedEchoes, echoCurves, stats).length === 0 && (
                     <p className="text-xs text-text-muted">No stats gained yet.</p>
                   )}
-                  {computeEchoStatSummary(equippedEchoes, echoCurves).map((total) => (
+                  {computeEchoStatSummary(equippedEchoes, echoCurves, stats).map((total) => (
                     <StatBox
                       key={total.statName}
                       icon={<StatIcon icons={statIcons} name={total.statName} />}
@@ -676,6 +689,7 @@ export function BuildScreenPage() {
           </Panel>
         </div>
       </div>
+      )}
 
       {pickerOpen && weaponCatalog && character && (
         <WeaponPicker

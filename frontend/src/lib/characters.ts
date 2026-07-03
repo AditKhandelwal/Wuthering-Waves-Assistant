@@ -6,6 +6,43 @@ import {
   type WeaponTypeName,
 } from "../types/character";
 
+// box-shadow-based rings/glows don't follow clip-path -- they'd render as a
+// plain rectangle around the angular clipped corners. `border` and
+// `filter: drop-shadow` both respect clip-path, so use those instead to get
+// a border+glow that actually hugs the clipped shape. Each class string is
+// spelled out fully (not built via template-literal interpolation) because
+// Tailwind statically scans source text for complete class names -- a
+// dynamically-assembled string never generates any CSS. Shared by
+// BuildScreenPage and BuildCard so the portrait glow stays consistent. The
+// glow itself pulses (see the glow-* keyframes in index.css) rather than
+// sitting at one static intensity, to read as an actual glow instead of a
+// flat colored outline.
+export const ELEMENT_PORTRAIT_CLASS: Record<ElementName, string> = {
+  Glacio: "[border-color:var(--color-element-glacio)] [animation:glow-glacio_2.4s_ease-in-out_infinite]",
+  Fusion: "[border-color:var(--color-element-fusion)] [animation:glow-fusion_2.4s_ease-in-out_infinite]",
+  Electro: "[border-color:var(--color-element-electro)] [animation:glow-electro_2.4s_ease-in-out_infinite]",
+  Aero: "[border-color:var(--color-element-aero)] [animation:glow-aero_2.4s_ease-in-out_infinite]",
+  Spectro: "[border-color:var(--color-element-spectro)] [animation:glow-spectro_2.4s_ease-in-out_infinite]",
+  Havoc: "[border-color:var(--color-element-havoc)] [animation:glow-havoc_2.4s_ease-in-out_infinite]",
+};
+
+// Subtle radial tint behind the build card, reflecting the character's own
+// element color -- a UI-only design choice (not a game-data claim), same
+// dynamic-class-string caveat as above (each value fully spelled out).
+export const ELEMENT_CARD_BG_CLASS: Record<ElementName, string> = {
+  Glacio:
+    "bg-[radial-gradient(ellipse_120%_100%_at_15%_0%,color-mix(in_srgb,var(--color-element-glacio)_16%,transparent),transparent_65%),var(--color-panel)]",
+  Fusion:
+    "bg-[radial-gradient(ellipse_120%_100%_at_15%_0%,color-mix(in_srgb,var(--color-element-fusion)_16%,transparent),transparent_65%),var(--color-panel)]",
+  Electro:
+    "bg-[radial-gradient(ellipse_120%_100%_at_15%_0%,color-mix(in_srgb,var(--color-element-electro)_16%,transparent),transparent_65%),var(--color-panel)]",
+  Aero: "bg-[radial-gradient(ellipse_120%_100%_at_15%_0%,color-mix(in_srgb,var(--color-element-aero)_16%,transparent),transparent_65%),var(--color-panel)]",
+  Spectro:
+    "bg-[radial-gradient(ellipse_120%_100%_at_15%_0%,color-mix(in_srgb,var(--color-element-spectro)_16%,transparent),transparent_65%),var(--color-panel)]",
+  Havoc:
+    "bg-[radial-gradient(ellipse_120%_100%_at_15%_0%,color-mix(in_srgb,var(--color-element-havoc)_16%,transparent),transparent_65%),var(--color-panel)]",
+};
+
 interface RawText {
   language: string;
   name: string;

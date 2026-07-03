@@ -7,6 +7,7 @@ import type {
   EquippedEcho,
   SubStatOption,
 } from "../types/echo";
+import type { ComputedStats } from "../types/stats";
 
 // Stats that render as a flat number rather than a percentage. Everything
 // else in this app's echo/weapon stat names is a percent -- same convention
@@ -16,6 +17,21 @@ const FLAT_STAT_NAMES = new Set(["HP", "ATK", "DEF"]);
 export function isFlatStat(statName: string): boolean {
   return FLAT_STAT_NAMES.has(statName);
 }
+
+export function formatStatValue(value: number, statName: string): string {
+  return isFlatStat(statName) ? String(Math.round(value)) : `${value.toFixed(1)}%`;
+}
+
+// Cost tier has no in-game color convention sourced from this app's data --
+// UI-only design choice (gold = rarest/highest cost), not a game data claim.
+// Spelled out literally per Tailwind v4's dynamic-class-string gotcha (see
+// .claude/rules/frontend.md) -- shared by EchoPicker, EchoSlotCard, and
+// EchoCardTile so the convention stays in one place.
+export const COST_DISC_CLASS: Record<1 | 3 | 4, string> = {
+  4: "border-gold text-gold-soft",
+  3: "border-gold-soft/60 text-text",
+  1: "border-border text-text-muted",
+};
 
 interface RawEchoCatalog {
   echoes: {
@@ -34,6 +50,7 @@ interface RawEchoSets {
 
 interface RawEchoStatCurves {
   mainStatOptionsByCost: Record<string, EchoMainStatOption[]>;
+  staticMainStatByCost: Record<string, EchoMainStatOption>;
   subStatOptions: SubStatOption[];
 }
 
@@ -88,6 +105,11 @@ export async function loadEchoStatCurves(): Promise<EchoStatCurves> {
       3: raw.mainStatOptionsByCost["3"] ?? [],
       4: raw.mainStatOptionsByCost["4"] ?? [],
     },
+    staticMainStatByCost: {
+      1: raw.staticMainStatByCost["1"],
+      3: raw.staticMainStatByCost["3"],
+      4: raw.staticMainStatByCost["4"],
+    },
     subStatOptions: raw.subStatOptions,
   };
 }
@@ -121,27 +143,17 @@ export interface EchoStatTotal {
   value: number;
 }
 
-// Requested display order. Flat and % variants of the same base stat (e.g.
-// "HP" and "HP%") are kept as separate rows -- they're different units and
-// can't be summed together -- but placed adjacent so they read as one group.
-const SUMMARY_STAT_ORDER = [
-  "HP",
-  "HP%",
-  "ATK",
-  "ATK%",
-  "DEF",
-  "DEF%",
-  "Energy Regen",
-  "Crit. Rate",
-  "Crit. DMG",
-];
-
-// Sums every equipped echo's main stat + rolled substats by exact stat name,
-// then returns only the non-zero totals in SUMMARY_STAT_ORDER.
-export function computeEchoStatSummary(
+// Sums every equipped echo's main stats (both the fixed static one -- flat
+// ATK for cost 3/4, flat HP for cost 1 -- and the player-chosen variable one)
+// plus rolled substats, by exact stat name. Raw/unfiltered -- includes every
+// stat name that can appear (elemental DMG bonus, Healing Bonus, etc), not
+// just the 6 shown in computeEchoStatSummary below. Shared by
+// computeEchoStatSummary (edit-view panel) and computeFinalStats
+// (final-stats aggregation).
+export function computeEchoStatTotals(
   equipped: EquippedEcho[],
   curves: EchoStatCurves,
-): EchoStatTotal[] {
+): Map<string, number> {
   const totals = new Map<string, number>();
   const add = (statName: string, value: number) => {
     totals.set(statName, (totals.get(statName) ?? 0) + value);
@@ -149,21 +161,52 @@ export function computeEchoStatSummary(
 
   for (const slot of equipped) {
     if (!slot.echo) continue;
-    const mainOption = curves.mainStatOptionsByCost[slot.echo.cost].find(
+
+    const staticOption = curves.staticMainStatByCost[slot.echo.cost];
+    const staticValue = computeEchoMainStatValue(staticOption, slot.level);
+    if (staticValue !== null) add(staticOption.statName, staticValue);
+
+    const variableOption = curves.mainStatOptionsByCost[slot.echo.cost].find(
       (o) => o.propId === slot.mainStatPropId,
     );
-    if (mainOption) {
-      const value = computeEchoMainStatValue(mainOption, slot.level);
-      if (value !== null) add(mainOption.statName, value);
+    if (variableOption) {
+      const value = computeEchoMainStatValue(variableOption, slot.level);
+      if (value !== null) add(variableOption.statName, value);
     }
+
     for (const sub of slot.substats) {
       if (sub.statName && sub.value !== null) add(sub.statName, sub.value);
     }
   }
 
-  return SUMMARY_STAT_ORDER.map((statName) => ({ statName, value: totals.get(statName) ?? 0 })).filter(
-    (t) => t.value !== 0,
-  );
+  return totals;
+}
+
+// The 6 stats shown in the edit-view "Echo Stat Summary" panel. HP/ATK/DEF
+// merge their flat and % contributions into a single "amount gained" number
+// (using the character's own base stat to convert the % share into the same
+// units as the flat share) -- Energy Regen/Crit Rate/Crit DMG are already
+// percent-only, nothing to merge. Hides any stat that comes out to 0.
+export function computeEchoStatSummary(
+  equipped: EquippedEcho[],
+  curves: EchoStatCurves,
+  baseStats: ComputedStats | null,
+): EchoStatTotal[] {
+  const totals = computeEchoStatTotals(equipped, curves);
+  const get = (statName: string) => totals.get(statName) ?? 0;
+
+  const hpGain = (baseStats?.hp ?? 0) * (get("HP%") / 100) + get("HP");
+  const atkGain = (baseStats?.atk ?? 0) * (get("ATK%") / 100) + get("ATK");
+  const defGain = (baseStats?.def ?? 0) * (get("DEF%") / 100) + get("DEF");
+
+  return [
+    { statName: "HP", value: hpGain },
+    { statName: "ATK", value: atkGain },
+    { statName: "DEF", value: defGain },
+    { statName: "Energy Regen", value: get("Energy Regen") },
+    { statName: "Crit. Rate", value: get("Crit. Rate") },
+    { statName: "Crit. DMG", value: get("Crit. DMG") },
+  ].filter((t) => t.value !== 0);
 }
 
 // Real game rule: a given echo's 5 substats can't repeat a stat among

@@ -1,4 +1,5 @@
 import { WEAPON_TYPE_BY_GB_ID } from "./characters";
+import { formatStatValue } from "./echoes";
 import type { WeaponTypeName } from "../types/character";
 import type { ComputedSecondaryStat, WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
 
@@ -129,12 +130,9 @@ export function computeWeaponSecondaryStat(
 
   const scaled = (stat.value * point.ratio) / 10000;
 
-  if (name === "ATK") {
-    return { name, displayValue: String(Math.round(scaled)) };
-  }
   // Crit Rate/DMG/Energy Regen (isRatio=false) store the base value as a
   // percent times 100 (540 -> 5.4%); ATK%/HP%/DEF% (isRatio=true) store it
-  // as a raw fraction (0.081 -> 8.1%).
-  const percent = stat.isRatio ? scaled * 100 : scaled / 100;
-  return { name, displayValue: `${percent.toFixed(1)}%` };
+  // as a raw fraction (0.081 -> 8.1%). Flat ATK just needs rounding.
+  const value = name === "ATK" ? Math.round(scaled) : stat.isRatio ? scaled * 100 : scaled / 100;
+  return { name, value, displayValue: formatStatValue(value, name) };
 }

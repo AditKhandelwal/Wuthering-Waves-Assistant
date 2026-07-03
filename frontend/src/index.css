@@ -32,3 +32,33 @@ body {
 .clip-corner {
   clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
 }
+
+/* Pulsing element-color glow for character portraits (build card + build
+   screen) -- one keyframe per element since `filter` can't reference a CSS
+   custom property's value through Tailwind's arbitrary-value syntax cleanly.
+   Replaces a flat, unchanging drop-shadow with an actual glow effect closer
+   to how element auras animate in-game. */
+@keyframes glow-glacio {
+  0%, 100% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-element-glacio) 40%, transparent)); }
+  50% { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-element-glacio) 80%, transparent)); }
+}
+@keyframes glow-fusion {
+  0%, 100% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-element-fusion) 40%, transparent)); }
+  50% { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-element-fusion) 80%, transparent)); }
+}
+@keyframes glow-electro {
+  0%, 100% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-element-electro) 40%, transparent)); }
+  50% { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-element-electro) 80%, transparent)); }
+}
+@keyframes glow-aero {
+  0%, 100% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-element-aero) 40%, transparent)); }
+  50% { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-element-aero) 80%, transparent)); }
+}
+@keyframes glow-spectro {
+  0%, 100% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-element-spectro) 40%, transparent)); }
+  50% { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-element-spectro) 80%, transparent)); }
+}
+@keyframes glow-havoc {
+  0%, 100% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-element-havoc) 40%, transparent)); }
+  50% { filter: drop-shadow(0 0 20px color-mix(in srgb, var(--color-element-havoc) 80%, transparent)); }
+}
