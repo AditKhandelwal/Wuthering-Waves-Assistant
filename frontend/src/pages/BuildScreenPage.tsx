@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { loadRoster } from "../lib/characters";
+import { ASCENSION_BREAKPOINTS, computeStats, loadStatCurves, maxLevelForBreach } from "../lib/stats";
 import type { Character } from "../types/character";
+import type { StatCurveData } from "../types/stats";
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -17,13 +19,23 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 export function BuildScreenPage() {
   const { characterId } = useParams();
   const [character, setCharacter] = useState<Character | null>(null);
+  const [curves, setCurves] = useState<StatCurveData | null>(null);
   const [level, setLevel] = useState(1);
+  const [breachLevel, setBreachLevel] = useState(0);
 
   useEffect(() => {
     loadRoster().then(({ characters }) => {
       setCharacter(characters.find((c) => c.roleGbId === characterId) ?? null);
     });
+    loadStatCurves().then(setCurves);
+    setLevel(1);
+    setBreachLevel(0);
   }, [characterId]);
+
+  const maxLevel = maxLevelForBreach(breachLevel);
+  const canAscend = level === maxLevel && breachLevel < ASCENSION_BREAKPOINTS.length - 1;
+  const stats =
+    character && curves ? computeStats(curves, character.roleGbId, level, breachLevel) : null;
 
   if (!character) {
     return (
@@ -61,13 +73,41 @@ export function BuildScreenPage() {
               <input
                 type="range"
                 min={1}
-                max={90}
+                max={maxLevel}
                 value={level}
                 onChange={(e) => setLevel(Number(e.target.value))}
                 className="w-full accent-gold"
               />
-              <span className="w-10 text-right text-sm text-gold-soft">{level}</span>
+              <span className="w-14 text-right text-sm text-gold-soft">
+                {level} / {maxLevel}
+              </span>
             </div>
+
+            {canAscend && (
+              <button
+                onClick={() => setBreachLevel((b) => b + 1)}
+                className="mt-3 w-full rounded-sm border border-gold py-1.5 text-xs font-semibold tracking-wide text-gold-soft transition hover:bg-panel-alt"
+              >
+                ASCEND
+              </button>
+            )}
+
+            {stats && (
+              <dl className="mt-4 grid grid-cols-3 gap-2 text-center">
+                <div>
+                  <dt className="text-[10px] uppercase tracking-wide text-text-muted">HP</dt>
+                  <dd className="text-sm text-text">{stats.hp.toLocaleString()}</dd>
+                </div>
+                <div>
+                  <dt className="text-[10px] uppercase tracking-wide text-text-muted">ATK</dt>
+                  <dd className="text-sm text-text">{stats.atk.toLocaleString()}</dd>
+                </div>
+                <div>
+                  <dt className="text-[10px] uppercase tracking-wide text-text-muted">DEF</dt>
+                  <dd className="text-sm text-text">{stats.def.toLocaleString()}</dd>
+                </div>
+              </dl>
+            )}
           </Panel>
         </div>
 
