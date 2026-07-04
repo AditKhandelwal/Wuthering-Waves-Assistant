@@ -248,16 +248,27 @@ STAT_PROP_INFO = {
     "HP%": (100022, 2),
     "ATK%": (100072, 2),
     "DEF%": (100102, 2),
-    "Crit. Rate": (81, 1),
-    "Crit. DMG": (91, 1),
-    "Healing Bonus": (351, 1),
-    "Energy Regen": (111, 1),
-    "Aero DMG Bonus": (251, 1),
-    "Glacio DMG Bonus": (221, 1),
-    "Fusion DMG Bonus": (231, 1),
-    "Electro DMG Bonus": (241, 1),
-    "Havoc DMG Bonus": (271, 1),
-    "Spectro DMG Bonus": (261, 1),
+    # BUG FIX (found 2026-07-04, testing echo-screenshot-import against a
+    # real Kronablight card): these 10 were hardcoded addType 1 (flat) --
+    # wrong, unconditionally, for every one of them. Crit. Rate/DMG, Energy
+    # Regen, Healing Bonus, and all 6 elemental DMG Bonus variants are always
+    # rendered as a percentage in-game; there is no flat version of any of
+    # these as a *variable* main-stat option (the only genuinely flat main
+    # stats are the separate STATIC one -- HP/ATK above -- which cost-1/3/4
+    # echoes always carry alongside whichever variable option is picked).
+    # This wasn't just cosmetic: it silently fed into ladderForMainStat's
+    # addType gate in the frontend's OCR-import decimal-recovery logic,
+    # which only retries a dropped-decimal-point read for addType 2 stats.
+    "Crit. Rate": (81, 2),
+    "Crit. DMG": (91, 2),
+    "Healing Bonus": (351, 2),
+    "Energy Regen": (111, 2),
+    "Aero DMG Bonus": (251, 2),
+    "Glacio DMG Bonus": (221, 2),
+    "Fusion DMG Bonus": (231, 2),
+    "Electro DMG Bonus": (241, 2),
+    "Havoc DMG Bonus": (271, 2),
+    "Spectro DMG Bonus": (261, 2),
 }
 
 # ---------------------------------------------------------------------------
@@ -284,18 +295,24 @@ GROUP_A_LADDERS = {
     "HP": ([320, 360, 390, 430, 470, 510, 540, 580], 1),
 }
 
-# CORRECTED (user, real in-game knowledge, 2026-07-03): none of these 10
-# DMG Bonus names (6 elemental + 4 attack-type) are actually valid ECHO
-# SUBSTATS -- elemental DMG Bonus is only ever a variable MAIN stat (cost-3
-# echoes only, see staticMainStatByCost below), and attack-type DMG Bonus
-# doesn't appear on echoes at all. The infographic's "DMG %" row apparently
-# doesn't map onto the substat pool the way it was originally assumed to.
-# GROUP_A_DMG_LADDER/GROUP_A_DMG_STAT_NAMES are kept here as a record of what
-# was transcribed and then found wrong -- build_substat_options() no longer
-# emits them. Real substat pool is exactly the 9 GROUP_A_LADDERS + GROUP_B_LADDERS
-# names. Don't resurrect without new evidence.
+# RE-CORRECTED (real echo-card screenshots, 2026-07-04): the 2026-07-03 fix
+# below went too far. Attack-type DMG Bonus (Basic Attack/Heavy Attack/
+# Resonance Skill/Resonance Liberation) IS a real echo substat -- confirmed
+# by 4 independent user-provided screenshots, each showing one of these 4
+# names as a "+"-prefixed substat row, and every observed value (10.1%, 7.9%,
+# 8.6%, 7.1%, 8.6%) is an exact hit on this same GROUP_A_DMG_LADDER. Elemental
+# DMG Bonus (Aero/Electro/Fusion/Glacio/Havoc/Spectro) stays excluded -- no
+# screenshot has ever shown it as a substat, and it's confirmed main-stat-only
+# (cost-3 echoes) by real in-game knowledge. Real substat pool is 13: the 9
+# GROUP_A_LADDERS + GROUP_B_LADDERS names, plus these 4 attack-type DMG Bonus
+# names. Don't remove these again without new contradicting evidence.
 GROUP_A_DMG_LADDER = [6.4, 7.1, 7.9, 8.6, 9.4, 10.1, 10.9, 11.6]
-GROUP_A_DMG_STAT_NAMES: list[str] = []
+GROUP_A_DMG_STAT_NAMES: list[str] = [
+    "Basic Attack DMG Bonus",
+    "Heavy Attack DMG Bonus",
+    "Resonance Skill DMG Bonus",
+    "Resonance Liberation DMG Bonus",
+]
 
 GROUP_B_LADDERS = {
     "DEF": ([40, 50, 60, 70], 1),
@@ -864,8 +881,8 @@ def build_substat_options() -> list[dict]:
 def verify_substat_transcription() -> list[str]:
     errors = []
     options = build_substat_options()
-    if len(options) != 9:
-        errors.append(f"Expected 9 substat entries, got {len(options)}")
+    if len(options) != 13:
+        errors.append(f"Expected 13 substat entries, got {len(options)}")
     for opt in options:
         if len(opt["values"]) != len(opt["chances"]):
             errors.append(f"{opt['statName']}: values/chances length mismatch")
@@ -1037,18 +1054,18 @@ def run_verification(
             log(f"    - {n}")
         all_ok = False
 
-    # (d) exactly 9 substat entries -- corrected from an earlier assumed 19
-    # (see GROUP_A_DMG_STAT_NAMES comment): DMG Bonus names (elemental and
-    # attack-type) aren't real substats, confirmed against real in-game data.
-    # Arikatsu's phantomsubproperty.json (19 rows) is no longer expected to
+    # (d) exactly 13 substat entries (see GROUP_A_DMG_STAT_NAMES comment):
+    # 9 plain stats + 4 attack-type DMG Bonus names, confirmed by real
+    # echo-card screenshots. Elemental DMG Bonus stays excluded (main-stat
+    # only). Arikatsu's phantomsubproperty.json (19 rows) is not expected to
     # match this count -- it's not a reliable "confirmed active substat pool"
-    # source on its own, just cross-referenced for the 9 real ones.
+    # source on its own, just cross-referenced for these 13.
     sub_count = len(curves["subStatOptions"])
-    if sub_count != 9:
-        log(f"  [FAIL] expected 9 substat entries, got {sub_count}")
+    if sub_count != 13:
+        log(f"  [FAIL] expected 13 substat entries, got {sub_count}")
         all_ok = False
     else:
-        log("  [OK] subStatOptions has exactly 9 entries (the real substat pool)")
+        log("  [OK] subStatOptions has exactly 13 entries (the real substat pool)")
 
     log(f"\n=== VERIFICATION {'PASSED' if all_ok else 'FAILED'} ===")
     return all_ok
@@ -1187,7 +1204,7 @@ def main():
         for e in substat_errors:
             log(f"  [FAIL] {e}")
     else:
-        log("  [OK] 9 entries transcribed, values/chances lengths match, both groups' chances sum to ~100%")
+        log("  [OK] 13 entries transcribed, values/chances lengths match, both groups' chances sum to ~100%")
     log(
         f"  [INFO] Arikatsu's phantomsubproperty.json has {substat_count} rows -- no longer expected to "
         "match (that file isn't a reliable confirmed-substat-pool source on its own, see "

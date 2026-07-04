@@ -125,23 +125,30 @@ This also resolves a question the original script's own verification gate
 was already flagging (`echoAttributes[].attribute`/`attribute2` in
 `wuwa_characters.json` — `attribute2` is exactly this static stat).
 
-### Echo substats never include any DMG Bonus (user correction, 2026-07-03)
+### Echo substats: elemental DMG Bonus excluded, attack-type DMG Bonus included (superseded again, 2026-07-04)
 
-Also corrected in the same pass: neither elemental DMG Bonus (Glacio/Fusion/
-Electro/Aero/Spectro/Havoc) nor attack-type DMG Bonus (Basic Attack/Heavy
-Attack/Resonance Skill/Resonance Liberation) are real echo **substats** —
-elemental DMG Bonus is only ever a *variable main stat*, and only on cost-3
-echoes (see above); attack-type DMG Bonus doesn't appear on echoes at all.
-The community substat infographic's "DMG %" row, previously assumed to cover
-all 10 of these names off one shared ladder, doesn't actually apply to the
-substat pool this way. Real substat pool is exactly 9: HP, HP%, ATK, ATK%,
-DEF, DEF%, Crit. Rate, Crit. DMG, Energy Regen. `subStatOptions` in
-`echo_stat_curves.json` is down from 19 to 9 entries; `build_substat_options()`
-no longer emits `GROUP_A_DMG_STAT_NAMES` (kept as an empty list, with a
-comment, as a record of what was wrong rather than deleted outright).
-Arikatsu's `phantomsubproperty.json` (19 rows) is no longer treated as
-confirming the substat count — it isn't a reliable source for that on its
-own.
+The 2026-07-03 correction below went too far in one direction. Real
+screenshots provided while scoping the echo-screenshot-import feature (4
+independent echo cards) directly contradicted it: each one shows an
+attack-type DMG Bonus name (Basic Attack DMG Bonus, Heavy Attack DMG Bonus,
+Resonance Skill DMG Bonus — Resonance Liberation DMG Bonus not seen yet but
+presumed parallel) as a genuine "+"-prefixed substat row, and every observed
+value (10.1%, 7.9%, 8.6% ×2, 7.1%) is an exact hit on the same 8-step ladder
+`[6.4, 7.1, 7.9, 8.6, 9.4, 10.1, 10.9, 11.6]` this data already had recorded
+(and had briefly removed) for that stat group. **Elemental** DMG Bonus
+(Glacio/Fusion/Electro/Aero/Spectro/Havoc) stays excluded as a substat — no
+screenshot has ever shown it in a substat row, consistent with it being
+main-stat-only (cost-3 echoes, see above).
+
+Real substat pool is 13: HP, HP%, ATK, ATK%, DEF, DEF%, Crit. Rate, Crit.
+DMG, Energy Regen, plus Basic/Heavy Attack DMG Bonus and Resonance
+Skill/Liberation DMG Bonus. `subStatOptions` in `echo_stat_curves.json` is
+back up from 9 to 13 entries; `build_substat_options()` in
+`scripts/fetch_echo_data.py` emits `GROUP_A_DMG_STAT_NAMES` again (now
+holding just the 4 attack-type names, not all 10 from the original
+over-inclusive assumption). Arikatsu's `phantomsubproperty.json` (19 rows)
+still isn't treated as confirming this exact count — it's not a reliable
+source for that on its own, just cross-referenced for these 13.
 
 ### Rank → level derivation (confirmed, not guessed)
 
@@ -174,3 +181,5 @@ if rediscovered.
 
 - **Damage formula** (the full per-hit formula: `DMG = Base × Resistances × Bonuses`, `%DEF = (800+8×LVL_atk)/(800+8×LVL_atk+DEF_target×(1-DEF_ignore))` capped 200%) — still not wired in. Partially superseded: the *final-stats* half (base+weapon+echoes → HP/ATK/DEF/Crit Rate/Crit DMG/Energy Regen/DMG Bonus categories, using the universal base constants Crit Rate 5%/Crit DMG 150%/Energy Regen 100%, none of which exist in this app's data) **is** now wired in — see `frontend/src/lib/finalStats.ts`. What's still missing is the actual per-hit damage calculation (resistances, DEF mitigation, crit expected-value) on top of those final stats.
 - **Echo set-bonus effects (2pc/5pc) as structured stat deltas** — still just free-text `description` strings (`echo_sets.json`), not parsed into machine-usable stat contributions. Deliberately not attempted (see `computeActiveSetBonuses` in `lib/echoes.ts`) — shown as read-only tags, not folded into any total.
+- **Cost-3 static main-stat (flat ATK) curve is wrong at intermediate levels** (found 2026-07-04, testing the echo-screenshot-import feature against a real Kronablight card): level 0 and level 25 both check out exactly against real cards (see the three other confirmed matches below), but level 20 — one of the app's own "confirmed rank anchor" points (Rank 4, per the rank→level derivation section above) — computes 63 when the real card shows 84. Endpoints being right but an interior anchor being wrong suggests either a transcription error specific to this one value in the original per-rank source table, or that the static-ATK curve was never actually validated at its interior anchors the way the variable main-stat curves were (it was "recovered from git history," i.e. pulled from an earlier already-computed table, not freshly re-sourced — see "Every echo has 2 main stats" above). Confirmed-correct static-stat endpoints from real cards: cost 1 HP @ level 25 = 2280 ✓, cost 4 ATK @ level 25 = 150 ✓, cost 3 ATK @ level 25 = 100 ✓. Needs more real screenshots (ideally several cost-3 echoes at varied levels) to pin down the actual intermediate curve before touching the data — don't guess-patch a single value. The same Kronablight card also showed the cost-3 *variable* main stat (Fusion DMG Bonus) at level 20 reading 18.9 in this app's data vs. 25.2 on the real card — same symptom (endpoints untested here, but consistent with the static-ATK finding), rolled into this same open item rather than treated separately.
+- **Main-stat `addType` was wrong for 10 names, now fixed**: `STAT_PROP_INFO` in `scripts/fetch_echo_data.py` had Crit. Rate, Crit. DMG, Healing Bonus, Energy Regen, and all 6 elemental DMG Bonus variants hardcoded as `addType: 1` (flat) — wrong unconditionally, since none of these have a flat form as a variable main-stat option (only the separate *static* stat, HP/ATK, is ever flat). Unlike the curve-value issue above, this needed no new data to confirm (DMG Bonus/Crit/Energy Regen are always percentages in-game) and was fixed directly: `STAT_PROP_INFO` corrected, both `echo_stat_curves.json` copies patched (11 entries). Substats were unaffected — `build_substat_options()` already had these right, this bug was isolated to `mainStatOptionsByCost` construction. Caught because the frontend's OCR-import decimal-recovery logic (`frontend/src/lib/echoOcrParse.ts`) gates its "maybe the OCR dropped a decimal point" retry on `addType === 2`, so a wrong `addType` silently broke OCR matching for these stats specifically — a good example of why this field being correct actually matters beyond display formatting.
