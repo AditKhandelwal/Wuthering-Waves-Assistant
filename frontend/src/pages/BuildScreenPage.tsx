@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { BuildCard } from "../components/BuildCard";
+import { EchoImportModal } from "../components/EchoImportModal";
 import { EchoPicker } from "../components/EchoPicker";
 import { SequenceNodeRow } from "../components/SequenceNodeRow";
 import { StatBox } from "../components/StatBox";
@@ -77,12 +78,14 @@ function EchoSlotCard({
   slot,
   curves,
   onOpenPicker,
+  onOpenImport,
   onUpdate,
   onSubStatChange,
 }: {
   slot: EquippedEcho;
   curves: EchoStatCurves | null;
   onOpenPicker: () => void;
+  onOpenImport: () => void;
   onUpdate: (patch: Partial<EquippedEcho>) => void;
   onSubStatChange: (subIndex: number, statName: string | null, value: number | null) => void;
 }) {
@@ -117,12 +120,20 @@ function EchoSlotCard({
             <span className="truncate text-sm font-semibold text-gold-soft">
               {slot.echo?.name ?? "Empty Slot"}
             </span>
-            <button
-              onClick={onOpenPicker}
-              className="shrink-0 rounded-sm border border-gold-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt"
-            >
-              {slot.echo ? "Change" : "Select"}
-            </button>
+            <div className="flex shrink-0 gap-1.5">
+              <button
+                onClick={onOpenImport}
+                className="rounded-sm border border-border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-text-muted transition hover:border-gold-soft hover:text-gold-soft"
+              >
+                Import
+              </button>
+              <button
+                onClick={onOpenPicker}
+                className="rounded-sm border border-gold-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt"
+              >
+                {slot.echo ? "Change" : "Select"}
+              </button>
+            </div>
           </div>
 
           {slot.echo && curves && (
@@ -271,6 +282,7 @@ export function BuildScreenPage() {
   const [echoRecommendation, setEchoRecommendation] = useState<EchoRecommendation | null>(null);
   const [equippedEchoes, setEquippedEchoes] = useState<EquippedEcho[]>(emptyEquippedEchoes());
   const [echoPickerSlot, setEchoPickerSlot] = useState<number | null>(null);
+  const [echoImportSlot, setEchoImportSlot] = useState<number | null>(null);
 
   const [cardView, setCardView] = useState(false);
   const [elementIcons, setElementIcons] = useState<Record<ElementName, string> | null>(null);
@@ -388,6 +400,37 @@ export function BuildScreenPage() {
       ),
     );
     setEchoPickerSlot(null);
+  }
+
+  // Screenshot import always fully replaces the target slot -- identity,
+  // set, level, main stat, and all 5 substats -- rather than merging with
+  // whatever was there before, since the whole point is "match what's on
+  // this card," not a partial patch.
+  function handleEchoImportApply(
+    slotIndex: number,
+    result: {
+      echo: EchoCatalogEntry | null;
+      chosenSetName: string | null;
+      mainStatPropId: number | null;
+      level: number;
+      substats: EquippedEcho["substats"];
+    },
+  ) {
+    setEquippedEchoes((current) =>
+      current.map((slot, i) =>
+        i === slotIndex
+          ? {
+              ...slot,
+              echo: result.echo,
+              chosenSetName: result.chosenSetName,
+              mainStatPropId: result.mainStatPropId,
+              level: result.level,
+              substats: result.substats,
+            }
+          : slot,
+      ),
+    );
+    setEchoImportSlot(null);
   }
 
   const stats = character && curves ? computeStats(curves, character.roleGbId, level) : null;
@@ -625,6 +668,7 @@ export function BuildScreenPage() {
                   slot={slot}
                   curves={echoCurves}
                   onOpenPicker={() => setEchoPickerSlot(i)}
+                  onOpenImport={() => setEchoImportSlot(i)}
                   onUpdate={(patch) => updateEquippedEcho(i, patch)}
                   onSubStatChange={(subIndex, statName, value) =>
                     updateEchoSubStat(i, subIndex, statName, value)
@@ -714,6 +758,18 @@ export function BuildScreenPage() {
           recommendedSetNames={echoRecommendation?.recommendedSetNames ?? []}
           onSelect={(echo, chosenSetName) => handleEchoSelect(echoPickerSlot, echo, chosenSetName)}
           onClose={() => setEchoPickerSlot(null)}
+        />
+      )}
+
+      {echoImportSlot !== null && echoCatalog && echoCurves && (
+        <EchoImportModal
+          catalog={echoCatalog}
+          sets={echoSets}
+          recommendedSetNames={echoRecommendation?.recommendedSetNames ?? []}
+          curves={echoCurves}
+          currentEchoName={equippedEchoes[echoImportSlot].echo?.name ?? null}
+          onApply={(result) => handleEchoImportApply(echoImportSlot, result)}
+          onClose={() => setEchoImportSlot(null)}
         />
       )}
     </div>
