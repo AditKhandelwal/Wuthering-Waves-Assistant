@@ -1,4 +1,4 @@
-import { useState } from "react";
+import type { CharacterForteNodes, ForteNode } from "../types/forteNode";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
 
 interface TalentGridProps {
@@ -9,6 +9,11 @@ interface TalentGridProps {
   inherentActive: boolean[];
   onToggleInherent: (index: number) => void;
   keynoteSkills: KeynoteSkill[];
+  forteNodes: CharacterForteNodes | null;
+  // Flat array of 8 booleans: [col0-lower, col0-upper, col1-lower, col1-upper, ...]
+  // Columns are in the same order as SKILL_TO_FORTE_COLUMN keys.
+  forteNodeActive: boolean[];
+  onToggleForteNode: (flatIndex: number) => void;
 }
 
 function Connector() {
@@ -23,6 +28,67 @@ function Connector() {
 // for this view's larger nodes.
 const ARC_OFFSET_BY_DISTANCE = [0, 20, 64];
 
+// Maps the talent's skillType string to the forte node column key.
+// Forte Circuit is omitted — that column uses Inherent Skills instead.
+const SKILL_TO_FORTE_COLUMN: Record<string, keyof CharacterForteNodes> = {
+  "Normal Attack": "normal_attack",
+  "Resonance Skill": "resonance_skill",
+  "Resonance Liberation": "resonance_liberation",
+  "Intro Skill": "intro_skill",
+};
+
+// Column order for the flat forteNodeActive array (must match above, without Forte Circuit).
+const FORTE_COLUMN_ORDER: Array<keyof CharacterForteNodes> = [
+  "normal_attack",
+  "resonance_skill",
+  "resonance_liberation",
+  "intro_skill",
+];
+
+// Short stat abbreviations for display inside the 40×40px circle.
+function statAbbrev(stat: string): string {
+  if (stat === "Crit. Rate") return "CR";
+  if (stat === "Crit. DMG") return "CD";
+  if (stat === "ATK") return "ATK";
+  if (stat === "HP") return "HP";
+  if (stat === "DEF") return "DEF";
+  if (stat === "Healing Bonus") return "HB";
+  if (stat.endsWith("DMG Bonus")) return stat.charAt(0) + "DB";
+  return stat.slice(0, 3);
+}
+
+function ForteNodeButton({
+  node,
+  active,
+  onToggle,
+}: {
+  node: ForteNode;
+  active: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className="flex flex-col items-center">
+      <button
+        onClick={onToggle}
+        title={`${node.stat} +${node.value}%`}
+        className={`flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-full border bg-panel transition ${
+          active
+            ? "border-gold shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
+            : "border-border opacity-50 hover:border-gold-soft"
+        }`}
+      >
+        <span className={`text-[7px] font-bold leading-none tabular-nums ${active ? "text-gold" : "text-text-muted"}`}>
+          {statAbbrev(node.stat)}
+        </span>
+        <span className={`text-[7px] leading-none tabular-nums ${active ? "text-gold-soft" : "text-text-muted"}`}>
+          +{node.value}%
+        </span>
+      </button>
+      <Connector />
+    </div>
+  );
+}
+
 export function TalentGrid({
   talents,
   levels,
@@ -31,13 +97,10 @@ export function TalentGrid({
   inherentActive,
   onToggleInherent,
   keynoteSkills,
+  forteNodes,
+  forteNodeActive,
+  onToggleForteNode,
 }: TalentGridProps) {
-  // Placeholder nodes have no real data/icon yet -- togglable now so the
-  // interaction is already in place once real pngs replace these circles.
-  const [placeholderActive, setPlaceholderActive] = useState<Record<string, boolean>>({});
-  const togglePlaceholder = (key: string) =>
-    setPlaceholderActive((current) => ({ ...current, [key]: !current[key] }));
-
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-start justify-between gap-4">
@@ -45,6 +108,9 @@ export function TalentGrid({
           const level = levels[i] ?? 1;
           const isForteCircuit = talent.skillType === "Forte Circuit";
           const offset = ARC_OFFSET_BY_DISTANCE[Math.abs(i - 2)] ?? 0;
+          const forteColKey = SKILL_TO_FORTE_COLUMN[talent.skillType];
+          const colNodes = forteNodes && forteColKey ? forteNodes[forteColKey] : null;
+          const colOrderIndex = forteColKey ? FORTE_COLUMN_ORDER.indexOf(forteColKey) : -1;
 
           return (
             <div
@@ -90,27 +156,30 @@ export function TalentGrid({
                       </div>
                     );
                   })
-                : // Decorative placeholders -- no real icon/data yet, but
-                  // togglable so the interaction is ready for when real pngs
-                  // replace these plain circles.
-                  [0, 1].map((j) => {
-                    const key = `${talent.skillType}-${j}`;
-                    const active = placeholderActive[key] ?? false;
-                    return (
-                      <div key={j} className="flex flex-col items-center">
-                        <button
-                          onClick={() => togglePlaceholder(key)}
-                          title="Placeholder node -- no data yet"
-                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-panel transition ${
-                            active
-                              ? "border-gold shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
-                              : "border-border opacity-50 hover:border-gold-soft"
-                          }`}
+                : colNodes
+                  ? // Real forte node data — render upper (j=0) then lower (j=1)
+                    // Upper (index 1 in data) renders first (top of column, further from skill).
+                    // Lower (index 0 in data) renders second (closer to skill).
+                    [1, 0].map((tierIndex) => {
+                      const node = colNodes[tierIndex];
+                      const flatIndex = colOrderIndex * 2 + tierIndex;
+                      const active = forteNodeActive[flatIndex] ?? false;
+                      return (
+                        <ForteNodeButton
+                          key={tierIndex}
+                          node={node}
+                          active={active}
+                          onToggle={() => onToggleForteNode(flatIndex)}
                         />
+                      );
+                    })
+                  : // No forte data for this column — plain placeholder circles
+                    [0, 1].map((j) => (
+                      <div key={j} className="flex flex-col items-center">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-panel opacity-30" />
                         <Connector />
                       </div>
-                    );
-                  })}
+                    ))}
 
               <span
                 title={talent.name}

@@ -21,6 +21,7 @@ import {
   loadEchoSets,
   loadEchoStatCurves,
 } from "../lib/echoes";
+import { loadForteNodes } from "../lib/forteNodes";
 import { loadSequenceNodes } from "../lib/sequenceNodes";
 import { loadStatIcons } from "../lib/statIcons";
 import { computeStats, loadStatCurves } from "../lib/stats";
@@ -40,6 +41,7 @@ import type {
   EchoStatCurves,
   EquippedEcho,
 } from "../types/echo";
+import type { CharacterForteNodes } from "../types/forteNode";
 import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
@@ -275,6 +277,9 @@ export function BuildScreenPage() {
   const [inherentSkills, setInherentSkills] = useState<InherentSkill[]>([]);
   const [inherentActive, setInherentActive] = useState<boolean[]>([]);
   const [keynoteSkills, setKeynoteSkills] = useState<KeynoteSkill[]>([]);
+  const [forteNodes, setForteNodes] = useState<CharacterForteNodes | null>(null);
+  // 8 booleans: 4 columns × 2 tiers, all toggled on by default (representing a fully unlocked tree)
+  const [forteNodeActive, setForteNodeActive] = useState<boolean[]>(Array(8).fill(true));
 
   const [echoCatalog, setEchoCatalog] = useState<EchoCatalog | null>(null);
   const [echoSets, setEchoSets] = useState<EchoSet[]>([]);
@@ -297,10 +302,12 @@ export function BuildScreenPage() {
     setWeaponLevel(1);
     setWeaponRank(1);
     setUnlockedCount(0);
+    setForteNodeActive(Array(8).fill(true));
     setEquippedEchoes(emptyEquippedEchoes());
     setEchoRecommendation(null);
     if (characterId) {
       loadSequenceNodes(characterId).then(setSequenceNodes);
+      loadForteNodes(characterId).then(setForteNodes);
       loadTalents(characterId).then((loaded) => {
         setTalents(loaded);
         setTalentLevels(loaded.map(() => 1));
@@ -657,6 +664,13 @@ export function BuildScreenPage() {
                 )
               }
               keynoteSkills={keynoteSkills}
+              forteNodes={forteNodes}
+              forteNodeActive={forteNodeActive}
+              onToggleForteNode={(flatIndex) =>
+                setForteNodeActive((current) =>
+                  current.map((active, i) => (i === flatIndex ? !active : active)),
+                )
+              }
             />
           </Panel>
 
