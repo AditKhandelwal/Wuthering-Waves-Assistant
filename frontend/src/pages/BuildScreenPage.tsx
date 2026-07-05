@@ -495,6 +495,8 @@ export function BuildScreenPage() {
           equippedEchoes={equippedEchoes}
           echoCurves={echoCurves}
           echoSets={echoSets}
+          forteNodes={forteNodes}
+          forteNodeActive={forteNodeActive}
         />
       ) : (
       <div className="grid grid-cols-[240px_1fr] gap-8">

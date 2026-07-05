@@ -40,6 +40,9 @@ interface ComputeFinalStatsArgs {
   weaponCurves: WeaponStatCurves | null;
   equippedEchoes: EquippedEcho[];
   echoCurves: EchoStatCurves | null;
+  // Summed active forte node bonuses (stat name → total %).
+  // "ATK"/"HP"/"DEF" are percentage multipliers, not flat values.
+  forteBonusTotals?: Map<string, number>;
 }
 
 // Combines character base (at level) + weapon (ATK + its one secondary stat)
@@ -58,12 +61,14 @@ export function computeFinalStats({
   weaponCurves,
   equippedEchoes,
   echoCurves,
+  forteBonusTotals = new Map(),
 }: ComputeFinalStatsArgs): FinalStats | null {
   const base = computeStats(curves, character.roleGbId, level);
   if (!base) return null;
 
   const echoTotals = echoCurves ? computeEchoStatTotals(equippedEchoes, echoCurves) : new Map<string, number>();
   const echo = (statName: string) => echoTotals.get(statName) ?? 0;
+  const forte = (statName: string) => forteBonusTotals.get(statName) ?? 0;
 
   const weaponAtk =
     selectedWeapon && weaponCurves
@@ -75,9 +80,10 @@ export function computeFinalStats({
       : null;
   const weaponStat = (statName: string) => (weaponSecondary?.name === statName ? weaponSecondary.value : 0);
 
-  const hpPercent = echo("HP%") + weaponStat("HP%");
-  const atkPercent = echo("ATK%") + weaponStat("ATK%");
-  const defPercent = echo("DEF%") + weaponStat("DEF%");
+  // Forte "ATK"/"HP"/"DEF" nodes are percentage boosts, not flat values.
+  const hpPercent = echo("HP%") + weaponStat("HP%") + forte("HP");
+  const atkPercent = echo("ATK%") + weaponStat("ATK%") + forte("ATK");
+  const defPercent = echo("DEF%") + weaponStat("DEF%") + forte("DEF");
 
   const elementalDmgBonusName = `${character.element} DMG Bonus`;
 
@@ -86,11 +92,11 @@ export function computeFinalStats({
     atk: Math.round(((base.atk + weaponAtk) * (100 + atkPercent)) / 100 + echo("ATK")),
     def: Math.round((base.def * (100 + defPercent)) / 100 + echo("DEF")),
     energyRegen: BASE_ENERGY_REGEN + echo("Energy Regen") + weaponStat("Energy Regen"),
-    critRate: BASE_CRIT_RATE + echo("Crit. Rate") + weaponStat("Crit. Rate"),
-    critDmg: BASE_CRIT_DMG + echo("Crit. DMG") + weaponStat("Crit. DMG"),
-    healingBonus: echo("Healing Bonus"),
+    critRate: BASE_CRIT_RATE + echo("Crit. Rate") + weaponStat("Crit. Rate") + forte("Crit. Rate"),
+    critDmg: BASE_CRIT_DMG + echo("Crit. DMG") + weaponStat("Crit. DMG") + forte("Crit. DMG"),
+    healingBonus: echo("Healing Bonus") + forte("Healing Bonus"),
     elementalDmgBonusName,
-    elementalDmgBonus: echo(elementalDmgBonusName),
+    elementalDmgBonus: echo(elementalDmgBonusName) + forte(elementalDmgBonusName),
     basicAttackDmgBonus: echo("Basic Attack DMG Bonus"),
     heavyAttackDmgBonus: echo("Heavy Attack DMG Bonus"),
     skillDmgBonus: echo("Resonance Skill DMG Bonus"),

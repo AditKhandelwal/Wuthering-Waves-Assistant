@@ -9,6 +9,7 @@ import { computeFinalStats } from "../lib/finalStats";
 import { computeWeaponAtk, computeWeaponSecondaryStat } from "../lib/weapons";
 import type { Character, ElementName } from "../types/character";
 import type { EchoSet, EchoStatCurves, EquippedEcho } from "../types/echo";
+import type { CharacterForteNodes } from "../types/forteNode";
 import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
@@ -38,6 +39,9 @@ interface BuildCardProps {
   equippedEchoes: EquippedEcho[];
   echoCurves: EchoStatCurves | null;
   echoSets: EchoSet[];
+
+  forteNodes: CharacterForteNodes | null;
+  forteNodeActive: boolean[];
 }
 
 // Small solid-looking icon -- two stacked copies compound the source art's
@@ -226,8 +230,26 @@ export function BuildCard({
   equippedEchoes,
   echoCurves,
   echoSets,
+  forteNodes,
+  forteNodeActive,
 }: BuildCardProps) {
   const activeSetBonuses = computeActiveSetBonuses(equippedEchoes, echoSets);
+
+  const forteBonusTotals = (() => {
+    const totals = new Map<string, number>();
+    if (!forteNodes) return totals;
+    const COLS = ["normal_attack", "resonance_skill", "resonance_liberation", "intro_skill"] as const;
+    COLS.forEach((col, colIdx) => {
+      [0, 1].forEach((tierIdx) => {
+        if (forteNodeActive[colIdx * 2 + tierIdx]) {
+          const node = forteNodes[col][tierIdx];
+          totals.set(node.stat, (totals.get(node.stat) ?? 0) + node.value);
+        }
+      });
+    });
+    return totals;
+  })();
+
   const finalStats = curves
     ? computeFinalStats({
         character,
@@ -238,6 +260,7 @@ export function BuildCard({
         weaponCurves,
         equippedEchoes,
         echoCurves,
+        forteBonusTotals,
       })
     : null;
   const weaponAtk =
