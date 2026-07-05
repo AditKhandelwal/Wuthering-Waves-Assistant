@@ -672,6 +672,43 @@ export function BuildScreenPage() {
                 )
               }
             />
+
+            {forteNodes && (() => {
+              // Forte nodes are always percentage boosts regardless of stat name
+              // (e.g. ATK nodes give +1.8% ATK, not flat ATK).
+              const COLS = ["normal_attack", "resonance_skill", "resonance_liberation", "intro_skill"] as const;
+              const totals = new Map<string, number>();
+              COLS.forEach((col, colIdx) => {
+                [0, 1].forEach((tierIdx) => {
+                  if (forteNodeActive[colIdx * 2 + tierIdx]) {
+                    const node = forteNodes[col][tierIdx];
+                    totals.set(node.stat, (totals.get(node.stat) ?? 0) + node.value);
+                  }
+                });
+              });
+              const entries = [...totals.entries()];
+              return (
+                <div className="mt-4 border-t border-border pt-3">
+                  <span className="text-[10px] uppercase tracking-wide text-text-muted">
+                    Stat Node Gains
+                  </span>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {entries.length === 0 ? (
+                      <p className="text-xs text-text-muted">No nodes active.</p>
+                    ) : (
+                      entries.map(([stat, total]) => (
+                        <StatBox
+                          key={stat}
+                          icon={<StatIcon icons={statIcons} name={stat} />}
+                          label={stat}
+                          value={`+${total.toFixed(1)}%`}
+                        />
+                      ))
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
           </Panel>
 
           <Panel title="Echoes">
