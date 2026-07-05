@@ -42,6 +42,121 @@ interface RawCharacterWeaponEntry {
 
 type RawWeaponMap = Record<string, RawCharacterWeaponEntry>;
 
+// Weapons that exist in the game but aren't recommended for any character in
+// Kuro's guide API — discovered via the dotgg.gg weapon catalog (2026-07-04).
+// Stats (baseAtk / secondaryStat) are already present in weapon_stat_curves.json
+// so only catalog-display fields need supplementing here.
+const SUPPLEMENTAL_WEAPONS: WeaponCatalogEntry[] = [
+  {
+    gbId: "21010064",
+    name: "Helios Cleaver",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/helios-cleaver-icon.webp",
+    star: 4,
+    weaponType: "Broadblade",
+    effectName: "",
+    effectDescription: "Within 12s after Resonance Skill is cast, increases ATK by 3%/3.75%/4.5%/5.25%/6% every 2s, stacking up to 4 times. This effect can be triggered once every 12s. When stacks reach 4, all stacks reset within 6s.",
+  },
+  {
+    gbId: "21010084",
+    name: "Waning Redshift",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/waning-redshift-icon.webp",
+    star: 4,
+    weaponType: "Broadblade",
+    effectName: "",
+    effectDescription: "Casting the Resonance Skill grants 6/7/8/9/10 Resonance Energy and increases ATK by 10%/12.5%/15%/17.5%/20% for 16s. This effect can be triggered once every 20s.",
+  },
+  {
+    gbId: "21010094",
+    name: "Meditations on Mercy",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/meditations-on-mercy-icon.webp",
+    star: 4,
+    weaponType: "Broadblade",
+    effectName: "",
+    effectDescription: "Dealing DMG to enemies with Negative Statuses increases ATK by 4%/5%/6%/7%/8% for 10s. Triggered once per second, stackable up to 4 times.",
+  },
+  {
+    gbId: "21020064",
+    name: "Lunar Cutter",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/lunar-cutter-icon.webp",
+    star: 4,
+    weaponType: "Sword",
+    effectName: "",
+    effectDescription: "Gains 6 stacks of Oath on entering the battlefield. Each stack increases ATK by 2%/2.5%/3%/3.5%/4%, up to 6 stacks. Loses 1 stack every 2s; gains 6 stacks upon defeating an enemy. Triggers once every 12s.",
+  },
+  {
+    gbId: "21030084",
+    name: "Relativistic Jet",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/relativistic-jet-icon.webp",
+    star: 4,
+    weaponType: "Pistols",
+    effectName: "",
+    effectDescription: "Casting the Resonance Skill grants 6/7/8/9/10 Resonance Energy and increases ATK by 10%/12.5%/15%/17.5%/20% for 16s. This effect can be triggered once every 20s.",
+  },
+  {
+    gbId: "21040064",
+    name: "Hollow Mirage",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/hollow-mirage-icon.webp",
+    star: 4,
+    weaponType: "Gauntlets",
+    effectName: "",
+    effectDescription: "When Resonance Liberation is cast, grants 3 stacks of Iron Armor. Each stack increases ATK and DEF by 3%/3.5%/4%/4.5%/5%, up to 3 stacks. Reduces stacks by 1 when the Resonator takes damage.",
+  },
+  {
+    gbId: "21050027",
+    name: "Ocean's Gift",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/ocean-s-gift-icon.webp",
+    star: 4,
+    weaponType: "Rectifier",
+    effectName: "",
+    effectDescription: "Dealing DMG to enemies with Spectro Frazzle increases Spectro DMG by 6%/7%/8%/9%/10%, gaining 1 stack per second for 6s, up to 4 stacks.",
+  },
+  {
+    gbId: "21050044",
+    name: "Jinzhou Keeper",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/jinzhou-keeper-icon.webp",
+    star: 4,
+    weaponType: "Rectifier",
+    effectName: "",
+    effectDescription: "Casting Intro Skill increases ATK by 8%/10%/12%/14%/16% and HP by 10%/12.5%/15%/17.5%/20% for 15s.",
+  },
+  {
+    gbId: "21050064",
+    name: "Comet Flare",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/comet-flare-icon.webp",
+    star: 4,
+    weaponType: "Rectifier",
+    effectName: "",
+    effectDescription: "When dealing Basic Attack or Heavy Attack DMG, increases Healing Bonus by 3%/3.75%/4.5%/5.25%/6%, up to 3 stacks for 8s. Triggers once every 0.6s.",
+  },
+  {
+    gbId: "21050084",
+    name: "Fusion Accretion",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/fusion-accretion-icon.webp",
+    star: 4,
+    weaponType: "Rectifier",
+    effectName: "",
+    effectDescription: "Casting the Resonance Skill grants 6/7/8/9/10 Resonance Energy and increases ATK by 10%/12.5%/15%/17.5%/20% for 16s. This effect can be triggered once every 20s.",
+  },
+  {
+    gbId: "21050094",
+    name: "Waltz in Masquerade",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/waltz-in-masquerade-icon.webp",
+    star: 4,
+    weaponType: "Rectifier",
+    effectName: "",
+    effectDescription: "Dealing DMG to enemies with Negative Statuses increases ATK by 4%/5%/6%/7%/8% for 10s. Triggered once per second, stackable up to 4 times.",
+  },
+  {
+    gbId: "21050104",
+    name: "Radiant Dawn",
+    pictureUrl: "https://static.dotgg.gg/wuthering-waves/weapons/radiant-dawn-icon.webp",
+    star: 4,
+    weaponType: "Rectifier",
+    effectName: "",
+    effectDescription: "Casting Resonance Skill increases ATK by 9%/13.9%/18.9%/23.8%/28.8% and grants 9%/13.9%/18.9%/23.8%/28.8% Basic Attack DMG Bonus for 10s.",
+  },
+];
+
 export interface WeaponCatalog {
   // Every distinct weapon seen across all characters' recommendations,
   // grouped by weapon type. Not the true full ~118-weapon catalog -- only
@@ -83,6 +198,10 @@ export async function loadWeaponCatalog(): Promise<WeaponCatalog> {
       });
     }
     recommendedByCharacter[characterId] = recommended;
+  }
+
+  for (const w of SUPPLEMENTAL_WEAPONS) {
+    if (!byId.has(w.gbId)) byId.set(w.gbId, w);
   }
 
   const byType = {} as Record<WeaponTypeName, WeaponCatalogEntry[]>;
