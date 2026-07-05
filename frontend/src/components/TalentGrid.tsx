@@ -14,6 +14,7 @@ interface TalentGridProps {
   // Columns are in the same order as SKILL_TO_FORTE_COLUMN keys.
   forteNodeActive: boolean[];
   onToggleForteNode: (flatIndex: number) => void;
+  statIcons: Record<string, string> | null;
 }
 
 function Connector() {
@@ -45,44 +46,39 @@ const FORTE_COLUMN_ORDER: Array<keyof CharacterForteNodes> = [
   "intro_skill",
 ];
 
-// Short stat abbreviations for display inside the 40×40px circle.
-function statAbbrev(stat: string): string {
-  if (stat === "Crit. Rate") return "CR";
-  if (stat === "Crit. DMG") return "CD";
-  if (stat === "ATK") return "ATK";
-  if (stat === "HP") return "HP";
-  if (stat === "DEF") return "DEF";
-  if (stat === "Healing Bonus") return "HB";
-  if (stat.endsWith("DMG Bonus")) return stat.charAt(0) + "DB";
-  return stat.slice(0, 3);
-}
-
 function ForteNodeButton({
   node,
   active,
   onToggle,
+  statIcons,
 }: {
   node: ForteNode;
   active: boolean;
   onToggle: () => void;
+  statIcons: Record<string, string> | null;
 }) {
+  const iconUrl = statIcons?.[node.stat];
   return (
     <div className="flex flex-col items-center">
       <button
         onClick={onToggle}
-        title={`${node.stat} +${node.value}%`}
-        className={`flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-full border bg-panel transition ${
+        title={`${node.stat} +${node.value.toFixed(1)}%`}
+        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-panel transition ${
           active
             ? "border-gold shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
             : "border-border opacity-50 hover:border-gold-soft"
         }`}
       >
-        <span className={`text-[7px] font-bold leading-none tabular-nums ${active ? "text-gold" : "text-text-muted"}`}>
-          {statAbbrev(node.stat)}
-        </span>
-        <span className={`text-[7px] leading-none tabular-nums ${active ? "text-gold-soft" : "text-text-muted"}`}>
-          +{node.value}%
-        </span>
+        {iconUrl ? (
+          <span className="relative h-5 w-5">
+            <img src={iconUrl} alt={node.stat} className="absolute inset-0 h-full w-full brightness-0 invert" />
+            <img src={iconUrl} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full brightness-0 invert" />
+          </span>
+        ) : (
+          <span className={`text-[7px] font-bold leading-none ${active ? "text-gold" : "text-text-muted"}`}>
+            {node.stat.slice(0, 3)}
+          </span>
+        )}
       </button>
       <Connector />
     </div>
@@ -100,6 +96,7 @@ export function TalentGrid({
   forteNodes,
   forteNodeActive,
   onToggleForteNode,
+  statIcons,
 }: TalentGridProps) {
   return (
     <div className="flex flex-col gap-6">
@@ -170,6 +167,7 @@ export function TalentGrid({
                           node={node}
                           active={active}
                           onToggle={() => onToggleForteNode(flatIndex)}
+                          statIcons={statIcons}
                         />
                       );
                     })

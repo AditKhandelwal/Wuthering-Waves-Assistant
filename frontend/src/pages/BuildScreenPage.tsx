@@ -671,6 +671,7 @@ export function BuildScreenPage() {
                   current.map((active, i) => (i === flatIndex ? !active : active)),
                 )
               }
+              statIcons={statIcons}
             />
 
             {forteNodes && (() => {

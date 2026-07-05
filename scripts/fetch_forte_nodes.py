@@ -40,11 +40,11 @@ def fetch_json(url):
 
 
 def parse_bonus(name_str):
-    """Parse "Crit. Rate+2.80%" → {"stat": "Crit. Rate", "value": 2.8}"""
-    m = re.match(r"^(.+?)\+([0-9.]+)%$", name_str)
+    """Parse "Crit. Rate+2.80%" or "Crit. Rate Up2.80%" → {"stat": "Crit. Rate", "value": 2.8}"""
+    m = re.match(r"^(.+?)(?:\+| Up)([0-9.]+)%$", name_str)
     if not m:
         return None
-    return {"stat": m.group(1), "value": round(float(m.group(2)), 4)}
+    return {"stat": m.group(1).rstrip(), "value": round(float(m.group(2)), 4)}
 
 
 def main():
@@ -60,7 +60,15 @@ def main():
         if en and en.get("name"):
             name_to_id[en["name"].strip()] = role_id
 
-    print(f"  {len(name_to_id)} characters in wuwa_characters.json")
+    # Manual overrides for characters missing from wuwa_characters.json
+    # (initial fetch missed their ID block; dotgg knows them by name)
+    MANUAL_IDS = {
+        "Youhu":    "1106",
+        "Yangyang": "1402",
+    }
+    name_to_id.update(MANUAL_IDS)
+
+    print(f"  {len(name_to_id)} characters in wuwa_characters.json (+{len(MANUAL_IDS)} manual)")
 
     print("Fetching dotgg character list...")
     dotgg_chars = fetch_json(DOTGG_URL)
@@ -85,18 +93,19 @@ def main():
         parsed = [parse_bonus(b["name"]) for b in bonuses_sorted]
 
         # Rover gender pairs share the same forte data — map one dotgg entry to both IDs.
-        # key: dotgg name fragment → list of our roleGbIds
+        # key: dotgg name → list of our roleGbIds.
+        # IMPORTANT: "Rover (Male)"/"Rover (Female)" are Spectro (1501/1502), NOT Aero.
+        # "Rover: Aero" is only used for 1406/1408. Do not conflate by element.
         ROVER_PAIRS = {
             "Rover: Aero":           ["1406", "1408"],
-            "Rover (Male)":          ["1406", "1408"],
-            "Rover (Female)":        ["1406", "1408"],
             "Rover: Spectro":        ["1501", "1502"],
             "Rover (Spectro)":       ["1501", "1502"],
+            "Rover (Male)":          ["1501", "1502"],
+            "Rover (Female)":        ["1501", "1502"],
             "Rover: Havoc":          ["1604", "1605"],
             "Rover (Havoc)":         ["1604", "1605"],
             "Rover (Havoc) (Female)":["1604", "1605"],
             "Rover (Havoc) (Male)":  ["1604", "1605"],
-            "Rover":                 ["1406", "1408"],   # generic fallback
         }
 
         # Positions: sorted[0-3] = lower tier, sorted[4-7] = higher tier
@@ -174,9 +183,6 @@ def main():
         # Healer/support: DEF 15% (outer, 2.28/5.32) + Healing Bonus 10% (inner, non-standard 1.25/3.75)
         "1209": {"normal_attack": col("DEF", 2.28, 5.32), "resonance_skill": col("Healing Bonus", 1.25, 3.75), "resonance_liberation": col("Healing Bonus", 1.25, 3.75), "intro_skill": col("DEF", 2.28, 5.32)},  # Mornye
 
-        # Rover: Spectro — element DPS, assumed Crit Rate / ATK (no wutheringlab page found)
-        "1501": {"normal_attack": crit_rate, "resonance_skill": atk,      "resonance_liberation": atk,      "intro_skill": crit_rate},  # Rover: Spectro (M)
-        "1502": {"normal_attack": crit_rate, "resonance_skill": atk,      "resonance_liberation": atk,      "intro_skill": crit_rate},  # Rover: Spectro (F)
     }
 
     for role_id, entry in WUTHERINGLAB_FALLBACK.items():
