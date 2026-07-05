@@ -91,14 +91,20 @@ CREATE TABLE conversation_history (
 
 ## Known schema gap (deferred intentionally)
 
-The frontend build screen (character level, weapon, sequence nodes, talents)
-is built and working against local component state only — no persistence
-yet. When a "save build" feature gets scoped, `user_characters` will need:
+The frontend build screen (character level, weapon, sequence nodes, talents,
+forte nodes) is built and working against local component state only — no
+persistence yet. When a "save build" feature gets scoped, `user_characters`
+will need:
 - **Per-skill talent levels** (5 skills × 1-10 each) — no column for this at
   all currently, `addPointTarget` skill order is Normal Attack/Resonance
   Skill/Forte Circuit/Resonance Liberation/Intro Skill.
 - **Inherent Skill toggle state** (2 per character, on/off) — also no
   column.
+- **Forte stat node active state** (8 booleans per character) — the
+  togglable stat bonus nodes above each non-Forte-Circuit column. Frontend
+  stores as `forteNodeActive: boolean[]` (flat index = `colIdx * 2 +
+  tierIdx`, column order: normal_attack/resonance_skill/resonance_liberation/
+  intro_skill). No DB column exists.
 - `resonance_level INTEGER` (0-6) is probably still fine for sequence nodes
   as long as nodes only ever unlock in order 1→6 (not confirmed out-of-order
   unlock is impossible, but the frontend already assumes sequential).

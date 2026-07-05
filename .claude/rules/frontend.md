@@ -76,6 +76,33 @@ identical `<img>` copies absolutely positioned on top of each other; the
 compounded partial-alpha reads as solid white. Used in `SequenceNodeRow` and
 `TalentGrid`.
 
+## Forte Circuit stat bonus nodes
+
+8 togglable nodes per character (4 columns × 2 tiers). Data lives in
+`data/sequence_stat_nodes.json` (source) and `frontend/public/data/`
+(frontend copy — keep in sync). Loaded per-character via
+`frontend/src/lib/forteNodes.ts`.
+
+**Stat value types — critical distinction:** Even nodes named `"ATK"`,
+`"HP"`, or `"DEF"` are **percentage multipliers**, not flat values. In
+`computeFinalStats` (`finalStats.ts`) they are added to the `%` bucket
+(`atkPercent`, `hpPercent`, `defPercent`) that scales the base stat. `"Crit.
+Rate"`, `"Crit. DMG"`, `"Healing Bonus"`, and element DMG bonus names are
+direct additives. Getting this wrong produces subtly incorrect numbers that
+look plausible — verify with a toggle-on/toggle-off ATK comparison.
+
+**Flat index formula:** `colOrderIndex * 2 + tierIndex`. Column order:
+`normal_attack(0)`, `resonance_skill(1)`, `resonance_liberation(2)`,
+`intro_skill(3)`. `tierIndex 0` = lower tier (closer to skill diamond),
+`tierIndex 1` = upper tier (further from skill, renders at top of column in
+the UI). The UI renders `[1, 0]` so upper appears first visually.
+
+**Icons in node buttons:** Stat icons come from `stat_icons.json` (same map
+used by echo stat summary). The stat names in `sequence_stat_nodes.json`
+match the icon keys exactly (e.g. `"Crit. Rate"`, `"ATK"`, `"Glacio DMG
+Bonus"`). The double-stacked `<img>` pattern (`brightness-0 invert`) is
+needed for solid rendering — same as all other game icons in this project.
+
 ## Verifying UI changes
 
 No project-specific run skill exists yet. Pattern used throughout: start

@@ -11,9 +11,10 @@ A personalized Wuthering Waves AI agent that reasons over a user's actual roster
 **Current phase: Phase 1 — character build screen (frontend-first, mock/local state, no auth or persistence yet)**
 
 Done:
-- Reverse engineered Kuro's guide API; roster corrected from 46 → **54**
-  characters (brute-force scan originally missed a whole newer ID block,
-  1601-1608, all Havoc — see `.claude/rules/api.md`)
+- Reverse engineered Kuro's guide API; roster corrected from 46 → **56**
+  entity IDs (54 unique characters + 2 Rover gender variants that share
+  data; brute-force scan originally missed 1601-1608 Havoc block and
+  1106/1402 — see `.claude/rules/api.md`)
 - Character-select screen: grid + element/weapon-type filters, all real
   data, element-tinted glow on each portrait ring
 - Build screen (`frontend/src/pages/BuildScreenPage.tsx`), built one section
@@ -29,6 +30,13 @@ Done:
     Circuit (column placement is a deliberate simplification, not
     derivable — see `docs/DATA_REQUIREMENTS.md`), plus a real Outro
     Skill/Tune Break row below (`roleSkill.keynoteSkills[]`)
+  - **Forte Circuit stat bonus nodes** — the 8 passive %stat circles above
+    each non-Forte-Circuit talent column (Normal Attack, Resonance Skill,
+    Resonance Liberation, Intro Skill), 2 per column (lower/upper tier).
+    Togglable. Show stat icons. Data sourced from dotgg.gg API + wutheringlab
+    fallback (see `.claude/rules/api.md` and `data/sequence_stat_nodes.json`).
+    Live "Stat Node Gains" summary below the tree. Active nodes flow into
+    final stat aggregation (see Build Card below).
   - **Echoes** — flexible per-slot cost (any of 1/3/4 in any slot, not
     pinned by position), real catalog/sonata-set picker with real set
     icons, real main-stat model (every echo has a fixed *static* main stat
@@ -37,10 +45,11 @@ Done:
 - **Build Card** — a read-only, shareable "character card" view toggled
   from the same build screen (same live state, no route/data reload since
   there's no persistence yet). Real final-stat aggregation (character base
-  + weapon + all equipped echoes → HP/ATK/DEF/Energy Regen/Crit Rate/Crit
-  DMG/DMG-bonus categories, see `frontend/src/lib/finalStats.ts`), an
-  atmospheric starfield + element-colored background, and the same
-  cascading Forte tree as the edit view
+  + weapon + echoes + **active forte stat nodes** → HP/ATK/DEF/Energy
+  Regen/Crit Rate/Crit DMG/DMG-bonus categories, see
+  `frontend/src/lib/finalStats.ts`), an atmospheric starfield +
+  element-colored background, and the same cascading Forte tree as the
+  edit view
 
 See `docs/DATA_REQUIREMENTS.md` for exactly what's confirmed vs. inferred
 vs. still blocked in the underlying game data (the per-hit damage formula
@@ -69,6 +78,7 @@ npm run dev
 # Data scripts
 cd scripts
 python fetch_characters.py       # re-fetch all character data from Kuro API
+python fetch_forte_nodes.py      # re-fetch forte bonus nodes (dotgg + wutheringlab fallback)
 python seed_database.py          # parse JSON + seed PostgreSQL
 python check_data.py             # validate wuwa_characters.json
 
@@ -91,9 +101,11 @@ wuwa-agent/
 │       ├── agent.md
 │       └── conventions.md
 ├── data/
-│   └── wuwa_characters.json     # 46 characters, source of truth for knowledge base
+│   ├── wuwa_characters.json     # 54 characters (missing 1106/1402 — see api.md)
+│   └── sequence_stat_nodes.json # forte circuit stat bonus nodes, 56 entries
 ├── scripts/
 │   ├── fetch_characters.py      # Kuro API ingestion pipeline
+│   ├── fetch_forte_nodes.py     # dotgg.gg forte bonus data + wutheringlab fallback
 │   ├── seed_database.py         # parse JSON → PostgreSQL
 │   └── check_data.py            # data validation
 ├── backend/
