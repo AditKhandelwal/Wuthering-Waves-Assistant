@@ -1,60 +1,83 @@
 # Database
 
 ## Provider
-Supabase (free tier) — PostgreSQL + pgvector + Auth in one service.
-Enable pgvector: `CREATE EXTENSION IF NOT EXISTS vector;`
+Supabase (free tier) — PostgreSQL + Auth. `user_characters` and Auth are
+**implemented and live** (see below). `pgvector`/`knowledge_chunks`/
+`conversation_history` are still Phase 3 agent design, not created yet —
+`CREATE EXTENSION IF NOT EXISTS vector;` hasn't been run.
 
 ## Core Tables
 
 ### users
-Managed by Supabase Auth. Reference via `auth.users`.
+Managed by Supabase Auth. Reference via `auth.users`. Email + password only
+(no OAuth providers configured).
 
-### user_characters
+### user_characters (implemented)
+
+One row per (user, character) — a full saved build, not just roster
+ownership. Scalar columns for what the app actually queries/filters by;
+JSONB for the rest, deliberately **not** normalized into per-talent/
+per-substat rows. Reasoning: `talent_levels`/`inherent_active`/
+`forte_node_active`/`echoes` are fixed-size positional data that the
+frontend always reads and writes as one whole build — nothing queries a
+single substat or talent level in isolation. See
+`frontend/src/pages/BuildScreenPage.tsx`'s `useState` block for the
+authoritative in-memory shape this mirrors, and `frontend/src/lib/builds.ts`
+for save/load.
+
 ```sql
-CREATE TABLE user_characters (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-    role_gb_id INTEGER NOT NULL,           -- Kuro's character ID e.g. 1107 for Carlotta
-    character_name TEXT NOT NULL,
-    resonance_level INTEGER DEFAULT 0,     -- 0-6 (sequence nodes unlocked)
-    character_level INTEGER DEFAULT 1,     -- 1-90
-    weapon_gb_id INTEGER,                  -- weapon ID
-    weapon_name TEXT,
-    weapon_level INTEGER DEFAULT 1,
-    weapon_rank INTEGER DEFAULT 1,         -- R1-R5
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW(),
-    UNIQUE(user_id, role_gb_id)
+create table if not exists public.user_characters (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  role_gb_id text not null,              -- e.g. "1107" for Carlotta. TEXT not INTEGER --
+                                          -- the frontend keys everything by roleGbId as a
+                                          -- string (route params, Record<string,...> maps,
+                                          -- see the comment in lib/characters.ts explaining
+                                          -- roleGbId is the JSON object key, not a numeric field)
+  character_level int not null default 1 check (character_level between 1 and 90),
+  weapon_gb_id text,                     -- also TEXT, same reasoning (WeaponCatalogEntry.gbId)
+  weapon_level int default 1 check (weapon_level between 1 and 90),
+  weapon_rank int default 1 check (weapon_rank between 1 and 5),
+  resonance_level int default 0 check (resonance_level between 0 and 6),  -- sequence nodes unlocked
+  talent_levels jsonb not null default '[1,1,1,1,1]'::jsonb,      -- 5 ints 1-10, addPointTarget order:
+                                                                   -- Normal Attack/Resonance Skill/
+                                                                   -- Forte Circuit/Resonance Liberation/
+                                                                   -- Intro Skill
+  inherent_active jsonb not null default '[true,true]'::jsonb,    -- 2 bools
+  forte_node_active jsonb not null default '[]'::jsonb,           -- 8 bools, flat index = colIdx*2+tierIdx,
+                                                                   -- column order matches FORTE_COLUMN_ORDER
+                                                                   -- in TalentGrid.tsx
+  echoes jsonb not null default '[]'::jsonb,                      -- 5-slot array; each slot stores only
+                                                                   -- {echoName, chosenSetName, mainStatPropId,
+                                                                   -- level, substats} -- identifiers + user
+                                                                   -- values, NOT cached catalog display data
+                                                                   -- (name/icon/etc re-resolved live via
+                                                                   -- findEchoByName() in lib/echoes.ts on load)
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (user_id, role_gb_id)
 );
+
+alter table public.user_characters enable row level security;
+
+create policy "select own builds" on public.user_characters
+  for select using (auth.uid() = user_id);
+create policy "insert own builds" on public.user_characters
+  for insert with check (auth.uid() = user_id);
+create policy "update own builds" on public.user_characters
+  for update using (auth.uid() = user_id);
+create policy "delete own builds" on public.user_characters
+  for delete using (auth.uid() = user_id);
 ```
 
-### user_echoes
-```sql
-CREATE TABLE user_echoes (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-    role_gb_id INTEGER,                    -- which character this echo is equipped on (null = unequipped)
-    echo_name TEXT NOT NULL,
-    echo_set TEXT NOT NULL,                -- e.g. "Moonlit Clouds"
-    cost INTEGER NOT NULL,                 -- 1, 3, or 4
-    level INTEGER DEFAULT 0,              -- 0-25
-    main_stat TEXT NOT NULL,               -- e.g. "Crit. Rate"
-    main_stat_value NUMERIC,
-    sub_stat_1 TEXT,
-    sub_stat_1_value NUMERIC,
-    sub_stat_2 TEXT,
-    sub_stat_2_value NUMERIC,
-    sub_stat_3 TEXT,
-    sub_stat_3_value NUMERIC,
-    sub_stat_4 TEXT,
-    sub_stat_4_value NUMERIC,
-    sub_stat_5 TEXT,
-    sub_stat_5_value NUMERIC,
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
+**No `user_echoes` table.** An earlier sketch had a standalone echo
+inventory table (`role_gb_id` nullable for "unequipped" echoes) — dropped,
+since nothing in the UI has an echo inventory independent of a specific
+character's 5-slot loadout. Echoes only ever exist as part of
+`user_characters.echoes` today. Reintroduce a separate table if a standalone
+inventory feature actually gets built.
 
-### knowledge_chunks (RAG)
+### knowledge_chunks (RAG) — Phase 3, not built
 ```sql
 CREATE TABLE knowledge_chunks (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -70,7 +93,7 @@ CREATE TABLE knowledge_chunks (
 CREATE INDEX ON knowledge_chunks USING hnsw (embedding vector_cosine_ops);
 ```
 
-### conversation_history
+### conversation_history — Phase 3, not built
 ```sql
 CREATE TABLE conversation_history (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -84,29 +107,36 @@ CREATE TABLE conversation_history (
 ```
 
 ## Important rules
-- Always use `user_id` from Supabase Auth — never trust client-provided user IDs
-- Row Level Security (RLS) must be enabled on all user tables
-- Never embed raw JSON from `wuwa_characters.json` — parse into clean text first
-- `role_gb_id` is the foreign key linking everything to Kuro's character system
+- Always use `user_id` from Supabase Auth (`auth.uid()` in RLS policies, or
+  the client's current session) — never trust a client-provided user ID
+- Row Level Security is enabled on `user_characters`, one policy per
+  operation (select/insert/update/delete), all scoped to `auth.uid() =
+  user_id`
+- Never embed raw JSON from `wuwa_characters.json` — parse into clean text
+  first (still applies once `knowledge_chunks` gets built)
+- `role_gb_id` is the identifier linking everything to Kuro's character
+  system — `TEXT`, not `INTEGER` (see above)
 
-## Known schema gap (deferred intentionally)
+## Frontend wiring (implemented)
 
-The frontend build screen (character level, weapon, sequence nodes, talents,
-forte nodes) is built and working against local component state only — no
-persistence yet. When a "save build" feature gets scoped, `user_characters`
-will need:
-- **Per-skill talent levels** (5 skills × 1-10 each) — no column for this at
-  all currently, `addPointTarget` skill order is Normal Attack/Resonance
-  Skill/Forte Circuit/Resonance Liberation/Intro Skill.
-- **Inherent Skill toggle state** (2 per character, on/off) — also no
-  column.
-- **Forte stat node active state** (8 booleans per character) — the
-  togglable stat bonus nodes above each non-Forte-Circuit column. Frontend
-  stores as `forteNodeActive: boolean[]` (flat index = `colIdx * 2 +
-  tierIdx`, column order: normal_attack/resonance_skill/resonance_liberation/
-  intro_skill). No DB column exists.
-- `resonance_level INTEGER` (0-6) is probably still fine for sequence nodes
-  as long as nodes only ever unlock in order 1→6 (not confirmed out-of-order
-  unlock is impossible, but the frontend already assumes sequential).
-
-Not fixing this now — flagging so it's not rediscovered from scratch later.
+- `frontend/src/lib/supabase.ts` — client singleton, reads
+  `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY` from `frontend/.env` (see
+  `frontend/.env.example`; real `.env` is gitignored). Does NOT throw at
+  import time if either is missing — exports `isSupabaseConfigured: boolean`
+  and falls back to an inert placeholder client instead, so character
+  browsing/building still works with zero backend configured. An earlier
+  version threw here, which crashed the entire app at load (`AuthProvider`
+  wraps the whole tree in `main.tsx`) whenever `.env` wasn't set up.
+- `frontend/src/lib/auth.tsx` — `AuthProvider`/`useAuth()`, wraps
+  `supabase.auth` session state + `signUp`/`signIn`/`signOut`. Mounted once
+  in `main.tsx` around the whole app.
+- `frontend/src/lib/builds.ts` — `saveBuild`/`loadBuild`/
+  `loadAllBuildSummaries`/`deleteBuild`, all operating on the
+  `user_characters` table via `supabase-js` directly (no custom backend
+  needed — Supabase's client SDK talks to Postgres through RLS-protected
+  auto-generated APIs).
+- `BuildScreenPage.tsx` auto-loads a signed-in user's saved build for the
+  current character on mount (if one exists) and has a "Save Build" button
+  (disabled, with a tooltip, when signed out).
+- `MyBuildsPage.tsx` (route `/builds`) lists a signed-in user's saved
+  builds and lets them delete one.
