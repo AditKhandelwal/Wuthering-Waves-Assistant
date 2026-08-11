@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { CharacterForteNodes, ForteNode } from "../types/forteNode";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
 
@@ -21,6 +22,42 @@ function Connector() {
   return <div className="h-9 w-px bg-border" />;
 }
 
+// Free-typed level entry, not just the -/+ buttons -- clamped to 1-10 on
+// blur/Enter rather than on every keystroke, so the field can be cleared
+// and retyped (e.g. "1" -> "10") without an intermediate keystroke
+// snapping back to 1 (Number("") === 0, which would otherwise clamp
+// immediately and block typing a second digit).
+function TalentLevelInput({ level, onChange }: { level: number; onChange: (level: number) => void }) {
+  const [raw, setRaw] = useState(String(level));
+
+  useEffect(() => {
+    setRaw(String(level));
+  }, [level]);
+
+  function commit() {
+    const parsed = Math.round(Number(raw));
+    const clamped = Number.isFinite(parsed) && raw !== "" ? Math.min(10, Math.max(1, parsed)) : level;
+    setRaw(String(clamped));
+    if (clamped !== level) onChange(clamped);
+  }
+
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      value={raw}
+      title="Type a level (1-10)"
+      onChange={(e) => setRaw(e.target.value.replace(/[^0-9]/g, "").slice(0, 2))}
+      onFocus={(e) => e.target.select()}
+      onBlur={commit}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+      }}
+      className="h-5 w-6 shrink-0 rounded-sm border border-border bg-panel text-center text-xs tabular-nums text-gold-soft transition hover:border-gold-soft focus:border-gold focus:bg-panel-alt focus:outline-none"
+    />
+  );
+}
+
 // Vertical offset per column, indexed by distance from the center column
 // (Forte Circuit is always index 2 of the 5) -- 0 at the center, growing
 // going outward, so the tree reads as a shallow arc/wing (center raised,
@@ -31,7 +68,10 @@ const ARC_OFFSET_BY_DISTANCE = [0, 20, 64];
 
 // Maps the talent's skillType string to the forte node column key.
 // Forte Circuit is omitted — that column uses Inherent Skills instead.
-const SKILL_TO_FORTE_COLUMN: Record<string, keyof CharacterForteNodes> = {
+// Exported so BuildCard.tsx's TalentTree can render the same real forte
+// node data instead of its own placeholder circles (see the bug this fixed,
+// found 2026-08-08 comparing a Build Card against real in-game numbers).
+export const SKILL_TO_FORTE_COLUMN: Record<string, keyof CharacterForteNodes> = {
   "Normal Attack": "normal_attack",
   "Resonance Skill": "resonance_skill",
   "Resonance Liberation": "resonance_liberation",
@@ -39,7 +79,7 @@ const SKILL_TO_FORTE_COLUMN: Record<string, keyof CharacterForteNodes> = {
 };
 
 // Column order for the flat forteNodeActive array (must match above, without Forte Circuit).
-const FORTE_COLUMN_ORDER: Array<keyof CharacterForteNodes> = [
+export const FORTE_COLUMN_ORDER: Array<keyof CharacterForteNodes> = [
   "normal_attack",
   "resonance_skill",
   "resonance_liberation",
@@ -211,8 +251,9 @@ export function TalentGrid({
                 >
                   −
                 </button>
-                <span className="w-9 text-center text-xs tabular-nums text-gold-soft">
-                  {level}/10
+                <span className="flex w-11 shrink-0 items-center justify-center gap-0.5 text-xs tabular-nums text-gold-soft">
+                  <TalentLevelInput level={level} onChange={(newLevel) => onChange(i, newLevel)} />
+                  <span className="text-text-muted">/10</span>
                 </span>
                 <button
                   onClick={() => onChange(i, level + 1)}

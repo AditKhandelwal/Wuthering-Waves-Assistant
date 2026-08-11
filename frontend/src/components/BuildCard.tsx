@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { EchoCardTile } from "./EchoCardTile";
 import { ElementIcon } from "./ElementIcon";
 import { FinalStatsGrid } from "./FinalStatsGrid";
 import { StatIcon } from "./StatIcon";
+import { FORTE_COLUMN_ORDER, SKILL_TO_FORTE_COLUMN } from "./TalentGrid";
 import { ELEMENT_PORTRAIT_BORDER_CLASS, ELEMENT_PORTRAIT_GLOW_CLASS } from "../lib/characters";
 import { computeActiveSetBonuses, formatStatValue } from "../lib/echoes";
 import { computeFinalStats } from "../lib/finalStats";
 import { computeWeaponAtk, computeWeaponSecondaryStat } from "../lib/weapons";
 import type { Character, ElementName } from "../types/character";
 import type { EchoSet, EchoStatCurves, EquippedEcho } from "../types/echo";
-import type { CharacterForteNodes } from "../types/forteNode";
+import type { CharacterForteNodes, ForteNode } from "../types/forteNode";
 import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
@@ -93,37 +93,67 @@ const ARC_OFFSET_BY_DISTANCE = [0, 14, 46];
 // columns has its own vertical chain connected by a line down to the main
 // skill diamond, with the whole column shifted down further the closer it
 // is to either edge (see ARC_OFFSET_BY_DISTANCE). Forte Circuit's chain is
-// the 2 real Inherent Skills; the other 4 columns show togglable placeholder
-// nodes (no real data/icon yet, same "ready for when real data arrives"
-// pattern as the original TalentGrid used in the editable view -- these
-// represent the removed sequence_stat_nodes.json bonus-stat nodes, kept as
-// inert scaffolding, see docs/DATA_REQUIREMENTS.md). Outro Skill and Tune
-// Break (roleSkill.keynoteSkills[] -- real, distinct skill categories, not
-// the same as Inherent Skills) are shown in their own row below the tree,
-// matching a real in-game Forte-tree screenshot (2026-07-03).
+// the 2 real Inherent Skills; the other 4 columns show the same real forte
+// stat-bonus nodes as the editable TalentGrid (fixed 2026-08-08 -- this used
+// to render dead placeholder circles with a local-only toggle instead of
+// forteNodes/forteNodeActive, which were sitting right there as props the
+// whole time but never passed down into this sub-component). Outro Skill
+// and Tune Break (roleSkill.keynoteSkills[] -- real, distinct skill
+// categories, not the same as Inherent Skills) are shown in their own row
+// below the tree, matching a real in-game Forte-tree screenshot (2026-07-03).
+function ForteNodeDisplay({ node, active, statIcons }: { node: ForteNode; active: boolean; statIcons: Record<string, string> | null }) {
+  const iconUrl = statIcons?.[node.stat];
+  return (
+    <div className="flex flex-col items-center">
+      <span
+        title={`${node.stat} +${node.value.toFixed(1)}%${active ? "" : " (inactive)"}`}
+        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border bg-panel ${
+          active
+            ? "border-gold shadow-[0_0_6px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
+            : "border-border opacity-50"
+        }`}
+      >
+        {iconUrl ? (
+          <SolidIcon src={iconUrl} alt={node.stat} className="h-3.5 w-3.5" />
+        ) : (
+          <span className={`text-[6px] font-bold leading-none ${active ? "text-gold" : "text-text-muted"}`}>
+            {node.stat.slice(0, 3)}
+          </span>
+        )}
+      </span>
+      <Connector />
+    </div>
+  );
+}
+
 function TalentTree({
   talents,
   talentLevels,
   inherentSkills,
   inherentActive,
   keynoteSkills,
+  forteNodes,
+  forteNodeActive,
+  statIcons,
 }: {
   talents: Talent[];
   talentLevels: number[];
   inherentSkills: InherentSkill[];
   inherentActive: boolean[];
   keynoteSkills: KeynoteSkill[];
+  forteNodes: CharacterForteNodes | null;
+  forteNodeActive: boolean[];
+  statIcons: Record<string, string> | null;
 }) {
-  const [placeholderActive, setPlaceholderActive] = useState<Record<string, boolean>>({});
-  const togglePlaceholder = (key: string) =>
-    setPlaceholderActive((current) => ({ ...current, [key]: !current[key] }));
-
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-start justify-between gap-2">
         {talents.map((talent, i) => {
           const offset = ARC_OFFSET_BY_DISTANCE[Math.abs(i - 2)] ?? 0;
           const isForteCircuit = talent.skillType === "Forte Circuit";
+          const forteColKey = SKILL_TO_FORTE_COLUMN[talent.skillType];
+          const colNodes = forteNodes && forteColKey ? forteNodes[forteColKey] : null;
+          const colOrderIndex = forteColKey ? FORTE_COLUMN_ORDER.indexOf(forteColKey) : -1;
           return (
             <div
               key={talent.skillType}
@@ -150,24 +180,21 @@ function TalentTree({
                       </div>
                     );
                   })
-                : [0, 1].map((j) => {
-                    const key = `${talent.skillType}-${j}`;
-                    const active = placeholderActive[key] ?? false;
-                    return (
+                : colNodes
+                  ? [1, 0].map((tierIndex) => {
+                      const node = colNodes[tierIndex];
+                      const flatIndex = colOrderIndex * 2 + tierIndex;
+                      const active = forteNodeActive[flatIndex] ?? false;
+                      return (
+                        <ForteNodeDisplay key={tierIndex} node={node} active={active} statIcons={statIcons} />
+                      );
+                    })
+                  : [0, 1].map((j) => (
                       <div key={j} className="flex flex-col items-center">
-                        <button
-                          onClick={() => togglePlaceholder(key)}
-                          title="Placeholder node -- no data yet"
-                          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border bg-panel transition ${
-                            active
-                              ? "border-gold shadow-[0_0_6px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
-                              : "border-border opacity-50 hover:border-gold-soft"
-                          }`}
-                        />
+                        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border bg-panel opacity-30" />
                         <Connector />
                       </div>
-                    );
-                  })}
+                    ))}
               <span
                 title={talent.name}
                 className="flex h-8 w-8 shrink-0 rotate-45 items-center justify-center border border-gold bg-panel shadow-[0_0_8px_color-mix(in_srgb,var(--color-gold)_50%,transparent)]"
@@ -344,6 +371,9 @@ export function BuildCard({
                 inherentSkills={inherentSkills}
                 inherentActive={inherentActive}
                 keynoteSkills={keynoteSkills}
+                forteNodes={forteNodes}
+                forteNodeActive={forteNodeActive}
+                statIcons={statIcons}
               />
             </div>
           </div>

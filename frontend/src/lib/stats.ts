@@ -2,8 +2,9 @@ import type { ComputedStats, StatCurveData } from "../types/stats";
 
 // Temporary static data source standing in for a future backend endpoint,
 // same pattern as lib/characters.ts. Sourced from Arikatsu/WutheringWaves_Data
-// (property/baseproperty.json + property/rolepropertygrowth.json) since
-// wuwa_characters.json has no base HP/ATK/DEF or level-scaling data.
+// (BinData/property/baseproperty.json + BinData/property/rolepropertygrowth.json,
+// see scripts/fetch_character_stat_curves.py) since wuwa_characters.json has
+// no base HP/ATK/DEF or level-scaling data.
 export async function loadStatCurves(): Promise<StatCurveData> {
   const res = await fetch("/data/character_stat_curves.json");
   return res.json();

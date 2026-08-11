@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Modal } from "./Modal";
 import type { WeaponCatalogEntry } from "../types/weapon";
 
@@ -18,6 +19,8 @@ export function WeaponPicker({
   onSelect,
   onClose,
 }: WeaponPickerProps) {
+  const [query, setQuery] = useState("");
+
   const bestInSlotId = recommendedOrder[0];
   const recommendedIds = new Set(recommendedOrder.slice(1));
 
@@ -28,13 +31,32 @@ export function WeaponPicker({
     return b.star - a.star || a.name.localeCompare(b.name);
   });
 
+  const normalizedQuery = query.trim().toLowerCase();
+  const filtered = normalizedQuery
+    ? sorted.filter((weapon) => weapon.name.toLowerCase().includes(normalizedQuery))
+    : sorted;
+
   return (
     <Modal onClose={onClose}>
-      <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-text-muted">
-        Select Weapon
-      </h2>
+      <div className="sticky top-0 z-10 -mt-5 -mx-5 bg-panel px-5 pt-5 pb-3">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-widest text-text-muted">
+          Select Weapon
+        </h2>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search weapons..."
+          autoFocus
+          className="w-full rounded-sm border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-gold-soft focus:outline-none"
+        />
+      </div>
+      <div className="h-3" />
+      {filtered.length === 0 && (
+        <p className="py-6 text-center text-sm text-text-muted">No weapons match "{query}".</p>
+      )}
       <div className="flex flex-col gap-2">
-        {sorted.map((weapon) => (
+        {filtered.map((weapon) => (
           <button
             key={weapon.gbId}
             onClick={() => onSelect(weapon)}

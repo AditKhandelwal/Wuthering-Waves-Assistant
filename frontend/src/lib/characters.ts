@@ -90,10 +90,14 @@ export const WEAPON_TYPE_BY_GB_ID: Record<string, WeaponTypeName> = {
 
 // Kuro's guide API returns byte-identical content (including portrait) for
 // both IDs in each Rover gender pair (1406/1408 Aero, 1501/1502 Spectro,
-// 1604/1605 Havoc) — no way to tell them apart or get gender-specific art.
-// Rather than show two identical-looking cards, collapse each pair down to
-// one entry using the shared portrait (which already depicts both genders).
-const ROVER_DUPLICATE_IDS_TO_DROP = new Set(["1408", "1502", "1604"]);
+// 1604/1605 Havoc, 1309/1310 Electro added 2026-08) — no way to tell them
+// apart or get gender-specific art. Rather than show two identical-looking
+// cards, collapse each pair down to one entry using the shared portrait
+// (which already depicts both genders). No gender label is available for
+// the Electro pair (dotgg doesn't have it yet, unlike Spectro/Havoc's
+// Male/Female split — see .claude/rules/api.md), so 1310 is dropped by the
+// same "keep the lower ID" default used for the Aero pair.
+const ROVER_DUPLICATE_IDS_TO_DROP = new Set(["1408", "1502", "1604", "1310"]);
 
 // Temporary static data source standing in for a future `/api/characters`
 // backend endpoint (see docs/DATA_REQUIREMENTS.md) — swap the fetch URL
