@@ -1,0 +1,968 @@
+{
+  "baseStats": {
+    "1102": {
+      "lifeMax": 805,
+      "atk": 22,
+      "def": 77
+    },
+    "1103": {
+      "lifeMax": 1025,
+      "atk": 17,
+      "def": 82
+    },
+    "1104": {
+      "lifeMax": 831,
+      "atk": 35,
+      "def": 99
+    },
+    "1105": {
+      "lifeMax": 980,
+      "atk": 30,
+      "def": 98
+    },
+    "1107": {
+      "lifeMax": 996,
+      "atk": 37,
+      "def": 98
+    },
+    "1108": {
+      "lifeMax": 824,
+      "atk": 37,
+      "def": 91
+    },
+    "1109": {
+      "lifeMax": 979,
+      "atk": 30,
+      "def": 98
+    },
+    "1110": {
+      "lifeMax": 1337,
+      "atk": 23,
+      "def": 90
+    },
+    "1202": {
+      "lifeMax": 727,
+      "atk": 24,
+      "def": 78
+    },
+    "1203": {
+      "lifeMax": 841,
+      "atk": 34,
+      "def": 102
+    },
+    "1204": {
+      "lifeMax": 802,
+      "atk": 20,
+      "def": 93
+    },
+    "1205": {
+      "lifeMax": 831,
+      "atk": 37,
+      "def": 90
+    },
+    "1206": {
+      "lifeMax": 934,
+      "atk": 30,
+      "def": 107
+    },
+    "1207": {
+      "lifeMax": 953,
+      "atk": 31,
+      "def": 97
+    },
+    "1208": {
+      "lifeMax": 824,
+      "atk": 37,
+      "def": 91
+    },
+    "1209": {
+      "lifeMax": 1230,
+      "atk": 23,
+      "def": 111
+    },
+    "1210": {
+      "lifeMax": 882,
+      "atk": 34,
+      "def": 94
+    },
+    "1211": {
+      "lifeMax": 882,
+      "atk": 34,
+      "def": 94
+    },
+    "1301": {
+      "lifeMax": 840,
+      "atk": 35,
+      "def": 97
+    },
+    "1302": {
+      "lifeMax": 880,
+      "atk": 32,
+      "def": 105
+    },
+    "1303": {
+      "lifeMax": 682,
+      "atk": 18,
+      "def": 134
+    },
+    "1304": {
+      "lifeMax": 866,
+      "atk": 33,
+      "def": 103
+    },
+    "1305": {
+      "lifeMax": 850,
+      "atk": 34,
+      "def": 100
+    },
+    "1306": {
+      "lifeMax": 824,
+      "atk": 37,
+      "def": 91
+    },
+    "1307": {
+      "lifeMax": 850,
+      "atk": 18,
+      "def": 103
+    },
+    "1308": {
+      "lifeMax": 928,
+      "atk": 32,
+      "def": 96
+    },
+    "1309": {
+      "lifeMax": 862,
+      "atk": 35,
+      "def": 93
+    },
+    "1310": {
+      "lifeMax": 862,
+      "atk": 35,
+      "def": 93
+    },
+    "1403": {
+      "lifeMax": 788,
+      "atk": 21,
+      "def": 88
+    },
+    "1404": {
+      "lifeMax": 839,
+      "atk": 35,
+      "def": 97
+    },
+    "1405": {
+      "lifeMax": 1129,
+      "atk": 27,
+      "def": 92
+    },
+    "1406": {
+      "lifeMax": 862,
+      "atk": 35,
+      "def": 93
+    },
+    "1407": {
+      "lifeMax": 979,
+      "atk": 30,
+      "def": 98
+    },
+    "1408": {
+      "lifeMax": 862,
+      "atk": 35,
+      "def": 93
+    },
+    "1409": {
+      "lifeMax": 1184,
+      "atk": 25,
+      "def": 50
+    },
+    "1410": {
+      "lifeMax": 842,
+      "atk": 36,
+      "def": 92
+    },
+    "1411": {
+      "lifeMax": 979,
+      "atk": 30,
+      "def": 98
+    },
+    "1412": {
+      "lifeMax": 862,
+      "atk": 35,
+      "def": 93
+    },
+    "1501": {
+      "lifeMax": 912,
+      "atk": 30,
+      "def": 112
+    },
+    "1502": {
+      "lifeMax": 912,
+      "atk": 30,
+      "def": 112
+    },
+    "1503": {
+      "lifeMax": 1139,
+      "atk": 27,
+      "def": 90
+    },
+    "1504": {
+      "lifeMax": 680,
+      "atk": 27,
+      "def": 72
+    },
+    "1505": {
+      "lifeMax": 1337,
+      "atk": 23,
+      "def": 90
+    },
+    "1506": {
+      "lifeMax": 866,
+      "atk": 33,
+      "def": 103
+    },
+    "1507": {
+      "lifeMax": 862,
+      "atk": 35,
+      "def": 93
+    },
+    "1508": {
+      "lifeMax": 862,
+      "atk": 35,
+      "def": 93
+    },
+    "1509": {
+      "lifeMax": 979,
+      "atk": 30,
+      "def": 98
+    },
+    "1510": {
+      "lifeMax": 824,
+      "atk": 37,
+      "def": 91
+    },
+    "1511": {
+      "lifeMax": 882,
+      "atk": 34,
+      "def": 94
+    },
+    "1601": {
+      "lifeMax": 716,
+      "atk": 18,
+      "def": 128
+    },
+    "1602": {
+      "lifeMax": 755,
+      "atk": 21,
+      "def": 94
+    },
+    "1603": {
+      "lifeMax": 826,
+      "atk": 36,
+      "def": 95
+    },
+    "1604": {
+      "lifeMax": 866,
+      "atk": 33,
+      "def": 103
+    },
+    "1605": {
+      "lifeMax": 866,
+      "atk": 33,
+      "def": 103
+    },
+    "1606": {
+      "lifeMax": 980,
+      "atk": 30,
+      "def": 98
+    },
+    "1607": {
+      "lifeMax": 928,
+      "atk": 32,
+      "def": 90
+    },
+    "1608": {
+      "lifeMax": 862,
+      "atk": 35,
+      "def": 93
+    },
+    "1610": {
+      "lifeMax": 882,
+      "atk": 34,
+      "def": 94
+    }
+  },
+  "growthCurve": [
+    {
+      "level": 1,
+      "breachLevel": 0,
+      "lifeMaxRatio": 10000,
+      "atkRatio": 10000,
+      "defRatio": 10000
+    },
+    {
+      "level": 2,
+      "breachLevel": 0,
+      "lifeMaxRatio": 10842,
+      "atkRatio": 10842,
+      "defRatio": 10823
+    },
+    {
+      "level": 3,
+      "breachLevel": 0,
+      "lifeMaxRatio": 11685,
+      "atkRatio": 11685,
+      "defRatio": 11647
+    },
+    {
+      "level": 4,
+      "breachLevel": 0,
+      "lifeMaxRatio": 12528,
+      "atkRatio": 12528,
+      "defRatio": 12471
+    },
+    {
+      "level": 5,
+      "breachLevel": 0,
+      "lifeMaxRatio": 13370,
+      "atkRatio": 13370,
+      "defRatio": 13295
+    },
+    {
+      "level": 6,
+      "breachLevel": 0,
+      "lifeMaxRatio": 14213,
+      "atkRatio": 14213,
+      "defRatio": 14119
+    },
+    {
+      "level": 7,
+      "breachLevel": 0,
+      "lifeMaxRatio": 15056,
+      "atkRatio": 15056,
+      "defRatio": 14943
+    },
+    {
+      "level": 8,
+      "breachLevel": 0,
+      "lifeMaxRatio": 15898,
+      "atkRatio": 15898,
+      "defRatio": 15767
+    },
+    {
+      "level": 9,
+      "breachLevel": 0,
+      "lifeMaxRatio": 16741,
+      "atkRatio": 16741,
+      "defRatio": 16591
+    },
+    {
+      "level": 10,
+      "breachLevel": 0,
+      "lifeMaxRatio": 17584,
+      "atkRatio": 17584,
+      "defRatio": 17415
+    },
+    {
+      "level": 11,
+      "breachLevel": 0,
+      "lifeMaxRatio": 18426,
+      "atkRatio": 18426,
+      "defRatio": 18239
+    },
+    {
+      "level": 12,
+      "breachLevel": 0,
+      "lifeMaxRatio": 19269,
+      "atkRatio": 19269,
+      "defRatio": 19063
+    },
+    {
+      "level": 13,
+      "breachLevel": 0,
+      "lifeMaxRatio": 20112,
+      "atkRatio": 20112,
+      "defRatio": 19887
+    },
+    {
+      "level": 14,
+      "breachLevel": 0,
+      "lifeMaxRatio": 20955,
+      "atkRatio": 20955,
+      "defRatio": 20711
+    },
+    {
+      "level": 15,
+      "breachLevel": 0,
+      "lifeMaxRatio": 21797,
+      "atkRatio": 21797,
+      "defRatio": 21535
+    },
+    {
+      "level": 16,
+      "breachLevel": 0,
+      "lifeMaxRatio": 22640,
+      "atkRatio": 22640,
+      "defRatio": 22359
+    },
+    {
+      "level": 17,
+      "breachLevel": 0,
+      "lifeMaxRatio": 23483,
+      "atkRatio": 23483,
+      "defRatio": 23183
+    },
+    {
+      "level": 18,
+      "breachLevel": 0,
+      "lifeMaxRatio": 24325,
+      "atkRatio": 24325,
+      "defRatio": 24007
+    },
+    {
+      "level": 19,
+      "breachLevel": 0,
+      "lifeMaxRatio": 25168,
+      "atkRatio": 25168,
+      "defRatio": 24831
+    },
+    {
+      "level": 20,
+      "breachLevel": 0,
+      "lifeMaxRatio": 26011,
+      "atkRatio": 26011,
+      "defRatio": 25655
+    },
+    {
+      "level": 20,
+      "breachLevel": 1,
+      "lifeMaxRatio": 32677,
+      "atkRatio": 33511,
+      "defRatio": 32136
+    },
+    {
+      "level": 21,
+      "breachLevel": 1,
+      "lifeMaxRatio": 33520,
+      "atkRatio": 34353,
+      "defRatio": 32960
+    },
+    {
+      "level": 22,
+      "breachLevel": 1,
+      "lifeMaxRatio": 34363,
+      "atkRatio": 35196,
+      "defRatio": 33784
+    },
+    {
+      "level": 23,
+      "breachLevel": 1,
+      "lifeMaxRatio": 35205,
+      "atkRatio": 36039,
+      "defRatio": 34608
+    },
+    {
+      "level": 24,
+      "breachLevel": 1,
+      "lifeMaxRatio": 36048,
+      "atkRatio": 36882,
+      "defRatio": 35432
+    },
+    {
+      "level": 25,
+      "breachLevel": 1,
+      "lifeMaxRatio": 36891,
+      "atkRatio": 37724,
+      "defRatio": 36256
+    },
+    {
+      "level": 26,
+      "breachLevel": 1,
+      "lifeMaxRatio": 37734,
+      "atkRatio": 38567,
+      "defRatio": 37080
+    },
+    {
+      "level": 27,
+      "breachLevel": 1,
+      "lifeMaxRatio": 38576,
+      "atkRatio": 39410,
+      "defRatio": 37904
+    },
+    {
+      "level": 28,
+      "breachLevel": 1,
+      "lifeMaxRatio": 39419,
+      "atkRatio": 40252,
+      "defRatio": 38728
+    },
+    {
+      "level": 29,
+      "breachLevel": 1,
+      "lifeMaxRatio": 40262,
+      "atkRatio": 41095,
+      "defRatio": 39552
+    },
+    {
+      "level": 30,
+      "breachLevel": 1,
+      "lifeMaxRatio": 41104,
+      "atkRatio": 41938,
+      "defRatio": 40376
+    },
+    {
+      "level": 31,
+      "breachLevel": 1,
+      "lifeMaxRatio": 41947,
+      "atkRatio": 42780,
+      "defRatio": 41200
+    },
+    {
+      "level": 32,
+      "breachLevel": 1,
+      "lifeMaxRatio": 42790,
+      "atkRatio": 43623,
+      "defRatio": 42024
+    },
+    {
+      "level": 33,
+      "breachLevel": 1,
+      "lifeMaxRatio": 43632,
+      "atkRatio": 44466,
+      "defRatio": 42848
+    },
+    {
+      "level": 34,
+      "breachLevel": 1,
+      "lifeMaxRatio": 44475,
+      "atkRatio": 45308,
+      "defRatio": 43672
+    },
+    {
+      "level": 35,
+      "breachLevel": 1,
+      "lifeMaxRatio": 45318,
+      "atkRatio": 46151,
+      "defRatio": 44496
+    },
+    {
+      "level": 36,
+      "breachLevel": 1,
+      "lifeMaxRatio": 46161,
+      "atkRatio": 46994,
+      "defRatio": 45320
+    },
+    {
+      "level": 37,
+      "breachLevel": 1,
+      "lifeMaxRatio": 47003,
+      "atkRatio": 47837,
+      "defRatio": 46144
+    },
+    {
+      "level": 38,
+      "breachLevel": 1,
+      "lifeMaxRatio": 47846,
+      "atkRatio": 48679,
+      "defRatio": 46968
+    },
+    {
+      "level": 39,
+      "breachLevel": 1,
+      "lifeMaxRatio": 48689,
+      "atkRatio": 49522,
+      "defRatio": 47792
+    },
+    {
+      "level": 40,
+      "breachLevel": 1,
+      "lifeMaxRatio": 49531,
+      "atkRatio": 50365,
+      "defRatio": 48616
+    },
+    {
+      "level": 40,
+      "breachLevel": 2,
+      "lifeMaxRatio": 56198,
+      "atkRatio": 57865,
+      "defRatio": 55097
+    },
+    {
+      "level": 41,
+      "breachLevel": 2,
+      "lifeMaxRatio": 57041,
+      "atkRatio": 58707,
+      "defRatio": 55921
+    },
+    {
+      "level": 42,
+      "breachLevel": 2,
+      "lifeMaxRatio": 57883,
+      "atkRatio": 59550,
+      "defRatio": 56745
+    },
+    {
+      "level": 43,
+      "breachLevel": 2,
+      "lifeMaxRatio": 58726,
+      "atkRatio": 60393,
+      "defRatio": 57569
+    },
+    {
+      "level": 44,
+      "breachLevel": 2,
+      "lifeMaxRatio": 59569,
+      "atkRatio": 61235,
+      "defRatio": 58393
+    },
+    {
+      "level": 45,
+      "breachLevel": 2,
+      "lifeMaxRatio": 60411,
+      "atkRatio": 62078,
+      "defRatio": 59217
+    },
+    {
+      "level": 46,
+      "breachLevel": 2,
+      "lifeMaxRatio": 61254,
+      "atkRatio": 62921,
+      "defRatio": 60041
+    },
+    {
+      "level": 47,
+      "breachLevel": 2,
+      "lifeMaxRatio": 62097,
+      "atkRatio": 63764,
+      "defRatio": 60865
+    },
+    {
+      "level": 48,
+      "breachLevel": 2,
+      "lifeMaxRatio": 62940,
+      "atkRatio": 64606,
+      "defRatio": 61689
+    },
+    {
+      "level": 49,
+      "breachLevel": 2,
+      "lifeMaxRatio": 63782,
+      "atkRatio": 65449,
+      "defRatio": 62513
+    },
+    {
+      "level": 50,
+      "breachLevel": 2,
+      "lifeMaxRatio": 64625,
+      "atkRatio": 66292,
+      "defRatio": 63337
+    },
+    {
+      "level": 50,
+      "breachLevel": 3,
+      "lifeMaxRatio": 71292,
+      "atkRatio": 73792,
+      "defRatio": 69818
+    },
+    {
+      "level": 51,
+      "breachLevel": 3,
+      "lifeMaxRatio": 72134,
+      "atkRatio": 74634,
+      "defRatio": 70642
+    },
+    {
+      "level": 52,
+      "breachLevel": 3,
+      "lifeMaxRatio": 72977,
+      "atkRatio": 75477,
+      "defRatio": 71466
+    },
+    {
+      "level": 53,
+      "breachLevel": 3,
+      "lifeMaxRatio": 73820,
+      "atkRatio": 76320,
+      "defRatio": 72290
+    },
+    {
+      "level": 54,
+      "breachLevel": 3,
+      "lifeMaxRatio": 74662,
+      "atkRatio": 77162,
+      "defRatio": 73114
+    },
+    {
+      "level": 55,
+      "breachLevel": 3,
+      "lifeMaxRatio": 75505,
+      "atkRatio": 78005,
+      "defRatio": 73938
+    },
+    {
+      "level": 56,
+      "breachLevel": 3,
+      "lifeMaxRatio": 76348,
+      "atkRatio": 78848,
+      "defRatio": 74762
+    },
+    {
+      "level": 57,
+      "breachLevel": 3,
+      "lifeMaxRatio": 77191,
+      "atkRatio": 79691,
+      "defRatio": 75586
+    },
+    {
+      "level": 58,
+      "breachLevel": 3,
+      "lifeMaxRatio": 78033,
+      "atkRatio": 80533,
+      "defRatio": 76410
+    },
+    {
+      "level": 59,
+      "breachLevel": 3,
+      "lifeMaxRatio": 78876,
+      "atkRatio": 81376,
+      "defRatio": 77234
+    },
+    {
+      "level": 60,
+      "breachLevel": 3,
+      "lifeMaxRatio": 79719,
+      "atkRatio": 82219,
+      "defRatio": 78058
+    },
+    {
+      "level": 60,
+      "breachLevel": 4,
+      "lifeMaxRatio": 86385,
+      "atkRatio": 89719,
+      "defRatio": 84540
+    },
+    {
+      "level": 61,
+      "breachLevel": 4,
+      "lifeMaxRatio": 87228,
+      "atkRatio": 90561,
+      "defRatio": 85364
+    },
+    {
+      "level": 62,
+      "breachLevel": 4,
+      "lifeMaxRatio": 88071,
+      "atkRatio": 91404,
+      "defRatio": 86188
+    },
+    {
+      "level": 63,
+      "breachLevel": 4,
+      "lifeMaxRatio": 88913,
+      "atkRatio": 92247,
+      "defRatio": 87012
+    },
+    {
+      "level": 64,
+      "breachLevel": 4,
+      "lifeMaxRatio": 89756,
+      "atkRatio": 93089,
+      "defRatio": 87836
+    },
+    {
+      "level": 65,
+      "breachLevel": 4,
+      "lifeMaxRatio": 90599,
+      "atkRatio": 93932,
+      "defRatio": 88660
+    },
+    {
+      "level": 66,
+      "breachLevel": 4,
+      "lifeMaxRatio": 91441,
+      "atkRatio": 94775,
+      "defRatio": 89483
+    },
+    {
+      "level": 67,
+      "breachLevel": 4,
+      "lifeMaxRatio": 92284,
+      "atkRatio": 95617,
+      "defRatio": 90307
+    },
+    {
+      "level": 68,
+      "breachLevel": 4,
+      "lifeMaxRatio": 93127,
+      "atkRatio": 96460,
+      "defRatio": 91131
+    },
+    {
+      "level": 69,
+      "breachLevel": 4,
+      "lifeMaxRatio": 93970,
+      "atkRatio": 97303,
+      "defRatio": 91955
+    },
+    {
+      "level": 70,
+      "breachLevel": 4,
+      "lifeMaxRatio": 94812,
+      "atkRatio": 98146,
+      "defRatio": 92779
+    },
+    {
+      "level": 70,
+      "breachLevel": 5,
+      "lifeMaxRatio": 101479,
+      "atkRatio": 103146,
+      "defRatio": 99261
+    },
+    {
+      "level": 71,
+      "breachLevel": 5,
+      "lifeMaxRatio": 102322,
+      "atkRatio": 103988,
+      "defRatio": 100085
+    },
+    {
+      "level": 72,
+      "breachLevel": 5,
+      "lifeMaxRatio": 103164,
+      "atkRatio": 104831,
+      "defRatio": 100909
+    },
+    {
+      "level": 73,
+      "breachLevel": 5,
+      "lifeMaxRatio": 104007,
+      "atkRatio": 105674,
+      "defRatio": 101733
+    },
+    {
+      "level": 74,
+      "breachLevel": 5,
+      "lifeMaxRatio": 104850,
+      "atkRatio": 106516,
+      "defRatio": 102557
+    },
+    {
+      "level": 75,
+      "breachLevel": 5,
+      "lifeMaxRatio": 105692,
+      "atkRatio": 107359,
+      "defRatio": 103381
+    },
+    {
+      "level": 76,
+      "breachLevel": 5,
+      "lifeMaxRatio": 106535,
+      "atkRatio": 108202,
+      "defRatio": 104205
+    },
+    {
+      "level": 77,
+      "breachLevel": 5,
+      "lifeMaxRatio": 107378,
+      "atkRatio": 109044,
+      "defRatio": 105029
+    },
+    {
+      "level": 78,
+      "breachLevel": 5,
+      "lifeMaxRatio": 108220,
+      "atkRatio": 109887,
+      "defRatio": 105853
+    },
+    {
+      "level": 79,
+      "breachLevel": 5,
+      "lifeMaxRatio": 109063,
+      "atkRatio": 110730,
+      "defRatio": 106677
+    },
+    {
+      "level": 80,
+      "breachLevel": 5,
+      "lifeMaxRatio": 109906,
+      "atkRatio": 111573,
+      "defRatio": 107501
+    },
+    {
+      "level": 80,
+      "breachLevel": 6,
+      "lifeMaxRatio": 116573,
+      "atkRatio": 116573,
+      "defRatio": 113982
+    },
+    {
+      "level": 81,
+      "breachLevel": 6,
+      "lifeMaxRatio": 117415,
+      "atkRatio": 117415,
+      "defRatio": 114806
+    },
+    {
+      "level": 82,
+      "breachLevel": 6,
+      "lifeMaxRatio": 118258,
+      "atkRatio": 118258,
+      "defRatio": 115630
+    },
+    {
+      "level": 83,
+      "breachLevel": 6,
+      "lifeMaxRatio": 119101,
+      "atkRatio": 119101,
+      "defRatio": 116454
+    },
+    {
+      "level": 84,
+      "breachLevel": 6,
+      "lifeMaxRatio": 119943,
+      "atkRatio": 119943,
+      "defRatio": 117278
+    },
+    {
+      "level": 85,
+      "breachLevel": 6,
+      "lifeMaxRatio": 120786,
+      "atkRatio": 120786,
+      "defRatio": 118102
+    },
+    {
+      "level": 86,
+      "breachLevel": 6,
+      "lifeMaxRatio": 121629,
+      "atkRatio": 121629,
+      "defRatio": 118926
+    },
+    {
+      "level": 87,
+      "breachLevel": 6,
+      "lifeMaxRatio": 122471,
+      "atkRatio": 122471,
+      "defRatio": 119750
+    },
+    {
+      "level": 88,
+      "breachLevel": 6,
+      "lifeMaxRatio": 123314,
+      "atkRatio": 123314,
+      "defRatio": 120574
+    },
+    {
+      "level": 89,
+      "breachLevel": 6,
+      "lifeMaxRatio": 124157,
+      "atkRatio": 124157,
+      "defRatio": 121398
+    },
+    {
+      "level": 90,
+      "breachLevel": 6,
+      "lifeMaxRatio": 125000,
+      "atkRatio": 125000,
+      "defRatio": 122222
+    }
+  ]
+}

@@ -1,0 +1,456 @@
+{
+  "sets": [
+    {
+      "name": "Celestial Light",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Spectro DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Spectro DMG +30% for 15s after releasing Intro Skill."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/8266e4bfeda1bd42d8f9794eb4ea0a13.png"
+    },
+    {
+      "name": "Chromatic Foam",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Fusion DMG +10%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "When the Resonator inflicts Fusion Burst on the enemies, they gain the following effects: Gain 10% Fusion DMG Bonus for 15s. While this effect is active, casting an Outro Skill grants the incoming Resonator 25% Fusion DMG Bonus for 15s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/f48a4af5f273b532924f63a55d6944d1/b9153260449b3690d1c2c5963a8cd00f.png"
+    },
+    {
+      "name": "Crown of Valor",
+      "effects": [
+        {
+          "pieceCount": 3,
+          "description": "Upon gaining a Shield, increase the Resonator's ATK by 6% and Crit DMG by 4% for 4s. This effect can be triggered once every 0.5s and stacks up to 5 times."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/27fa8ae088d8e1aeddf39920a8fb92a4/079f4fb55b755f6f198bee97d7c95390.png"
+    },
+    {
+      "name": "Dream of the Lost",
+      "effects": [
+        {
+          "pieceCount": 3,
+          "description": "Holding 0 Resonance Energy increases Crit. Rate by 20% and grants 35% Echo Skill DMG Bonus."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/80ed1b9476f09d1a99b747ff18bf888c/ba6beb7ae28ef0a97d7a0a038feb5060.png"
+    },
+    {
+      "name": "Empyrean Anthem",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Energy Regen +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Increase the Resonator's Coordinated Attack DMG by 80%. Upon a critical hit of Coordinated Attack, increase the active Resonator's ATK by 20% for 4s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/c00b57557743e709b8b96933432e0dfa.png"
+    },
+    {
+      "name": "Eternal Radiance",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Spectro DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Inflicting enemies with Spectro Frazzle increases Crit. Rate by 20% for 15s. Attacking enemies with 10 stacks of Spectro Frazzle grants 15% Spectro DMG Bonus for 15s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/59b2900aa03cb2182a51cdb520b535b6.png"
+    },
+    {
+      "name": "Flamewing's Shadow",
+      "effects": [
+        {
+          "pieceCount": 3,
+          "description": "Dealing Echo Skill DMG increases Heavy Attack Crit. Rate by 20% for 6s. Dealing Heavy Attack DMG increases Echo Skill Crit. Rate by 20% for 6s. While both effects are active, gain 16% Fusion DMG Bonus."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/15d54498227df4c02ecc74e4f065a7ec/75c168b671d4ce827fca23907d85f114.png"
+    },
+    {
+      "name": "Flaming Clawprint",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Fusion DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Casting Resonance Liberation increases Fusion DMG of Resonators in the team by 15% and the caster's Resonance Liberation DMG by 20%, lasting for 35s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/d814559015eb8b84015683854f2d121b/88399fdcf82e54c15ebbaabe86ff3e5e.png"
+    },
+    {
+      "name": "Freezing Frost",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Glacio DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Glacio DMG +10% after releasing Basic Attack or Heavy Attack. This effect stacks up to 3 times, each stack lasts 15s."
+        }
+      ],
+      "iconUrl": "https://img.game8.co/3885446/4954fd99ccad43fa57899eb6d4670611.png/show"
+    },
+    {
+      "name": "Frosty Resolve",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Resonance Skill DMG +12%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Casting Resonance Skill grants 22.5% Glacio DMG Bonus for 15s and casting Resonance Liberation increases Resonance Skill DMG by 18%, lasting for 5s. This effect stacks up to 2 times."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/586e508f161f26ce94633729ac56c602.png"
+    },
+    {
+      "name": "Gusts of Welkin",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Aero DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Inflicting Aero Erosion on enemies increases Aero DMG for all Resonators in the team by 15%, and for the Resonator triggering this effect by an additional 15%, lasting for 20s."
+        }
+      ],
+      "iconUrl": "https://img.game8.co/4136245/ca9e5ba0c06d5a9fd9bcc9f77d728e16.png/show"
+    },
+    {
+      "name": "Halo of Starry Radiance",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Healing Bonus +10%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "When healing a Resonator in the team, every 1% of Off-Tune Buildup Rate grants a 0.2% ATK increase to all Resonators in the team for 4s, up to 25%. Effects of the same name cannot stack."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/e996fb48eee1f66623aaac326df6ac51/a969aaab995e4aaddbfe5fc3781fa63b.png"
+    },
+    {
+      "name": "Havoc Eclipse",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Havoc DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Havoc DMG +7.5% after releasing Basic Attack or Heavy Attack. This effect stacks up to 4 times, each stack lasts 15s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/f19c9085129709ee14d013be869df69b.png"
+    },
+    {
+      "name": "Heart of Evil's Purge",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Aero DMG+"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Inflicting Tune Strain - Shifting increases Crit. DMG and grants Aero DMG Bonus."
+        }
+      ],
+      "iconUrl": "https://img.game8.co/4543987/a6a060ddb2f44bbf34d00f0f0bd457e0.png/show"
+    },
+    {
+      "name": "Lamp of Nether Road",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "HP+"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Upon gaining a Shield, gain a stackable Crit. Rate increase. At max stacks, gain Fusion DMG Bonus."
+        }
+      ],
+      "iconUrl": "https://img.game8.co/4543988/05b9cb6ab08a0c3fa773d9a3be6321c1.png/show"
+    },
+    {
+      "name": "Law of Harmony",
+      "effects": [
+        {
+          "pieceCount": 3,
+          "description": "Casting Echo Skill grants 30% Heavy Attack DMG Bonus to the caster for 4s. Additionally, all Resonators in the team gain 4% Echo Skill DMG Bonus for 30s, stacking up to 4 times. Echoes of the same name can only trigger this effect once. The record of Echo triggering this effect is cleared along with this effect. At 4 stacks, casting Echo Skill again resets the duration of this effect."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/27fa8ae088d8e1aeddf39920a8fb92a4/7134f8f5aced525d1c11d229063305e7.png"
+    },
+    {
+      "name": "Lingering Tunes",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "ATK +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "While on the field, ATK increases by 5% every 1.5s. This effect stacks up to 4 stacks. Outro Skill DMG +60%."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/7afbb1602613ec52b265d7a54ad27330.png"
+    },
+    {
+      "name": "Midnight Veil",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Havoc DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "When Outro Skill is triggered, deal additional 480% Havoc DMG to surrounding enemies, and grants the incoming Resonator 15% Havoc DMG Bonus for 15s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/9eb60bc8bf2b004e4db7d1cc0d5f1d8c.png"
+    },
+    {
+      "name": "Molten Rift",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Fusion DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Fusion DMG +30% for 15s after releasing Resonance Skill."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/fb5c81ed3a220004b71069645f112867.png"
+    },
+    {
+      "name": "Moonlit Clouds",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Energy Regen +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "After using Outro Skill, increases the ATK of the next Resonator by 22.5% for 15s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/602e8f042f463dc47ebfdf6a94ed5a6d.png"
+    },
+    {
+      "name": "Pact of Neonlight Leap",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Spectro DMG +10%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Casting outro Skill increases the ATK of the incoming Resonator who casts Intro Skill by 15%. Each point of Tune Break Boost the incoming Resonator has additionally increases their ATK by 0.3%, up to 15%. This effect lasts for 15s, or until the Resonator is switched out."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/e996fb48eee1f66623aaac326df6ac51/2484a7df36877a14689574eebda6dd7c.png"
+    },
+    {
+      "name": "Reel of Spliced Memories",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "ATK +10%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Inflicting Tune Rupture - Shifting or Tune Strain - Shifting on enemies increases the Tune Break Boost of Resonators in the team by 20 for 30s. Effects of the same name do not stack."
+        }
+      ],
+      "iconUrl": "https://img.game8.co/4471613/f9577d32ca06c113cab9ff6e0d39c3a9.png/show"
+    },
+    {
+      "name": "Rejuvenating Glow",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Healing Bonus +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Increases the ATK of all party members by 15% for 30s upon healing allies."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/9eb9cd58b9ea5e04c890326b5c1f471f.png"
+    },
+    {
+      "name": "Rite of Gilded Revelation",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Spectro DMG +10%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Dealing Basic Attack DMG increases Spectro DMG by 10% for 5s, stacking up to 3 times. With 3 stacks, casting Resonance Liberation grants 40% Basic Attack DMG Bonus."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/e996fb48eee1f66623aaac326df6ac51/258f63b9448490d648948081e23d86db.png"
+    },
+    {
+      "name": "Shadow of Shattered Dreams",
+      "effects": [
+        {
+          "pieceCount": 1,
+          "description": "Inflicting Hack - Shifting on the target grants 35% Basic Attack DMG and Heavy Attack DMG for 15s."
+        }
+      ],
+      "iconUrl": "https://img.game8.co/4518041/ae00141727ab6ea9d780b37d69522c21.png/show"
+    },
+    {
+      "name": "Sierra Gale",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Aero DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Aero DMG +30% for 15s after releasing Intro Skill."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/09dd8c2662b96ce14928333f055c5580.png"
+    },
+    {
+      "name": "Song of Feathered Trace",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Energy Regen+"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Upon inflicting Havoc Bane, gain Crit. Rate and Heavy Attack DMG Bonus increase. Upon inflicting Glacio Chafe, grant ATK increase for Resonators in the team."
+        }
+      ],
+      "iconUrl": "https://img.game8.co/4543986/3ac3b8ee861e45a16beeea36396bd1ab.png/show"
+    },
+    {
+      "name": "Sound of True Name",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Aero DMG +10%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Dealing Echo Skill DMG to enemies increases the Resonator's Echo Skill Crit. Rate by 20%, and grants 15% Aero DMG Bonus for 5s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/f48a4af5f273b532924f63a55d6944d1/5004a2bbca35d7d745207c2f34e2b909.png"
+    },
+    {
+      "name": "Thread of Severed Fate",
+      "effects": [
+        {
+          "pieceCount": 3,
+          "description": "Inflicting Havoc Bane increases the Resonator's ATK by 20% and grants 30% Resonance Liberation DMG Bonus for 5s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/3b9ca540ee66b46851b1a00eb1118230/7ae5e99a8c2f19cd25f44313293553aa.png"
+    },
+    {
+      "name": "Tidebreaking Courage",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Energy Regen +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Increase the Resonator's ATK by 15%. Reaching 250% Energy Regen increases all Attribute DMG by 30% for the Resonator."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/7b6fbd4c592d356e087a0f1053751007.png"
+    },
+    {
+      "name": "Trailblazing Star",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Fusion DMG +10%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Inflicting Fusion Burst or Tune Rupture - Shifting increases the Resonator's Crit. Rate by 20% and grants 20% Fusion DMG Bonus for 8s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/f48a4af5f273b532924f63a55d6944d1/fff5c6cf4ca1543a72b64bf5dff0d8ef.png"
+    },
+    {
+      "name": "Void Thunder",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Electro DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Electro DMG +15% after releasing Heavy Attack or Resonance Skill. This effect stacks up to 2 times, each stack lasts 15s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/c4d88a047905cdb485c0e9abcca20348/10fb15c77258a991b0028080a64fb42d.png"
+    },
+    {
+      "name": "Windward Pilgrimage",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Aero DMG +10%."
+        },
+        {
+          "pieceCount": 5,
+          "description": "Hitting a target with Aero Erosion increases Crit Rate by 10% and grants 30% Aero DMG Bonus, lasting for 10s."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/d814559015eb8b84015683854f2d121b/c9baca3cda1c39194c04fe2170c3da65.png"
+    },
+    {
+      "name": "Wishes of Quiet Snowfall",
+      "effects": [
+        {
+          "pieceCount": 2,
+          "description": "Glacio DMG +10%"
+        },
+        {
+          "pieceCount": 5,
+          "description": "Inflicting Glacio Chafe on enemies increases Glacio DMG dealt by 10% for 15s. The Resonator gains the Snowfall effect for 15s, which can be triggered every 25s.Snowfall Effect:- Dealing Resonance Liberation DMG removes Snowfall and increases Crit. Rate by 25% for 6s. While the effect is active, dealing Resonance Liberation DMG extends its duration by 4s, triggered once every 0.5s, up to 6 times.- Casting Outro Skill removes Snowfall and grants 25% Glacio DMG Bonus to the incoming Resonator for 15s.When Snowfall is removed, only one of the effects above can be triggered."
+        }
+      ],
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/0424730bfb814ed4bd7c768d07360a27/19ee203f0229aae4b91567bff25442e5.png"
+    }
+  ]
+}

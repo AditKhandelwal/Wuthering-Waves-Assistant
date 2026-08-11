@@ -1,0 +1,2441 @@
+{
+  "_note": "Forte Circuit stat bonus nodes. Source: Arikatsu/WutheringWaves_Data raw skill-tree datamine (BinData/skillTree/skilltree.json), replacing the earlier dotgg.gg + wutheringlab.com hybrid (2026-08-08) -- see this script's docstring for the extraction method and property-Id mapping. 8 nodes per character: 2 per non-Forte-Circuit column (lower tier, upper tier). Values are percentages. Columns: normal_attack, resonance_skill, resonance_liberation, intro_skill. Array index [0]=lower tier (closer to skill), [1]=upper tier (further from skill, unlocks after lower).",
+  "nodes": {
+    "1102": {
+      "normal_attack": [
+        {
+          "stat": "Glacio DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Glacio DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Glacio DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Glacio DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1103": {
+      "normal_attack": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1104": {
+      "normal_attack": [
+        {
+          "stat": "Glacio DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Glacio DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Glacio DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Glacio DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1105": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1107": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1108": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1109": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1110": {
+      "normal_attack": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1202": {
+      "normal_attack": [
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1203": {
+      "normal_attack": [
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1204": {
+      "normal_attack": [
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Fusion DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1205": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1206": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1207": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1208": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
+    "1209": {
+      "normal_attack": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "DEF",
+          "value": 2.28
+        },
+        {
+          "stat": "DEF",
+          "value": 5.32
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "DEF",
+          "value": 2.28
+        },
+        {
+          "stat": "DEF",
+          "value": 5.32
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1210": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1211": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
+    "1301": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
+    "1302": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1303": {
+      "normal_attack": [
+        {
+          "stat": "Electro DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Electro DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "DEF",
+          "value": 2.28
+        },
+        {
+          "stat": "DEF",
+          "value": 5.32
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "DEF",
+          "value": 2.28
+        },
+        {
+          "stat": "DEF",
+          "value": 5.32
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Electro DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Electro DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1304": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1305": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
+    "1306": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1307": {
+      "normal_attack": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1308": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1309": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1403": {
+      "normal_attack": [
+        {
+          "stat": "Aero DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Aero DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Aero DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Aero DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1404": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1405": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1406": {
+      "normal_attack": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1407": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
+    "1409": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1410": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1411": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1412": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1501": {
+      "normal_attack": [
+        {
+          "stat": "Spectro DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Spectro DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Spectro DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Spectro DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1503": {
+      "normal_attack": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1504": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1505": {
+      "normal_attack": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1506": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
+    "1507": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1508": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1509": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1510": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1511": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1601": {
+      "normal_attack": [
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "DEF",
+          "value": 2.28
+        },
+        {
+          "stat": "DEF",
+          "value": 5.32
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "DEF",
+          "value": 2.28
+        },
+        {
+          "stat": "DEF",
+          "value": 5.32
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1602": {
+      "normal_attack": [
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1603": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
+    "1604": {
+      "normal_attack": [
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1606": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
+    "1607": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1608": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1610": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1310": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1408": {
+      "normal_attack": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Healing Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Healing Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1502": {
+      "normal_attack": [
+        {
+          "stat": "Spectro DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Spectro DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Spectro DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Spectro DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    },
+    "1605": {
+      "normal_attack": [
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 4.2
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 1.8
+        },
+        {
+          "stat": "Havoc DMG Bonus",
+          "value": 4.2
+        }
+      ]
+    }
+  }
+}

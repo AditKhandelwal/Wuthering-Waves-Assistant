@@ -1,0 +1,3526 @@
+{
+  "1102": {
+    "name": "Sanhua",
+    "element": "Glacio",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "65.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "250.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Impermanence Heron",
+      "sets": [
+        "Moonlit Clouds"
+      ]
+    },
+    "recommendedWeapons": [
+      "Blazing Brilliance",
+      "Red Spring",
+      "Emerald of Genesis"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      }
+    ],
+    "rotationNotes": "1. Sanhua is a Glacio sub-DPS focused on Resonance Skill DMG.\n2. Sanhua has exceptional Concerto Energy generation.\n3. Sanhua's Outro Skill boosts the Basic Attack DMG of the next character.",
+    "teamComps": [
+      {
+        "main": "Camellya",
+        "spares": [
+          "Encore"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1105": {
+    "name": "Zhezhi",
+    "element": "Glacio",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "65.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "140.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Impermanence Heron",
+      "sets": [
+        "Moonlit Clouds"
+      ]
+    },
+    "recommendedWeapons": [
+      "Rime-Draped Sprouts",
+      "Stringmaster",
+      "Cosmic Ripples",
+      "Augment"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Zhezhi is a Glacio sub-DPS/Support who provides off-field off-field Coordinated Attacks with Resonance Liberation. Her Outro Skill increases Glacio DMG and Resonance Skill DMG for the next character.",
+    "teamComps": [
+      {
+        "main": "Carlotta",
+        "spares": [
+          "Jinhsi",
+          "Sanhua"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1107": {
+    "name": "Carlotta",
+    "element": "Glacio",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2000"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Sentry Construct",
+      "sets": [
+        "Frosty Resolve"
+      ]
+    },
+    "recommendedWeapons": [
+      "The Last Dance",
+      "Static Mist",
+      "Thunderbolt"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": null
+      }
+    ],
+    "rotationNotes": "Optimal Rotation: Carlotta's main goal is to build 120 Substance to cast Heavy Attack: Imminent Oblivion, before casting her Resonance Liberation to enter the Twilight Tango state.",
+    "teamComps": [
+      {
+        "main": "Zhezhi",
+        "spares": [
+          "Sanhua"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina",
+          "Baizhi"
+        ]
+      }
+    ]
+  },
+  "1108": {
+    "name": "Hiyuki",
+    "element": "Glacio",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "115.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reminiscence: Threnodian - Voidborne Construct",
+      "sets": [
+        "Wishes of Quiet Snowfall"
+      ]
+    },
+    "recommendedWeapons": [
+      "Frostburn",
+      "Emerald of Genesis",
+      "Everbright Polestar"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Hiyuki, a member of the Special Response Force, is the embodiment of icy purity.\nThe wishes entrusted to her in her brief encounters with others drive her on, carving a path forward.",
+    "teamComps": [
+      {
+        "main": "Lynae",
+        "spares": [
+          "Zhezhi"
+        ]
+      },
+      {
+        "main": "Chisa",
+        "spares": [
+          "Mornye"
+        ]
+      }
+    ]
+  },
+  "1109": {
+    "name": "Lucilla",
+    "element": "Glacio",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "65.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2100"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Glommoth",
+      "sets": [
+        "Wishes of Quiet Snowfall"
+      ]
+    },
+    "recommendedWeapons": [
+      "Freeze Frame",
+      "Stringmaster",
+      "Lethean Elegy"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Lucilla, President of Startorch Academy and idealist with both feet on the ground. She holds quiet vigil over her students as they rise to challenge the very sky.",
+    "teamComps": [
+      {
+        "main": "Hiyuki",
+        "spares": [
+          "Sigrika",
+          "Phrolova"
+        ]
+      },
+      {
+        "main": "Chisa",
+        "spares": [
+          "Shorekeeper"
+        ]
+      }
+    ]
+  },
+  "1203": {
+    "name": "Encore",
+    "element": "Fusion",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "65.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "250.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Inferno Rider",
+      "sets": [
+        "Molten Rift"
+      ]
+    },
+    "recommendedWeapons": [
+      "Stringmaster",
+      "Cosmic Ripples",
+      "Augment"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      }
+    ],
+    "rotationNotes": "Encore is a Fusion main DPS. She deals high burst and off-field DMG through Basic Attack and Resonance Liberation DMG. Versatile in both melee and ranged combat.",
+    "teamComps": [
+      {
+        "main": "Changli",
+        "spares": [
+          "Sanhua"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1204": {
+    "name": "Mortefi",
+    "element": "Fusion",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "210.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "150.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Impermanence Heron",
+      "sets": [
+        "Moonlit Clouds"
+      ]
+    },
+    "recommendedWeapons": [
+      "Static Mist",
+      "Cadenza",
+      "Undying Flame"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": null
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": null
+      }
+    ],
+    "rotationNotes": "Mortefi is a Fusion character whose main source of DMG comes from Resonance Skills and frequent Coordinated Attacks.",
+    "teamComps": [
+      {
+        "main": "Jiyan",
+        "spares": [
+          "Jinhsi"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1206": {
+    "name": "Brant",
+    "element": "Fusion",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "200.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "250.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Dragon of Dirge",
+      "sets": [
+        "Tidebreaking Courage"
+      ]
+    },
+    "recommendedWeapons": [
+      "Unflickering Valor",
+      "Overture",
+      "Red Spring"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Brant is a 5 star fusion Sword user considered as a super hybrid character because he can fulfill multiple roles in your team building, including keeping your team alive with shields if you need it, healing your entire team with his basic attacks and liberation, does decent damage and extremely versatile when it comes to team building because he can be slotted into many teams where the other dps uses the fusion attribute or scales off resonance skill damage.",
+    "teamComps": [
+      {
+        "main": "Lupa",
+        "spares": [
+          "Sanhua",
+          "Encore"
+        ]
+      },
+      {
+        "main": "Changli",
+        "spares": [
+          "Shorekeeper"
+        ]
+      }
+    ]
+  },
+  "1207": {
+    "name": "Lupa",
+    "element": "Fusion",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2300"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "130.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Lioness of Glory",
+      "sets": [
+        "Flaming Clawprint"
+      ]
+    },
+    "recommendedWeapons": [
+      "Wildfire Mark",
+      "Lustrous Razor",
+      "Autumntrace"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "1. Lupa is a Fusion Sub-DPS/Support, with a kit centered around Resonance Liberation DMG.\n2. Lupa revolves around [Wolflame] and [Wolfaith] as core energy sources, enabling various enhanced attacks and Coordinated Attack.\n3. When activating Resonance Liberation, Lupa gains an auto-recovery effect, increasing error tolerance.\n4. Most of Lupa's skills can be cast mid-air, making her exceptionally effective at aerial combat.\n5. Lupa provides buffs to the entire team based on the number of Fusion units present. Her Outro Skill boosts allies' Fusion DMG and Basic Attack DMG, significantly enhancing Fusion teams.",
+    "teamComps": [
+      {
+        "main": "Brant",
+        "spares": [
+          "Encore"
+        ]
+      },
+      {
+        "main": "Changli",
+        "spares": [
+          "Chixia"
+        ]
+      }
+    ]
+  },
+  "1208": {
+    "name": "Galbrena",
+    "element": "Fusion",
+    "statThresholds": [
+      {
+        "stat": "ATK",
+        "target": "2000"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "265.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Corrosaurus",
+      "sets": [
+        "Flamewing's Shadow",
+        "Flaming Clawprint"
+      ]
+    },
+    "recommendedWeapons": [
+      "Lux & Umbra",
+      "Static Mist",
+      "Solar Flame"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Galbrena, a resonator with a demonic presence. She unleashes flashy and fast paced attacks, while raining down hellfire onto the enemies, only to finish the onslaught with a wingbeat flare, and a final devastating kick.\nGalbrena combines smooth gameplay, with powerful damage, making her a powerful main DPS resonator.\nShe relies on her teammates to unlock a major portion of her damage, so good teambuilding is required for her to thrive.&nbsp;",
+    "teamComps": [
+      {
+        "main": "Qiuyuan",
+        "spares": [
+          "Lupa",
+          "Cantarella"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Brant"
+        ]
+      }
+    ]
+  },
+  "1209": {
+    "name": "Mornye",
+    "element": "Fusion",
+    "statThresholds": [
+      {
+        "stat": "Energy Regen",
+        "target": "250.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reactor Husk",
+      "sets": [
+        "Halo of Starry Radiance"
+      ]
+    },
+    "recommendedWeapons": [
+      "Starfield Calibrator",
+      "Discord",
+      "Dauntless Evernight"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Mornye, the professor of the Department of Exostrider Engineering, is an Engineer with two prosthetic legs carrying her towards the stars of her dreams.",
+    "teamComps": [
+      {
+        "main": "Lynae",
+        "spares": [
+          "Brant"
+        ]
+      },
+      {
+        "main": "Lupa",
+        "spares": []
+      }
+    ]
+  },
+  "1210": {
+    "name": "Aemeath",
+    "element": "Fusion",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "255.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "118.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2100"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Sigillum",
+      "sets": [
+        "Trailblazing Star"
+      ]
+    },
+    "recommendedWeapons": [
+      "Everbright Polestar",
+      "Emerald of Genesis",
+      "Feather Edge"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 10
+      }
+    ],
+    "rotationNotes": "Aemeath is an Off-Tune, Fusion character who utlizes two forms simaltaneously in combat to deal incredible AoE Fusion DMG. While in her Mecha form, shes also capable of flight at high speeds, making her an exceptional exploration unit as well.",
+    "teamComps": [
+      {
+        "main": "Lynae",
+        "spares": [
+          "Lupa"
+        ]
+      },
+      {
+        "main": "Mornye",
+        "spares": [
+          "Brant"
+        ]
+      }
+    ]
+  },
+  "1211": {
+    "name": "Denia",
+    "element": "Fusion",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "270.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "130.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2200"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reminiscence: Denia",
+      "sets": [
+        "Chromatic Foam"
+      ]
+    },
+    "recommendedWeapons": [
+      "Forged Dwarf Star",
+      "Stringmaster",
+      "Augment"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "1. Denia is a dual-system sub-DPS/support for Fusion Burst and Tune Strain, focusing on Resonance Liberation DMG.\n2. In Fusion Burst mode, Denia can apply [Fusion Burst] to enemies, increase teamwide Fusion DMG, and her Outro Skill increases the [Fusion Burst] DMG taken by enemies around the on-field character.\n3. In Tune Strain mode, Denia can apply Tune Strain - Shifting and trigger Tune Strain - Interfered, increasing teamwide Tune Break Boost, while her Outro Skill increases teammates' total DMG.\n4. Denia can continuously group enemies for long durations while off-field, is easy to operate, and has 2 forms!",
+    "teamComps": [
+      {
+        "main": "Aemeath",
+        "spares": [
+          "Luuk Herssen"
+        ]
+      },
+      {
+        "main": "Chisa",
+        "spares": [
+          "Mornye"
+        ]
+      }
+    ]
+  },
+  "1303": {
+    "name": "Yuanwu",
+    "element": "Electro",
+    "statThresholds": [
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "210.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Hecate",
+      "sets": [
+        "Empyrean Anthem"
+      ]
+    },
+    "recommendedWeapons": [
+      "Amity Accord",
+      "Stonard",
+      "Originite: Type IV"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "1. Yuanwu is an Electro sub-DPS who excels at Coordinated Attack.\n2. Yuanwu boosts the resistance to interruption of the entire team.\n3. Yuanwu has high Concerto Energy efficiency. His Outro Skill calls down lightning centered on the target, dealing significant Vibration Strength DMG to enemies hit.",
+    "teamComps": [
+      {
+        "main": "Jinhsi",
+        "spares": []
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1304": {
+    "name": "Jinhsi",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "275.0%"
+      },
+      {
+        "stat": "Resonance Skill DMG Bonus",
+        "target": "20.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Jué",
+      "sets": [
+        "Celestial Light"
+      ]
+    },
+    "recommendedWeapons": [
+      "Ages of Harvest",
+      "Verdant Summit",
+      "Lustrous Razor"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Jinhsi is an Spectro character typically used as an on-field main DPS. Jinhsi specializes in Resonance Skill DMG. With a wide attack range, excellent targeting, and high burst potential, she boasts both high floor and high ceiling performance.",
+    "teamComps": [
+      {
+        "main": "Zhezhi",
+        "spares": [
+          "Cantarella",
+          "Changli"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1305": {
+    "name": "Xiangli Yao",
+    "element": "Electro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "65.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "270.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Thundering Mephis",
+      "sets": [
+        "Void Thunder"
+      ]
+    },
+    "recommendedWeapons": [
+      "Verity's Handle",
+      "Tragicomedy",
+      "Stonard"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Xiangli Yao is an Electro main DPS specializing in Resonance Liberation DMG. His unique time dilation mechanic and high resistance to interruption during Resonance Liberation allow him to maintain stable DPS, making him highly consistent and easy to use.",
+    "teamComps": [
+      {
+        "main": "Yinlin",
+        "spares": [
+          "Sanhua"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1306": {
+    "name": "Augusta",
+    "element": "Electro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "60.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "250.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "The False Sovereign",
+      "sets": [
+        "Crown of Valor",
+        "Void Thunder"
+      ]
+    },
+    "recommendedWeapons": [
+      "Thunderflare Dominion",
+      "Verdant Summit",
+      "Aureate Zenith"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Augusta, the undefeated gladiator of the agon, sets forth red lightning, and bashes enemies with her Gryphon.\nAugusta unleases quickpaced slashes, and zips through the battlefield like an active lightning bolt, only to stop time when her Resonance Liberation activates, before decimating her foes.&nbsp;",
+    "teamComps": [
+      {
+        "main": "Mortefi",
+        "spares": [
+          "Phrolova",
+          "Yinlin"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1307": {
+    "name": "Buling",
+    "element": "Electro",
+    "statThresholds": [
+      {
+        "stat": "Energy Regen",
+        "target": "150.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "1800"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Fallacy of No Return",
+      "sets": [
+        "Rejuvenating Glow"
+      ]
+    },
+    "recommendedWeapons": [
+      "Variation",
+      "Cosmic Ripples",
+      "Stringmaster"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Buling, the Black Shore's Consultant, and master of Feng Shiu, is a phenomenal character in the rights hands, She utilizes Yin and Yang to power up her forte, and support her team.",
+    "teamComps": [
+      {
+        "main": "Carlotta",
+        "spares": [
+          "Jinhsi"
+        ]
+      },
+      {
+        "main": "Chisa",
+        "spares": [
+          "Zhezhi"
+        ]
+      }
+    ]
+  },
+  "1308": {
+    "name": "Rebecca",
+    "element": "Electro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "80.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "280.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2200"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reminiscence - Nightmare: Adam Smasher",
+      "sets": [
+        "Lingering Tunes",
+        "Void Thunder"
+      ]
+    },
+    "recommendedWeapons": [
+      "Skull Thrasher",
+      "Static Mist",
+      "Solar Flame"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 5
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "1. Rebecca is a sub-DPS who primarily deals Basic Attack DMG.\n2. Rebecca is a Hack character within the Off-Tune mechanic. She can apply [Hack - Shifting] to enemies and trigger responses to [Hack - Interfered], dealing Hack DMG.\n3. Rebecca has 2 combat modes, Pistol and Shotgun. After casting her Resonance Liberation, she can also use an HMG for automatic attacks, making her highly versatile and fun to play.\n4. Rebecca can increase the entire team's ATK and boost teammates' Tune Break Boost when they apply [Hack - Shifting].\n5. Rebecca's Outro Skill summons a turret that continuously attacks, while increasing the next character's DMG Amplification for all Attributes and Heavy Attack DMG.",
+    "teamComps": [
+      {
+        "main": "Lucy",
+        "spares": [
+          "Jiyan"
+        ]
+      },
+      {
+        "main": "Mornye",
+        "spares": [
+          "Shorekeeper",
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1403": {
+    "name": "Aalto",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "210.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Feilian Beringal",
+      "sets": [
+        "Sierra Gale"
+      ]
+    },
+    "recommendedWeapons": [
+      "Static Mist",
+      "Novaburst",
+      "Cadenza"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Aalto is an Aero sub-DPS who enhances teammates&rsquo; Aero DMG.",
+    "teamComps": [
+      {
+        "main": "Jiyan",
+        "spares": [
+          "Rover: Aero"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1404": {
+    "name": "Jiyan",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Aero DMG Bonus",
+        "target": "40.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2200"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Feilian Beringal",
+      "sets": [
+        "Sierra Gale"
+      ]
+    },
+    "recommendedWeapons": [
+      "Verdant Summit",
+      "Lustrous Razor",
+      "Autumntrace"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": null
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": null
+      }
+    ],
+    "rotationNotes": "Jiyan is an Aero on-field main DPS with an easy-to-master playstyle, AoE coverage, high attack frequency, and strong parry.",
+    "teamComps": [
+      {
+        "main": "Mortefi",
+        "spares": [
+          "Aalto"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1405": {
+    "name": "Jianxin",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "ATK",
+        "target": "1800"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "50.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "180.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "130.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Impermanence Heron",
+      "sets": [
+        "Moonlit Clouds"
+      ]
+    },
+    "recommendedWeapons": [
+      "Verity's Handle",
+      "Abyss Surges",
+      "Stonard",
+      "Marcato"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Jianxin is an Aero sub-DPS/Support with strong grouping capabilities, plus healing and shielding utility. Her Outro Skill buffs teammates' Resonance Liberation.",
+    "teamComps": [
+      {
+        "main": "Xiangli Yao",
+        "spares": [
+          "Rover: Havoc"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina",
+          "Baizhi"
+        ]
+      }
+    ]
+  },
+  "1406": {
+    "name": "Rover: Aero",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "60.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "220.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "140.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2100"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Fallacy of No Return",
+      "sets": [
+        "Rejuvenating Glow"
+      ]
+    },
+    "recommendedWeapons": [
+      "Bloodpact's Pledge",
+      "Blazing Brilliance",
+      "Emerald of Genesis"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "1. Aero Rover is an Aero sub DPS, healer or Support, with a focus on Resonance Skill DMG.\n2. Aero Rover's enhanced Mid-air Attack and Resonance Liberation provide team-wide healing.\n3. As a core enabler of Aero Negative Status, Aero Rover&rsquo;s Resonance Skill converts all non-Aero Negative Statuses into Aero.\n4. Aero Rover's Outro Skill raises the target&rsquo;s Aero Negative Status stack cap when allies attack.\n5. Aero Rover has a 5-star signature weapon that boosts team-wide Aero DMG after triggering its passive.",
+    "teamComps": [
+      {
+        "main": "Jiyan",
+        "spares": [
+          "Cartethyia"
+        ]
+      },
+      {
+        "main": "Mortefi",
+        "spares": []
+      }
+    ]
+  },
+  "1408": {
+    "name": "Rover: Aero",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "60.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "220.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "140.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2100"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Fallacy of No Return",
+      "sets": [
+        "Rejuvenating Glow"
+      ]
+    },
+    "recommendedWeapons": [
+      "Bloodpact's Pledge",
+      "Blazing Brilliance",
+      "Emerald of Genesis"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "1. Aero Rover is an Aero sub DPS, healer or Support, with a focus on Resonance Skill DMG.\n2. Aero Rover's enhanced Mid-air Attack and Resonance Liberation provide team-wide healing.\n3. As a core enabler of Aero Negative Status, Aero Rover&rsquo;s Resonance Skill converts all non-Aero Negative Statuses into Aero.\n4. Aero Rover's Outro Skill raises the target&rsquo;s Aero Negative Status stack cap when allies attack.\n5. Aero Rover has a 5-star signature weapon that boosts team-wide Aero DMG after triggering its passive.",
+    "teamComps": [
+      {
+        "main": "Jiyan",
+        "spares": [
+          "Cartethyia"
+        ]
+      },
+      {
+        "main": "Mortefi",
+        "spares": []
+      }
+    ]
+  },
+  "1409": {
+    "name": "Cartethyia",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "HP",
+        "target": "50000"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "130.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reminiscence: Fleurdelys",
+      "sets": [
+        "Windward Pilgrimage"
+      ]
+    },
+    "recommendedWeapons": [
+      "Defier's Thorn",
+      "Red Spring",
+      "Unflickering Valor",
+      "Guardian Sword"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "1. Cartethyia is an Aero main DPS who scales with HP, focused on Basic Attack DMG and [Aero Erosion] DMG.\n2. Cartethyia excels at both direct DMG and DoT, with large AoE and strong adaptability across environments.\n3. Cartethyia can apply [Aero Erosion] herself. Some of her skills are treated as [Aero Erosion] DMG, can accelerate or instantly trigger its DMG, spread its stacks, and scale her DMG based on the number of [Aero Erosion] stacks on enemies. She's a core Aero Negative Status DPS.\n4. Cartethyia has two forms: Cartethyia and Fleurdelys.",
+    "teamComps": [
+      {
+        "main": "Ciaccona",
+        "spares": [
+          "Sanhua"
+        ]
+      },
+      {
+        "main": "Chisa",
+        "spares": [
+          "Shorekeeper",
+          "Rover: Aero"
+        ]
+      }
+    ]
+  },
+  "1410": {
+    "name": "Iuno",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "250.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Lady of the Sea",
+      "sets": [
+        "Crown of Valor",
+        "Sierra Gale"
+      ]
+    },
+    "recommendedWeapons": [
+      "Moongazer's Sigil",
+      "Verity's Handle",
+      "Aether Strike"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Iuno, the Priestess of Septimont, lets loose a gale of arrows under the moon. She flies across the battlefield raining down a volley of arrows from every angle onto her enemies.&nbsp;",
+    "teamComps": [
+      {
+        "main": "Augusta",
+        "spares": [
+          "Jiyan",
+          "Zani"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1411": {
+    "name": "Qiuyuan",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2000"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reminiscence: Fenrico",
+      "sets": [
+        "Law of Harmony",
+        "Sierra Gale"
+      ]
+    },
+    "recommendedWeapons": [
+      "Emerald Sentence",
+      "Emerald of Genesis",
+      "Endless Collapse"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Qiuyuan, a blind swordsman capable of seeing the enemies before they see him. He springs into combat from the Bamboo forest generated from his forte, while painting the world black to match his vision of the world.&nbsp;",
+    "teamComps": [
+      {
+        "main": "Galbrena",
+        "spares": [
+          "Phrolova",
+          "Ciaccona"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Rover: Aero"
+        ]
+      }
+    ]
+  },
+  "1412": {
+    "name": "Sigrika",
+    "element": "Aero",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "265.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "118.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nameless Explorer",
+      "sets": [
+        "Sound of True Name"
+      ]
+    },
+    "recommendedWeapons": [
+      "Solsworn Ciphers",
+      "Blazing Justice",
+      "Abyss Surges"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Sigrika, a Startorch Academy student Preparatory Program, and master of the unique and strange anomolies called Runes.",
+    "teamComps": [
+      {
+        "main": "Qiuyuan",
+        "spares": [
+          "Lynae"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Mornye"
+        ]
+      }
+    ]
+  },
+  "1501": {
+    "name": "Rover: Spectro",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "ATK",
+        "target": "2000"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "240.0%"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "50.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Mourning Aix",
+      "sets": [
+        "Eternal Radiance"
+      ]
+    },
+    "recommendedWeapons": [
+      "Blazing Brilliance",
+      "Emerald of Genesis",
+      "Fables of Wisdom",
+      "Lumingloss"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Spectro Rover is a Spectro DPS specializing in Resonance Skill DMG and rapid buildup of [Spectro Frazzle] stacks.",
+    "teamComps": [
+      {
+        "main": "Phoebe",
+        "spares": []
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina",
+          "Baizhi"
+        ]
+      }
+    ]
+  },
+  "1502": {
+    "name": "Rover: Spectro",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "ATK",
+        "target": "2000"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "240.0%"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "50.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Mourning Aix",
+      "sets": [
+        "Eternal Radiance"
+      ]
+    },
+    "recommendedWeapons": [
+      "Blazing Brilliance",
+      "Emerald of Genesis",
+      "Fables of Wisdom",
+      "Lumingloss"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Spectro Rover is a Spectro DPS specializing in Resonance Skill DMG and rapid buildup of [Spectro Frazzle] stacks.",
+    "teamComps": [
+      {
+        "main": "Phoebe",
+        "spares": []
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina",
+          "Baizhi"
+        ]
+      }
+    ]
+  },
+  "1503": {
+    "name": "Verina",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "Energy Regen",
+        "target": "230.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Bell-Borne Geochelone",
+      "sets": [
+        "Rejuvenating Glow"
+      ]
+    },
+    "recommendedWeapons": [
+      "Stellar Symphony",
+      "Variation",
+      "Call of the Abyss"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 1
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 1
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Verina is a Spectro healer with incredibly fast Concerto Energy generation, powerful DMG buffs, and even a revival mechanic.",
+    "teamComps": [
+      {
+        "main": "Rover: Havoc",
+        "spares": [
+          "Jinhsi",
+          "Changli"
+        ]
+      },
+      {
+        "main": "Sanhua",
+        "spares": [
+          "Zhezhi"
+        ]
+      }
+    ]
+  },
+  "1504": {
+    "name": "Lumi",
+    "element": "Electro",
+    "statThresholds": [
+      {
+        "stat": "ATK",
+        "target": "2000"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "210.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Thundering Mephis",
+      "sets": [
+        "Void Thunder"
+      ]
+    },
+    "recommendedWeapons": [
+      "Lustrous Razor",
+      "Autumntrace",
+      "Discord"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": null
+      }
+    ],
+    "rotationNotes": "Lumi deals Electro DMG and focuses on Basic Attack DMG, with two viable roles: main DPS and sub-DPS. She also boosts the Resonance Skill DMG of the next character.",
+    "teamComps": [
+      {
+        "main": "Sanhua",
+        "spares": [
+          "Changli",
+          "Jinhsi"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1505": {
+    "name": "Shorekeeper",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "Energy Regen",
+        "target": "250.0%"
+      },
+      {
+        "stat": "HP",
+        "target": "30000"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "220.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Fallacy of No Return",
+      "sets": [
+        "Rejuvenating Glow"
+      ]
+    },
+    "recommendedWeapons": [
+      "Variation",
+      "Stellar Symphony",
+      "Call of the Abyss"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "The Shorekeeper is the Best Universal Support in the game that can fit into any team thanks to her team wide 12.5% crit rate &amp; 25% crit damage buff. She also has really good healing in her kit and her outro Amplifies the damage of all of your characters.\n&nbsp;She can also save you from a fatal blow.",
+    "teamComps": [
+      {
+        "main": "Carlotta",
+        "spares": [
+          "Changli",
+          "Jinhsi"
+        ]
+      },
+      {
+        "main": "Zhezhi",
+        "spares": [
+          "Camellya"
+        ]
+      }
+    ]
+  },
+  "1506": {
+    "name": "Phoebe",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "65.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "250.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Mourning Aix",
+      "sets": [
+        "Eternal Radiance"
+      ]
+    },
+    "recommendedWeapons": [
+      "Luminous Hymn",
+      "Stringmaster",
+      "Rime-Draped Sprouts"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Phoebe is a Spectro character with dual roles: Main DPS and Support. Regardless of the role, her playstyle revolves around Heavy Attack DMG.",
+    "teamComps": [
+      {
+        "main": "Rover: Spectro",
+        "spares": [
+          "Sanhua"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1507": {
+    "name": "Zani",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "ATK",
+        "target": "2300"
+      },
+      {
+        "stat": "DEF",
+        "target": "1137"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "60.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Capitaneus",
+      "sets": [
+        "Eternal Radiance"
+      ]
+    },
+    "recommendedWeapons": [
+      "Blazing Justice",
+      "Tragicomedy",
+      "Legend of Drunken Hero",
+      "Celestial Spiral"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "1. Zani is a Spectro main DPS and the core of Spectro Frazzle teams, dealing primarily Heavy Attack DMG and Spectro DMG.\n2. Zani can instantly trigger the team's [Spectro Frazzle] and convert it into her own energy, enabling a stable combat cycle.\n3. Some of Zani's skills stagnate enemies. Most of her skills offer Block/DMG Reduction, creating a safe window for sustained DPS and boosting her survivability.\n4. Zani comes with a strong [Spectro Frazzle] DMG bonus, significantly enhancing her DMG potential.",
+    "teamComps": [
+      {
+        "main": "Phoebe",
+        "spares": [
+          "Rover: Spectro"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1508": {
+    "name": "Chisa",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "75.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "250.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2300"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reminiscence: Threnodian - Leviathan",
+      "sets": [
+        "Thread of Severed Fate",
+        "Havoc Eclipse"
+      ]
+    },
+    "recommendedWeapons": [
+      "Kumokiri",
+      "Wildfire Mark",
+      "Lustrous Razor"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Chisa, is a conscienntious, level-headed student from Startorch Academy. She sees the weaknesses in structures in the form of threads, and with her scissors, she will sever those weak points.",
+    "teamComps": [
+      {
+        "main": "Cartethyia",
+        "spares": [
+          "Zani"
+        ]
+      },
+      {
+        "main": "Ciaccona",
+        "spares": [
+          "Phoebe"
+        ]
+      }
+    ]
+  },
+  "1509": {
+    "name": "Lynae",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "215.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Hyvatia",
+      "sets": [
+        "Pact of Neonlight Leap"
+      ]
+    },
+    "recommendedWeapons": [
+      "Spectrum Blaster",
+      "Phasic Homogenizer",
+      "Static Mist"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Lynae is an eccentric character with Spray Bottles, and a ton of color to add to life. She uses her motorbike in combat along with paint to decimate her enemies, while also buffing her friends.",
+    "teamComps": [
+      {
+        "main": "Aemeath",
+        "spares": [
+          "Iuno",
+          "Xiangli Yao"
+        ]
+      },
+      {
+        "main": "Mornye",
+        "spares": [
+          "Shorekeeper"
+        ]
+      }
+    ]
+  },
+  "1510": {
+    "name": "Luuk Herssen",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Twin Nova: Nebulous Cannon",
+      "sets": [
+        "Rite of Gilded Revelation"
+      ]
+    },
+    "recommendedWeapons": [
+      "Daybreaker's Spine",
+      "Pulsation Bracer",
+      "Abyss Surges"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Luuk, a Startorch Academy student in the nursing department who specializes in pure damage, rather than healing.\nLuuk offers Tune Strain - Interfered effects to allow himself and his allies to increases his personal damage.\nHis aerial combat leaves him gliding through battle and weaving between enemies to deliver precise strikes, and finally finishing them off with his powered up Resonance Liberation.",
+    "teamComps": [
+      {
+        "main": "Lynae",
+        "spares": [
+          "Sanhua"
+        ]
+      },
+      {
+        "main": "Mornye",
+        "spares": [
+          "Shorekeeper"
+        ]
+      }
+    ]
+  },
+  "1511": {
+    "name": "Lucy",
+    "element": "Spectro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "80.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2300"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reminiscence - Nightmare: Adam Smasher",
+      "sets": [
+        "Rite of Gilded Revelation",
+        "Celestial Light"
+      ]
+    },
+    "recommendedWeapons": [
+      "Spectral Trigger",
+      "Phasic Homogenizer",
+      "Solar Flame"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "1. Lucy is a main DPS focused on Heavy Attack DMG.\n2. Lucy is a Hack character within the Off-Tune mechanic. She can apply [Hack - Shifting] to enemies and trigger responses to [Hack - Interfered], dealing Hack DMG.\n3. Lucy has multiple enhanced abilities and solid DPS. Her design stays highly faithful to her character concept and features a variety of unique mechanics. In particular, her Resonance Liberation hack-in offers 7 selectable effects, making her highly enjoyable to play.\n4. Lucy's Outro Skill increases the next character's Basic Attack DMG, provides DMG reduction for teammates, and if that teammate can apply [Hack - Shifting], they also gain DMG Amplification for all Attributes.",
+    "teamComps": [
+      {
+        "main": "Rebecca",
+        "spares": [
+          "Iuno",
+          "Mortefi"
+        ]
+      },
+      {
+        "main": "Mornye",
+        "spares": [
+          "Shorekeeper"
+        ]
+      }
+    ]
+  },
+  "1103": {
+    "name": "Baizhi",
+    "element": "Glacio",
+    "statThresholds": [],
+    "recommendedEcho": {
+      "name": null,
+      "sets": []
+    },
+    "recommendedWeapons": [],
+    "talentPriority": [],
+    "rotationNotes": "Bai Zhi is a Huaxu researcher in the game who specializes in echo sounds. Rational thinking dominates, and she is used to taking actions rigorously and accurately. In scientific research work, she is very organized and follows her own plan to advance her work, giving people a feeling of being cold and distant.  But in fact, she only focuses on her own research and work, and is not difficult to approach.",
+    "teamComps": []
+  },
+  "1104": {
+    "name": "Lingyang",
+    "element": "Glacio",
+    "statThresholds": [],
+    "recommendedEcho": {
+      "name": null,
+      "sets": []
+    },
+    "recommendedWeapons": [],
+    "talentPriority": [],
+    "rotationNotes": "1. Ling Yang is a main output character with simple operation and excellent aerial pursuit ability. \n2. When the resonance circuit [Lion Soul] is fully stacked, you can hit hard and enter the flying lion aerial combat. \n3. After clicking 1 chain, it has excellent resistance to interruptions and can stand up to deal with most situations.",
+    "teamComps": []
+  },
+  "1202": {
+    "name": "Chixia",
+    "element": "Fusion",
+    "statThresholds": [],
+    "recommendedEcho": {
+      "name": null,
+      "sets": []
+    },
+    "recommendedWeapons": [],
+    "talentPriority": [],
+    "rotationNotes": "1. Chixia is positioned as the main C, the damage attribute is melt damage, and the core skills are regarded as resonance skill damage\n2. As a four-star character, it is very cost-effective and suitable for novices to open up wasteland in the early stage. When they reach graduation in the later stage, they are also a qualified main C\n3. The attack frequency is fast, and the skills are divided into long and short presses, which can be stored twice\n4. The ultimate move and extended skill come with AOE range damage",
+    "teamComps": []
+  },
+  "1205": {
+    "name": "Changli",
+    "element": "Fusion",
+    "statThresholds": [],
+    "recommendedEcho": {
+      "name": null,
+      "sets": []
+    },
+    "recommendedWeapons": [],
+    "talentPriority": [],
+    "rotationNotes": "1. [Changli] is positioned as a fire plug-in C. It has the station time and skill module of the main C. It also has strong joint performance and a turning force-type deepening continuation of 20 melt + 25 resonance liberation\n 2. Changli can not only assume the main C position in the fire team, but also can be inserted into the team of various characters as a general plug-in to assume the second position. At the same time, its large skill range and many AOE characteristics make it outstanding in [Mingge Haixu]",
+    "teamComps": []
+  },
+  "1301": {
+    "name": "Calcharo",
+    "element": "Electro",
+    "statThresholds": [],
+    "recommendedEcho": {
+      "name": null,
+      "sets": []
+    },
+    "recommendedWeapons": [],
+    "talentPriority": [],
+    "rotationNotes": "1. Kakaro, positioned as main C of the conductive system, the core damage type is resonance liberation damage\n2. Has three skills and a special variation entry animation\n3. Passive after turning on the power[Killing Intent]When the stack is full, it can deliver a powerful blow",
+    "teamComps": []
+  },
+  "1302": {
+    "name": "Yinlin",
+    "element": "Electro",
+    "statThresholds": [],
+    "recommendedEcho": {
+      "name": null,
+      "sets": []
+    },
+    "recommendedWeapons": [],
+    "talentPriority": [],
+    "rotationNotes": "[Yinlin] is positioned as the cooperative sub-c of the thunder system. It can put synergy marks on multiple enemies to deal damage. At the same time, the extension has conductivity and liberation amplification. It can exist as a cooperative sub-c or a thunder team amplification. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;",
+    "teamComps": []
+  },
+  "1407": {
+    "name": "Ciaccona",
+    "element": "Aero",
+    "statThresholds": [],
+    "recommendedEcho": {
+      "name": null,
+      "sets": []
+    },
+    "recommendedWeapons": [],
+    "talentPriority": [],
+    "rotationNotes": "1. Xia Kong PositioningWind erosion effect or aerodynamic deputy C, the weapon uses a sidearm, the operation is simple, and it can increase the upper limit of the output of the wind erosion or aerodynamic team. \n2. After Xia Kong casts [Resonance Liberation], he can continue to add [Wind Erosion Effect] in the background. \n3. Xia Kong’s [Extension Skill] can increase the damage of [Wind Erosion Effect] by 100% for targets around the characters in the team.",
+    "teamComps": []
+  },
+  "1601": {
+    "name": "Taoqi",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "DEF",
+        "target": "4000"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "175.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Impermanence Heron",
+      "sets": [
+        "Moonlit Clouds"
+      ]
+    },
+    "recommendedWeapons": [
+      "Discord",
+      "Dauntless Evernight",
+      "Originite: Type I"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "1. Taoqi is a Havoc survival unit and Support, with Resonance Liberation as her main source of DMG.\n2. Taoqi's Parry (Strategic Parry), enhanced Basic Attack DMG, shield strength, and Resonance Liberation DMG all scale with her DEF.\n3. Taoqi&rsquo;s Outro Skill boosts the Resonance Skill DMG of the next character.",
+    "teamComps": [
+      {
+        "main": "Carlotta",
+        "spares": [
+          "Changli"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1602": {
+    "name": "Danjin",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "50.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "210.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "1900"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Crownless",
+      "sets": [
+        "Havoc Eclipse"
+      ]
+    },
+    "recommendedWeapons": [
+      "Emerald of Genesis",
+      "Lumingloss",
+      "Somnoire Anchor"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Danjin is a Havoc character who focuses on Heavy Attack DMG. She features a unique self-sustaining DMG loop and provides some team-wide buffs.",
+    "teamComps": [
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      },
+      {
+        "main": "Roccia",
+        "spares": [
+          "Sanhua"
+        ]
+      }
+    ]
+  },
+  "1603": {
+    "name": "Camellya",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "65.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Havoc DMG Bonus",
+        "target": "97.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2000"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Crownless",
+      "sets": [
+        "Havoc Eclipse"
+      ]
+    },
+    "recommendedWeapons": [
+      "Red Spring",
+      "Emerald of Genesis",
+      "Lumingloss",
+      "Commando of Conviction"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": null
+      }
+    ],
+    "rotationNotes": "Camellya is a Havoc main DPS with two attack modes. She specializes in Basic Attack DMG and Havoc DMG with high multipliers.",
+    "teamComps": [
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      },
+      {
+        "main": "Roccia",
+        "spares": [
+          "Sanhua",
+          "Danjin"
+        ]
+      }
+    ]
+  },
+  "1604": {
+    "name": "Rover: Havoc",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "60.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Dreamless",
+      "sets": [
+        "Havoc Eclipse"
+      ]
+    },
+    "recommendedWeapons": [
+      "Emerald of Genesis",
+      "Blazing Brilliance",
+      "Red Spring",
+      "Lumingloss"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Havoc Rover is a Havoc main DPS. High burst DMG and with straightforward mechanics.",
+    "teamComps": [
+      {
+        "main": "Roccia",
+        "spares": [
+          "Sanhua",
+          "Danjin"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1605": {
+    "name": "Rover: Havoc",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "60.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "120.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Dreamless",
+      "sets": [
+        "Havoc Eclipse"
+      ]
+    },
+    "recommendedWeapons": [
+      "Emerald of Genesis",
+      "Blazing Brilliance",
+      "Red Spring",
+      "Lumingloss"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 1
+      }
+    ],
+    "rotationNotes": "Havoc Rover is a Havoc main DPS. High burst DMG and with straightforward mechanics.",
+    "teamComps": [
+      {
+        "main": "Roccia",
+        "spares": [
+          "Sanhua",
+          "Danjin"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1606": {
+    "name": "Roccia",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "220.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "130.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Impermanence Heron",
+      "sets": [
+        "Moonlit Clouds"
+      ]
+    },
+    "recommendedWeapons": [
+      "Tragicomedy",
+      "Verity's Handle",
+      "Stonard"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Roccia is a Havoc with decent DPS mostly serving as a Sub-DPS/Support. Her Resonance Skill can gather enemies, while her Resonance Liberation grants ATK buffs to the team based on her Crit. Rate, boosts Havoc and Basic Attack DMG, and allows her to quickly fill the Concerto Energy. She is versatile.",
+    "teamComps": [
+      {
+        "main": "Camellya",
+        "spares": [
+          "Rover: Havoc"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1607": {
+    "name": "Cantarella",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "Crit. DMG",
+        "target": "240.0%"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "140.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Crownless",
+      "sets": [
+        "Havoc Eclipse"
+      ]
+    },
+    "recommendedWeapons": [
+      "Whispers of Sirens",
+      "Rime-Draped Sprouts",
+      "Stringmaster"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "1. Cantarella is a Havoc sub-DPS/healer/Support, focusing on Basic Attack DMG.\n2. Cantarella's [Flickering Reverie] inflicts enemies in range with [Hazy Dream], a powerful AoE slow lasting up to 6.5s.\n3. Cantarella's enhanced Resonance Skill, ultimate Resonance Skill, and Resonance Liberation are all categorized as Echo Skills.\n4. Cantarella features off-field Coordinated Attack with a relatively wide attack range.\n5. Cantarella's Outro Skill boosts allies&rsquo; Havoc DMG and Resonance Skill DMG.",
+    "teamComps": [
+      {
+        "main": "Jinhsi",
+        "spares": [
+          "Roccia"
+        ]
+      },
+      {
+        "main": "Zhezhi",
+        "spares": [
+          "Shorekeeper",
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1608": {
+    "name": "Phrolova",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "ATK",
+        "target": "2200"
+      },
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Hecate",
+      "sets": [
+        "Dream of the Lost",
+        "Midnight Veil"
+      ]
+    },
+    "recommendedWeapons": [
+      "Lethean Elegy",
+      "Stringmaster",
+      "Augment"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "1. Phrolova is a DPS focused on Resonance Skill DMG and Echo Skill DMG.\n2. Phrolova gains access to enhanced Heavy Attack upon reaching 6 stacks of [Volatile Notes], which also enables her Resonance Liberation.\n3. Phrolova's Resonance Liberation includes both on-field and off-field attack modes.\n4. Phrolova's Outro Skill boosts the next teammate's Havoc DMG and Heavy Attack DMG.",
+    "teamComps": [
+      {
+        "main": "Qiuyuan",
+        "spares": [
+          "Cantarella"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Verina"
+        ]
+      }
+    ]
+  },
+  "1110": {
+    "name": "Suisui",
+    "element": "Glacio",
+    "statThresholds": [
+      {
+        "stat": "Energy Regen",
+        "target": "260.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Forbidden Bastion",
+      "sets": [
+        "Song of Feathered Trace"
+      ]
+    },
+    "recommendedWeapons": [
+      "Firstlight's Herald",
+      "Stellar Symphony",
+      "Variation"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Suisui, Yangyang's sister, is a noblewoman from Mingting who manages grand trade agreements. \nShe is the young director of the Zhaoming Commerce Guild.",
+    "teamComps": [
+      {
+        "main": "Yangyang: Xuanling",
+        "spares": [
+          "Hiyuki"
+        ]
+      },
+      {
+        "main": "Chisa",
+        "spares": [
+          "Lucilla"
+        ]
+      }
+    ]
+  },
+  "1309": {
+    "name": "Rover: Electro",
+    "element": "Electro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "110.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2200"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Tempest Mephis",
+      "sets": [
+        "Void Thunder"
+      ]
+    },
+    "recommendedWeapons": [
+      "Emerald of Genesis",
+      "Blazing Brilliance",
+      "Endless Collapse"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Rover returns with electrifying Electro resonnace energy.",
+    "teamComps": [
+      {
+        "main": "Yangyang: Xuanling",
+        "spares": [
+          "Hiyuki",
+          "Aemeath"
+        ]
+      },
+      {
+        "main": "Chisa",
+        "spares": [
+          "Buling"
+        ]
+      }
+    ]
+  },
+  "1310": {
+    "name": "Rover: Electro",
+    "element": "Electro",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "260.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "110.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2200"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Nightmare: Tempest Mephis",
+      "sets": [
+        "Void Thunder"
+      ]
+    },
+    "recommendedWeapons": [
+      "Emerald of Genesis",
+      "Blazing Brilliance",
+      "Endless Collapse"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Rover returns with electrifying Electro resonnace energy.",
+    "teamComps": [
+      {
+        "main": "Yangyang: Xuanling",
+        "spares": [
+          "Hiyuki",
+          "Aemeath"
+        ]
+      },
+      {
+        "main": "Chisa",
+        "spares": [
+          "Buling"
+        ]
+      }
+    ]
+  },
+  "1610": {
+    "name": "Yangyang: Xuanling",
+    "element": "Havoc",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "70.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "270.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "118.0%"
+      },
+      {
+        "stat": "ATK",
+        "target": "2400"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Thousand-Puppet Pavilion",
+      "sets": [
+        "Song of Feathered Trace"
+      ]
+    },
+    "recommendedWeapons": [
+      "Azure Oath",
+      "Emerald Sentence",
+      "Emerald of Genesis"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Yangyang, our first Solaris companion, has returned in a new form. She embodies the presence of a bird, and displays immense power in her combat.",
+    "teamComps": [
+      {
+        "main": "Chisa",
+        "spares": [
+          "Iuno",
+          "Mortefi"
+        ]
+      },
+      {
+        "main": "Suisui",
+        "spares": [
+          "Shorekeeper"
+        ]
+      }
+    ]
+  }
+}
