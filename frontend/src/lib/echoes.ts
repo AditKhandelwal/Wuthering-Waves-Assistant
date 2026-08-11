@@ -90,6 +90,31 @@ export async function loadEchoCatalog(): Promise<EchoCatalog> {
   return { byCost, bySetName };
 }
 
+// Kuro's guide API and the game8.co-sourced catalog punctuate the same echo
+// name differently often enough to matter -- e.g. Kuro's "Reminiscence -
+// Nightmare: Adam Smasher" vs the catalog's "Reminiscence: Nightmare Adam
+// Smasher" (dash/colon swapped), or "Twin Nova: Nebulous Cannon" vs "Twin
+// Nova - Nebulous Cannon". Strip punctuation and collapse whitespace before
+// comparing so a signature-echo lookup isn't silently defeated by this.
+function normalizeEchoName(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+// Finds a catalog entry by name across all cost tiers (a character's
+// signature echo isn't always cost 4), tolerant of the punctuation
+// mismatches above.
+export function findEchoByName(catalog: EchoCatalog, name: string): EchoCatalogEntry | null {
+  const target = normalizeEchoName(name);
+  for (const list of Object.values(catalog.byCost)) {
+    const match = list.find((e) => normalizeEchoName(e.name) === target);
+    if (match) return match;
+  }
+  return null;
+}
+
 export async function loadEchoSets(): Promise<EchoSet[]> {
   const res = await fetch("/data/echo_sets.json");
   const raw: RawEchoSets = await res.json();
