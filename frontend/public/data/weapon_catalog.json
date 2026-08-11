@@ -1,0 +1,902 @@
+{
+  "21010011": {
+    "gbId": "21010011",
+    "name": "Training Broadblade",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/training-broadblade-icon.webp",
+    "star": 1,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 4%/5%/6%/7%/8%."
+  },
+  "21010012": {
+    "gbId": "21010012",
+    "name": "Tyro Broadblade",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/tyro-broadblade-icon.webp",
+    "star": 2,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 5%/6.25%/7.5%/8.75%/10%."
+  },
+  "21010013": {
+    "gbId": "21010013",
+    "name": "Broadblade of Night",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/broadblade-of-night-icon.webp",
+    "star": 3,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases ATK by 8%/10%/12%/14%/16%, lasting for 10/10/10/10/10s."
+  },
+  "21010015": {
+    "gbId": "21010015",
+    "name": "Lustrous Razor",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/lustrous-razor-icon.webp",
+    "star": 5,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Increases Energy Regen by 12.8%/16%/19.2%/22.4%/25.6%. When Resonance Skill is cast, Resonance Liberation DMG Bonus is increased by 7%/8.75%/10.5%/12.25%/14%, stacking up to 3/3/3/3/3 times. This effect lasts for 12/12/12/12/12s."
+  },
+  "21010016": {
+    "gbId": "21010016",
+    "name": "Verdant Summit",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/verdant-summit-icon.webp",
+    "star": 5,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Increases Attribute DMG Bonus by 12%/15%/18%/21%/24%. Every time Intro Skill or Resonance Liberation is cast, increases Heavy Attack DMG Bonus by 24%/30%/36%/42%/48%, stacking up to 2/2/2/2/2 time(s). This effect lasts for 14/14/14/14/14s."
+  },
+  "21010023": {
+    "gbId": "21010023",
+    "name": "Originite: Type I",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/originite-type-i-icon.webp",
+    "star": 3,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, heals 3%/3.75%/4.5%/5.25%/6% of the Resonator's Max HP. This effect can be triggered 1/1/1/1/1 time(s) every 12/12/12/12/12s."
+  },
+  "21010024": {
+    "gbId": "21010024",
+    "name": "Discord",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/discord-icon.webp",
+    "star": 4,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/10/12/14/16 Concerto Energy. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21010026": {
+    "gbId": "21010026",
+    "name": "Ages of Harvest",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/ages-of-harvest-icon.webp",
+    "star": 5,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Grants 12%/15%/18%/21%/24% Attribute DMG Bonus. Casting Intro Skill gives the equipper Ageless Marking, which grants 24%/30%/36%/42%/48% Resonance Skill DMG Bonus for 12/12/12/12/12s. Casting Resonance Skill gives the equipper Ethereal Endowment, which grants 24%/30%/36%/42%/48% Resonance Skill DMG Bonus for 12/12/12/12/12s."
+  },
+  "21010034": {
+    "gbId": "21010034",
+    "name": "Broadblade#41",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/broadblade-41-icon.webp",
+    "star": 4,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "When the Resonator's HP is above 80%/80%/80%/80%/80%, increases ATK by 12%/15%/18%/21%/24%. When the Resonator's HP is below 40%/50%/60%/70%/80%, gives 5%/6.25%/7.5%/8.75%/10% healing when dealing Basic Attack DMG or Heavy Attack DMG. This effect can be triggered 1/1/1/1/1 time(s) every 8/8/8/8/8s."
+  },
+  "21010036": {
+    "gbId": "21010036",
+    "name": "Wildfire Mark",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/wildfire-mark-icon.webp",
+    "star": 5,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 12%/15%/18%/21%/24%. Performing Intro Skill or Resonance Liberation increases Resonance Liberation DMG by 24%/30%/36%/42%/48% for 6/6/6/6/6s. Dealing Heavy Attack DMG extends this effect by 4/4/4/4/4s, up to 1/1/1/1/1 time. Each successful extension gives 24%/30%/36%/42%/48% Fusion DMG Bonus to all Resonators in the team for 30/30/30/30/30s. Effects of the same name cannot be stacked."
+  },
+  "21010043": {
+    "gbId": "21010043",
+    "name": "Broadblade of Voyager",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/broadblade-of-voyager-icon.webp",
+    "star": 3,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/9/10/11/12 Resonance Energy. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21010044": {
+    "gbId": "21010044",
+    "name": "Dauntless Evernight",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/dauntless-evernight-icon.webp",
+    "star": 4,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases ATK by 8%/10%/12%/14%/16% and DEF by 15%/18.75%/22.5%/26.25%/30%, lasting for 15/15/15/15/15s."
+  },
+  "21010046": {
+    "gbId": "21010046",
+    "name": "Thunderflare Dominion",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/thunderflare-dominion-icon.webp",
+    "star": 5,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 12%/15%/18%/21%/24%. Casting Intro Skill or Resonance Skill increases Heavy Attack DMG by 20%/25%/30%/35%/40% for 15/15/15/15/15s. Obtaining Shield allows Heavy Attack DMG to ignore 7.2%/8.4%/9.6%/10.8%/12% of the target's DEF for 7/7/7/7/7s, stacking up to 5/5/5/5/5 times. This effect is triggered once every 0.5s"
+  },
+  "21010053": {
+    "gbId": "21010053",
+    "name": "Guardian Broadblade",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/guardian-broadblade-icon.webp",
+    "star": 3,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Increases Basic Attack DMG Bonus and Heavy Attack DMG Bonus by 12%/15%/18%/21%/24%."
+  },
+  "21010063": {
+    "gbId": "21010063",
+    "name": "Beguiling Melody",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/beguiling-melody-icon.webp",
+    "star": 3,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, restores 4/5/6/7/8 Concerto Energy. When Outro Skill is cast, restores 4/5/6/7/8 Resonance Energy."
+  },
+  "21010064": {
+    "gbId": "21010064",
+    "name": "Helios Cleaver",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/helios-cleaver-icon.webp",
+    "star": 4,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Within 12/12/12/12/12s after Resonance Skill is cast, increases ATK by 3%/3.75%/4.5%/5.25%/6% every 2/2/2/2/2s, stacking up to 4/4/4/4/4 time(s). This effect can be triggered 1/1/1/1/1 time(s) every 12/12/12/12/12s. When the number of stacks reaches 4/4/4/4/4, all stacks will be reset within 6/6/6/6/6s."
+  },
+  "21010074": {
+    "gbId": "21010074",
+    "name": "Autumntrace",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/autumntrace-icon.webp",
+    "star": 4,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 4%/6.2%/8.4%/10.6%/12.8% upon dealing Basic Attack DMG or Heavy Attack DMG, stacking up to 5/5/5/5/5 time(s). This effect lasts for 7/7/7/7/7s and can be triggered 1/1/1/1/1 time(s) every 1/1/1/1/1s."
+  },
+  "21010084": {
+    "gbId": "21010084",
+    "name": "Waning Redshift",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/waning-redshift-icon.webp",
+    "star": 4,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Casting the Resonance Skill grants 6/7/8/9/10 Resonance Energy and increases ATK by 10%/12.5%/15%/17.5%/20%, lasting for 16/16/16/16/16s. This effect can be triggered once every 20/20/20/20/20s."
+  },
+  "21010094": {
+    "gbId": "21010094",
+    "name": "Meditations on Mercy",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/meditations-on-mercy-icon.webp",
+    "star": 4,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Dealing DMG to enemies with Negative Statuses increases the wielder's ATK by 4%/5%/6%/7%/8% for 10/10/10/10/10s. This effect can be triggered 1 time per second, stackable up to 4/4/4/4/4 times."
+  },
+  "21010104": {
+    "gbId": "21010104",
+    "name": "Aureate Zenith",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/aureate-zenith-icon.webp",
+    "star": 4,
+    "weaponType": "Broadblade",
+    "effectName": "",
+    "effectDescription": "Casting Resonance Liberation increases ATK by 7.2%/11.1%/15.1%/19%/23% and grants 10.8%/16.7%/22.6%/28.6%/34.5% Heavy Attack DMG Bonus for 15/15/15/15/15s."
+  },
+  "21020011": {
+    "gbId": "21020011",
+    "name": "Training Sword",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/training-sword-icon.webp",
+    "star": 1,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 4%/5%/6%/7%/8%."
+  },
+  "21020012": {
+    "gbId": "21020012",
+    "name": "Tyro Sword",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/tyro-sword-icon.webp",
+    "star": 2,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 5%/6.25%/7.5%/8.75%/10%."
+  },
+  "21020013": {
+    "gbId": "21020013",
+    "name": "Sword of Night",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/sword-of-night-icon.webp",
+    "star": 3,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases ATK by 8%/10%/12%/14%/16%, lasting for 10/10/10/10/10s."
+  },
+  "21020015": {
+    "gbId": "21020015",
+    "name": "Emerald of Genesis",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/emerald-of-genesis-icon.webp",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Increases Energy Regen by 12.8%/16%/19.2%/22.4%/25.6%. When Resonance Skill is cast, increases ATK by 6%/7.5%/9%/10.5%/12%, stacking up to 2/2/2/2/2 time(s). This effect lasts for 10/10/10/10/10s."
+  },
+  "21020016": {
+    "gbId": "21020016",
+    "name": "Blazing Brilliance",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/blazing-brilliance-icon.webp",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "ATK increased by 12%/15%/18%/21%/24%. The wielder gains 1 stack of Searing Feather upon dealing damage, which can be triggered once every 0.5s, and gains 5 stacks of the same effect upon casting Resonance Skill. Each stack of Searing Feather gives 4%/5%/6%/7%/8% additional Resonance Skill DMG Bonus for up to 14 stacks. After reaching the max stacks, all stacks will be removed in 12/12/12/12/12s."
+  },
+  "21020017": {
+    "gbId": "21020017",
+    "name": "Somnoire Anchor",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/somnoire-anchor-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Gain 1/1/1/1/1 stack of Hiss when dealing damage to the target, with 1/1/1/1/1 stack generated every 1/1/1/1/1s. \nHiss: each stack increases the wielder's ATK by 2%/2.5%/3%/3.5%/4% for 3/3/3/3/3s, stacking up to 10/10/10/10/10 times. Switching off the wielder clears all stacks. Gaining 10/10/10/10/10 stacks increases the wielder's Crit. Rate by 6%/7.5%/9%/10.5%/12%."
+  },
+  "21020023": {
+    "gbId": "21020023",
+    "name": "Originite: Type II",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/originite-type-ii-icon.webp",
+    "star": 3,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "When Resonance Liberation is cast, heals 5%/6.25%/7.5%/8.75%/10% of the Resonator's Max HP. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21020024": {
+    "gbId": "21020024",
+    "name": "Overture",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/overture-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/10/12/14/16 Concerto Energy. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21020026": {
+    "gbId": "21020026",
+    "name": "Red Spring",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/red-spring-icon.webp",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Increase ATK by 12%/15%/18%/21%/24%. When dealing Basic Attack DMG, the wielder gains 10%/12.5%/15%/17.5%/20% Basic Attack DMG Bonus for 14/14/14/14/14s. This effect can be triggered once per second, stacking up to 3/3/3/3/3 times.\nWhen the wielder's Concerto Energy is consumed, gain 40%/50%/60%/70%/80% Basic DMG Bonus for 10/10/10/10/10. This effect can be triggered once per second and ends when the wielder is switched off the field."
+  },
+  "21020034": {
+    "gbId": "21020034",
+    "name": "Sword#18",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/sword-18-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "When the Resonator's HP drops below 40%/50%/60%/70%/80%, increases Heavy Attack DMG Bonus by 18%/22.5%/27%/31.5%/36% and gives 5%/6.25%/7.5%/8.75%/10% healing when dealing Heavy Attack DMG. This effect can be triggered 1/1/1/1/1 time(s) every 8/8/8/8/8s."
+  },
+  "21020036": {
+    "gbId": "21020036",
+    "name": "Unflickering Valor",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/unflickering-valor-icon.webp",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Increase Crit. Rate by 8%/10%/12%/14%/16%. Casting Resonance Liberation gives 24%/30%/36%/42%/48% Basic Attack DMG Bonus for 10/10/10/10/10s. Dealing Basic Attack DMG gives 24%/30%/36%/42%/48% Basic Attack DMG Bonus for 4/4/4/4/4s."
+  },
+  "21020043": {
+    "gbId": "21020043",
+    "name": "Sword of Voyager",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/sword-of-voyager-icon.webp",
+    "star": 3,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/9/10/11/12 Resonance Energy. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21020044": {
+    "gbId": "21020044",
+    "name": "Commando of Conviction",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/commando-of-conviction-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases ATK by 15%/18.75%/22.5%/26.25%/30%, lasting for 15/15/15/15/15s."
+  },
+  "21020046": {
+    "gbId": "21020046",
+    "name": "Bloodpact's Pledge",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/bloodpact-s-pledge-icon.webp",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Providing Healing increases Resonance Skill DMG by 10%/14%/18%/22%/26% for 6/6/6/6/6s. When Rover: Aero casts Resonance Skill Unbound Flow, Aero DMG dealt by nearby Resonators on the field is Amplified by 10%/14%/18%/22%/26% for 30/30/30/30/30s."
+  },
+  "21020053": {
+    "gbId": "21020053",
+    "name": "Guardian Sword",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/guardian-sword-icon.webp",
+    "star": 3,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Resonance Skill DMG Bonus is increased by 12%/15%/18%/21%/24%."
+  },
+  "21020056": {
+    "gbId": "21020056",
+    "name": "Defier's Thorn",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/defier-s-thorn-icon.webp",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Max HP is increased by 12%/15%/18%/21%/24%. 15/15/15/15/15s after casting Intro Skill or Basic Attacks, ignore 8%/10%/12%/14%/16% of the target's DEF when dealing damage. If the target has at least 1 stack of Aero Erosion, the DMG taken by the target is Amplified by 20%/25%/30%/35%/40%."
+  },
+  "21020064": {
+    "gbId": "21020064",
+    "name": "Lunar Cutter",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/lunar-cutter-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Equipped Resonator gains 6/6/6/6/6 stack(s) of Oath upon entering the battlefield. Each stack increases ATK by 2%/2.5%/3%/3.5%/4%, up to 6/6/6/6/6 stacks. This effect can be triggered 1/1/1/1/1 time(s) every 12/12/12/12/12s. The equipped Resonator loses 1/1/1/1/1 stack(s) of Oath every 2/2/2/2/2s, and gains 6/6/6/6/6 stack(s) upon defeating an enemy."
+  },
+  "21020074": {
+    "gbId": "21020074",
+    "name": "Lumingloss",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/lumingloss-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, increases Basic Attack DMG Bonus and Heavy Attack DMG Bonus by 20%/31%/42%/53%/64%, stacking up to 1/1/1/1/1 time(s). This effect lasts for 10/10/10/10/10s and can be triggered 1/1/1/1/1 time(s) every 1/1/1/1/1s."
+  },
+  "21020084": {
+    "gbId": "21020084",
+    "name": "Endless Collapse",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/endless-collapse-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Casting the Resonance Skill grants 6/7/8/9/10 Resonance Energy and increases ATK by 10%/12.5%/15%/17.5%/20%, lasting for 16/16/16/16/16s. This effect can be triggered once every 20/20/20/20/20s."
+  },
+  "21020094": {
+    "gbId": "21020094",
+    "name": "Fables of Wisdom",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/fables-of-wisdom-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Dealing DMG to enemies with Negative Statuses increases the wielder's ATK by 4%/5%/6%/7%/8% for 10/10/10/10/10s. This effect can be triggered 1 time per second, stackable up to 4/4/4/4/4 times."
+  },
+  "21020104": {
+    "gbId": "21020104",
+    "name": "Feather Edge",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/feather-edge-icon.webp",
+    "star": 4,
+    "weaponType": "Sword",
+    "effectName": "",
+    "effectDescription": "Casting Resonance Liberation increases ATK by 7.2%/11.1%/15.1%/19%/23% and grants 10.8%/16.7%/22.6%/28.6%/34.5% Resonance Liberation DMG Bonus for 15/15/15/15/15s."
+  },
+  "21030011": {
+    "gbId": "21030011",
+    "name": "Training Pistols",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/training-pistols-icon.webp",
+    "star": 1,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 4%/5%/6%/7%/8%."
+  },
+  "21030012": {
+    "gbId": "21030012",
+    "name": "Tyro Pistols",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/tyro-pistols-icon.webp",
+    "star": 2,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 5%/6.25%/7.5%/8.75%/10%."
+  },
+  "21030013": {
+    "gbId": "21030013",
+    "name": "Pistols of Night",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/pistols-of-night-icon.webp",
+    "star": 3,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases ATK by 8%/10%/12%/14%/16%, lasting for 10/10/10/10/10s."
+  },
+  "21030015": {
+    "gbId": "21030015",
+    "name": "Static Mist",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/static-mist-icon.webp",
+    "star": 5,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "Increases Energy Regen by 12.8%/16%/19.2%/22.4%/25.6%. Incoming Resonator's ATK is increased by 10%/12.5%/15%/17.5%/20% for 14/14/14/14/14s, stackable for up to 1/1/1/1/1 times after the wielder casts Outro Skill."
+  },
+  "21030016": {
+    "gbId": "21030016",
+    "name": "The Last Dance",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/the-last-dance-icon.webp",
+    "star": 5,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 12%/15%/18%/21%/24%. Every time Intro Skill or Resonance Liberation is cast, Resonance Skill DMG Bonus increases by 48%/60%/72%/84%/96% for 5/5/5/5/5s."
+  },
+  "21030023": {
+    "gbId": "21030023",
+    "name": "Originite: Type III",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/originite-type-iii-icon.webp",
+    "star": 3,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "When Dodge Counter is cast, heals 1.6%/2%/2.4%/2.8%/3.2% of the Resonator's Max HP. This effect can be triggered 1/1/1/1/1 time(s) every 6/6/6/6/6s."
+  },
+  "21030024": {
+    "gbId": "21030024",
+    "name": "Cadenza",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/cadenza-icon.webp",
+    "star": 4,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/10/12/14/16 Concerto Energy. This effect can be triggered 1/1/1/1/1 times every 20/20/20/20/20s."
+  },
+  "21030026": {
+    "gbId": "21030026",
+    "name": "Woodland Aria",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/woodland-aria-icon.webp",
+    "star": 5,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "ATK is increased by 12%/15%/18%/21%/24%. Inflicting Aero Erosion on the target gives 24%/30%/36%/42%/48% Aero DMG Bonus for 10/10/10/10/10s. Hitting targets with Aero Erosion reduces their Aero RES by 10%/11.5%/13%/14.5%/16% for 20/20/20/20/20s. Effects of the same name cannot be stacked."
+  },
+  "21030034": {
+    "gbId": "21030034",
+    "name": "Pistols#26",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/pistols-26-icon.webp",
+    "star": 4,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "When the Resonator takes no damage, increases ATK by 6%/7.5%/9%/10.5%/12% every 5/5/5/5/5s, stacking up to 2/2/2/2/2 time(s). This effect lasts for 8/8/8/8/8s. When the Resonator takes damage, loses 1/1/1/1/1 stacks and heals 5%/6.25%/7.5%/8.75%/10% of their Max HP."
+  },
+  "21030043": {
+    "gbId": "21030043",
+    "name": "Pistols of Voyager",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/pistols-of-voyager-icon.webp",
+    "star": 3,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/9/10/11/12 Resonance Energy. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21030044": {
+    "gbId": "21030044",
+    "name": "Undying Flame",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/undying-flame-icon.webp",
+    "star": 4,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases Resonance Skill DMG Bonus by 20%/25%/30%/35%/40% for 15/15/15/15/15s."
+  },
+  "21030053": {
+    "gbId": "21030053",
+    "name": "Guardian Pistols",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/guardian-pistols-icon.webp",
+    "star": 3,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "Resonance Skill DMG Bonus is increased by 12%/15%/18%/21%/24%."
+  },
+  "21030064": {
+    "gbId": "21030064",
+    "name": "Novaburst",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/novaburst-icon.webp",
+    "star": 4,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "When the Resonator dashes or dodges, increases ATK by 4%/5%/6%/7%/8%, stacking up to 3/3/3/3/3 time(s). This effect lasts for 8/8/8/8/8s."
+  },
+  "21030074": {
+    "gbId": "21030074",
+    "name": "Thunderbolt",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/thunderbolt-icon.webp",
+    "star": 4,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "When hitting a target with Basic Attacks or Heavy Attacks, increases Resonance Skill DMG Bonus by 7%/11%/15%/19%/23%, stacking up to 3/3/3/3/3 time(s). This effect lasts for 10/10/10/10/10s and can be triggered 1/1/1/1/1 time(s) every 1/1/1/1/1s."
+  },
+  "21030084": {
+    "gbId": "21030084",
+    "name": "Relativistic Jet",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/relativistic-jet-icon.webp",
+    "star": 4,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "Casting the Resonance Skill grants 6/7/8/9/10 Resonance Energy and increases ATK by 10%/12.5%/15%/17.5%/20%, lasting for 16/16/16/16/16s. This effect can be triggered once every 20/20/20/20/20s."
+  },
+  "21030094": {
+    "gbId": "21030094",
+    "name": "Romance in Farewell",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/romance-in-farewell-icon.webp",
+    "star": 4,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "Dealing DMG to enemies with Negative Statuses increases the wielder's ATK by 4%/5%/6%/7%/8% for 10/10/10/10/10s. This effect can be triggered 1 time per second, stackable up to 4/4/4/4/4 times."
+  },
+  "21030104": {
+    "gbId": "21030104",
+    "name": "Solar Flame",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/solar-flame-icon.webp",
+    "star": 4,
+    "weaponType": "Pistols",
+    "effectName": "",
+    "effectDescription": "Dealing Basic Attack or Heavy Attack DMG increases ATK by 2.2%/3.4%/4.7%/5.9%/7.2% and grants 2.2%/3.4%/4.7%/5.9%/7.2% Heavy Attack DMG Bonus for 7/7/7/7/7s, stacking up to 4/4/4/4/? times. This effect can be triggered <SapTag=4>1/1/1/1/1</SapTag> {Cus:Sap,S=time P=times SapTag=4} every 1/1/1/1/1s."
+  },
+  "21040011": {
+    "gbId": "21040011",
+    "name": "Training Gauntlets",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/training-gauntlets-icon.webp",
+    "star": 1,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 4%/5%/6%/7%/8%."
+  },
+  "21040012": {
+    "gbId": "21040012",
+    "name": "Tyro Gauntlets",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/tyro-gauntlets-icon.webp",
+    "star": 2,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 5%/6.25%/7.5%/8.75%/10%."
+  },
+  "21040013": {
+    "gbId": "21040013",
+    "name": "Gauntlets of Night",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/gauntlets-of-night-icon.webp",
+    "star": 3,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases ATK by 8%/10%/12%/14%/16%, lasting for 10/10/10/10/10s."
+  },
+  "21040015": {
+    "gbId": "21040015",
+    "name": "Abyss Surges",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/abyss-surges-icon.webp",
+    "star": 5,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Increases Energy Regen by 12.8%/16%/19.2%/22.4%/25.6%. When hitting a target with Resonance Skill, increases Basic Attack DMG Bonus by 10%/12.5%/15%/17.5%/20%, lasting for 8/8/8/8/8s. When hitting a target with Basic Attacks, increases Resonance Skill DMG Bonus by 10%/12.5%/15%/17.5%/20%, lasting for 8/8/8/8/8s."
+  },
+  "21040016": {
+    "gbId": "21040016",
+    "name": "Verity's Handle",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/verity-s-handle-icon.webp",
+    "star": 5,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Gain 12%/15%/18%/21%/24% Attribute DMG Bonus. When using Resonance Liberation, the wielder gains 48%/60%/72%/84%/96% Resonance Liberation DMG Bonus for 8/8/8/8/8s. This effect can be extended by 5/5/5/5/5s each time Resonance Skills are cast, up to 3/3/3/3/3 times."
+  },
+  "21040023": {
+    "gbId": "21040023",
+    "name": "Originite: Type IV",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/originite-type-iv-icon.webp",
+    "star": 3,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "When dealing Basic Attack DMG, heals 0.5%/0.65%/0.8%/0.95%/1.1% of the Resonator's Max HP. This effect can be triggered 1/1/1/1/1 time(s) every 3/3/3/3/3s."
+  },
+  "21040024": {
+    "gbId": "21040024",
+    "name": "Marcato",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/marcato-icon.webp",
+    "star": 4,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/10/12/14/16 Concerto Energy. This effect can be triggered 1/1/1/1/1 times every 20/20/20/20/20s."
+  },
+  "21040026": {
+    "gbId": "21040026",
+    "name": "Tragicomedy",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/tragicomedy-icon.webp",
+    "star": 5,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 12%/15%/18%/21%/24%. Every time Basic Attack or Intro Skill is cast, Heavy Attack DMG Bonus increases by 48%/60%/72%/84%/96% for 3/3/3/3/3s."
+  },
+  "21040034": {
+    "gbId": "21040034",
+    "name": "Gauntlets#21D",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/gauntlets-21d-icon.webp",
+    "star": 4,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "When the Resonator dashes or dodges, increases ATK by 8%/10%/12%/14%/16%. Increases Dodge Counter DMG by 50%/62.5%/75%/87.5%/100%, lasting for 8/8/8/8/8s. When Dodge Counter is performed, heals 5%/6.25%/7.5%/8.75%/10% of the Resonator's Max HP. This effect can be triggered 1/1/1/1/1 time(s) every 6/6/6/6/6s."
+  },
+  "21040036": {
+    "gbId": "21040036",
+    "name": "Blazing Justice",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/blazing-justice-icon.webp",
+    "star": 5,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 12%/15%/18%/21%/24%. Casting Basic Attack grants the following effects: Dealing damage ignores 8%/10%/12%/14%/16% of the target's DEF and Amplifies Spectro Frazzle DMG dealt by 50%/62.5%/75%/87.5%/100% for 6/6/6/6/6s. Retriggering the effect resets its duration."
+  },
+  "21040043": {
+    "gbId": "21040043",
+    "name": "Gauntlets of Voyager",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/gauntlets-of-voyager-icon.webp",
+    "star": 3,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/9/10/11/12 Resonance Energy. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21040044": {
+    "gbId": "21040044",
+    "name": "Amity Accord",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/amity-accord-icon.webp",
+    "star": 4,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases Resonance Liberation DMG Bonus by 20%/25%/30%/35%/40%, lasting for 15/15/15/15/15s."
+  },
+  "21040046": {
+    "gbId": "21040046",
+    "name": "Moongazer's Sigil",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/moongazer-s-sigil-icon.webp",
+    "star": 5,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 12%/15%/18%/21%/24%. Casting Intro Skill or Resonance Liberation increases Resonance Liberation DMG by 20%/25%/30%/35%/40% for 15/15/15/15/15s. Obtaining Shield allows Resonance Liberation DMG to ignore 7.2%/8.4%/9.6%/10.8%/12.0% of the target's DEF for 7/7/7/7/7s, stacking up to 5/5/5/5/5 times. This effect is triggered once every 0.5/0.5/0.5/0.5/0.5s. Upon casting Intro Skill, this effect reaches max stacks immediately, lasting for 3/3/3/3/3s."
+  },
+  "21040053": {
+    "gbId": "21040053",
+    "name": "Guardian Gauntlets",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/guardian-gauntlets-icon.webp",
+    "star": 3,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Increases Resonance Liberation DMG Bonus by 12%/15%/18%/21%/24%."
+  },
+  "21040064": {
+    "gbId": "21040064",
+    "name": "Hollow Mirage",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/hollow-mirage-icon.webp",
+    "star": 4,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "When Resonance Liberation is cast, grants 3/3/3/3/3 stack(s) of Iron Armor. Each stack increases ATK and DEF by 3%/3.5%/4%/4.5%/5%, stacking up to 3/3/3/3/3 time(s). When the Resonator takes damage, reduces the number of stacks by 1/1/1/1/1."
+  },
+  "21040074": {
+    "gbId": "21040074",
+    "name": "Stonard",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/stonard-icon.webp",
+    "star": 4,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Casting Resonance Skill increases the wielder's Resonance Liberation DMG Bonus by 18%/27%/36%/45%/54%, lasting for 15/15/15/15/15s."
+  },
+  "21040084": {
+    "gbId": "21040084",
+    "name": "Celestial Spiral",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/celestial-spiral-icon.webp",
+    "star": 4,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Casting the Resonance Skill grants 6/7/8/9/10 Resonance Energy and increases ATK by 10%/12.5%/15%/17.5%/20%, lasting for 16/16/16/16/16s. This effect can be triggered once every 20/20/20/20/20s."
+  },
+  "21040094": {
+    "gbId": "21040094",
+    "name": "Legend of Drunken Hero",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/legend-of-drunken-hero-icon.webp",
+    "star": 4,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Dealing DMG to enemies with Negative Statuses increases the wielder's ATK by 4%/5%/6%/7%/8% for 10/10/10/10/10s. This effect can be triggered 1 time per second, stackable up to 4/4/4/4/4 times."
+  },
+  "21040104": {
+    "gbId": "21040104",
+    "name": "Aether Strike",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/aether-strike-icon.webp",
+    "star": 4,
+    "weaponType": "Gauntlets",
+    "effectName": "",
+    "effectDescription": "Casting Resonance Liberation increases ATK by 7.2%/11.1%/15.1%/19%/23% and grants 10.8%/16.7%/22.6%/28.6%/34.5% Resonance Liberation DMG Bonus for 15/15/15/15/15s."
+  },
+  "21050011": {
+    "gbId": "21050011",
+    "name": "Training Rectifier",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/training-rectifier-icon.webp",
+    "star": 1,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 4%/5%/6%/7%/8%."
+  },
+  "21050012": {
+    "gbId": "21050012",
+    "name": "Tyro Rectifier",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/tyro-rectifier-icon.webp",
+    "star": 2,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 5%/6.25%/7.5%/8.75%/10%."
+  },
+  "21050013": {
+    "gbId": "21050013",
+    "name": "Rectifier of Night",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/rectifier-of-night-icon.webp",
+    "star": 3,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, increases ATK by 8%/10%/12%/14%/16%, lasting for 10/10/10/10/10s."
+  },
+  "21050015": {
+    "gbId": "21050015",
+    "name": "Cosmic Ripples",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/cosmic-ripples-icon.webp",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Increases Energy Regen by 12.8%/16%/19.2%/22.4%/25.6%. When dealing Basic Attack DMG, increases Basic Attack DMG Bonus by 3.2%/4%/4.8%/5.6%/6.4%, stacking up to 5/5/5/5/5 time(s). This effect lasts for 8/8/8/8/8s and can be triggered 1/1/1/1/1 time(s) every 0.5/0.5/0.5/0.5/0.5s."
+  },
+  "21050016": {
+    "gbId": "21050016",
+    "name": "Stringmaster",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/stringmaster-icon.webp",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Grants 12%/15%/18%/21%/24% Attribute DMG Bonus. When dealing Resonance Skill DMG, increases ATK by 12%/15%/18%/21%/24%, stacking up to 2/2/2/2/2 times. This effect lasts for 5/5/5/5/5s. When the wielder is not on the field, increases their ATK by an additional 12%/15%/18%/21%/24%."
+  },
+  "21050017": {
+    "gbId": "21050017",
+    "name": "Call of the Abyss",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/call-of-the-abyss-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Casting Resonance Liberation increases the Resonator's Healing Bonus by 16%/20%/24%/28%/32% for 15/15/15/15/15s."
+  },
+  "21050023": {
+    "gbId": "21050023",
+    "name": "Originite: Type V",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/originite-type-v-icon.webp",
+    "star": 3,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "When Intro Skill is cast, heals 5%/6.25%/7.5%/8.75%/10% of the Resonator's Max HP. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21050024": {
+    "gbId": "21050024",
+    "name": "Variation",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/variation-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/10/12/14/16 Concerto Energy. This effect can be triggered 1/1/1/1/1 times every 20/20/20/20/20s."
+  },
+  "21050026": {
+    "gbId": "21050026",
+    "name": "Rime-Draped Sprouts",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/rime-draped-sprouts-icon.webp",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Increase ATK by 12%/15%/18%/21%/24%. While the wielder is on the field, using Resonance Skill grants 12%/15%/18%/21%/24% Basic Attack DMG Bonus, stacking up to 3/3/3/3/3 times for 6/6/6/6/6s. At 3/3/3/3/3 stacks or above, casting Outro Skill consumes all stacks of this effect and grants the wielder 52%/65%/78%/91%/104% Basic Attack DMG Bonus for 27/27/27/27/27s, effective when the wielder is off the field."
+  },
+  "21050027": {
+    "gbId": "21050027",
+    "name": "Ocean's Gift",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/ocean-s-gift-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Dealing DMG to enemies with Spectro Frazzle increases the wielder's Spectro DMG by 6%/7%/8%/9%/10%, gaining 1 stack per second for 6s, stacking up to 4 times."
+  },
+  "21050034": {
+    "gbId": "21050034",
+    "name": "Rectifier#25",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/rectifier-25-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, if the Resonator's HP is below 60%/60%/60%/60%/60%, heals 5%/6.25%/7.5%/8.75%/10% of their Max HP.  This effect can be triggered 1/1/1/1/1 time(s) every 8/8/8/8/8s. If the Resonator's HP is above 60%/60%/60%/60%/60%, increases ATK by 12%/15%/18%/21%/24%, lasting for 10/10/10/10/10s."
+  },
+  "21050036": {
+    "gbId": "21050036",
+    "name": "Stellar Symphony",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/stellar-symphony-icon.webp",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Increase HP by 12%/15%/18%/21%/24%. Restore 8/10/12/14/16 Concerto Energy when casting Resonance Liberation. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s. When casting Resonance Skill that heals, increase nearby party members' ATK by 14%/17.5%/21%/24.5%/28% for 30/30/30/30/30s. Effects of the same name cannot be stacked."
+  },
+  "21050043": {
+    "gbId": "21050043",
+    "name": "Rectifier of Voyager",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/rectifier-of-voyager-icon.webp",
+    "star": 3,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "When Resonance Skill is cast, restores 8/9/10/11/12 Resonance Energy. This effect can be triggered 1/1/1/1/1 time(s) every 20/20/20/20/20s."
+  },
+  "21050044": {
+    "gbId": "21050044",
+    "name": "Jinzhou Keeper",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/jinzhou-keeper-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Casting Intro Skill increases the wielder's ATK by 8%/10%/12%/14%/16% and HP by 10%/12.5%/15%/17.5%/20%, lasting for 15/15/15/15/15s."
+  },
+  "21050046": {
+    "gbId": "21050046",
+    "name": "Luminous Hymn",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/luminous-hymn-icon.webp",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Increase ATK by 12%/15%/18%/21%/24%. Dealing DMG to targets with Spectro Frazzle grants the wielder 14%/17.5%/21%/24.5%/28% Basic Attack DMG Bonus and 14%/17.5%/21%/24.5%/28% Heavy Attack DMG Bonus, stacking up to <SapTag=2>3/3/3/3/3</SapTag> {Cus:Sap,S=time P=times SapTag=2} for 6/6/6/6/6s. Casting Outro Skill Amplifies the Spectro Frazzle DMG on targets around the active Resonator by 30%/37.5%/45%/52.5%/60% for 30/30/30/30/30s. Effects of the same name cannot be stacked."
+  },
+  "21050053": {
+    "gbId": "21050053",
+    "name": "Guardian Rectifier",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/guardian-rectifier-icon.webp",
+    "star": 3,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Increases Basic Attack and Heavy Attack DMG Bonus by 12%/15%/18%/21%/24%."
+  },
+  "21050056": {
+    "gbId": "21050056",
+    "name": "Whispers of Sirens",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/whispers-of-sirens-icon.webp",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Increases ATK by 12%/15%/18%/21%/24%. Casting Echo Skill within 10/10/10/10/10s after casting Intro Skill or Basic Attacks grants <SapTag=2>1/1/1/1/1</SapTag> {Cus:Sap,S=stack P=stacks SapTag=2} of Gentle Dream. Echoes with the same name can only trigger this effect once, stacking up to 2/2/2/2/2 times, lasting for 10/10/10/10/10s. When reaching 2 stacks, casting Echo Skill no longer resets the duration of this effect. This effect activates up to once per 10s. Switching to another Resonator ends this effect early.\nWith <SapTag=5>1/1/1/1/1</SapTag> {Cus:Sap,S=stack P=stacks SapTag=5}: Grants 40%/50%/60%/70%/80% Basic Attack DMG Bonus.\nWith <SapTag=7>2/2/2/2/2</SapTag> {Cus:Sap,S=stack P=stacks SapTag=7}: Ignores 12%/15%/18%/21%/24% of the target's Havoc RES."
+  },
+  "21050064": {
+    "gbId": "21050064",
+    "name": "Comet Flare",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/comet-flare-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "When dealing Basic Attack DMG or Heavy Attack DMG, increases Healing Bonus by 3%/3.75%/4.5%/5.25%/6%, stacking up to 3/3/3/3/3 time(s). This effect lasts for 8/8/8/8/8s and can be triggered 1/1/1/1/1 time(s) every 0.6/0.6/0.6/0.6/0.6s."
+  },
+  "21050066": {
+    "gbId": "21050066",
+    "name": "Lethean Elegy",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/lethean-elegy-icon.webp",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "ATK is increased by 12%/15%/18%/21%/24%. Within 12/12/12/12/12s after dealing Echo Skill DMG, gain 32%/40%/48%/56%/64% Resonance Skill DMG Bonus and 32%/40%/48%/56%/64% Echo Skill DMG Amplification, and ignore 8%/10%/12%/14%/16% of the target's DEF when dealing damage."
+  },
+  "21050074": {
+    "gbId": "21050074",
+    "name": "Augment",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/augment-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Casting Resonance Liberation increases the wielder's ATK by 15%/23.25%/31.5%/39.75%/48%, lasting for 15/15/15/15/15s."
+  },
+  "21050084": {
+    "gbId": "21050084",
+    "name": "Fusion Accretion",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/fusion-accretion-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Casting the Resonance Skill grants 6/7/8/9/10 Resonance Energy and increases ATK by 10%/12.5%/15%/17.5%/20%, lasting for 16/16/16/16/16s. This effect can be triggered once every 20/20/20/20/20s."
+  },
+  "21050094": {
+    "gbId": "21050094",
+    "name": "Waltz in Masquerade",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/waltz-in-masquerade-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Dealing DMG to enemies with Negative Statuses increases the wielder's ATK by 4%/5%/6%/7%/8% for 10/10/10/10/10s. This effect can be triggered 1 time per second, stackable up to 4/4/4/4/4 times."
+  },
+  "21050104": {
+    "gbId": "21050104",
+    "name": "Radiant Dawn",
+    "pictureUrl": "https://static.dotgg.gg/wuthering-waves/weapons/radiant-dawn-icon.webp",
+    "star": 4,
+    "weaponType": "Rectifier",
+    "effectName": "",
+    "effectDescription": "Casting Resonance Skill increases ATK by 9%/13.9%/18.9%/23.8%/28.8% and grants 9%/13.9%/18.9%/23.8%/28.8% Basic Attack DMG Bonus for 10/10/10/10/10s."
+  }
+}
