@@ -45,9 +45,13 @@ interface DraftState {
 
 interface DraftConfidence {
   echo: FieldConfidence;
+  echoRawText: string;
   level: FieldConfidence;
+  levelRawText: string;
   mainStat: FieldConfidence;
+  mainStatRawText: string;
   substats: FieldConfidence[];
+  substatsRawText: string[];
 }
 
 const ALL_ECHOES_LOOKUP = (catalog: EchoCatalog) => [
@@ -87,9 +91,13 @@ function draftFromParsed(
     },
     confidence: {
       echo: parsed.echoName.confidence,
+      echoRawText: parsed.echoName.rawText,
       level: parsed.level.confidence,
+      levelRawText: parsed.level.rawText,
       mainStat: parsed.variableMainStat.confidence,
+      mainStatRawText: parsed.variableMainStat.rawText,
       substats: parsed.substats.map((f) => f.confidence),
+      substatsRawText: parsed.substats.map((f) => f.rawText),
     },
   };
 }
@@ -103,7 +111,16 @@ function confidenceBorderClass(c: FieldConfidence): string {
 
 function VerifyCaption({ confidence, rawText }: { confidence: FieldConfidence; rawText: string }) {
   if (confidence === "matched" || !rawText) return null;
-  return <p className="mt-0.5 text-[10px] text-amber-500">Verify -- OCR read "{rawText}"</p>;
+  // The raw OCR text (title attribute, hover to see) is only meaningful for
+  // debugging a misread -- showing it as the visible message reads as
+  // gibberish to a user who doesn't know what OCR is (real example: `%%
+  // Crit. DMG 44.0%`). Keep it accessible for that case without cluttering
+  // the normal read.
+  return (
+    <p className="mt-0.5 text-[10px] text-amber-500" title={`OCR read: "${rawText}"`}>
+      Verify -- this field may not be correct
+    </p>
+  );
 }
 
 export function EchoImportModal({
@@ -310,7 +327,7 @@ export function EchoImportModal({
                 {draft.echo ? "Change" : "Select"}
               </button>
             </div>
-            <VerifyCaption confidence={confidence.echo} rawText="" />
+            <VerifyCaption confidence={confidence.echo} rawText={confidence.echoRawText} />
           </div>
 
           {draft.echo && draft.echo.setNames.length > 1 && (
@@ -348,6 +365,7 @@ export function EchoImportModal({
                 {draft.level} / 25
               </span>
             </div>
+            <VerifyCaption confidence={confidence.level} rawText={confidence.levelRawText} />
           </div>
 
           {staticOption && staticValue !== null && (
@@ -384,6 +402,7 @@ export function EchoImportModal({
                 </span>
               )}
             </div>
+            <VerifyCaption confidence={confidence.mainStat} rawText={confidence.mainStatRawText} />
           </div>
 
           <div>
@@ -393,40 +412,42 @@ export function EchoImportModal({
                 const available = availableSubStatNames(curves, { ...draft, slotIndex: -1 }, subIndex);
                 const chosenOption = curves.subStatOptions.find((o) => o.statName === sub.statName) ?? null;
                 return (
-                  <div
-                    key={subIndex}
-                    className={`flex items-center gap-2 rounded-sm border p-1 ${confidenceBorderClass(confidence.substats[subIndex])}`}
-                  >
-                    <select
-                      value={sub.statName ?? ""}
-                      onChange={(e) => updateSubStat(subIndex, e.target.value || null, null)}
-                      className="min-w-0 flex-1 rounded-sm border border-border bg-panel px-2 py-1 text-xs text-text"
+                  <div key={subIndex}>
+                    <div
+                      className={`flex items-center gap-2 rounded-sm border p-1 ${confidenceBorderClass(confidence.substats[subIndex])}`}
                     >
-                      <option value="">-- Stat --</option>
-                      {sub.statName && !available.some((o) => o.statName === sub.statName) && (
-                        <option value={sub.statName}>{sub.statName}</option>
-                      )}
-                      {available.map((o) => (
-                        <option key={o.statName} value={o.statName}>
-                          {o.statName}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      value={sub.value ?? ""}
-                      disabled={!chosenOption}
-                      onChange={(e) =>
-                        updateSubStat(subIndex, sub.statName, e.target.value ? Number(e.target.value) : null)
-                      }
-                      className="w-24 shrink-0 rounded-sm border border-border bg-panel px-2 py-1 text-xs text-text disabled:opacity-40"
-                    >
-                      <option value="">--</option>
-                      {chosenOption?.values.map((v) => (
-                        <option key={v} value={v}>
-                          {chosenOption ? formatStatValue(v, chosenOption.statName) : v}
-                        </option>
-                      ))}
-                    </select>
+                      <select
+                        value={sub.statName ?? ""}
+                        onChange={(e) => updateSubStat(subIndex, e.target.value || null, null)}
+                        className="min-w-0 flex-1 rounded-sm border border-border bg-panel px-2 py-1 text-xs text-text"
+                      >
+                        <option value="">-- Stat --</option>
+                        {sub.statName && !available.some((o) => o.statName === sub.statName) && (
+                          <option value={sub.statName}>{sub.statName}</option>
+                        )}
+                        {available.map((o) => (
+                          <option key={o.statName} value={o.statName}>
+                            {o.statName}
+                          </option>
+                        ))}
+                      </select>
+                      <select
+                        value={sub.value ?? ""}
+                        disabled={!chosenOption}
+                        onChange={(e) =>
+                          updateSubStat(subIndex, sub.statName, e.target.value ? Number(e.target.value) : null)
+                        }
+                        className="w-24 shrink-0 rounded-sm border border-border bg-panel px-2 py-1 text-xs text-text disabled:opacity-40"
+                      >
+                        <option value="">--</option>
+                        {chosenOption?.values.map((v) => (
+                          <option key={v} value={v}>
+                            {chosenOption ? formatStatValue(v, chosenOption.statName) : v}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <VerifyCaption confidence={confidence.substats[subIndex]} rawText={confidence.substatsRawText[subIndex]} />
                   </div>
                 );
               })}

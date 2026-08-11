@@ -288,7 +288,19 @@ function matchMainStat(
   level: number | null,
 ): ParsedField<ParsedStatRow> {
   if (!candidate) return emptyField("");
-  const nameMatch = fuzzyMatchName(candidate.rawName, names);
+  // OCR sometimes reads a main stat's icon glyph as stray leading "text"
+  // (confirmed real case: ATK's crossed-swords icon misread as "XR",
+  // producing raw text "XR ATK 18.0%") -- unlike substat rows, main-stat
+  // rows have no leading "+" anchor to bound where icon noise ends and the
+  // real name begins, so MAIN_STAT_ROW_RE's name-capture group swallows it
+  // whole ("XR ATK"), which doesn't fuzzy-match "ATK%" closely enough on
+  // its own. Retry against just the last whitespace-separated word, since
+  // the real stat name is always last -- icons render to the left of text
+  // in this game's UI, never the right. Same retry-with-a-cleaned-variant
+  // pattern as matchEchoName's cosmetic-prefix stripping.
+  const nameMatch =
+    fuzzyMatchName(candidate.rawName, names) ??
+    fuzzyMatchName(candidate.rawName.split(/\s+/).pop() ?? candidate.rawName, names);
   if (!nameMatch) return { value: null, rawText: candidate.rawText, confidence: "unmatched" };
 
   const option = optionsByName.get(nameMatch.match);

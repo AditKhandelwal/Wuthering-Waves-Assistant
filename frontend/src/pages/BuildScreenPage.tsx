@@ -15,6 +15,7 @@ import {
   computeEchoMainStatValue,
   computeEchoStatSummary,
   COST_DISC_CLASS,
+  findEchoByName,
   formatStatValue,
   loadEchoCatalog,
   loadEchoRecommendation,
@@ -24,6 +25,8 @@ import {
 import { loadForteNodes } from "../lib/forteNodes";
 import { loadSequenceNodes } from "../lib/sequenceNodes";
 import { loadStatIcons } from "../lib/statIcons";
+import { useAuth } from "../lib/auth";
+import { saveBuild, loadBuild } from "../lib/builds";
 import { computeStats, loadStatCurves } from "../lib/stats";
 import { loadInherentSkills, loadKeynoteSkills, loadTalents } from "../lib/talents";
 import { renderRankScaledText, stripHtml } from "../lib/text";
@@ -257,6 +260,9 @@ function EchoSlotCard({
 
 export function BuildScreenPage() {
   const { characterId } = useParams();
+  const { user } = useAuth();
+  const [savedBuildChecked, setSavedBuildChecked] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [character, setCharacter] = useState<Character | null>(null);
   const [curves, setCurves] = useState<StatCurveData | null>(null);
   const [statIcons, setStatIcons] = useState<Record<string, string> | null>(null);
@@ -278,8 +284,10 @@ export function BuildScreenPage() {
   const [inherentActive, setInherentActive] = useState<boolean[]>([]);
   const [keynoteSkills, setKeynoteSkills] = useState<KeynoteSkill[]>([]);
   const [forteNodes, setForteNodes] = useState<CharacterForteNodes | null>(null);
-  // 8 booleans: 4 columns × 2 tiers, all toggled on by default (representing a fully unlocked tree)
-  const [forteNodeActive, setForteNodeActive] = useState<boolean[]>(Array(8).fill(true));
+  // 8 booleans: 4 columns × 2 tiers, all off by default -- these are
+  // unlocked by investing sequence/resonance points in the real game, not
+  // free, so a fresh build shouldn't start with every bonus already active.
+  const [forteNodeActive, setForteNodeActive] = useState<boolean[]>(Array(8).fill(false));
 
   const [echoCatalog, setEchoCatalog] = useState<EchoCatalog | null>(null);
   const [echoSets, setEchoSets] = useState<EchoSet[]>([]);
@@ -302,9 +310,11 @@ export function BuildScreenPage() {
     setWeaponLevel(1);
     setWeaponRank(1);
     setUnlockedCount(0);
-    setForteNodeActive(Array(8).fill(true));
+    setForteNodeActive(Array(8).fill(false));
     setEquippedEchoes(emptyEquippedEchoes());
     setEchoRecommendation(null);
+    setSavedBuildChecked(false);
+    setSaveStatus("idle");
     if (characterId) {
       loadSequenceNodes(characterId).then(setSequenceNodes);
       loadForteNodes(characterId).then(setForteNodes);
@@ -314,7 +324,9 @@ export function BuildScreenPage() {
       });
       loadInherentSkills(characterId).then((loaded) => {
         setInherentSkills(loaded);
-        setInherentActive(loaded.map(() => true));
+        // Off by default, same reasoning as forteNodeActive above -- these
+        // are unlocked via sequence nodes in the real game, not free.
+        setInherentActive(loaded.map(() => false));
       });
       loadKeynoteSkills(characterId).then(setKeynoteSkills);
       loadEchoRecommendation(characterId).then(setEchoRecommendation);
@@ -349,7 +361,7 @@ export function BuildScreenPage() {
     if (equippedEchoes[0].echo) return;
     const name = echoRecommendation.signatureEchoName;
     if (!name) return;
-    const match = echoCatalog.byCost[4].find((e) => e.name === name);
+    const match = findEchoByName(echoCatalog, name);
     if (!match) return;
     const defaultMainOption = echoCurves.mainStatOptionsByCost[match.cost][0];
     setEquippedEchoes((current) =>
@@ -368,6 +380,47 @@ export function BuildScreenPage() {
       ),
     );
   }, [echoCatalog, echoCurves, echoRecommendation, equippedEchoes]);
+
+  // If signed in, load this character's saved build (if one exists) and
+  // hydrate every field from it, overriding whatever the recommendation
+  // effects above filled in. Only runs once per (character, sign-in) --
+  // guarded by savedBuildChecked, reset alongside the rest of the build
+  // state whenever characterId changes.
+  useEffect(() => {
+    if (!characterId || !user || !echoCatalog || !weaponCatalog || savedBuildChecked) return;
+    loadBuild(user.id, characterId, echoCatalog, weaponCatalog).then((saved) => {
+      if (saved) {
+        setLevel(saved.level);
+        setSelectedWeapon(saved.selectedWeapon);
+        setWeaponLevel(saved.weaponLevel);
+        setWeaponRank(saved.weaponRank);
+        setUnlockedCount(saved.unlockedCount);
+        setTalentLevels(saved.talentLevels);
+        setInherentActive(saved.inherentActive);
+        setForteNodeActive(saved.forteNodeActive);
+        setEquippedEchoes(saved.equippedEchoes);
+      }
+      setSavedBuildChecked(true);
+    });
+  }, [characterId, user, echoCatalog, weaponCatalog, savedBuildChecked]);
+
+  async function handleSaveBuild() {
+    if (!user || !character) return;
+    setSaveStatus("saving");
+    const { error } = await saveBuild(user.id, character.roleGbId, {
+      level,
+      selectedWeapon,
+      weaponLevel,
+      weaponRank,
+      unlockedCount,
+      talentLevels,
+      inherentActive,
+      forteNodeActive,
+      equippedEchoes,
+    });
+    setSaveStatus(error ? "error" : "saved");
+    if (!error) setTimeout(() => setSaveStatus("idle"), 2000);
+  }
 
   function updateEquippedEcho(index: number, patch: Partial<EquippedEcho>) {
     setEquippedEchoes((current) =>
@@ -466,12 +519,28 @@ export function BuildScreenPage() {
         <Link to="/" className="text-sm text-text-muted hover:text-gold-soft transition">
           &larr; Characters
         </Link>
-        <button
-          onClick={() => setCardView((current) => !current)}
-          className="rounded-sm border border-gold-soft px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt"
-        >
-          {cardView ? "Edit Build" : "View Card"}
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleSaveBuild}
+            disabled={!user || saveStatus === "saving"}
+            title={user ? undefined : "Sign in to save your build"}
+            className="rounded-sm border border-gold-soft px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
+          >
+            {saveStatus === "saving"
+              ? "Saving..."
+              : saveStatus === "saved"
+                ? "Saved"
+                : saveStatus === "error"
+                  ? "Save Failed"
+                  : "Save Build"}
+          </button>
+          <button
+            onClick={() => setCardView((current) => !current)}
+            className="rounded-sm border border-gold-soft px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt"
+          >
+            {cardView ? "Edit Build" : "View Card"}
+          </button>
+        </div>
       </div>
 
       {cardView ? (

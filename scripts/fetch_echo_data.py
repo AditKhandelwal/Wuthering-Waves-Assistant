@@ -900,6 +900,38 @@ def verify_substat_transcription() -> list[str]:
 # ---------------------------------------------------------------------------
 
 
+# ---------------------------------------------------------------------------
+# Manual corrections
+# ---------------------------------------------------------------------------
+
+# game8 (a fan wiki, not Kuro's own data) is occasionally incomplete on set
+# membership -- each correction here is backed by a real in-game screenshot,
+# not inferred/guessed, and is additive (appended to whatever game8 already
+# found, never replacing it, since a screenshot proving one set membership
+# doesn't disprove another).
+MANUAL_SET_CORRECTIONS: dict[str, list[str]] = {
+    # User-provided screenshot (2026-08-10) of Sabercat Prowler's in-game
+    # echo card shows "Halo of Starry Radiance" as its active Sonata Effect
+    # (2pc and 5pc both checked). game8's cost-3 page doesn't list this set
+    # for this echo at all -- confirmed still missing on a live re-check the
+    # same day, so this isn't a stale scrape, game8 itself is incomplete here.
+    "Sabercat Prowler": ["Halo of Starry Radiance"],
+    # Same evidence, same day, for the other Sabercat echo -- user provided
+    # a second screenshot (this one after the first check came back
+    # inconclusive, no Sonata Effect section visible) explicitly showing
+    # Sabercat Reaver's Sonata Effect section with Halo of Starry Radiance
+    # checked at 2/2 and 5/5, same as Prowler.
+    "Sabercat Reaver": ["Halo of Starry Radiance"],
+}
+
+
+def apply_manual_set_corrections(echoes: list[dict]) -> None:
+    for echo in echoes:
+        for set_name in MANUAL_SET_CORRECTIONS.get(echo["name"], []):
+            if set_name not in echo["setNames"]:
+                echo["setNames"].append(set_name)
+
+
 def cross_link_signature_echoes(echoes: list[dict], characters_data: dict) -> tuple[int, list[str]]:
     game8_index = {normalize_name(e["name"]): e for e in echoes}
     matched = 0
@@ -1097,6 +1129,7 @@ def main():
         log(f"    parsed {len(echoes)} echoes for cost {cost}")
         all_echoes.extend(echoes)
     log(f"  total echoes: {len(all_echoes)}")
+    apply_manual_set_corrections(all_echoes)
 
     log("  fetching sonata effects page...")
     sonata_html = fetch_html(GAME8_SONATA_URL, "sonata", cache_dir)

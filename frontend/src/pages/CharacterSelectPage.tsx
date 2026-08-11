@@ -26,6 +26,7 @@ export function CharacterSelectPage() {
   const [roster, setRoster] = useState<RosterData | null>(null);
   const [elementFilter, setElementFilter] = useState<ElementName | null>(null);
   const [weaponTypeFilter, setWeaponTypeFilter] = useState<WeaponTypeName | null>(null);
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,12 +35,14 @@ export function CharacterSelectPage() {
 
   const filtered = useMemo<Character[]>(() => {
     if (!roster) return [];
+    const normalizedQuery = query.trim().toLowerCase();
     return roster.characters.filter(
       (c) =>
         (!elementFilter || c.element === elementFilter) &&
-        (!weaponTypeFilter || c.weaponType === weaponTypeFilter),
+        (!weaponTypeFilter || c.weaponType === weaponTypeFilter) &&
+        (!normalizedQuery || c.name.toLowerCase().includes(normalizedQuery)),
     );
-  }, [roster, elementFilter, weaponTypeFilter]);
+  }, [roster, elementFilter, weaponTypeFilter, query]);
 
   return (
     <div className="mx-auto max-w-6xl px-8 py-10">
@@ -54,6 +57,13 @@ export function CharacterSelectPage() {
 
       {roster && (
         <div className="mb-8 flex flex-col gap-3 border-b border-border pb-6">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search resonators..."
+            className="w-full max-w-xs rounded-sm border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-gold-soft focus:outline-none"
+          />
           <IconToggleRow
             options={ELEMENT_ORDER.map((el) => ({
               value: el,
@@ -77,6 +87,8 @@ export function CharacterSelectPage() {
 
       {!roster ? (
         <p className="text-text-muted">Loading roster...</p>
+      ) : filtered.length === 0 ? (
+        <p className="text-text-muted">No resonators match "{query}".</p>
       ) : (
         <div className="grid grid-cols-4 gap-x-6 gap-y-8 sm:grid-cols-6 md:grid-cols-8">
           {filtered.map((character) => (
