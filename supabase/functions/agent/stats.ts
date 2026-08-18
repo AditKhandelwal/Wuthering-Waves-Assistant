@@ -174,6 +174,8 @@ export interface ActiveSetBonus {
 export interface EchoSlotBreakdown {
   slot: number; // 1-5. WuWa echo slots have no body-part names (unlike some
   // other games' artifact/relic systems) -- just 5 generic numbered slots.
+  cost: 1 | 3 | 4 | null; // null only if echoName is unresolved -- see costNote
+  costNote?: string;
   echoName: string | null;
   echoNameNote?: string;
   setName: string | null;
@@ -207,6 +209,10 @@ export function computeEchoSlotBreakdown(
     }
     return {
       slot: i + 1,
+      cost: echo?.cost ?? null,
+      costNote: echo
+        ? undefined
+        : "Cost is unresolved because the echo name didn't match this app's catalog -- do not guess a cost tier for this slot.",
       echoName: slot.echoName,
       echoNameNote: slot.echoName
         ? undefined

@@ -104,8 +104,23 @@ def main():
             if en_text(s.get("skillType", {}).get("texts", []), "name")
         ]
 
+        # Real mechanical/rotation/synergy analysis, written by Kuro's guide
+        # authors -- NOT role.roleDescription (a one-line flavor bio, e.g.
+        # "Sigrika, a Startorch Academy student..."), which is what this
+        # used to pull and is nearly useless for "how does X's kit work"
+        # questions. introductionDescription is a short punchy tips list;
+        # introductionDetail is the real multi-paragraph mechanical
+        # breakdown (forms, stacks, enhanced skills, finishers, rotation
+        # order). Confirmed present (non-empty) for all 58 characters as of
+        # 2026-08-17. introductionSynopsis is a one-line role/element/weapon
+        # summary in Kuro's own words -- kept separate as `synopsis` since
+        # it's a different granularity (good for a quick "tell me about X"
+        # answer, not rotation detail).
         base_text = en_text(entry.get("baseTexts", []))
-        rotation_notes = strip_html(base_text.get("roleDescription")) if base_text else ""
+        synopsis = strip_html(base_text.get("introductionSynopsis")) if base_text else ""
+        playstyle_tips = strip_html(base_text.get("introductionDescription")) if base_text else ""
+        rotation_detail = strip_html(base_text.get("introductionDetail")) if base_text else ""
+        rotation_notes = "\n\n".join(p for p in [playstyle_tips, rotation_detail] if p)
 
         team_comps = []
         for item in entry.get("teammate", {}).get("items", []):
@@ -121,6 +136,7 @@ def main():
         guides[role_id] = {
             "name": name,
             "element": element,
+            "synopsis": synopsis,
             "statThresholds": stat_thresholds,
             "recommendedEcho": {"name": recommended_echo_name, "sets": recommended_sets},
             "recommendedWeapons": recommended_weapons,
