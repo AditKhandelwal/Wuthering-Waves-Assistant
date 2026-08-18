@@ -58,6 +58,32 @@ export interface ComputedSecondaryStat {
   value: number;
 }
 
+// The always-on stat-bonus component of a weapon's passive ability text --
+// see scripts/build_weapon_passive_bonuses.py for how this is extracted and
+// why only the unconditional part is ever included. Deno-side mirror of
+// frontend/src/lib/weapons.ts's computeWeaponPassiveBonusTotals.
+export interface WeaponPassiveBonus {
+  stat: string;
+  valuesByRank: number[]; // index 0 = Rank 1, index 4 = Rank 5
+}
+export type WeaponPassiveBonuses = Record<string, WeaponPassiveBonus[]>;
+
+export function computeWeaponPassiveBonusTotals(
+  bonuses: WeaponPassiveBonuses,
+  weaponGbId: string,
+  rank: number,
+): Map<string, number> {
+  const totals = new Map<string, number>();
+  const entries = bonuses[weaponGbId];
+  if (!entries) return totals;
+  for (const entry of entries) {
+    const value = entry.valuesByRank[rank - 1];
+    if (value === undefined) continue;
+    totals.set(entry.stat, (totals.get(entry.stat) ?? 0) + value);
+  }
+  return totals;
+}
+
 // See weapons.ts for how these prop IDs were resolved/verified.
 const WEAPON_STAT_NAME_BY_PROP_ID: Record<number, string> = {
   7: "ATK",
@@ -263,7 +289,9 @@ export function computeFinalStats(args: {
   curves: StatCurveData;
   weaponGbId: string | null;
   weaponLevel: number;
+  weaponRank: number;
   weaponCurves: WeaponStatCurves;
+  weaponPassiveBonuses: WeaponPassiveBonuses;
   echoTotals: Map<string, number>;
   forteBonusTotals: Map<string, number>;
 }): FinalStats | null {
@@ -273,28 +301,36 @@ export function computeFinalStats(args: {
   const echo = (statName: string) => args.echoTotals.get(statName) ?? 0;
   const forte = (statName: string) => args.forteBonusTotals.get(statName) ?? 0;
 
+  const elementalDmgBonusName = args.element ? `${args.element} DMG Bonus` : "Elemental DMG Bonus";
+  // "ELEMENTAL" is build_weapon_passive_bonuses.py's placeholder for a
+  // passive phrased as "Attribute DMG Bonus" -- resolved here, same as the
+  // frontend port in finalStats.ts.
+  const weaponPassiveTotals = args.weaponGbId
+    ? computeWeaponPassiveBonusTotals(args.weaponPassiveBonuses, args.weaponGbId, args.weaponRank)
+    : new Map<string, number>();
+  const weaponPassive = (statName: string) =>
+    weaponPassiveTotals.get(statName === elementalDmgBonusName ? "ELEMENTAL" : statName) ?? 0;
+
   const weaponAtk = args.weaponGbId ? computeWeaponAtk(args.weaponCurves, args.weaponGbId, args.weaponLevel) : 0;
   const weaponSecondary = args.weaponGbId
     ? computeWeaponSecondaryStat(args.weaponCurves, args.weaponGbId, args.weaponLevel)
     : null;
   const weaponStat = (statName: string) => (weaponSecondary?.name === statName ? weaponSecondary.value : 0);
 
-  const hpPercent = echo("HP%") + weaponStat("HP%") + forte("HP");
-  const atkPercent = echo("ATK%") + weaponStat("ATK%") + forte("ATK");
-  const defPercent = echo("DEF%") + weaponStat("DEF%") + forte("DEF");
-
-  const elementalDmgBonusName = args.element ? `${args.element} DMG Bonus` : "Elemental DMG Bonus";
+  const hpPercent = echo("HP%") + weaponStat("HP%") + forte("HP") + weaponPassive("HP%");
+  const atkPercent = echo("ATK%") + weaponStat("ATK%") + forte("ATK") + weaponPassive("ATK%");
+  const defPercent = echo("DEF%") + weaponStat("DEF%") + forte("DEF") + weaponPassive("DEF%");
 
   return {
     hp: Math.round((base.hp * (100 + hpPercent)) / 100 + echo("HP")),
     atk: Math.round(((base.atk + weaponAtk) * (100 + atkPercent)) / 100 + echo("ATK")),
     def: Math.round((base.def * (100 + defPercent)) / 100 + echo("DEF")),
-    energyRegen: BASE_ENERGY_REGEN + echo("Energy Regen") + weaponStat("Energy Regen"),
-    critRate: BASE_CRIT_RATE + echo("Crit. Rate") + weaponStat("Crit. Rate") + forte("Crit. Rate"),
-    critDmg: BASE_CRIT_DMG + echo("Crit. DMG") + weaponStat("Crit. DMG") + forte("Crit. DMG"),
-    healingBonus: echo("Healing Bonus") + forte("Healing Bonus"),
+    energyRegen: BASE_ENERGY_REGEN + echo("Energy Regen") + weaponStat("Energy Regen") + weaponPassive("Energy Regen"),
+    critRate: BASE_CRIT_RATE + echo("Crit. Rate") + weaponStat("Crit. Rate") + forte("Crit. Rate") + weaponPassive("Crit. Rate"),
+    critDmg: BASE_CRIT_DMG + echo("Crit. DMG") + weaponStat("Crit. DMG") + forte("Crit. DMG") + weaponPassive("Crit. DMG"),
+    healingBonus: echo("Healing Bonus") + forte("Healing Bonus") + weaponPassive("Healing Bonus"),
     elementalDmgBonusName,
-    elementalDmgBonus: echo(elementalDmgBonusName) + forte(elementalDmgBonusName),
+    elementalDmgBonus: echo(elementalDmgBonusName) + forte(elementalDmgBonusName) + weaponPassive(elementalDmgBonusName),
   };
 }
 

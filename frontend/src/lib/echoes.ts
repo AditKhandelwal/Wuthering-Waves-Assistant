@@ -18,8 +18,25 @@ export function isFlatStat(statName: string): boolean {
   return FLAT_STAT_NAMES.has(statName);
 }
 
+// Wuthering Waves truncates displayed stat percentages rather than rounding
+// them -- confirmed 2026-08-18 against a real screenshot: Cosmic Ripples'
+// level-90 secondary stat shows 53.9% in-game, but this app's old
+// `toFixed(1)` (which rounds) produced 54.0%. The raw computed value is
+// 53.99999879...%, a hair under 54 -- a float32-precision artifact in the
+// source stat value (0.11999999731779099 instead of a clean 0.12), not a
+// genuine 54%. `Math.floor` alone would introduce the mirror-image bug: a
+// value that's genuinely meant to be clean (e.g. 24.3) can be stored as
+// 24.299999999999997 due to ordinary float64 representation noise, which
+// would wrongly truncate down to 24.2. The small epsilon (1e-7 -- far
+// bigger than float64's ~1e-13 representation noise, far smaller than the
+// ~1.2e-6 gap in the Cosmic Ripples case) absorbs that noise without
+// masking a real just-under-the-boundary value.
+function truncateToOneDecimal(value: number): number {
+  return Math.floor(value * 10 + 1e-7) / 10;
+}
+
 export function formatStatValue(value: number, statName: string): string {
-  return isFlatStat(statName) ? String(Math.round(value)) : `${value.toFixed(1)}%`;
+  return isFlatStat(statName) ? String(Math.round(value)) : `${truncateToOneDecimal(value).toFixed(1)}%`;
 }
 
 // Cost tier has no in-game color convention sourced from this app's data --

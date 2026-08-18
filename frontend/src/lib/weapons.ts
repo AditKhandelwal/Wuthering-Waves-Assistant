@@ -1,7 +1,12 @@
 import { WEAPON_TYPE_BY_GB_ID } from "./characters";
 import { formatStatValue } from "./echoes";
 import type { WeaponTypeName } from "../types/character";
-import type { ComputedSecondaryStat, WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
+import type {
+  ComputedSecondaryStat,
+  WeaponCatalogEntry,
+  WeaponPassiveBonuses,
+  WeaponStatCurves,
+} from "../types/weapon";
 
 // Resolved by cross-referencing weaponconf.json's SecondPropId.Id against
 // wuwa_characters.json's roleAttribute gbId prefixes (e.g. "8-2" -> Crit.
@@ -115,6 +120,35 @@ export async function loadWeaponCatalog(): Promise<WeaponCatalog> {
 export async function loadWeaponStatCurves(): Promise<WeaponStatCurves> {
   const res = await fetch("/data/weapon_stat_curves.json");
   return res.json();
+}
+
+export async function loadWeaponPassiveBonuses(): Promise<WeaponPassiveBonuses> {
+  const res = await fetch("/data/weapon_passive_bonuses.json");
+  return res.json();
+}
+
+// Resolves a weapon's extracted unconditional passive bonus(es) at a given
+// rank into a stat-name -> total-value map, ready to feed into
+// computeFinalStats the same way forte/echo totals already do. The
+// "ELEMENTAL" placeholder key (weapons whose bonus is phrased as whichever
+// element the wielder is, e.g. "Grants 12% Attribute DMG Bonus") is left
+// unresolved here and handled inside computeFinalStats, which is where
+// elementalDmgBonusName already gets built from character.element -- keeps
+// this function ignorant of that convention.
+export function computeWeaponPassiveBonusTotals(
+  bonuses: WeaponPassiveBonuses,
+  weaponGbId: string,
+  rank: number,
+): Map<string, number> {
+  const totals = new Map<string, number>();
+  const entries = bonuses[weaponGbId];
+  if (!entries) return totals;
+  for (const entry of entries) {
+    const value = entry.valuesByRank[rank - 1];
+    if (value === undefined) continue;
+    totals.set(entry.stat, (totals.get(entry.stat) ?? 0) + value);
+  }
+  return totals;
 }
 
 export function computeWeaponAtk(

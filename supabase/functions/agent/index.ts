@@ -49,6 +49,15 @@ import characterGuidesRaw from "./character_guides.json" with { type: "json" };
 // whenever the source files in data/ change.
 import characterStatCurvesRaw from "./character_stat_curves.json" with { type: "json" };
 import weaponStatCurvesRaw from "./weapon_stat_curves.json" with { type: "json" };
+// The always-on stat-bonus component of each weapon's passive ability text
+// (see scripts/build_weapon_passive_bonuses.py) -- computeFinalStats used to
+// only read a weapon's ATK and its one secondary stat, never its passive,
+// which silently undercounted final stats for any weapon with an
+// unconditional passive bonus (found 2026-08-19 via a real ~1770 HP
+// discrepancy on a Defier's Thorn build, whose Rank 1 passive is an
+// unconditional +12% Max HP that was never being applied). Re-copy +
+// redeploy whenever weapon_catalog.json changes and that script is rerun.
+import weaponPassiveBonusesRaw from "./weapon_passive_bonuses.json" with { type: "json" };
 // gbId -> name, merged from dotgg's catalog + Kuro's per-character weapon
 // texts by scripts/build_agent_weapon_names.py (117/118 coverage) --
 // replaced a dotgg-only bundle (100/118) after a real build's weapon
@@ -83,6 +92,7 @@ import {
   normalizeEchoName,
   type StatCurveData,
   type WeaponStatCurves,
+  type WeaponPassiveBonuses,
   type EchoStatCurves,
   type EchoCatalogEntry,
   type EchoSet,
@@ -104,6 +114,7 @@ const characterGuides = characterGuidesRaw as Record<string, CharacterGuide>;
 
 const characterStatCurves = characterStatCurvesRaw as unknown as StatCurveData;
 const weaponStatCurves = weaponStatCurvesRaw as unknown as WeaponStatCurves;
+const weaponPassiveBonuses = weaponPassiveBonusesRaw as unknown as WeaponPassiveBonuses;
 const weaponNames = weaponNamesRaw as Record<string, string>;
 const echoStatCurves = echoStatCurvesRaw as unknown as EchoStatCurves;
 const echoSets = (echoSetsRaw as { sets: EchoSet[] }).sets;
@@ -714,7 +725,9 @@ async function getCharacterBuild(supabase: SupabaseClient, characterName: unknow
     curves: characterStatCurves,
     weaponGbId: data.weapon_gb_id,
     weaponLevel: data.weapon_level,
+    weaponRank: data.weapon_rank,
     weaponCurves: weaponStatCurves,
+    weaponPassiveBonuses,
     echoTotals,
     forteBonusTotals,
   });

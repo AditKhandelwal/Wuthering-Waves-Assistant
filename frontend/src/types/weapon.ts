@@ -32,3 +32,14 @@ export interface ComputedSecondaryStat {
   value: number;
   displayValue: string;
 }
+
+// The always-on stat-bonus component of a weapon's passive ability text
+// (built by scripts/build_weapon_passive_bonuses.py -- see that script's
+// docstring for why only the unconditional part is extracted). "ELEMENTAL"
+// is a placeholder stat name resolved at compute time against whichever
+// character wields it, mirroring elementalDmgBonusName in finalStats.ts.
+export interface WeaponPassiveBonus {
+  stat: string;
+  valuesByRank: number[]; // index 0 = Rank 1, index 4 = Rank 5
+}
+export type WeaponPassiveBonuses = Record<string, WeaponPassiveBonus[]>;

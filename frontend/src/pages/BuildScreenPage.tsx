@@ -34,6 +34,7 @@ import {
   computeWeaponAtk,
   computeWeaponSecondaryStat,
   loadWeaponCatalog,
+  loadWeaponPassiveBonuses,
   loadWeaponStatCurves,
 } from "../lib/weapons";
 import type { Character, ElementName } from "../types/character";
@@ -50,7 +51,7 @@ import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
 import type { EchoCatalog, EchoRecommendation } from "../lib/echoes";
 import type { WeaponCatalog } from "../lib/weapons";
-import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
+import type { WeaponCatalogEntry, WeaponPassiveBonuses, WeaponStatCurves } from "../types/weapon";
 
 // Real builds vary in which slot holds which cost tier (4-3-3-1-1, 4-4-1-1-1,
 // etc.) -- so slots aren't pinned to a fixed cost. Each slot's cost is
@@ -270,6 +271,7 @@ export function BuildScreenPage() {
 
   const [weaponCatalog, setWeaponCatalog] = useState<WeaponCatalog | null>(null);
   const [weaponCurves, setWeaponCurves] = useState<WeaponStatCurves | null>(null);
+  const [weaponPassiveBonuses, setWeaponPassiveBonuses] = useState<WeaponPassiveBonuses | null>(null);
   const [selectedWeapon, setSelectedWeapon] = useState<WeaponCatalogEntry | null>(null);
   const [weaponLevel, setWeaponLevel] = useState(1);
   const [weaponRank, setWeaponRank] = useState(1);
@@ -337,6 +339,7 @@ export function BuildScreenPage() {
     loadRoster().then(({ elementIcons }) => setElementIcons(elementIcons));
     loadWeaponCatalog().then(setWeaponCatalog);
     loadWeaponStatCurves().then(setWeaponCurves);
+    loadWeaponPassiveBonuses().then(setWeaponPassiveBonuses);
     loadStatIcons().then(setStatIcons);
     loadEchoCatalog().then(setEchoCatalog);
     loadEchoSets().then(setEchoSets);
@@ -554,6 +557,7 @@ export function BuildScreenPage() {
           weaponLevel={weaponLevel}
           weaponRank={weaponRank}
           weaponCurves={weaponCurves}
+          weaponPassiveBonuses={weaponPassiveBonuses}
           sequenceNodes={sequenceNodes}
           unlockedCount={unlockedCount}
           talents={talents}

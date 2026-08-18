@@ -6,14 +6,14 @@ import { FORTE_COLUMN_ORDER, SKILL_TO_FORTE_COLUMN } from "./TalentGrid";
 import { ELEMENT_PORTRAIT_BORDER_CLASS, ELEMENT_PORTRAIT_GLOW_CLASS } from "../lib/characters";
 import { computeActiveSetBonuses, formatStatValue } from "../lib/echoes";
 import { computeFinalStats } from "../lib/finalStats";
-import { computeWeaponAtk, computeWeaponSecondaryStat } from "../lib/weapons";
+import { computeWeaponAtk, computeWeaponPassiveBonusTotals, computeWeaponSecondaryStat } from "../lib/weapons";
 import type { Character, ElementName } from "../types/character";
 import type { EchoSet, EchoStatCurves, EquippedEcho } from "../types/echo";
 import type { CharacterForteNodes, ForteNode } from "../types/forteNode";
 import type { SequenceNode } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
-import type { WeaponCatalogEntry, WeaponStatCurves } from "../types/weapon";
+import type { WeaponCatalogEntry, WeaponPassiveBonuses, WeaponStatCurves } from "../types/weapon";
 
 interface BuildCardProps {
   character: Character;
@@ -26,6 +26,7 @@ interface BuildCardProps {
   weaponLevel: number;
   weaponRank: number;
   weaponCurves: WeaponStatCurves | null;
+  weaponPassiveBonuses: WeaponPassiveBonuses | null;
 
   sequenceNodes: SequenceNode[];
   unlockedCount: number;
@@ -247,6 +248,7 @@ export function BuildCard({
   weaponLevel,
   weaponRank,
   weaponCurves,
+  weaponPassiveBonuses,
   sequenceNodes,
   unlockedCount,
   talents,
@@ -277,6 +279,11 @@ export function BuildCard({
     return totals;
   })();
 
+  const weaponPassiveBonusTotals =
+    selectedWeapon && weaponPassiveBonuses
+      ? computeWeaponPassiveBonusTotals(weaponPassiveBonuses, selectedWeapon.gbId, weaponRank)
+      : new Map<string, number>();
+
   const finalStats = curves
     ? computeFinalStats({
         character,
@@ -288,6 +295,7 @@ export function BuildCard({
         equippedEchoes,
         echoCurves,
         forteBonusTotals,
+        weaponPassiveBonusTotals,
       })
     : null;
   const weaponAtk =
