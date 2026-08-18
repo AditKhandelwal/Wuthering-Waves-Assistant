@@ -1,3 +1,5 @@
+import { toBlob, toPng } from "html-to-image";
+import { useRef, useState } from "react";
 import { EchoCardTile } from "./EchoCardTile";
 import { ElementIcon } from "./ElementIcon";
 import { FinalStatsGrid } from "./FinalStatsGrid";
@@ -306,103 +308,180 @@ export function BuildCard({
       : null;
   const elementIconUrl = elementIcons?.[character.element];
 
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [exportStatus, setExportStatus] = useState<"idle" | "working" | "copied" | "error">("idle");
+  const exportFilename = `${character.name.replace(/[^a-z0-9]+/gi, "-")}-build.png`;
+
+  // pixelRatio 2 for a crisp result when shared/pasted at a larger size than
+  // the on-screen card. cacheBust appends a timestamp to each embedded
+  // image's fetch so a stale cached response can't silently poison the
+  // render. onImageErrorHandler is required, not optional polish -- without
+  // it, html-to-image's embed-images.js rejects the ENTIRE capture the
+  // moment any single <img> on the card fails to load (confirmed in its
+  // source: onerror defaults to `reject` with no handler set), which is
+  // exactly the raw DOM Event a real user hit here (one broken/CORS-blocked
+  // echo icon killed the whole export, even though the character portrait,
+  // weapon icon, and every other image were fine). A single missing icon
+  // should degrade to a blank patch in that one spot, not fail the export.
+  const exportOptions = {
+    pixelRatio: 2,
+    cacheBust: true,
+    onImageErrorHandler: (event: Event | string) => {
+      console.warn("Build card export: one image failed to embed, continuing without it:", event);
+    },
+  };
+
+  async function handleDownload() {
+    if (!cardRef.current) return;
+    setExportStatus("working");
+    try {
+      const dataUrl = await toPng(cardRef.current, exportOptions);
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = exportFilename;
+      link.click();
+      setExportStatus("idle");
+    } catch (err) {
+      console.error("Failed to export build card image:", err);
+      setExportStatus("error");
+    }
+  }
+
+  async function handleCopy() {
+    if (!cardRef.current) return;
+    setExportStatus("working");
+    try {
+      const blob = await toBlob(cardRef.current, exportOptions);
+      if (!blob) throw new Error("Failed to generate image");
+      await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+      setExportStatus("copied");
+      setTimeout(() => setExportStatus("idle"), 2000);
+    } catch (err) {
+      console.error("Failed to copy build card image:", err);
+      setExportStatus("error");
+    }
+  }
+
   return (
-    <div
-      className="card-atmosphere clip-corner border border-border p-4"
-      style={{ "--card-glow-color": `var(--color-element-${character.element.toLowerCase()})` } as React.CSSProperties}
-    >
-      <div className="grid grid-cols-[240px_1fr] gap-4">
-        <div className="min-w-0 flex flex-col gap-3">
-          <div className={`min-h-0 flex-1 ${ELEMENT_PORTRAIT_GLOW_CLASS[character.element]}`}>
-            <div
-              className={`clip-corner h-full w-full overflow-hidden border-2 bg-panel-alt ${ELEMENT_PORTRAIT_BORDER_CLASS[character.element]}`}
-            >
-              <img
-                src={character.illustrationPictureUrl}
-                alt={character.name}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {elementIconUrl && (
-              <ElementIcon element={character.element} iconUrl={elementIconUrl} className="h-5 w-5" />
-            )}
-            <h1 className="truncate text-sm font-semibold text-gold-soft">{character.name}</h1>
-            <span className="shrink-0 text-[10px] text-text-muted">Lv.{level}</span>
-          </div>
-
-          {selectedWeapon && (
-            <div className="flex items-center gap-3 border border-border bg-panel-alt px-3 py-3">
-              <img
-                src={selectedWeapon.pictureUrl}
-                alt={selectedWeapon.name}
-                className="h-16 w-16 shrink-0 object-contain"
-              />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-semibold text-gold-soft">
-                  {selectedWeapon.name}
-                </p>
-                <p className="text-xs text-text-muted">
-                  Lv.{weaponLevel} &middot; Rank {weaponRank}
-                </p>
-                <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
-                  {weaponAtk !== null && (
-                    <span className="flex items-center gap-1 text-xs text-text">
-                      <StatIcon icons={statIcons} name="ATK" />
-                      {weaponAtk}
-                    </span>
-                  )}
-                  {weaponSecondaryStat && (
-                    <span className="flex items-center gap-1 text-xs text-text">
-                      <StatIcon icons={statIcons} name={weaponSecondaryStat.name} />
-                      {formatStatValue(weaponSecondaryStat.value, weaponSecondaryStat.name)}
-                    </span>
-                  )}
-                </div>
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center justify-end gap-2">
+        {exportStatus === "error" && (
+          <span className="text-xs text-red-400">Couldn't generate image -- try again</span>
+        )}
+        {exportStatus === "copied" && <span className="text-xs text-gold-soft">Copied!</span>}
+        <button
+          onClick={handleCopy}
+          disabled={exportStatus === "working"}
+          className="rounded-sm border border-gold-soft px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Copy Image
+        </button>
+        <button
+          onClick={handleDownload}
+          disabled={exportStatus === "working"}
+          className="rounded-sm border border-gold-soft px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-gold-soft transition hover:bg-panel-alt disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          Download
+        </button>
+      </div>
+      <div
+        ref={cardRef}
+        className="card-atmosphere clip-corner border border-border p-4"
+        style={{ "--card-glow-color": `var(--color-element-${character.element.toLowerCase()})` } as React.CSSProperties}
+      >
+        <div className="grid grid-cols-[240px_1fr] gap-4">
+          <div className="min-w-0 flex flex-col gap-3">
+            <div className={`min-h-0 flex-1 ${ELEMENT_PORTRAIT_GLOW_CLASS[character.element]}`}>
+              <div
+                className={`clip-corner h-full w-full overflow-hidden border-2 bg-panel-alt ${ELEMENT_PORTRAIT_BORDER_CLASS[character.element]}`}
+              >
+                <img
+                  src={character.illustrationPictureUrl}
+                  alt={character.name}
+                  className="h-full w-full object-cover"
+                />
               </div>
             </div>
-          )}
-        </div>
 
-        <div className="min-w-0 flex flex-col gap-3">
-          <div className="flex items-start gap-4 border-b border-border pb-3">
-            <div className="flex flex-col gap-3">
-              {finalStats && <FinalStatsGrid stats={finalStats} statIcons={statIcons} />}
-              <CompactSequenceRow nodes={sequenceNodes} unlockedCount={unlockedCount} />
+            <div className="flex items-center gap-2">
+              {elementIconUrl && (
+                <ElementIcon element={character.element} iconUrl={elementIconUrl} className="h-5 w-5" />
+              )}
+              <h1 className="truncate text-sm font-semibold text-gold-soft">{character.name}</h1>
+              <span className="shrink-0 text-[10px] text-text-muted">Lv.{level}</span>
             </div>
-            <div className="min-w-0 flex-1 border-l border-border pl-4">
-              <TalentTree
-                talents={talents}
-                talentLevels={talentLevels}
-                inherentSkills={inherentSkills}
-                inherentActive={inherentActive}
-                keynoteSkills={keynoteSkills}
-                forteNodes={forteNodes}
-                forteNodeActive={forteNodeActive}
-                statIcons={statIcons}
-              />
-            </div>
+
+            {selectedWeapon && (
+              <div className="flex items-center gap-3 border border-border bg-panel-alt px-3 py-3">
+                <img
+                  src={selectedWeapon.pictureUrl}
+                  alt={selectedWeapon.name}
+                  className="h-16 w-16 shrink-0 object-contain"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold text-gold-soft">
+                    {selectedWeapon.name}
+                  </p>
+                  <p className="text-xs text-text-muted">
+                    Lv.{weaponLevel} &middot; Rank {weaponRank}
+                  </p>
+                  <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
+                    {weaponAtk !== null && (
+                      <span className="flex items-center gap-1 text-xs text-text">
+                        <StatIcon icons={statIcons} name="ATK" />
+                        {weaponAtk}
+                      </span>
+                    )}
+                    {weaponSecondaryStat && (
+                      <span className="flex items-center gap-1 text-xs text-text">
+                        <StatIcon icons={statIcons} name={weaponSecondaryStat.name} />
+                        {formatStatValue(weaponSecondaryStat.value, weaponSecondaryStat.name)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
-          {activeSetBonuses.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {activeSetBonuses.map((bonus) => (
-                <span
-                  key={bonus.setName}
-                  className="rounded-sm border border-gold px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-gold-soft"
-                >
-                  {bonus.setName} ({bonus.count})
-                </span>
+          <div className="min-w-0 flex flex-col gap-3">
+            <div className="flex items-start gap-4 border-b border-border pb-3">
+              <div className="flex flex-col gap-3">
+                {finalStats && <FinalStatsGrid stats={finalStats} statIcons={statIcons} />}
+                <CompactSequenceRow nodes={sequenceNodes} unlockedCount={unlockedCount} />
+              </div>
+              <div className="min-w-0 flex-1 border-l border-border pl-4">
+                <TalentTree
+                  talents={talents}
+                  talentLevels={talentLevels}
+                  inherentSkills={inherentSkills}
+                  inherentActive={inherentActive}
+                  keynoteSkills={keynoteSkills}
+                  forteNodes={forteNodes}
+                  forteNodeActive={forteNodeActive}
+                  statIcons={statIcons}
+                />
+              </div>
+            </div>
+
+            {activeSetBonuses.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {activeSetBonuses.map((bonus) => (
+                  <span
+                    key={bonus.setName}
+                    className="rounded-sm border border-gold px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-gold-soft"
+                  >
+                    {bonus.setName} ({bonus.count})
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <div className="grid grid-cols-5 gap-1.5">
+              {equippedEchoes.map((slot, i) => (
+                <EchoCardTile key={i} slot={slot} curves={echoCurves} statIcons={statIcons} sets={echoSets} />
               ))}
             </div>
-          )}
-
-          <div className="grid grid-cols-5 gap-1.5">
-            {equippedEchoes.map((slot, i) => (
-              <EchoCardTile key={i} slot={slot} curves={echoCurves} statIcons={statIcons} sets={echoSets} />
-            ))}
           </div>
         </div>
       </div>
