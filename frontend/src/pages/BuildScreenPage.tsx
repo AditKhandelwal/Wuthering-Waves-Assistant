@@ -187,7 +187,7 @@ function EchoSlotCard({
                 )}
               </div>
 
-              {slot.echo.setNames.length > 1 && (
+              {slot.echo.setNames.length > 1 ? (
                 <div className="mt-2 flex items-center gap-2">
                   <span className="shrink-0 text-[10px] uppercase tracking-wide text-text-muted">Set</span>
                   <select
@@ -202,6 +202,15 @@ function EchoSlotCard({
                     ))}
                   </select>
                 </div>
+              ) : (
+                slot.echo.setNames.length === 1 && (
+                  // Only one possible set -- nothing to choose, so show it
+                  // as plain text instead of a single-option dropdown.
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="shrink-0 text-[10px] uppercase tracking-wide text-text-muted">Set</span>
+                    <span className="text-xs text-text">{slot.echo.setNames[0]}</span>
+                  </div>
+                )
               )}
 
               <div className="mt-3">
