@@ -1,0 +1,8 @@
+{
+  "_note": "Hand-curated, NOT auto-fetched -- unlike sequence_stat_nodes.json (Forte Circuit passive nodes, sourced wholesale from the Arikatsu datamine), resonance-chain sequence nodes only exist in Kuro's own guide API (wuwa_characters.json's roleResonance) as free-text descriptions, with no structured stat field at all. Each entry below was read and verified by hand from that text. ONLY includes nodes that are an unconditional flat bonus to a stat this app already tracks in computeFinalStats (Crit. Rate, Crit. DMG, HP/ATK/DEF (%), Energy Regen, Healing Bonus, elemental DMG bonus) -- explicitly excluding skill-specific DMG multipliers (e.g. 'Heavy Attack DMG Multiplier +40%') and conditional/proc-based buffs (e.g. 'ATK +20% for 8s after inflicting X'), which would misrepresent a situational effect as an always-on stat if folded in here. Coverage is intentionally partial and grows only as nodes are individually reviewed -- a character or sequence number missing from `bonuses` is NOT a bug; it means that node either isn't a flat stat bonus or hasn't been reviewed yet. See frontend/src/lib/sequenceNodes.ts.",
+  "bonuses": {
+    "1413": [
+      { "sequence": 1, "stat": "Crit. Rate", "value": 16 }
+    ]
+  }
+}

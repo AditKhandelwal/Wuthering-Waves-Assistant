@@ -70,6 +70,13 @@ import echoCatalogRaw from "./echo_catalog.json" with { type: "json" };
 import echoStatCurvesRaw from "./echo_stat_curves.json" with { type: "json" };
 import echoSetsRaw from "./echo_sets.json" with { type: "json" };
 import sequenceStatNodesRaw from "./sequence_stat_nodes.json" with { type: "json" };
+// Hand-curated, partial-coverage sequence (resonance chain) stat bonuses --
+// see sequence_node_stat_bonuses.json's _note and stats.ts's
+// computeSequenceBonusTotals for why this is a separate, much smaller
+// dataset than sequence_stat_nodes.json (Forte Circuit nodes) despite the
+// similar name. Re-copy + redeploy whenever data/sequence_node_stat_bonuses.json
+// changes.
+import sequenceNodeStatBonusesRaw from "./sequence_node_stat_bonuses.json" with { type: "json" };
 // A SECOND, independent data source alongside Kuro's own guide API -- real
 // per-character damage-per-rotation (DPR) calcs (weapon/echo-set/sequence
 // comparisons as %-vs-baseline) from a community spreadsheet ("Wuthering
@@ -89,6 +96,7 @@ import {
   computeActiveSetBonuses,
   computeFinalStats,
   computeForteBonusTotals,
+  computeSequenceBonusTotals,
   normalizeEchoName,
   type StatCurveData,
   type WeaponStatCurves,
@@ -119,6 +127,9 @@ const weaponNames = weaponNamesRaw as Record<string, string>;
 const echoStatCurves = echoStatCurvesRaw as unknown as EchoStatCurves;
 const echoSets = (echoSetsRaw as { sets: EchoSet[] }).sets;
 const sequenceStatNodes = (sequenceStatNodesRaw as { nodes: Record<string, Record<string, { stat: string; value: number }[]>> }).nodes;
+const sequenceNodeStatBonuses = (
+  sequenceNodeStatBonusesRaw as { bonuses: Record<string, { sequence: number; stat: string; value: number }[]> }
+).bonuses;
 
 interface DpsCalcEntry {
   name: string;
@@ -718,6 +729,10 @@ async function getCharacterBuild(supabase: SupabaseClient, characterName: unknow
     (data.forte_node_active ?? []) as boolean[],
     sequenceStatNodes[id],
   );
+  const sequenceBonusTotals = computeSequenceBonusTotals(
+    sequenceNodeStatBonuses[id],
+    (data.resonance_level ?? 0) as number,
+  );
   const finalStats = computeFinalStats({
     roleGbId: id,
     element: characterGuides[id]?.element ?? null,
@@ -730,6 +745,7 @@ async function getCharacterBuild(supabase: SupabaseClient, characterName: unknow
     weaponPassiveBonuses,
     echoTotals,
     forteBonusTotals,
+    sequenceBonusTotals,
   });
 
   const talentLevels = (data.talent_levels ?? []) as number[];

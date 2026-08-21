@@ -43,6 +43,11 @@ interface ComputeFinalStatsArgs {
   // Summed active forte node bonuses (stat name → total %).
   // "ATK"/"HP"/"DEF" are percentage multipliers, not flat values.
   forteBonusTotals?: Map<string, number>;
+  // Summed unlocked sequence-node stat bonuses (stat name → total), from
+  // computeSequenceBonusTotals -- see sequence_node_stat_bonuses.json's
+  // _note for why coverage is hand-curated and partial rather than
+  // complete like forteBonusTotals.
+  sequenceBonusTotals?: Map<string, number>;
   // The weapon's own always-on passive bonus (stat name → total %), from
   // computeWeaponPassiveBonusTotals -- see that function and
   // scripts/build_weapon_passive_bonuses.py for why only the unconditional
@@ -72,6 +77,7 @@ export function computeFinalStats({
   equippedEchoes,
   echoCurves,
   forteBonusTotals = new Map(),
+  sequenceBonusTotals = new Map(),
   weaponPassiveBonusTotals = new Map(),
 }: ComputeFinalStatsArgs): FinalStats | null {
   const base = computeStats(curves, character.roleGbId, level);
@@ -80,6 +86,7 @@ export function computeFinalStats({
   const echoTotals = echoCurves ? computeEchoStatTotals(equippedEchoes, echoCurves) : new Map<string, number>();
   const echo = (statName: string) => echoTotals.get(statName) ?? 0;
   const forte = (statName: string) => forteBonusTotals.get(statName) ?? 0;
+  const sequence = (statName: string) => sequenceBonusTotals.get(statName) ?? 0;
 
   const elementalDmgBonusName = `${character.element} DMG Bonus`;
   // "ELEMENTAL" is build_weapon_passive_bonuses.py's placeholder for a
@@ -101,20 +108,43 @@ export function computeFinalStats({
   const weaponStat = (statName: string) => (weaponSecondary?.name === statName ? weaponSecondary.value : 0);
 
   // Forte "ATK"/"HP"/"DEF" nodes are percentage boosts, not flat values.
-  const hpPercent = echo("HP%") + weaponStat("HP%") + forte("HP") + weaponPassive("HP%");
-  const atkPercent = echo("ATK%") + weaponStat("ATK%") + forte("ATK") + weaponPassive("ATK%");
-  const defPercent = echo("DEF%") + weaponStat("DEF%") + forte("DEF") + weaponPassive("DEF%");
+  // Sequence-node bonuses to these same three stats would also be % (no
+  // curated data has one yet, but the convention would match forte's).
+  const hpPercent = echo("HP%") + weaponStat("HP%") + forte("HP") + sequence("HP") + weaponPassive("HP%");
+  const atkPercent = echo("ATK%") + weaponStat("ATK%") + forte("ATK") + sequence("ATK") + weaponPassive("ATK%");
+  const defPercent = echo("DEF%") + weaponStat("DEF%") + forte("DEF") + sequence("DEF") + weaponPassive("DEF%");
 
   return {
     hp: Math.round((base.hp * (100 + hpPercent)) / 100 + echo("HP")),
     atk: Math.round(((base.atk + weaponAtk) * (100 + atkPercent)) / 100 + echo("ATK")),
     def: Math.round((base.def * (100 + defPercent)) / 100 + echo("DEF")),
-    energyRegen: BASE_ENERGY_REGEN + echo("Energy Regen") + weaponStat("Energy Regen") + weaponPassive("Energy Regen"),
-    critRate: BASE_CRIT_RATE + echo("Crit. Rate") + weaponStat("Crit. Rate") + forte("Crit. Rate") + weaponPassive("Crit. Rate"),
-    critDmg: BASE_CRIT_DMG + echo("Crit. DMG") + weaponStat("Crit. DMG") + forte("Crit. DMG") + weaponPassive("Crit. DMG"),
-    healingBonus: echo("Healing Bonus") + forte("Healing Bonus") + weaponPassive("Healing Bonus"),
+    energyRegen:
+      BASE_ENERGY_REGEN +
+      echo("Energy Regen") +
+      weaponStat("Energy Regen") +
+      sequence("Energy Regen") +
+      weaponPassive("Energy Regen"),
+    critRate:
+      BASE_CRIT_RATE +
+      echo("Crit. Rate") +
+      weaponStat("Crit. Rate") +
+      forte("Crit. Rate") +
+      sequence("Crit. Rate") +
+      weaponPassive("Crit. Rate"),
+    critDmg:
+      BASE_CRIT_DMG +
+      echo("Crit. DMG") +
+      weaponStat("Crit. DMG") +
+      forte("Crit. DMG") +
+      sequence("Crit. DMG") +
+      weaponPassive("Crit. DMG"),
+    healingBonus: echo("Healing Bonus") + forte("Healing Bonus") + sequence("Healing Bonus") + weaponPassive("Healing Bonus"),
     elementalDmgBonusName,
-    elementalDmgBonus: echo(elementalDmgBonusName) + forte(elementalDmgBonusName) + weaponPassive(elementalDmgBonusName),
+    elementalDmgBonus:
+      echo(elementalDmgBonusName) +
+      forte(elementalDmgBonusName) +
+      sequence(elementalDmgBonusName) +
+      weaponPassive(elementalDmgBonusName),
     basicAttackDmgBonus: echo("Basic Attack DMG Bonus") + weaponPassive("Basic Attack DMG Bonus"),
     heavyAttackDmgBonus: echo("Heavy Attack DMG Bonus") + weaponPassive("Heavy Attack DMG Bonus"),
     skillDmgBonus: echo("Resonance Skill DMG Bonus") + weaponPassive("Resonance Skill DMG Bonus"),

@@ -103,6 +103,51 @@ match the icon keys exactly (e.g. `"Crit. Rate"`, `"ATK"`, `"Glacio DMG
 Bonus"`). The double-stacked `<img>` pattern (`brightness-0 invert`) is
 needed for solid rendering — same as all other game icons in this project.
 
+## Sequence (resonance chain) node stat bonuses
+
+Added 2026-08-20 for Qingxiao's chain 1 (+16% Crit. Rate) — **not** the same
+system as Forte Circuit above despite the similar-sounding name and
+similarly-named source file. Data lives in
+`data/sequence_node_stat_bonuses.json` (source, mirrored to
+`frontend/public/data/` and `supabase/functions/agent/`), loaded via
+`frontend/src/lib/sequenceNodes.ts`'s `loadSequenceStatBonuses`/
+`computeSequenceBonusTotals`, and wired into `computeFinalStats` (both the
+frontend `finalStats.ts` and the agent's `stats.ts` port) as a `sequence()`
+accumulator alongside the existing `forte()` one.
+
+**Why this is a separate, hand-curated dataset, not a fetch script:** Forte
+Circuit nodes come from a full external datamine with structured
+`{Id, Value, IsRatio}` fields (see `api.md`). Sequence/resonance-chain nodes
+only exist in Kuro's own guide API (`wuwa_characters.json`'s
+`roleResonance`) as **free-text descriptions** — there is no structured stat
+field to fetch at all. Each entry in `sequence_node_stat_bonuses.json` was
+read and verified by hand from that text.
+
+**Coverage is deliberately partial, not a bug.** Most sequence nodes across
+most characters are skill-specific DMG multipliers or conditional/proc-based
+buffs (e.g. "Heavy Attack DMG Multiplier +40%", "ATK +20% for 8s after
+inflicting X") — folding those into the always-on final-stats total would
+misrepresent a situational effect as a permanent one. Only unconditional
+flat bonuses to a stat `computeFinalStats` already tracks (Crit. Rate,
+Crit. DMG, Healing Bonus, Energy Regen, elemental DMG bonus, or HP/ATK/DEF)
+belong in this file, and only once individually confirmed — a
+character/sequence missing from it means "not reviewed yet," not "confirmed
+zero bonus." Don't write an automated parser against the free-text
+description without a human checking every match; the format varies a lot
+and most nodes are NOT simple stat bonuses.
+
+**Cumulative, not independently toggled:** unlike Forte nodes (each toggled
+on/off individually), a sequence bonus applies whenever
+`sequence <= unlockedCount` — resonance chain effects stack as you unlock
+higher sequences, matching the game's real mechanic.
+
+**HP/ATK/DEF caveat:** Forte's convention guarantees `"HP"`/`"ATK"`/`"DEF"`
+are always percentage multipliers. Sequence bonuses have no such guarantee
+— a node's wording could plausibly be a flat value instead. No curated entry
+hits this yet (only Crit. Rate, which is unambiguous), but don't blindly
+copy Forte's percentage-only assumption if one ever gets added; check the
+source text.
+
 ## Verifying UI changes
 
 No project-specific run skill exists yet. Pattern used throughout: start

@@ -1,4 +1,4 @@
-import type { SequenceNode } from "../types/sequenceNode";
+import type { SequenceNode, SequenceStatBonus } from "../types/sequenceNode";
 
 interface RawText {
   language: string;
@@ -32,4 +32,30 @@ export async function loadSequenceNodes(characterId: string): Promise<SequenceNo
       } satisfies SequenceNode;
     })
     .sort((a, b) => a.sequence - b.sequence);
+}
+
+type RawBonusFile = { bonuses: Record<string, SequenceStatBonus[]> };
+
+// See sequence_node_stat_bonuses.json's _note -- hand-curated and
+// intentionally partial, unlike loadForteNodes' fully-sourced data.
+export async function loadSequenceStatBonuses(characterId: string): Promise<SequenceStatBonus[]> {
+  const res = await fetch("/data/sequence_node_stat_bonuses.json");
+  const raw: RawBonusFile = await res.json();
+  return raw.bonuses[characterId] ?? [];
+}
+
+// Sequence-node effects are cumulative once unlocked (unlike forte nodes,
+// which are independently toggled) -- sums every bonus whose sequence is at
+// or below the currently-unlocked count.
+export function computeSequenceBonusTotals(
+  bonuses: SequenceStatBonus[],
+  unlockedCount: number,
+): Map<string, number> {
+  const totals = new Map<string, number>();
+  for (const bonus of bonuses) {
+    if (bonus.sequence <= unlockedCount) {
+      totals.set(bonus.stat, (totals.get(bonus.stat) ?? 0) + bonus.value);
+    }
+  }
+  return totals;
 }

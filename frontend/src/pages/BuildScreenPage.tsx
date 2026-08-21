@@ -23,7 +23,7 @@ import {
   loadEchoStatCurves,
 } from "../lib/echoes";
 import { loadForteNodes } from "../lib/forteNodes";
-import { loadSequenceNodes } from "../lib/sequenceNodes";
+import { computeSequenceBonusTotals, loadSequenceNodes, loadSequenceStatBonuses } from "../lib/sequenceNodes";
 import { loadStatIcons } from "../lib/statIcons";
 import { useAuth } from "../lib/auth";
 import { saveBuild, loadBuild } from "../lib/builds";
@@ -46,7 +46,7 @@ import type {
   EquippedEcho,
 } from "../types/echo";
 import type { CharacterForteNodes } from "../types/forteNode";
-import type { SequenceNode } from "../types/sequenceNode";
+import type { SequenceNode, SequenceStatBonus } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
 import type { EchoCatalog, EchoRecommendation } from "../lib/echoes";
@@ -287,6 +287,7 @@ export function BuildScreenPage() {
   const [pickerOpen, setPickerOpen] = useState(false);
 
   const [sequenceNodes, setSequenceNodes] = useState<SequenceNode[]>([]);
+  const [sequenceStatBonuses, setSequenceStatBonuses] = useState<SequenceStatBonus[]>([]);
   const [unlockedCount, setUnlockedCount] = useState(0);
 
   const [talents, setTalents] = useState<Talent[]>([]);
@@ -328,6 +329,7 @@ export function BuildScreenPage() {
     setSaveStatus("idle");
     if (characterId) {
       loadSequenceNodes(characterId).then(setSequenceNodes);
+      loadSequenceStatBonuses(characterId).then(setSequenceStatBonuses);
       loadForteNodes(characterId).then(setForteNodes);
       loadTalents(characterId).then((loaded) => {
         setTalents(loaded);
@@ -568,6 +570,7 @@ export function BuildScreenPage() {
           weaponCurves={weaponCurves}
           weaponPassiveBonuses={weaponPassiveBonuses}
           sequenceNodes={sequenceNodes}
+          sequenceStatBonuses={sequenceStatBonuses}
           unlockedCount={unlockedCount}
           talents={talents}
           talentLevels={talentLevels}
@@ -729,6 +732,43 @@ export function BuildScreenPage() {
                 setUnlockedCount((current) => (sequence === current ? sequence - 1 : sequence))
               }
             />
+
+            {/* Only rendered when this character has at least one hand-verified
+                stat bonus curated (see sequence_node_stat_bonuses.json) --
+                most characters have none reviewed yet, and staying silent
+                there beats implying "this character truly has zero" every
+                time. Value is always rendered with a "%" suffix -- true for
+                every currently-curated stat (Crit. Rate/DMG, Healing Bonus,
+                Energy Regen, elemental DMG bonus are always percentage
+                stats), but NOT guaranteed for HP/ATK/DEF the way forte's
+                data is -- would need explicit flat-vs-% handling if/when an
+                HP/ATK/DEF sequence bonus ever gets curated. */}
+            {sequenceStatBonuses.length > 0 &&
+              (() => {
+                const totals = computeSequenceBonusTotals(sequenceStatBonuses, unlockedCount);
+                const entries = [...totals.entries()];
+                return (
+                  <div className="mt-4 border-t border-border pt-3">
+                    <span className="text-[10px] uppercase tracking-wide text-text-muted">
+                      Sequence Stat Gains
+                    </span>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {entries.length === 0 ? (
+                        <p className="text-xs text-text-muted">Not unlocked yet.</p>
+                      ) : (
+                        entries.map(([stat, total]) => (
+                          <StatBox
+                            key={stat}
+                            icon={<StatIcon icons={statIcons} name={stat} />}
+                            label={stat}
+                            value={`+${total.toFixed(1)}%`}
+                          />
+                        ))
+                      )}
+                    </div>
+                  </div>
+                );
+              })()}
           </Panel>
 
           <Panel title="Talents">

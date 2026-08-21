@@ -294,12 +294,17 @@ export function computeFinalStats(args: {
   weaponPassiveBonuses: WeaponPassiveBonuses;
   echoTotals: Map<string, number>;
   forteBonusTotals: Map<string, number>;
+  // Summed unlocked sequence-node stat bonuses -- see
+  // computeSequenceBonusTotals below and sequence_node_stat_bonuses.json's
+  // _note for why this is hand-curated and partial, unlike forteBonusTotals.
+  sequenceBonusTotals?: Map<string, number>;
 }): FinalStats | null {
   const base = computeStats(args.curves, args.roleGbId, args.level);
   if (!base) return null;
 
   const echo = (statName: string) => args.echoTotals.get(statName) ?? 0;
   const forte = (statName: string) => args.forteBonusTotals.get(statName) ?? 0;
+  const sequence = (statName: string) => args.sequenceBonusTotals?.get(statName) ?? 0;
 
   const elementalDmgBonusName = args.element ? `${args.element} DMG Bonus` : "Elemental DMG Bonus";
   // "ELEMENTAL" is build_weapon_passive_bonuses.py's placeholder for a
@@ -317,21 +322,60 @@ export function computeFinalStats(args: {
     : null;
   const weaponStat = (statName: string) => (weaponSecondary?.name === statName ? weaponSecondary.value : 0);
 
-  const hpPercent = echo("HP%") + weaponStat("HP%") + forte("HP") + weaponPassive("HP%");
-  const atkPercent = echo("ATK%") + weaponStat("ATK%") + forte("ATK") + weaponPassive("ATK%");
-  const defPercent = echo("DEF%") + weaponStat("DEF%") + forte("DEF") + weaponPassive("DEF%");
+  const hpPercent = echo("HP%") + weaponStat("HP%") + forte("HP") + sequence("HP") + weaponPassive("HP%");
+  const atkPercent = echo("ATK%") + weaponStat("ATK%") + forte("ATK") + sequence("ATK") + weaponPassive("ATK%");
+  const defPercent = echo("DEF%") + weaponStat("DEF%") + forte("DEF") + sequence("DEF") + weaponPassive("DEF%");
 
   return {
     hp: Math.round((base.hp * (100 + hpPercent)) / 100 + echo("HP")),
     atk: Math.round(((base.atk + weaponAtk) * (100 + atkPercent)) / 100 + echo("ATK")),
     def: Math.round((base.def * (100 + defPercent)) / 100 + echo("DEF")),
-    energyRegen: BASE_ENERGY_REGEN + echo("Energy Regen") + weaponStat("Energy Regen") + weaponPassive("Energy Regen"),
-    critRate: BASE_CRIT_RATE + echo("Crit. Rate") + weaponStat("Crit. Rate") + forte("Crit. Rate") + weaponPassive("Crit. Rate"),
-    critDmg: BASE_CRIT_DMG + echo("Crit. DMG") + weaponStat("Crit. DMG") + forte("Crit. DMG") + weaponPassive("Crit. DMG"),
-    healingBonus: echo("Healing Bonus") + forte("Healing Bonus") + weaponPassive("Healing Bonus"),
+    energyRegen:
+      BASE_ENERGY_REGEN +
+      echo("Energy Regen") +
+      weaponStat("Energy Regen") +
+      sequence("Energy Regen") +
+      weaponPassive("Energy Regen"),
+    critRate:
+      BASE_CRIT_RATE +
+      echo("Crit. Rate") +
+      weaponStat("Crit. Rate") +
+      forte("Crit. Rate") +
+      sequence("Crit. Rate") +
+      weaponPassive("Crit. Rate"),
+    critDmg:
+      BASE_CRIT_DMG +
+      echo("Crit. DMG") +
+      weaponStat("Crit. DMG") +
+      forte("Crit. DMG") +
+      sequence("Crit. DMG") +
+      weaponPassive("Crit. DMG"),
+    healingBonus: echo("Healing Bonus") + forte("Healing Bonus") + sequence("Healing Bonus") + weaponPassive("Healing Bonus"),
     elementalDmgBonusName,
-    elementalDmgBonus: echo(elementalDmgBonusName) + forte(elementalDmgBonusName) + weaponPassive(elementalDmgBonusName),
+    elementalDmgBonus:
+      echo(elementalDmgBonusName) +
+      forte(elementalDmgBonusName) +
+      sequence(elementalDmgBonusName) +
+      weaponPassive(elementalDmgBonusName),
   };
+}
+
+// Sequence-node effects are cumulative once unlocked (unlike forte nodes,
+// which are independently toggled) -- sums every bonus whose sequence is at
+// or below the currently-unlocked count. Mirrors
+// frontend/src/lib/sequenceNodes.ts's computeSequenceBonusTotals.
+export function computeSequenceBonusTotals(
+  bonuses: { sequence: number; stat: string; value: number }[] | undefined,
+  unlockedCount: number,
+): Map<string, number> {
+  const totals = new Map<string, number>();
+  if (!bonuses) return totals;
+  for (const bonus of bonuses) {
+    if (bonus.sequence <= unlockedCount) {
+      totals.set(bonus.stat, (totals.get(bonus.stat) ?? 0) + bonus.value);
+    }
+  }
+  return totals;
 }
 
 // Matches FORTE_COLUMN_ORDER in TalentGrid.tsx / the flat-index convention

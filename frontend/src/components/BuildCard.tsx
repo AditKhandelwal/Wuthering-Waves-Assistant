@@ -8,11 +8,12 @@ import { FORTE_COLUMN_ORDER, SKILL_TO_FORTE_COLUMN } from "./TalentGrid";
 import { ELEMENT_PORTRAIT_BORDER_CLASS, ELEMENT_PORTRAIT_GLOW_CLASS } from "../lib/characters";
 import { computeActiveSetBonuses, formatStatValue } from "../lib/echoes";
 import { computeFinalStats } from "../lib/finalStats";
+import { computeSequenceBonusTotals } from "../lib/sequenceNodes";
 import { computeWeaponAtk, computeWeaponPassiveBonusTotals, computeWeaponSecondaryStat } from "../lib/weapons";
 import type { Character, ElementName } from "../types/character";
 import type { EchoSet, EchoStatCurves, EquippedEcho } from "../types/echo";
 import type { CharacterForteNodes, ForteNode } from "../types/forteNode";
-import type { SequenceNode } from "../types/sequenceNode";
+import type { SequenceNode, SequenceStatBonus } from "../types/sequenceNode";
 import type { StatCurveData } from "../types/stats";
 import type { InherentSkill, KeynoteSkill, Talent } from "../types/talent";
 import type { WeaponCatalogEntry, WeaponPassiveBonuses, WeaponStatCurves } from "../types/weapon";
@@ -31,6 +32,7 @@ interface BuildCardProps {
   weaponPassiveBonuses: WeaponPassiveBonuses | null;
 
   sequenceNodes: SequenceNode[];
+  sequenceStatBonuses: SequenceStatBonus[];
   unlockedCount: number;
 
   talents: Talent[];
@@ -252,6 +254,7 @@ export function BuildCard({
   weaponCurves,
   weaponPassiveBonuses,
   sequenceNodes,
+  sequenceStatBonuses,
   unlockedCount,
   talents,
   talentLevels,
@@ -281,6 +284,8 @@ export function BuildCard({
     return totals;
   })();
 
+  const sequenceBonusTotals = computeSequenceBonusTotals(sequenceStatBonuses, unlockedCount);
+
   const weaponPassiveBonusTotals =
     selectedWeapon && weaponPassiveBonuses
       ? computeWeaponPassiveBonusTotals(weaponPassiveBonuses, selectedWeapon.gbId, weaponRank)
@@ -297,6 +302,7 @@ export function BuildCard({
         equippedEchoes,
         echoCurves,
         forteBonusTotals,
+        sequenceBonusTotals,
         weaponPassiveBonusTotals,
       })
     : null;
