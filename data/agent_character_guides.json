@@ -3580,5 +3580,72 @@
         ]
       }
     ]
+  },
+  "1413": {
+    "name": "Qingxiao",
+    "element": "Aero",
+    "synopsis": "Qingxiao is an Aero, Sword wielding character whom is a Tune Strain main DPS. Qingxiao's gameplay revolves around managing two Forte Gauges: Qin Heart and Sword Cadence.\nOnce both are full, she can use Heavy Attack - Stringblade to enter Ephemeral Transcendence. While in this state, her attacks generate Heart Sword Intent, which eventually allows her to unleash her powerful enhanced Heavy Attack, Heaven's Reckoning.",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "75.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "275.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "118.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Calamity Effigy",
+      "sets": [
+        "Heart of Evil's Purge"
+      ]
+    },
+    "recommendedWeapons": [
+      "Glint of Clouds",
+      "Emerald of Genesis",
+      "Emerald Sentence"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "A strong Qingxiao rotation starts with Intro Skill &rarr; Resonance Skill, giving her 30 Sword Cadence while Resonant Chime allows Severing Note Judgement to generate an additional 30 Qin Heart on top of its normal 45. Continue using Basic Attacks and Severing Note - Ascendant until Qin Heart and Sword Cadence are full, then hold Basic Attack for Heavy Attack - Stringblade.\nDuring Ephemeral Transcendence, use enhanced Basic Attacks or Dodge Counters until Heart Sword Intent reaches 100, then hold Basic Attack to cast Heaven&rsquo;s Reckoning. Avoid switching characters between Stringblade and Heaven&rsquo;s Reckoning, as doing so removes Heaven&rsquo;s Clarity&rsquo;s enhancement to the finisher.\nAfter Heaven&rsquo;s Reckoning, use Resonance Liberation to take advantage of the Mindlock stacks built on the enemy and reapply Heaven&rsquo;s Clarity, allowing Qingxiao to generate Qin Heart and Sword Cadence faster for her next rotation.\nSample Rotation:\nIntro &rarr; Resonance Skill &rarr; Basics/Ascendant &rarr; Stringblade &rarr; Ephemeral Basics &rarr; Heaven&rsquo;s Reckoning &rarr; Resonance Liberation &rarr; Repeat\n\nQingxiao's gameplay revolves around using her Basic Attacks and Resonance Skill together to quickly build Qin Heart and Sword Cadence. Her Resonance Skill: Severing Note Judgement is especially important, instantly granting 45 Qin Heart and allowing her to follow directly into Basic Attack Stage 4. If used after her Intro Skill, Resonant Chime grants an additional 30 Qin Heart.\nOnce Qin Heart and Sword Cadence both reach 100, hold Basic Attack to cast Heavy Attack - Stringblade, consuming both gauges and entering Ephemeral Transcendence. You will then cast her enhanced Basic Attacks or Dodge Counters to build Heart Sword Intent. Once Heart Sword Intent reaches 100, hold Basic Attack again to unleash Heaven's Reckoning, her heavy attack main finisher, before restarting the gauge-building process.\nEach time a Resonator inflicts Tune Strain - Interfered, the enemy gains one stack of Mindlock, up to 15. Mindlock significantly increases the damage of Qingxiao's major attacks, granting additional damage amplification for every stack accumulated.\nQingxiao gains Heaven's Clarity upon entering combat or casting Resonance Liberation. Because Heaven's Reckoning removes Heaven's Clarity, you generally want to cast Resonance Liberation after her Forte finisher. This allows her Liberation to benefit from the Mindlock stacks built during the rotation while also reapplying Heaven&rsquo;s Clarity for faster Forte generation during the next rotation.",
+    "teamComps": [
+      {
+        "main": "Denia",
+        "spares": [
+          "Lynae"
+        ]
+      },
+      {
+        "main": "Mornye",
+        "spares": [
+          "Shorekeeper"
+        ]
+      }
+    ]
   }
 }

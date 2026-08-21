@@ -33,10 +33,8 @@ HEADERS = {
 CHARS_PATH = "data/wuwa_characters.json"
 FRONTEND_COPY_PATH = "frontend/public/data/wuwa_characters.json"
 
-# 2026-08 patch: Suisui (1110), Rover: Electro pair (1309/1310),
-# Yangyang: Xuanling (1610) -- a new alt-kit entry under Yangyang's name,
-# distinct roleGbId from the original Yangyang (1402).
-NEW_ROLE_IDS = [1110, 1309, 1310, 1610]
+# Qingxiao (1413) -- new resonator, guide id 14131.
+NEW_ROLE_IDS = [1413]
 
 
 def fetch_json(url):

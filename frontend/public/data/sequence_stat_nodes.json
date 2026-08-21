@@ -1513,6 +1513,48 @@
         }
       ]
     },
+    "1413": {
+      "normal_attack": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. DMG",
+          "value": 2.4
+        },
+        {
+          "stat": "Crit. DMG",
+          "value": 5.6
+        }
+      ]
+    },
     "1501": {
       "normal_attack": [
         {
