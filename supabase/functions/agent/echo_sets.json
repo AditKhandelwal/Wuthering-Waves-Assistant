@@ -175,25 +175,25 @@
       "effects": [
         {
           "pieceCount": 2,
-          "description": "Aero DMG+"
+          "description": "Aero DMG +10%"
         },
         {
           "pieceCount": 5,
-          "description": "Inflicting Tune Strain - Shifting increases Crit. DMG and grants Aero DMG Bonus."
+          "description": "Inflicting Tune Strain - Shifting increases Crit. DMG by 20% and Aero DMG Bonus by 20% for 15s."
         }
       ],
-      "iconUrl": "https://img.game8.co/4543987/a6a060ddb2f44bbf34d00f0f0bd457e0.png/show"
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/ea26972f5bea2890410f5391e65f072b/0a15afc49252258b6e7c0821c3499d3d.png"
     },
     {
       "name": "Lamp of Nether Road",
       "effects": [
         {
           "pieceCount": 2,
-          "description": "HP+"
+          "description": "HP +10%"
         },
         {
           "pieceCount": 5,
-          "description": "Upon gaining a Shield, gain a stackable Crit. Rate increase. At max stacks, gain Fusion DMG Bonus."
+          "description": "Upon gaining a Shield, gain 5% increase in Crit. Rate for 5s, max 4 stacks. This effect can be triggered every 0.5s. At max stacks, gain 15% Fusion DMG Bonus."
         }
       ],
       "iconUrl": "https://img.game8.co/4543988/05b9cb6ab08a0c3fa773d9a3be6321c1.png/show"
@@ -349,14 +349,14 @@
       "effects": [
         {
           "pieceCount": 2,
-          "description": "Energy Regen+"
+          "description": "Energy Regen +10%"
         },
         {
           "pieceCount": 5,
-          "description": "Upon inflicting Havoc Bane, gain Crit. Rate and Heavy Attack DMG Bonus increase. Upon inflicting Glacio Chafe, grant ATK increase for Resonators in the team."
+          "description": "Upon inflicting Havoc Bane, gain Xuanling's Feather, which grants a 20% increase in Crit. Rate and 25% increase in Heavy Attack DMG Bonus to the Resonator, lasting 15s.Upon inflicting Glacio Chafe, gain Chongming's Feather, which grants a 0.1% increase in ATK to Resonators in the team for every 1% of the Resonator's Energy Regen, up to 25%, lasting 10s."
         }
       ],
-      "iconUrl": "https://img.game8.co/4543986/3ac3b8ee861e45a16beeea36396bd1ab.png/show"
+      "iconUrl": "https://guide-res.aki-game.net/introduction/material/ea26972f5bea2890410f5391e65f072b/9c86482e30a12260a6d0bbbcb91e82ad.png"
     },
     {
       "name": "Sound of True Name",

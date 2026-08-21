@@ -2,7 +2,10 @@
 fetch_echo_data.py — build the Echo catalog, sonata set list, and stat curves
 for the build-screen Echo picker (Phase 0 of the Echoes plan).
 
-Produces three files (and mirrors them to frontend/public/data/):
+Produces three files, mirrored to frontend/public/data/, plus echo_sets.json
+and echo_stat_curves.json ALSO mirrored to supabase/functions/agent/ (NOT
+echo_catalog.json there -- see AGENT_DATA_DIR's comment below for why; run
+download_echo_images.py afterward for that one, then redeploy the agent):
     data/echo_catalog.json       ~185 named echoes, cost tier, category, set membership
     data/echo_sets.json          34 sonata sets, flexible pieceCount/description effects
     data/echo_stat_curves.json   main-stat values by level (per cost tier) + substat roll ladders
@@ -93,6 +96,14 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 FRONTEND_DATA_DIR = ROOT / "frontend" / "public" / "data"
+# NOT echo_catalog.json -- that one gets its pictureUrl fields rewritten by
+# download_echo_images.py AFTER this script runs, so mirroring it here would
+# just be immediately stale; that script mirrors its own copy to the agent
+# directory instead. echo_sets.json/echo_stat_curves.json aren't touched by
+# that later step, so they're safe (and necessary) to mirror here -- missing
+# this once already let the agent's bundled echo_sets.json silently go stale
+# after a real rerun (2026-08-20).
+AGENT_DATA_DIR = ROOT / "supabase" / "functions" / "agent"
 CHARACTERS_JSON = DATA_DIR / "wuwa_characters.json"
 
 ARIKATSU_CANDIDATES = [
@@ -1327,7 +1338,18 @@ def main():
             dest = FRONTEND_DATA_DIR / name
             dest.write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
             log(f"  mirrored {name} -> {dest}")
-        log("\nDone. All 3 files verified and mirrored to frontend/public/data/.")
+        # echo_catalog.json deliberately excluded here -- see AGENT_DATA_DIR's
+        # comment above for why.
+        for src, name in ((sets_path, "echo_sets.json"), (curves_path, "echo_stat_curves.json")):
+            dest = AGENT_DATA_DIR / name
+            dest.write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
+            log(f"  mirrored {name} -> {dest}")
+        log(
+            "\nDone. All 3 files verified and mirrored to frontend/public/data/ "
+            "(echo_sets.json/echo_stat_curves.json also mirrored to "
+            "supabase/functions/agent/ -- re-run scripts/download_echo_images.py "
+            "for echo_catalog.json's agent copy, and redeploy the agent function)."
+        )
     else:
         log("\nDone (skipped --verify; files written to data/ only, NOT mirrored to frontend).")
 

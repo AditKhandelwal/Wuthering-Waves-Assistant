@@ -151,15 +151,23 @@ npm run preview
 # Data scripts (work today, run from repo root)
 python scripts/fetch_new_characters.py       # fetch newly-released resonators by roleGbId -> data/wuwa_characters.json (edit NEW_ROLE_IDS first)
 python scripts/fetch_character_stat_curves.py # re-fetch level-1 base HP/ATK/DEF + growth curve (Arikatsu datamine) -> data/character_stat_curves.json
-python scripts/fetch_forte_nodes.py          # re-fetch forte bonus nodes (Arikatsu datamine, all 58 characters) -> data/sequence_stat_nodes.json
-python scripts/fetch_echo_data.py            # re-fetch echo catalog/sets/stat curves -> data/echo_*.json
+python scripts/fetch_forte_nodes.py          # re-fetch forte bonus nodes (Arikatsu datamine, all 59 characters) -> data/sequence_stat_nodes.json
+python scripts/fetch_echo_data.py            # re-fetch echo catalog/sets/stat curves -> data/echo_*.json (also mirrors
+                                              # echo_sets.json/echo_stat_curves.json to supabase/functions/agent/ --
+                                              # echo_catalog.json there needs download_echo_images.py, next line)
+python scripts/download_echo_images.py       # rerun whenever echo_catalog.json changes (new echoes need a local copy
+                                              # self-hosted too, or their Build Card export silently breaks on CORS)
 python scripts/fetch_weapon_catalog.py       # re-fetch full weapon name/icon/passive catalog (dotgg) -> data/weapon_catalog.json
 # scripts/fetch_resonator_guides.py is dead/commented-out, not currently wired up
 #
 # After adding new characters (fetch_new_characters.py), always also rerun
 # fetch_character_stat_curves.py and fetch_forte_nodes.py -- new characters
 # silently show no HP/ATK/DEF or forte nodes until those catch up (bit us
-# for the 2026-08 patch's Suisui/Rover:Electro/Yangyang:Xuanling).
+# for the 2026-08 patch's Suisui/Rover:Electro/Yangyang:Xuanling). After
+# fetch_echo_data.py picks up a new echo, always also rerun
+# download_echo_images.py and redeploy the agent function (bit us for
+# Qingxiao's "Calamity Effigy" -- the agent's echo_sets.json/
+# echo_stat_curves.json copies don't update themselves).
 python scripts/build_agent_character_guides.py  # rebuild the agent's lean character-guide extract ->
                                                  # data/agent_character_guides.json + supabase/functions/agent/character_guides.json
                                                  # rerun whenever wuwa_characters.json changes, then redeploy the function

@@ -7,35 +7,14 @@
   },
   "echoes": [
     {
-      "name": "Reminiscence: Nightmare Adam Smasher",
-      "cost": 4,
-      "category": "Overlord",
-      "setNames": [
-        "Shadow of Shattered Dreams"
-      ],
-      "kuroGbId": "60002015",
-      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/54f91f2af554b82b370dad3b91ceffc9/a76b654595406510d1e9848cd7410e7c.png"
-    },
-    {
-      "name": "Myriad Snare: Rustfire Chassis",
-      "cost": 4,
-      "category": "Overlord",
-      "setNames": [
-        "Heart of Evil's Purge",
-        "Lamp of Nether Road"
-      ],
-      "kuroGbId": null,
-      "pictureUrl": "/echo-images/c8c5e35c2290152c2e2418105be50f72.png"
-    },
-    {
       "name": "Thousand-Puppet Pavilion",
       "cost": 4,
-      "category": "Overlord",
+      "category": "Calamity",
       "setNames": [
         "Song of Feathered Trace"
       ],
-      "kuroGbId": null,
-      "pictureUrl": "/echo-images/5e1e64c6bbd82b7a1dbdbbb039ffaa96.png"
+      "kuroGbId": "60002185",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/01df3b8679baec0ef6c69d49152d3c91/65ef1dcbfed1327b010b48ed74d92d96.png"
     },
     {
       "name": "Feilian Beringal",
@@ -78,16 +57,6 @@
       "pictureUrl": "/echo-images/3d61962c3053a6ef5dd93ef335995798.png"
     },
     {
-      "name": "Mourning Aix",
-      "cost": 4,
-      "category": "Overlord",
-      "setNames": [
-        "Celestial Light"
-      ],
-      "kuroGbId": null,
-      "pictureUrl": "/echo-images/80903c8dbfbb66b0e0687d09c7d0a054.png"
-    },
-    {
       "name": "Nightmare: Mourning Aix",
       "cost": 4,
       "category": "Overlord",
@@ -96,6 +65,16 @@
       ],
       "kuroGbId": "60000925",
       "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/9aadf508ea76f4577c22141efe8d39d9.png"
+    },
+    {
+      "name": "Mourning Aix",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Celestial Light"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "/echo-images/80903c8dbfbb66b0e0687d09c7d0a054.png"
     },
     {
       "name": "Lampylumen Myriad",
@@ -108,16 +87,6 @@
       "pictureUrl": "/echo-images/6f9985f0e8d3a27e474bf391fcc8a858.png"
     },
     {
-      "name": "Nightmare: Crownless",
-      "cost": 4,
-      "category": "Overlord",
-      "setNames": [
-        "Havoc Eclipse"
-      ],
-      "kuroGbId": "60000905",
-      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/ce1f2d7954dcddf9e4e16eb2b5ffcf10.png"
-    },
-    {
       "name": "Crownless",
       "cost": 4,
       "category": "Overlord",
@@ -126,6 +95,16 @@
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/b0e22697f3cd9f75c5a101b9a6868f52.png"
+    },
+    {
+      "name": "Nightmare: Crownless",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Havoc Eclipse"
+      ],
+      "kuroGbId": "60000905",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/ce1f2d7954dcddf9e4e16eb2b5ffcf10.png"
     },
     {
       "name": "Dreamless",
@@ -202,15 +181,15 @@
       "pictureUrl": "https://guide-res.aki-game.net/introduction/material/fb999546dfb46ffe46987bd52b0810d3/226275363edc607f126957093227335f.png"
     },
     {
-      "name": "Nightmare: Tempest Mephis",
+      "name": "Myriad Snare: Rustfire Chassis",
       "cost": 4,
       "category": "Overlord",
       "setNames": [
-        "Void Thunder",
-        "Empyrean Anthem"
+        "Heart of Evil's Purge",
+        "Lamp of Nether Road"
       ],
       "kuroGbId": null,
-      "pictureUrl": "/echo-images/02a01af63c1d8c9fe5e658297f4e7fc8.png"
+      "pictureUrl": "/echo-images/c8c5e35c2290152c2e2418105be50f72.png"
     },
     {
       "name": "Tempest Mephis",
@@ -221,6 +200,17 @@
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/2d70807576259fc772eb4ceb4bfa881f.png"
+    },
+    {
+      "name": "Nightmare: Tempest Mephis",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Void Thunder",
+        "Empyrean Anthem"
+      ],
+      "kuroGbId": "60000895",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/33ba5a1e0aa32d8d51546cdecba97340.png"
     },
     {
       "name": "Thundering Mephis",
@@ -243,16 +233,6 @@
       "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/a01dd069a584a959af6692a4e47fd176.png"
     },
     {
-      "name": "Nightmare: Inferno Rider",
-      "cost": 4,
-      "category": "Overlord",
-      "setNames": [
-        "Molten Rift"
-      ],
-      "kuroGbId": "60000915",
-      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/f7e254be0eacd91a0f0f1d26fa471317.png"
-    },
-    {
       "name": "Inferno Rider",
       "cost": 4,
       "category": "Overlord",
@@ -261,6 +241,16 @@
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/913556794499a8f9f15bbd17bd4c7a16.png"
+    },
+    {
+      "name": "Nightmare: Inferno Rider",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Molten Rift"
+      ],
+      "kuroGbId": "60000915",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/f7e254be0eacd91a0f0f1d26fa471317.png"
     },
     {
       "name": "Lorelei",
@@ -374,6 +364,27 @@
       ],
       "kuroGbId": "60001165",
       "pictureUrl": "https://guide-res.aki-game.net/introduction/material/c95a4a33202d2d96c0507f06760f87bb/3b43fc28971eb65284b84d52a1f28885.png"
+    },
+    {
+      "name": "Reminiscence: Nightmare Adam Smasher",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Shadow of Shattered Dreams"
+      ],
+      "kuroGbId": "60002015",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/54f91f2af554b82b370dad3b91ceffc9/a76b654595406510d1e9848cd7410e7c.png"
+    },
+    {
+      "name": "Calamity Effigy",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Heart of Evil's Purge",
+        "Lamp of Nether Road"
+      ],
+      "kuroGbId": "60002215",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/d6962e1fbd0d0f0e249387d0ea4ba19b/c93e4cedbd4b823f7062d5edbe74cb24.png"
     },
     {
       "name": "Jué",
@@ -615,8 +626,8 @@
         "Heart of Evil's Purge",
         "Lamp of Nether Road"
       ],
-      "kuroGbId": null,
-      "pictureUrl": "/echo-images/d51021a7d2c8d8befface69e681cc92d.png"
+      "kuroGbId": "60002165",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/01df3b8679baec0ef6c69d49152d3c91/08f38655b6997ddc317fd657898288eb.png"
     },
     {
       "name": "Frostbite Coleoid",
