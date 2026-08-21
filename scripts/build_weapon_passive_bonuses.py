@@ -98,7 +98,16 @@ CONDITIONAL_MARKERS = re.compile(
     re.IGNORECASE,
 )
 
-RANK_VALUES_RE = r"([\d.]+%?(?:/[\d.]+%?){4})"
+# \(? / \)? are optional LITERAL parens (not capturing groups -- capturing
+# is only the inner ([\d.]+...) group, so existing m.group(N) call sites
+# below are unaffected). Needed because Kuro's own per-character weapon
+# text wraps rank values in literal parentheses ("(12%/15%/18%/21%/24%)"),
+# unlike dotgg's format_description() output which never does -- missed
+# entirely until Kuro-sourced catalog entries were fed into this extractor
+# for the first time (2026-08-20, Kumokiri/Glint of Clouds both silently
+# extracted as "no unconditional bonus found" when the real issue was just
+# the surrounding parens not matching).
+RANK_VALUES_RE = r"\(?([\d.]+%?(?:/[\d.]+%?){4})\)?"
 SUBJECT_PREFIX = r"(?:the wielder'?s |the Resonator'?s |)"
 
 # Two-stat pattern tried FIRST (e.g. "Increases Basic Attack DMG Bonus and

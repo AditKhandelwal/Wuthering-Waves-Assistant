@@ -21,9 +21,23 @@ weapon texts already in wuwa_characters.json).
 
 Only IDs also present in weapon_stat_curves.json's `baseAtk` are kept --
 a display entry with no computable ATK/secondary-stat would be broken in
-the build screen, not useful. As of 2026-08-07 this leaves 3 of 118 IDs
-(21010045/21020045/21050045) with no display data from either source --
-logged, not guessed.
+the build screen, not useful.
+
+STEP 2 (added 2026-08-20): weapons dotgg still doesn't have (too new, or
+never added) get a fallback pass over every character's own
+recommended-weapon data in wuwa_characters.json instead, which has the same
+shape (name/icon/star/weaponType/passive text, already rank-scaled -- no
+{0}-placeholder expansion needed, unlike dotgg's format). Found via a real
+gap: Kumokiri (Chisa's own signature weapon, 21010056) and Qingxiao's new
+"Glint of Clouds" (21020106) were BOTH missing from this catalog -- not
+just unsearchable in the weapon picker, but silently excluded from
+build_weapon_passive_bonuses.py's extraction too (that script only scans
+weapon_catalog.json entries), so Kumokiri's own "+12% ATK" unconditional
+passive was never being applied for anyone, independent of anything
+Qingxiao-related. As of 2026-08-07 (dotgg-only) this left 22 of 118 IDs
+with no display data; this fallback is expected to close most of that gap
+going forward, logging whatever's still missing after both passes rather
+than guessing.
 """
 
 import json
@@ -36,6 +50,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 DOTGG_URL = "https://api.dotgg.gg/cgfw/getgacha?game=wuthering-waves&type=weapons"
 CURVES_PATH = "data/weapon_stat_curves.json"
+CHARACTERS_PATH = "data/wuwa_characters.json"
 OUT_PATH = "data/weapon_catalog.json"
 FRONTEND_COPY_PATH = "frontend/public/data/weapon_catalog.json"
 ICON_BASE = "https://static.dotgg.gg/wuthering-waves/"
@@ -66,6 +81,45 @@ def format_description(skill):
         values = [str(rank[i]) if i < len(rank) and rank[i] is not None else "?" for rank in params]
         description = description.replace(f"{{{i}}}", "/".join(values))
     return description
+
+
+def load_kuro_weapon_entries():
+    """Scan every character's recommended-weapon list, keyed by weapon gbId.
+
+    Multiple characters can recommend the same weapon; the first entry with
+    a real (non-placeholder) English name wins, since a handful of Kuro
+    entries come back with unlocalized "WeaponConf_X_WeaponName"-style text
+    for very new content (see weapon_names.py's build script for the same
+    pattern).
+    """
+    with open(CHARACTERS_PATH, encoding="utf-8") as f:
+        characters = json.load(f)
+
+    entries = {}
+    for char in characters.values():
+        for w in char.get("weapon", {}).get("items", []):
+            gb_id = w.get("gbId")
+            if not gb_id:
+                continue
+            en = next((t for t in w.get("texts", []) if t.get("language") == "en"), None)
+            if not en or not en.get("name") or en["name"].startswith("WeaponConf_"):
+                continue
+            if gb_id in entries:
+                continue  # already have a good entry for this weapon
+            weapon_type_en = next(
+                (t for t in w.get("weaponType", {}).get("texts", []) if t.get("language") == "en"),
+                None,
+            )
+            entries[gb_id] = {
+                "gbId": gb_id,
+                "name": en["name"],
+                "pictureUrl": w.get("pictureUrl") or "",
+                "star": int(w.get("star", 0)),
+                "weaponType": weapon_type_en["name"] if weapon_type_en else "Sword",
+                "effectName": en.get("effectName") or "",
+                "effectDescription": en.get("effectDescription") or "",
+            }
+    return entries
 
 
 def main():
@@ -99,13 +153,30 @@ def main():
         }
 
     missing = base_atk_ids - catalog.keys()
-    print(f"\nBuilt catalog entries for {len(catalog)} weapons")
+    print(f"\nBuilt {len(catalog)} catalog entries from dotgg")
     if skipped_no_curve:
         print(f"Skipped {len(skipped_no_curve)} dotgg weapons with no matching stat curve:")
         for s in skipped_no_curve:
             print(f"  - {s}")
+
     if missing:
-        print(f"\n{len(missing)} weapon(s) still have NO display data (no dotgg match either):")
+        print(f"\n{len(missing)} weapon(s) not covered by dotgg -- trying Kuro's per-character data...")
+        kuro_entries = load_kuro_weapon_entries()
+        filled_from_kuro = []
+        for gb_id in sorted(missing):
+            entry = kuro_entries.get(gb_id)
+            if not entry:
+                continue
+            catalog[gb_id] = entry
+            filled_from_kuro.append(f"{entry['name']} ({gb_id})")
+        if filled_from_kuro:
+            print(f"  filled {len(filled_from_kuro)} from Kuro data:")
+            for f_ in filled_from_kuro:
+                print(f"    - {f_}")
+
+    missing = base_atk_ids - catalog.keys()
+    if missing:
+        print(f"\n{len(missing)} weapon(s) still have NO display data (no dotgg or Kuro match):")
         for m in sorted(missing):
             print(f"  - {m}")
 

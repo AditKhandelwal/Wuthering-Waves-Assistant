@@ -898,5 +898,167 @@
     "weaponType": "Rectifier",
     "effectName": "",
     "effectDescription": "Casting Resonance Skill increases ATK by 9%/13.9%/18.9%/23.8%/28.8% and grants 9%/13.9%/18.9%/23.8%/28.8% Basic Attack DMG Bonus for 10/10/10/10/10s."
+  },
+  "21010056": {
+    "gbId": "21010056",
+    "name": "Kumokiri",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/fe547baef11ea31381ec0383ea35315a/d8265f01d2200cb991d13859a51e9327.png",
+    "star": 5,
+    "weaponType": "Broadblade",
+    "effectName": "Thread of Fate",
+    "effectDescription": "ATK is increased by (12%/15%/18%/21%/24%). When the wielder casts Intro Skill or inflicts Negative Statuses, they gain (8%/10%/12%/14%/16%) Resonance Liberation DMG Bonus, stacking up to (3/3/3/3/3) times for (15/15/15/15/15)s.\nAt max stacks, when Resonators in the team inflict Negative Statuses, they gain (24%/30%/36%/42%/48%) All-Attribute DMG Bonus for (15/15/15/15/15)s. Effects of the same name cannot be stacked."
+  },
+  "21010066": {
+    "gbId": "21010066",
+    "name": "Starfield Calibrator",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/97ce591b46df96187200305bb0b1174c/0030e6cac2b757c2335c99961a2024aa.png",
+    "star": 5,
+    "weaponType": "Broadblade",
+    "effectName": "Definite Solution",
+    "effectDescription": "Increases DEF by (16%/20%/24%/28%/32%). Casting Resonance Skill restores (8/10/12/14/16) points of Concerto Energy. This effect can be triggered (1/1/1/1/1) {Cus:Sap,S=time P=times SapTag=3} every (20/20/20/20/20)s. When the wielder heals Resonators, increases Crit. DMG of all nearby Resonators in the team by (20%/25%/30%/35%/40%) for (4/4/4/4/4)s. Effects of the same name cannot be stacked."
+  },
+  "21020066": {
+    "gbId": "21020066",
+    "name": "Emerald Sentence",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/969d788346824691716d6a6f88f14e9e/e393918666d312da64c0039a65db6c32.png",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "When A Heart Settles",
+    "effectDescription": "ATK is increased by (12%/15%/18%/21%/24%). Casting Echo Skill within (10/10/10/10/10)s after casting Intro Skill or Basic Attack grants 1 stack of Bamboo Cleaver, which grants (30/37.5/45/52.5/60)% Heavy Attack DMG Bonus to the wielder. This effect can be triggered by Echoes of the same name once only, stacking up to 2 times, lasting for (12/12/12/12/12)s. Casting Echo Skill at max stacks does not reset the duration. This effect can be triggered once every (10/10/10/10/10)s and ends early if the wielder is switched off the field.\nCasting Intro Skill grants (20%/25%/30%/35%/40%) Echo Skill DMG Bonus to all Resonators in the team for (30/30/30/30/30)s. Effects of the same name cannot be stacked."
+  },
+  "21020076": {
+    "gbId": "21020076",
+    "name": "Everbright Polestar",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/f4f33511132cc7e7e580f8eb5d802eab/299600b7af58f44bc6d1b7a37d75d99a.png",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "Starchaser",
+    "effectDescription": "Increases All-Attribute DMG Bonus by (12%/15%/18%/21%/24%). When inflicting Tune Rupture - Shifting or Fusion Burst, the wielder's Resonance Liberation DMG ignores (32%/40%/48%/56%/64%) DEF and (10%/15%/20%/25%/30%) Fusion RES on targets for (8/8/8/8/8)s."
+  },
+  "21020086": {
+    "gbId": "21020086",
+    "name": "Frostburn",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf7c1805516c1ab81c3d0a3ce017c193/67259dd0cb97cb48a558c6e284e60639.png",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "Self No More",
+    "effectDescription": "ATK is increased by (12%/15%/18%/21%/24%). After the wielder applies Glacio Chafe, Glacio DMG is Amplified by (28%/35%/42%/49%/56%), and Resonance Liberation DMG ignores (10%/12.5%/15%/17.5%/20%) of the target's DEF. If the wielder is the active Resonator in the team, Glacio Chafe DMG dealt to all targets within a certain range is Amplified by (20%/25%/30%/35%/40%) for (6/6/6/6/6)s. This effect can be triggered up to (1/1/1/1/1) {Cus:Sap,S=time P=times SapTag=6} every (0.1/0.1/0.1/0.1/0.1)s. Only the strongest effect of the same name applies."
+  },
+  "21020096": {
+    "gbId": "21020096",
+    "name": "Azure Oath",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6734f89615f83e89588720ea71fbd861/a30852baeff799d7577493211bc60e83.png",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "Unbending",
+    "effectDescription": "Grants (12%/15%/18%/21%/24%) All-Attribute DMG Bonus. After inflicting Havoc Bane, the wielder gains (36%/45%/54%/63%/72%) Heavy Attack DMG Amplification and their Heavy Attack DMG ignores (12%/15%/18%/21%/24%) of the target's DEF, lasting for (8/8/8/8/8)s."
+  },
+  "21020106": {
+    "gbId": "21020106",
+    "name": "Glint of Clouds",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/0f5a89b31fd000c8e600140f92d10e4d/03f7877b8e05bfc02c7d5fce3eea1a0f.png",
+    "star": 5,
+    "weaponType": "Sword",
+    "effectName": "Evil's Scourge",
+    "effectDescription": "ATK is increased by (12%/15%/18%/21%/24%). Inflicting Tune Strain - Shifting grants (11.2%/14%/16.8%/19.6%/22.4%) Aero DMG Bonus for (2/2/2/2/2)s, stacking up to (5/5/5/5/5) times. This effect can be triggered once every (0.5/0.5/0.5/0.5/0.5)s. Upon reaching the max stack limit, gain the following effects:\n- This Aero DMG Bonus effect's duration is extended to (30/30/30/30/30)s.\n- Aero DMG ignores (10%/12.5%/15%/17.5%/20%) of the target's DEF during this effect."
+  },
+  "21030036": {
+    "gbId": "21030036",
+    "name": "Lux & Umbra",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/fbc61d63061384fa68438eab9d5c6fff/0b3fd1787b191e3eb83236edcdbb62fb.png",
+    "star": 5,
+    "weaponType": "Pistols",
+    "effectName": "To Fire She Returns",
+    "effectDescription": "ATK is increased by (12%/15%/18%/21%/24%). Upon dealing Echo Skill DMG, gain (24%/30%/36%/42%/48%) Heavy Attack DMG Amplification for (6/6/6/6/6)s. Upon dealing Heavy Attack DMG, gain (24%/30%/36%/42%/48%) Echo Skill DMG Amplification for (6/6/6/6/6)s. DMG Amplification on each attack is capped at (24%/30%/36%/42%/48%). While both effects are active, dealing damage ignores (8%/10%/12%/14%/16%) of the target's DEF."
+  },
+  "21030045": {
+    "gbId": "21030045",
+    "name": "Phasic Homogenizer",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6b94b82c68eb83e1d3ad74847a44af79/c6e53ac91bf21d3fc0f8a0cb227a19da.png",
+    "star": 5,
+    "weaponType": "Pistols",
+    "effectName": "Insight Bearer",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). After a Resonator in the team casts a Tune Break skill, it grants (20%/22.5%/25%/27.5%/30%) All-Attribute DMG Bonus to the wielder for (14/14/14/14/14)s."
+  },
+  "21030046": {
+    "gbId": "21030046",
+    "name": "Spectrum Blaster",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6b94b82c68eb83e1d3ad74847a44af79/04490ea39fc3c85aea74fc9dcf1ca20e.png",
+    "star": 5,
+    "weaponType": "Pistols",
+    "effectName": "Attendance Exemption Protocol",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). Casting Intro Skill or dealing Basic Attack DMG to targets increases the wielder's Basic Attack DMG Bonus by (36%/45%/54%/63%/72%) for (4/4/4/4/4)s. Each time the wielder inflicts Tune Rupture - Shifting or Tune Strain - Shifting during Basic Attacks, all DMG dealt by Resonators in the team is increased by (8%/10%/12%/14%/16%) for (30/30/30/30/30)s, up to (3/3/3/3/3) stacks. Effects of the same name cannot be stacked."
+  },
+  "21030056": {
+    "gbId": "21030056",
+    "name": "Spectral Trigger",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/57c7a21dc61541f5d6fae771d97cc19f/2dc17b2d535b3cf8db0784a1acaa126a.png",
+    "star": 5,
+    "weaponType": "Pistols",
+    "effectName": "Sunken Dream",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). Casting Resonance Skill grants (20%/25%/30%/35%/40%) Spectro DMG Bonus to the wielder for (14/14/14/14/14)s, stacking up to (2/2/2/2/2) times. Inflicting Hack - Shifting grants (30%/37.5%/45%/52.5%/60%) Heavy Attack DMG Amplification to the wielder for (14/14/14/14/14)s, during which Heavy Attack DMG ignores (10/12.5/15/17.5/20)% of the target's DEF."
+  },
+  "21030066": {
+    "gbId": "21030066",
+    "name": "Skull Thrasher",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/57c7a21dc61541f5d6fae771d97cc19f/c580eb6efd7934ed55aaa777c560bdf1.png",
+    "star": 5,
+    "weaponType": "Pistols",
+    "effectName": "Wakeful Loner",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). Casting Intro Skill grants (24%/30%/36%/42%/48%) Basic Attack DMG Bonus to the wielder for (14/14/14/14/14)s. Inflicting Hack - Shifting grants (12%/15%/18%/21%/24%) Basic Attack DMG Bonus to the wielder for (14/14/14/14/14)s, and increases the ATK of Resonators in the team by (24%/30%/36%/42%/48%) for (30/30/30/30/30)s. Effects of the same name do not stack."
+  },
+  "21040045": {
+    "gbId": "21040045",
+    "name": "Pulsation Bracer",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6b94b82c68eb83e1d3ad74847a44af79/2c54b94e0580bb0bd59b16bb777accfb.png",
+    "star": 5,
+    "weaponType": "Gauntlets",
+    "effectName": "Barrier Breacher",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). Dealing damage to targets under Tune Strain - Interfered grants (6%/6.7%/7.5%/8.2%/9%) Basic Attack DMG Bonus for (3/3/3/3/3)s, stacking up to (4/4/4/4/4) times. This effect can be triggered <SapTag=5>(1/1/1/1/1)</SapTag> {Cus:Sap,S=time P=times SapTag=5} every (0.5/0.5/0.5/0.5/0.5)s. Retriggering the effect resets its duration."
+  },
+  "21040056": {
+    "gbId": "21040056",
+    "name": "Daybreaker's Spine",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a322792e1331c20e44022e47590b4905/456db6a83922ac6ce40ae62ae68229fd.png",
+    "star": 5,
+    "weaponType": "Gauntlets",
+    "effectName": "Suturing Dayline",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). After dealing Basic Attack DMG, the wielder gains (20%/25%/30%/35%/40%) Spectro DMG Bonus for (4/4/4/4/4)s. Each time after the wielder inflicts Tune Strain - Shifting on the target, they gain (20%/25%/30%/35%/40%) Basic Attack DMG Amplification and their Basic Attack DMG ignores (10%/12.5%/15%/17.5%/20%) of the target's DEF for (6/6/6/6/6)s."
+  },
+  "21040066": {
+    "gbId": "21040066",
+    "name": "Solsworn Ciphers",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2bf23086c815ffb5b50f112b48b096a1/5bd21f64e398ca98e16fca986d8acd53.png",
+    "star": 5,
+    "weaponType": "Gauntlets",
+    "effectName": "Sunward",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). Casting Intro Skill or Echo Skill grants (32%/40%/48%/56%/64%) Echo Skill DMG Amplification for (15/15/15/15/15)s. When dealing Echo Skill DMG, Aero DMG ignores (10%/12.5%/15%/17.5%/20%) of the target's DEF for (6/6/6/6/6)s."
+  },
+  "21050076": {
+    "gbId": "21050076",
+    "name": "Forged Dwarf Star",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3f141be1af2fda93b4da99e79c169fa7/67fbad3fe22db9ff5a338a19227c8282.png",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "Dissolution",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). After the wielder inflicts Fusion Burst or Tune Strain - Shifting on the target, their Resonance Liberation DMG Bonus is increased by (36%/45%/54%/63%/72%) for (5/5/5/5/5)s. While this effect lasts, after Resonators in the team inflict Fusion Burst or Tune Strain - Shifting, their ATK is increased by (24%/30%/36%/42%/48%) for (15/15/15/15/15)s. Effects of the same name cannot be stacked."
+  },
+  "21050086": {
+    "gbId": "21050086",
+    "name": "Freeze Frame",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/057e638f97c51ff0898a0e8b5effed12/688a380a60087a9e3630b3b8e75d330e.png",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "Light's Offering",
+    "effectDescription": "Increases ATK by (12%/15%/18%/21%/24%). Inflicting Glacio Chafe on the target grants the wielder (30%/37.5%/45%/52.5%/60%) Glacio DMG Bonus for (12/12/12/12/12)s and increases the ATK of all Resonators in the team by (24%/30%/36%/42%/48%) for (30/30/30/30/30)s. Effects of the same name cannot be stacked."
+  },
+  "21050096": {
+    "gbId": "21050096",
+    "name": "Firstlight's Herald",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/acd90e7d0fcc4a40b815bb6d6787ed13/9d07112dee5498e579842a5656cb44aa.png",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "Spring Wreath",
+    "effectDescription": "Increases Max HP by (12%/15%/18%/21%/24%). Casting Resonance Liberation restores (8/10/12/14/16) points of Concerto Energy, triggered once every 20s. Inflicting Glacio Chafe grants Snow Taint for 6s. Applying healing grants Ripples for 6s. If the wielder has done both while on the field, the next Outro Skill grants both effects for 6s. When the wielder has both Snow Taint and Ripples, the ATK of all nearby Resonators in the team is increased by (20%/25%/30%/35%/40%). Effects of the same name do not stack."
   }
 }
