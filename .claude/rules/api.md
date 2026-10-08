@@ -20,7 +20,7 @@ Without these headers, the API returns `{"code": 200, "data": null}`.
 - `GET /introduction/list?roleGbId={id}` — list of guide entries for a character
 - `GET /introduction/info?roleGbId={id}&id={guide_id}` — full build data for a guide entry
 
-**All 60 valid character roleGbIds (verified 2026-08-07 — element ID blocks
+**All 61 valid character roleGbIds (verified 2026-08-20 — element ID blocks
 correspond to 1=Glacio, 2=Fusion, 3=Electro, 4=Aero, 5=Spectro, 6=Havoc;
 IDs don't strictly follow their block's element once a block is "full" —
 e.g. 1610 "Yangyang: Xuanling" is Havoc despite the 1610 slot falling right
@@ -31,7 +31,7 @@ VALID_IDS = [
     1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110,
     1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211,
     1301, 1302, 1303, 1304, 1305, 1306, 1307, 1308, 1309, 1310,
-    1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410, 1411, 1412,
+    1402, 1403, 1404, 1405, 1406, 1407, 1408, 1409, 1410, 1411, 1412, 1413,
     1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509, 1510, 1511,
     1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1610
 ]
@@ -46,6 +46,11 @@ frontend character-select grid). Found by brute-force probing
 below. Fetched into `wuwa_characters.json` via `scripts/fetch_new_characters.py`
 (edit its `NEW_ROLE_IDS` list and rerun for the next patch's additions).
 
+**Later addition:** 1413 (Qingxiao, Aero — follows its block's element, no
+exception needed unlike 1110/1610 above), added 2026-08-20 the same day her
+guide went live (`guide_id` 14131) — a good illustration of how fast a new
+release can show up in this API.
+
 **Known API quirk:** for Rover gender-variant pairs (e.g. 1406/1408,
 1501/1502, 1604/1605), the API's own `role.roleGbId` field in the response
 body has been observed out of sync with the `roleGbId` you queried by —
@@ -55,7 +60,7 @@ body's internal `role.roleGbId` field.
 
 **Missing from `wuwa_characters.json`:** 1106 (Youhu) and 1402 (Yangyang)
 were not fetched by the initial brute-force scan and are absent from the
-file (58 of 60 valid IDs present). The frontend character-select grid
+file (59 of 61 valid IDs present). The frontend character-select grid
 therefore cannot show them, and `fetch_forte_nodes.py` never attempts
 them either (it iterates `wuwa_characters.json`'s own keys) — run
 `fetch_new_characters.py` for these two first if that ever gets fixed.
@@ -73,7 +78,7 @@ wutheringlab approximations, with zero coverage for anything released in
 the 2026-08 patch — and one of the approximations (Mornye's Healing Bonus)
 turned out to be flatly wrong (guessed 1.25%/3.75%, real value is the
 standard 1.80%/4.20% tier). `scripts/fetch_forte_nodes.py` now pulls real
-per-node values for **all 58 characters** straight from this datamine repo
+per-node values for **all 59 characters** straight from this datamine repo
 instead. Same repo already used for `fetch_character_stat_curves.py` — see
 that script for the branch-resolution pattern (`GET
 https://api.github.com/repos/Arikatsu/WutheringWaves_Data` for
@@ -174,13 +179,60 @@ key in `weapon_stat_curves.json`'s `baseAtk` — which conveniently filters
 these out too, since a display entry with no computable ATK is useless
 either way.
 
-**Coverage:** dotgg + Kuro's per-character recommended-weapon texts
-together cover 117 of 118 weapon gbIds (only `21010045`/`21020045`/
-`21050045` have neither). Some Kuro-sourced weapon texts are zh-Hans-only
-(no `"en"` entry at all) — `loadWeaponCatalog()` in `frontend/src/lib/
-weapons.ts` treats a Kuro name of `"Unknown"` as lower-priority than a
-dotgg name, not as already-resolved, so dotgg's real name/icon still wins
-for those.
+**Kuro-data fallback pass (added 2026-08-20):** for any weapon id with real
+stat-curve data but no usable dotgg entry, `fetch_weapon_catalog.py` now
+does a second pass scanning every character's own recommended-weapon data
+in `wuwa_characters.json` (`load_kuro_weapon_entries()`) and fills the
+catalog entry from there instead — same name/icon/star/weaponType/
+rank-scaled passive-text shape, no `{0}`-placeholder expansion needed since
+Kuro's text is already rank-scaled. Found via a real gap, not proactively:
+Qingxiao's brand-new "Glint of Clouds" (too new for dotgg) AND Chisa's
+pre-existing signature weapon Kumokiri (dotgg just never had it) were BOTH
+missing display data before this — Kumokiri's absence meant its own +12%
+ATK passive was silently never applied for any Chisa build, unrelated to
+Qingxiao. This is a genuinely different gap from the zh-Hans-only-text case
+below (weapon *entirely missing* from dotgg vs. *present but unlocalized*)
+— both mechanisms coexist, this one doesn't replace the other.
+
+**Coverage:** as of 2026-08-20, 4 of 122 known weapon gbIds have no display
+data from any source (`21010045`, `21010076`, `21020045`, `21050045` —
+`21010076` newly surfaced when `fetch_weapon_stat_curves.py` picked up real
+stat-curve data for it; no character recommends it and dotgg doesn't have
+it either). Some Kuro-sourced weapon texts are zh-Hans-only (no `"en"`
+entry at all) — `loadWeaponCatalog()` in `frontend/src/lib/weapons.ts`
+treats a Kuro name of `"Unknown"` as lower-priority than a dotgg name, not
+as already-resolved, so dotgg's real name/icon still wins for those.
+
+**`weapon_stat_curves.json` has a real fetch script now**
+(`scripts/fetch_weapon_stat_curves.py`, added 2026-08-20) — this file
+previously existed only as already-committed data with NO way to
+regenerate it, a gap that went unnoticed until a brand-new weapon needed
+adding and there was nowhere to fetch it from. Source: the same Arikatsu
+datamine repo, `BinData/weapon/weaponconf.json` (per-weapon `FirstPropId`
+= base ATK + `FirstCurve`, `SecondPropId` = secondary stat + `SecondCurve`,
+`DescParams[0].ArrayString` = rank 1-5 passive values) and
+`BinData/property/weaponpropertygrowth.json` (flat `(CurveId, Level,
+BreachLevel) -> CurveValue` table shared by all weapons). Confirmed every
+one of 122 weapons uses `FirstCurve=1`/`SecondCurve=2` — only two curve
+shapes exist in the whole game, not a per-weapon choice, though the script
+still reads the ids off the data rather than hardcoding them. Verifies
+byte-identical output against whatever's already committed for every
+previously-known weapon id before writing anything, refusing to overwrite
+on a mismatch.
+
+**Rank-value regex only matched dotgg's format, not Kuro's** (found +
+fixed 2026-08-20, `scripts/build_weapon_passive_bonuses.py`): dotgg's
+`format_description()` output never wraps rank values in parens
+(`"4%/5%/6%/7%/8%"`), but Kuro's own per-character weapon text does
+(`"(12%/15%/18%/21%/24%)"`). The passive-bonus extraction regex was tuned
+only against dotgg text (the only source fed into it until the Kuro
+fallback above started adding entries), so it silently rejected every
+Kuro-sourced weapon's passive as "no unconditional bonus found" — including
+Kumokiri's and Glint of Clouds' plain, obviously-unconditional "ATK is
+increased by X%." Fixed by making the surrounding parens optional in
+`RANK_VALUES_RE` (literal `\(?`/`\)?`, not new capturing groups, so
+existing `m.group(N)` call sites didn't need to change). Extraction went
+from 40/118 to 56/118 weapons with zero regressions on the original 40.
 
 **5 more dotgg entries have a cosmetically-broken name** — one 4★ per
 weapon type (`21010034`/`21020034`/`21030034`/`21040034`/`21050034`) comes

@@ -1,9 +1,29 @@
 # Agent
 
-**Status: implemented and deployed** — `supabase/functions/agent/index.ts`
-(Deno Edge Function), `frontend/src/pages/ChatPage.tsx` (route `/chat`, a
-"Chat" link in `Header.tsx` next to "My Builds"). Everything below
-describes what's actually live, not a target design.
+**Status: implemented, but the deployed function is currently STALE
+relative to `main`** — `supabase/functions/agent/index.ts` (Deno Edge
+Function), `frontend/src/pages/ChatPage.tsx` (route `/chat`, a "Chat" link
+in `Header.tsx` next to "My Builds"). Everything below describes the
+*code as committed*, not necessarily what's live right now.
+
+**As of 2026-08-20, the last `npx supabase functions deploy agent` ran
+right after the commit that added Qingxiao's character-guide data only**
+(commit `c1c2be1`). Three later commits on `main` touch
+`supabase/functions/agent/` and have NOT been deployed yet:
+- Sequence-node stat bonuses (`sequenceBonusTotals` in `stats.ts`/
+  `index.ts`) — chat answers about a character's Crit Rate etc. won't
+  reflect any curated sequence-chain bonus (e.g. Qingxiao's chain-1 +16%
+  Crit. Rate) until this deploys.
+- Qingxiao's new echo "Calamity Effigy" + the `echo_sets.json`/
+  `echo_stat_curves.json` agent-mirror fix.
+- The weapon stat-curve/passive-bonus fixes (Qingxiao's "Glint of Clouds",
+  Kumokiri's previously-missing +12% ATK passive, 18 more weapons added to
+  the catalog).
+
+Run `npx supabase functions deploy agent` to catch the live function up,
+then this note can be removed/updated. Check `git log
+supabase/functions/agent -1` vs. the last deploy if this note itself has
+gone stale by the time you're reading it.
 
 ## Architecture
 Raw ReAct loop using the Claude API's tool calling, running as a Supabase
@@ -132,14 +152,20 @@ exact match first, then substring, via `resolveCharacterId()`), except
   character: level, **resolved weapon name** (not a raw ID — resolved via
   `weapon_names.json`, a gbId->name map merged from dotgg's catalog +
   Kuro's per-character weapon texts by
-  `scripts/build_agent_weapon_names.py`, 117/118 coverage; a dotgg-only
-  bundle used until 2026-08-10 covered only 100/118 and a real user's
-  weapon — "Everbright Polestar," Kuro-only — showed up as "Unknown (id
-  ...)"), talent levels, sequence nodes unlocked, **computed final stats**
-  (HP/ATK/DEF/Crit Rate/Crit DMG/Energy Regen/elemental DMG bonus —
-  aggregated from character base + weapon + echoes + active forte nodes),
-  **activeEchoSets** (equipped sonata set + piece count + the actual
-  active bonus text, not individual echo names), and **`echoes`** — a
+  `scripts/build_agent_weapon_names.py`, coverage improved again
+  2026-08-20 once `fetch_weapon_catalog.py` grew its own Kuro-fallback
+  pass — see `api.md`; a dotgg-only bundle used until 2026-08-10 covered
+  only 100/118 and a real user's weapon — "Everbright Polestar," Kuro-only
+  — showed up as "Unknown (id ...)"), talent levels, sequence nodes
+  unlocked, **computed final stats** (HP/ATK/DEF/Crit Rate/Crit DMG/Energy
+  Regen/elemental DMG bonus — aggregated from character base + weapon +
+  echoes + active forte nodes + **curated sequence-chain stat bonuses**,
+  added 2026-08-20, e.g. Qingxiao's chain-1 +16% Crit. Rate; coverage is
+  hand-curated and partial, see `sequence_node_stat_bonuses.json`'s `_note`
+  — a character/sequence missing from it means "not reviewed yet," not
+  "confirmed zero bonus"), **activeEchoSets** (equipped sonata set + piece
+  count + the actual active bonus text, not individual echo names), and
+  **`echoes`** — a
   per-slot breakdown (main stat + all 5 substats for each of the 5
   equipped echoes, numbered 1-5, never named by body part) added
   2026-08-10 so the agent can answer "which echo should I replace"

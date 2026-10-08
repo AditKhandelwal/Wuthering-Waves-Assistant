@@ -20,6 +20,15 @@ same file's "Decision: no RAG in v1"). What's left: deploying the frontend
 + this Edge Function together (they launch as one product, not
 separately — see `.claude/rules/agent.md`).
 
+**⚠ Pick-up note (2026-08-20):** the deployed agent function is currently
+STALE — see `.claude/rules/agent.md`'s top note for exactly which 3 commits
+haven't been pushed live yet (`npx supabase functions deploy agent` to fix).
+Also: a local, **unpushed** branch `feature/sonata-set-icon-detection`
+exists with a finished feature (OCR-anchored + trained-YOLOv8-model sonata
+set detection from an echo screenshot) that was deliberately kept separate
+from the Qingxiao/weapon/sequence-bonus work on `main` this session — see
+"In-progress / not on `main` yet" below before assuming it's live.
+
 Done:
 - **Agent + chat UI** — `supabase/functions/agent/index.ts` (Deno Edge
   Function): Claude API (`claude-haiku-4-5`) tool-calling ReAct loop, 4
@@ -62,26 +71,42 @@ Done:
   auth and CRUD directly from the frontend. Requires a real Supabase
   project; copy `frontend/.env.example` to `frontend/.env` and fill in
   `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`.
-- Reverse engineered Kuro's guide API; roster now at **60** valid
-  entity IDs, 58 fetched into `wuwa_characters.json` (still missing
+- Reverse engineered Kuro's guide API; roster now at **61** valid
+  entity IDs, 59 fetched into `wuwa_characters.json` (still missing
   1106/1402, a pre-existing gap — see `.claude/rules/api.md`). Grew from an
   original 46 → 56 (brute-force scan originally missed the 1601-1608 Havoc
   block) → 60 with the 2026-08 patch's Suisui (1110), the Rover: Electro
-  pair (1309/1310), and Yangyang: Xuanling (1610), pulled via the new
-  `scripts/fetch_new_characters.py`
+  pair (1309/1310), and Yangyang: Xuanling (1610) → 61 with Qingxiao
+  (1413, Aero/Sword), pulled via `scripts/fetch_new_characters.py`. Adding
+  a character always needs `fetch_character_stat_curves.py` +
+  `fetch_forte_nodes.py` rerun too, or they silently show no HP/ATK/DEF or
+  forte nodes — see the Commands section below.
 - Character-select screen: grid + element/weapon-type filters, all real
   data, element-tinted glow on each portrait ring
 - Build screen (`frontend/src/pages/BuildScreenPage.tsx`), built one section
   at a time, each verified visually in a running browser, not just
   type-checked:
   - **Character Level** — real HP/ATK/DEF via a sourced level-scaling curve
-  - **Weapon** — the full per-weapon-type catalog, 117 of 118 weapons with
+  - **Weapon** — the full per-weapon-type catalog, 118 of 122 weapons with
     real name/icon/passive text (recommended-by-a-character weapons from
-    Kuro's guide API, filled in for the rest from a dotgg.gg catalog fetch
-    — see `scripts/fetch_weapon_catalog.py`), real computed ATK + secondary
-    stat, rank-scaled passive text, and a search box in the picker
-    (`WeaponPicker.tsx`)
-  - **Sequence Nodes** — real per-node names/icons, sequential toggle
+    Kuro's guide API, filled in for most of the rest from a dotgg.gg
+    catalog fetch, with a further Kuro-data fallback pass added
+    2026-08-20 for weapons dotgg still doesn't have — see
+    `scripts/fetch_weapon_catalog.py` and `.claude/rules/api.md`), real
+    computed ATK + secondary stat (`data/weapon_stat_curves.json`, which
+    got its own real fetch script — `scripts/fetch_weapon_stat_curves.py`
+    — for the first time 2026-08-20, closing a gap where that file had no
+    documented way to regenerate at all), rank-scaled passive text, and a
+    search box in the picker (`WeaponPicker.tsx`)
+  - **Sequence Nodes** — real per-node names/icons, sequential toggle.
+    Node unlocks feed into final-stat aggregation too (added 2026-08-20,
+    `data/sequence_node_stat_bonuses.json`) — but only for the small,
+    hand-curated set of nodes confirmed to be an unconditional flat stat
+    bonus (e.g. Qingxiao's chain 1, +16% Crit. Rate); most sequence nodes
+    are skill-specific multipliers or conditional procs and are
+    deliberately NOT folded into the total — see
+    `.claude/rules/frontend.md`'s "Sequence (resonance chain) node stat
+    bonuses" section before extending this data
   - **Talents** (`TalentGrid.tsx`) — real 5-skill steppers (1-10) in a
     cascading arc layout (Forte Circuit raised, tapering outward, matching
     a real in-game screenshot), Inherent Skills togglable above Forte
@@ -93,7 +118,7 @@ Done:
     Resonance Liberation, Intro Skill), 2 per column (lower/upper tier).
     Togglable. Show stat icons (fixed 2026-08-08 — the Build Card's copy of
     this tree wasn't wired to real data at all, just dead placeholder
-    circles). Data for all 58 characters sourced from a raw game datamine
+    circles). Data for all 59 characters sourced from a raw game datamine
     (see `.claude/rules/api.md` and `data/sequence_stat_nodes.json`),
     replacing an earlier dotgg.gg + wutheringlab hybrid that only covered
     42 characters and had at least one hand-approximated value that turned
@@ -113,7 +138,8 @@ Done:
   from the same build screen (same live state, no route/data reload — it's
   a local view-mode flag, not tied to the save/load flow). Real final-stat
   aggregation (character base
-  + weapon + echoes + **active forte stat nodes** → HP/ATK/DEF/Energy
+  + weapon + echoes + **active forte stat nodes** + **curated sequence-chain
+  stat bonuses** (added 2026-08-20, partial coverage) → HP/ATK/DEF/Energy
   Regen/Crit Rate/Crit DMG/DMG-bonus categories, see
   `frontend/src/lib/finalStats.ts`), an atmospheric starfield +
   element-colored background, and the same cascading Forte tree as the
@@ -122,6 +148,30 @@ Done:
 See `docs/DATA_REQUIREMENTS.md` for exactly what's confirmed vs. inferred
 vs. still blocked in the underlying game data (the per-hit damage formula
 and structured echo set-bonus effects are the main remaining gaps).
+
+### In-progress / not on `main` yet
+
+- **Sonata-set auto-detection from an echo screenshot** — a finished
+  feature living on a local, **unpushed** branch
+  `feature/sonata-set-icon-detection` (branched from `main` before the
+  Qingxiao/weapon/sequence-bonus work in this doc, so it does NOT include
+  any of that — merge or rebase before continuing). Two-stage detection:
+  a trained YOLOv8n model (`echo_sonata_dataset/`, not committed — see its
+  own `.gitignore` entry — exported to TensorFlow.js at
+  `frontend/public/models/sonata_badge_detector/`) locates the sonata-set
+  badge icon on the screenshot; an OCR-anchored coarse/fine crop search
+  (`frontend/src/lib/echoIconMatch.ts`) is the fallback when the model
+  isn't confident. Both feed the same 8×8 color-signature match against
+  self-hosted set-icon references (`frontend/public/echo-set-icons/`,
+  `scripts/download_echo_set_icons.py` /
+  `scripts/compute_echo_set_icon_hashes.py`) instead of hot-linked
+  third-party images. Also fixed two real perf bugs on this branch: the
+  Tesseract OCR worker was being created and torn down on every import
+  (~9.6s → ~0.3s once fixed by reusing one worker for the page's
+  lifetime, `echoOcrEngine.ts`), and running the vision model in parallel
+  with OCR caused real CPU contention on machines without a WebGL backend
+  (fixed by running detection strictly after OCR finishes). To resume:
+  `git checkout feature/sonata-set-icon-detection`.
 
 @.claude/rules/architecture.md
 @.claude/rules/api.md
@@ -157,7 +207,19 @@ python scripts/fetch_echo_data.py            # re-fetch echo catalog/sets/stat c
                                               # echo_catalog.json there needs download_echo_images.py, next line)
 python scripts/download_echo_images.py       # rerun whenever echo_catalog.json changes (new echoes need a local copy
                                               # self-hosted too, or their Build Card export silently breaks on CORS)
-python scripts/fetch_weapon_catalog.py       # re-fetch full weapon name/icon/passive catalog (dotgg) -> data/weapon_catalog.json
+python scripts/fetch_weapon_stat_curves.py   # re-fetch real ATK/secondary-stat/rank-value curves (Arikatsu datamine) ->
+                                              # data/weapon_stat_curves.json (added 2026-08-20 -- this file previously
+                                              # had NO fetch script at all; verifies byte-identical against every
+                                              # already-known weapon before overwriting, refuses to write on a mismatch)
+python scripts/fetch_weapon_catalog.py       # re-fetch full weapon name/icon/passive catalog (dotgg + a Kuro-data
+                                              # fallback pass added 2026-08-20 for weapons dotgg doesn't have) ->
+                                              # data/weapon_catalog.json -- run fetch_weapon_stat_curves.py FIRST,
+                                              # this script filters to ids already in weapon_stat_curves.json's baseAtk
+python scripts/build_weapon_passive_bonuses.py  # extract each weapon's unconditional passive stat bonus (regex over
+                                                 # effectDescription, handles both dotgg's and Kuro's rank-value text
+                                                 # formats as of 2026-08-20) -> data/weapon_passive_bonuses.json +
+                                                 # frontend/public/data/ + supabase/functions/agent/ (all 3, no
+                                                 # separate mirror step needed) -- rerun whenever weapon_catalog.json changes
 # scripts/fetch_resonator_guides.py is dead/commented-out, not currently wired up
 #
 # After adding new characters (fetch_new_characters.py), always also rerun
@@ -167,17 +229,27 @@ python scripts/fetch_weapon_catalog.py       # re-fetch full weapon name/icon/pa
 # fetch_echo_data.py picks up a new echo, always also rerun
 # download_echo_images.py and redeploy the agent function (bit us for
 # Qingxiao's "Calamity Effigy" -- the agent's echo_sets.json/
-# echo_stat_curves.json copies don't update themselves).
+# echo_stat_curves.json copies don't update themselves). After adding a
+# new WEAPON (a new character's signature weapon, most commonly), always
+# rerun fetch_weapon_stat_curves.py -> fetch_weapon_catalog.py ->
+# build_weapon_passive_bonuses.py -> build_agent_weapon_names.py in that
+# order, then redeploy -- bit us for Qingxiao's "Glint of Clouds" (missing
+# entirely from weapon_stat_curves.json, so no ATK/Crit Rate showed at
+# all) and, independently, for Chisa's pre-existing Kumokiri (present in
+# weapon_stat_curves.json but missing from weapon_catalog.json, which
+# silently meant its own +12% ATK passive was never applied for anyone).
 python scripts/build_agent_character_guides.py  # rebuild the agent's lean character-guide extract ->
                                                  # data/agent_character_guides.json + supabase/functions/agent/character_guides.json
                                                  # rerun whenever wuwa_characters.json changes, then redeploy the function
-python scripts/build_agent_weapon_names.py      # rebuild the agent's gbId -> weapon name map (dotgg + Kuro merged, 117/118) ->
+python scripts/build_agent_weapon_names.py      # rebuild the agent's gbId -> weapon name map (dotgg + Kuro merged) ->
                                                  # data/agent_weapon_names.json + supabase/functions/agent/weapon_names.json
                                                  # rerun whenever weapon_catalog.json or wuwa_characters.json changes, then redeploy
 
 # Agent (Supabase Edge Function -- works today, needs `npx supabase login` once)
 npx supabase secrets set GROQ_API_KEY=...   # one-time, or whenever the key rotates
-npx supabase functions deploy agent          # deploy/redeploy after any index.ts or character_guides.json change
+npx supabase functions deploy agent          # deploy/redeploy after any index.ts or *.json change under
+                                              # supabase/functions/agent/ -- currently PENDING as of 2026-08-20,
+                                              # see .claude/rules/agent.md's top note for exactly what's undeployed
 # No local `supabase functions serve` -- Docker Desktop doesn't run on this
 # machine. Test against the real deployed function instead.
 ```
@@ -203,11 +275,13 @@ wuwa-agent/
 ├── docs/
 │   └── DATA_REQUIREMENTS.md     # what's confirmed vs. inferred vs. blocked in the game data
 ├── data/                        # source JSON; mirrored into frontend/public/data/ (see frontend.md)
-│   ├── wuwa_characters.json     # 58 characters (missing 1106/1402 — see api.md)
-│   ├── sequence_stat_nodes.json # forte circuit stat bonus nodes, all 58 characters (Arikatsu datamine)
+│   ├── wuwa_characters.json     # 59 characters (missing 1106/1402 — see api.md)
+│   ├── sequence_stat_nodes.json # forte circuit stat bonus nodes, all 59 characters (Arikatsu datamine)
+│   ├── sequence_node_stat_bonuses.json # hand-curated, PARTIAL sequence-chain stat bonuses (see frontend.md)
 │   ├── character_stat_curves.json
-│   ├── weapon_stat_curves.json
-│   ├── weapon_catalog.json      # full weapon name/icon/passive catalog (dotgg.gg), fills gaps beyond character-recommended weapons
+│   ├── weapon_stat_curves.json  # now has a real fetch script -- scripts/fetch_weapon_stat_curves.py (2026-08-20)
+│   ├── weapon_catalog.json      # full weapon name/icon/passive catalog (dotgg.gg + a Kuro-data fallback), fills gaps beyond character-recommended weapons
+│   ├── weapon_passive_bonuses.json  # each weapon's unconditional passive stat bonus, extracted from effectDescription
 │   ├── echo_catalog.json / echo_sets.json / echo_stat_curves.json
 │   ├── stat_icons.json
 │   ├── agent_character_guides.json  # lean per-character extract for the agent's guide/team-comp tools
@@ -215,20 +289,25 @@ wuwa-agent/
 ├── scripts/
 │   ├── fetch_new_characters.py        # pulls new resonators' full guide data by roleGbId -> wuwa_characters.json
 │   ├── fetch_character_stat_curves.py # level-1 base HP/ATK/DEF + growth curve (Arikatsu datamine, dynamic branch resolution)
-│   ├── fetch_forte_nodes.py           # forte bonus data for all 58 characters (Arikatsu datamine)
+│   ├── fetch_forte_nodes.py           # forte bonus data for all 59 characters (Arikatsu datamine)
 │   ├── fetch_echo_data.py             # echo catalog/sonata sets/stat curves (game8.co + wutheringlab + Arikatsu datamine)
-│   ├── fetch_weapon_catalog.py        # full weapon catalog (dotgg.gg) -> weapon_catalog.json
+│   ├── download_echo_images.py        # self-hosts game8.co-sourced echo images (CORS); rerun after fetch_echo_data.py
+│   ├── fetch_weapon_stat_curves.py    # real ATK/secondary-stat curves (Arikatsu datamine) -> weapon_stat_curves.json (added 2026-08-20)
+│   ├── fetch_weapon_catalog.py        # full weapon catalog (dotgg.gg + Kuro-data fallback pass) -> weapon_catalog.json
+│   ├── build_weapon_passive_bonuses.py # extracts each weapon's unconditional passive bonus -> weapon_passive_bonuses.json
 │   ├── fetch_resonator_guides.py      # dead code, fully commented out
 │   ├── build_agent_character_guides.py # wuwa_characters.json -> agent_character_guides.json + the function's copy
 │   └── build_agent_weapon_names.py    # weapon_catalog.json + wuwa_characters.json -> agent_weapon_names.json + the function's copy
 ├── supabase/
 │   └── functions/agent/
-│       ├── index.ts              # the agent Edge Function -- see agent.md
+│       ├── index.ts              # the agent Edge Function -- see agent.md (currently PENDING deploy, see its top note)
 │       ├── stats.ts              # Deno port of frontend/src/lib/{stats,weapons,echoes,finalStats}.ts's stat math
 │       ├── character_guides.json # bundled copy of data/agent_character_guides.json (no runtime fetch)
 │       ├── weapon_names.json     # bundled copy of data/agent_weapon_names.json (no runtime fetch)
-│       └── (+ raw copies of character_stat_curves/weapon_stat_curves/echo_catalog/echo_sets/
-│             echo_stat_curves/sequence_stat_nodes.json, for stats.ts's aggregation)
+│       ├── sequence_node_stat_bonuses.json # bundled copy, NOT auto-mirrored by any script -- copy by hand if it changes
+│       └── (+ raw copies of character_stat_curves/weapon_stat_curves/weapon_passive_bonuses/echo_catalog/echo_sets/
+│             echo_stat_curves/sequence_stat_nodes.json, for stats.ts's aggregation -- echo_sets.json/echo_stat_curves.json
+│             ARE auto-mirrored by fetch_echo_data.py now, echo_catalog.json needs download_echo_images.py, see Commands)
 └── frontend/
     ├── .env.example               # VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY -- copy to .env (gitignored)
     ├── public/data/              # frontend's own copy of data/*.json — see frontend.md
