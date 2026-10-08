@@ -3647,5 +3647,145 @@
         ]
       }
     ]
+  },
+  "1212": {
+    "name": "Jingran",
+    "element": "Fusion",
+    "synopsis": "Jingran is a Fusion Heavy Attack Main DPS who cycles between Yang Font and Yin Vessel, generating Qi to unleash powerful Forte Heavy Attacks. His kit heavily rewards Max HP, converting it into ATK, Fusion DMG Bonus, stronger Shields, and increased Heavy Attack multipliers.",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "75.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "265.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "118.0%"
+      },
+      {
+        "stat": "HP",
+        "target": "50000"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Myriad Snare: Rustfire Chassis",
+      "sets": [
+        "Lamp of Nether Road"
+      ]
+    },
+    "recommendedWeapons": [
+      "Thousandfold Deliverance",
+      "Thunderflare Dominion",
+      "Verdant Summit"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 6
+      }
+    ],
+    "rotationNotes": "Jingran gains significant offensive bonuses from Max HP: Every 1,000 Max HP grants 36 ATK, up to 1,800 ATK. Every 1,000 Max HP grants 1.5% Fusion DMG Bonus, up to 75%. During Yinghuo, Max HP above 25,000 further increases the DMG Multipliers of Soul Raid and Stardome Meander. These effects effectively reach their maximum at 50,000 Max HP.\n\nJingran's gameplay revolves around Qi, which has a maximum of 300. His Resonance Skill follow-ups, Dodge Counters, Intro Skill, and later Basic Attack stages rapidly generate Qi. Once he reaches 300 Qi, he can consume all of it to perform his Forte Heavy Attack, which also switches him between his Yang and Yin states. \nAfter casting his Resonance Liberation, Jingran gains 200 Qi, 100 Fire of Life, and 3 stacks of Wayfarer's Mark. Each Wayfarer's Mark refunds 200 Qi after a Forte Heavy Attack, meaning Jingran only needs to generate another 100 Qi before using his next one. \nDuring his Liberation state, his Forte Heavy Attacks also consume Fire of Life for increased damage and trigger an additional instance of Heavy Attack DMG.\nBasic Rotation\nJingran's basic rotation is to Intro Skill into Jingran after using your supports to buff him, then immediately cast his Resonance Liberation. His Intro Skill grants 100 Qi and his Liberation grants another 200, allowing him to immediately cast his first Forte Heavy Attack. \nFrom here, use Jingran's Basic Attacks, Resonance Skill follow-ups, or Dodge Counter to generate the additional 100 Qi needed between each Forte Heavy Attack. Wayfarer's Mark refunds 200 Qi after the first three Heavy Attacks, allowing Jingran to chain up to 4 empowered Forte Heavy Attacks during his Liberation window.",
+    "teamComps": [
+      {
+        "main": "Iuno",
+        "spares": [
+          "Lupa",
+          "Mortefi"
+        ]
+      },
+      {
+        "main": "Shorekeeper",
+        "spares": [
+          "Brant"
+        ]
+      }
+    ]
+  },
+  "1311": {
+    "name": "Hsin",
+    "element": "Electro",
+    "synopsis": "Hsin is an Electro Rectifier Resonator whose primary damage is considered Resonance Skill DMG. She is a Main DPS with two distinct gameplay modes: Unison and Electro Flare.",
+    "statThresholds": [
+      {
+        "stat": "Crit. Rate",
+        "target": "75.0%"
+      },
+      {
+        "stat": "Crit. DMG",
+        "target": "265.0%"
+      },
+      {
+        "stat": "Energy Regen",
+        "target": "118.0%"
+      }
+    ],
+    "recommendedEcho": {
+      "name": "Reminiscence: Suhsin the Inevitable",
+      "sets": [
+        "Heart of Sworn Vigil"
+      ]
+    },
+    "recommendedWeapons": [
+      "Blooming Jadehaven",
+      "Lethean Elegy",
+      "Stringmaster"
+    ],
+    "talentPriority": [
+      {
+        "skill": "Resonance Liberation",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Forte Circuit",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Normal Attack",
+        "recommendLevel": 10
+      },
+      {
+        "skill": "Resonance Skill",
+        "recommendLevel": 8
+      },
+      {
+        "skill": "Intro Skill",
+        "recommendLevel": 8
+      }
+    ],
+    "rotationNotes": "Sample Rotation: Team builds Electro Rage &rarr; Intro Hsin &rarr; Resonance Skill &rarr; Fill Forte&rarr; Heavy Attack &rarr; Formshift &rarr; Build Forte &rarr; Pillars Aligned &rarr; Spam Basics to 0 &rarr; Hold Basic &rarr; Pillars Across Heaven.\n\nHsin has two main gameplay modes, Unison and Electro Flare. Her Unison Mode allows her to trigger her Outro Skill without consuming Concerto Energy, enabling frequent swaps and team buffs, meanwhile her Electro Flare Mode allows her to utilize the Electro Flare debuff to overwhelm enemies.\nHsin gains stacks of Heart of Thunder by utilizing the team to inflict the Electro Rage debuff. Heart of Thunder can stack up to 100. Upon using Hsin's Intro Skill, she will begin in Answering Form. Her Intro Skill contributes to her Forte Gauge, Answering Heart, and also inflicts Electro Flare.\nUsing her Resonance Skill: Heartward by Moon triggers additional Electro Flare DMG based on Hsin's Heart of Thunder stacks and the target's current Electro Flare stacks. Continue attacking to fill Answering Heart and unlock her Enhanced Heavy Attack.\nUtilizing her Enhanced Heavy Attack unlocks her Resonance Liberation, allowing Hsin to enter Illumining Form while immediately inflicting 5 Electro Flare stacks on nearby targets.\nIn Illumining Form, use Basic Attacks and Resonance Skill to fill her new Forte Gauge. After Formshift, collapsing the Modular Heartlock grants 150 Illumining Heart, greatly speeding up this process. Once the gauge is full, Resonance Skill: Pillars Aligned becomes available, allowing Hsin to enter Mechanism Dominion.\nContinue using Basic Attacks to drain the Forte Gaugewhile applying additional Electro Flare. Once the Forte Gauge is depleted, use Hsin's Heavy Attack to cast Beholding All Horizons, unlocking her Enhanced Resonance Liberation. Finish the rotation by collapsing the world with Resonance Liberation: Pillars Across Heaven.",
+    "teamComps": [
+      {
+        "main": "Rover: Electro",
+        "spares": [
+          "Chisa",
+          "Jinhsi"
+        ]
+      },
+      {
+        "main": "Buling",
+        "spares": [
+          "Suisui"
+        ]
+      }
+    ]
   }
 }

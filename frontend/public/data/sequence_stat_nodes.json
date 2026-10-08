@@ -757,6 +757,48 @@
         }
       ]
     },
+    "1212": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "HP",
+          "value": 1.8
+        },
+        {
+          "stat": "HP",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
     "1301": {
       "normal_attack": [
         {
@@ -1094,6 +1136,48 @@
       ]
     },
     "1309": {
+      "normal_attack": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ],
+      "resonance_skill": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "resonance_liberation": [
+        {
+          "stat": "ATK",
+          "value": 1.8
+        },
+        {
+          "stat": "ATK",
+          "value": 4.2
+        }
+      ],
+      "intro_skill": [
+        {
+          "stat": "Crit. Rate",
+          "value": 1.2
+        },
+        {
+          "stat": "Crit. Rate",
+          "value": 2.8
+        }
+      ]
+    },
+    "1311": {
       "normal_attack": [
         {
           "stat": "Crit. Rate",

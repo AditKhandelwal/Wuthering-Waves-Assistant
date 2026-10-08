@@ -917,6 +917,15 @@
     "effectName": "Definite Solution",
     "effectDescription": "Increases DEF by (16%/20%/24%/28%/32%). Casting Resonance Skill restores (8/10/12/14/16) points of Concerto Energy. This effect can be triggered (1/1/1/1/1) {Cus:Sap,S=time P=times SapTag=3} every (20/20/20/20/20)s. When the wielder heals Resonators, increases Crit. DMG of all nearby Resonators in the team by (20%/25%/30%/35%/40%) for (4/4/4/4/4)s. Effects of the same name cannot be stacked."
   },
+  "21010076": {
+    "gbId": "21010076",
+    "name": "Thousandfold Deliverance",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/92d12a0617574d314014160426f7d7c5/310e79fa5e1e09692cff66773a66374f.png",
+    "star": 5,
+    "weaponType": "Broadblade",
+    "effectName": "Hark, Spirits and Stars",
+    "effectDescription": "Grants (12%/15%/18%/21%/24%) All-Attribute DMG Bonus. Casting Intro Skill or gaining a Shield as the active Resonator grants 1 stack of Nature's Order and 1 stack of Cradle of Life. This effect can be triggered via gaining a Shield once every 0.5s, stacking up to (6/6/6/6/6) {Cus:Sap,S=time P=times SapTag=1}, lasting for (7/7/7/7/7)s. Switching to another Resonator ends both Nature's Order and Cradle of Life immediately.\nNature's Order: Crit. DMG is increased by (6%/7.5%/9%/10.5%/12%), up to (36%/45%/54%/63%/72%). When Nature's Order reaches (6/6/6/6/6) {Cus:Sap,S=stack P=stacks SapTag=A}, the Crit. Rate of Heavy Attack DMG is increased by (12%/15%/18%/21%/24%).\nCradle of Life: Casting Heavy Attack consumes up to (2/2/2/2/2) stacks of Cradle of Life. For every (1/1/1/1/1) {Cus:Sap,S=stack P=stacks SapTag=6} of Cradle of Life consumed, Heavy Attack DMG ignores (15%/17.5%/20%/22.5%/25%) of the target's DEF, up to (30%/35%/40%/45%/50%). The effect lasts for (2/2/2/2/2)s."
+  },
   "21020066": {
     "gbId": "21020066",
     "name": "Emerald Sentence",
@@ -1060,5 +1069,14 @@
     "weaponType": "Rectifier",
     "effectName": "Spring Wreath",
     "effectDescription": "Increases Max HP by (12%/15%/18%/21%/24%). Casting Resonance Liberation restores (8/10/12/14/16) points of Concerto Energy, triggered once every 20s. Inflicting Glacio Chafe grants Snow Taint for 6s. Applying healing grants Ripples for 6s. If the wielder has done both while on the field, the next Outro Skill grants both effects for 6s. When the wielder has both Snow Taint and Ripples, the ATK of all nearby Resonators in the team is increased by (20%/25%/30%/35%/40%). Effects of the same name do not stack."
+  },
+  "21050116": {
+    "gbId": "21050116",
+    "name": "Blooming Jadehaven",
+    "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ad03590323a97804c7ddb800a7ecf1e2/a7174bcea14ad301b0c81e45597ced9d.png",
+    "star": 5,
+    "weaponType": "Rectifier",
+    "effectName": "Hundredfold Artifice",
+    "effectDescription": "Grants (12%/15%/18%/21%/24%) All-Attribute DMG Bonus. After the wielder inflicts Electro Flare or triggers Unison Response, Resonance Skill DMG is Amplified by (36%/45%/54%/63%/72%) and ignores (10%/13.5%/17%/20.5%/24%) of the target's Electro RES. While the wielder is the active Resonator, Electro Flare DMG taken by targets within a certain range is Amplified by (30%/37.5%/45%/52.5%/60%) for (30/30/30/30/30)s, triggered (1/1/1/1/1) {Cus:Sap,S=time P=times SapTag=6} every (0.1/0.1/0.1/0.1/0.1)s. Only the strongest effect of the same name applies."
   }
 }

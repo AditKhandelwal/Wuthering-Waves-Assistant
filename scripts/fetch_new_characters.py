@@ -33,8 +33,11 @@ HEADERS = {
 CHARS_PATH = "data/wuwa_characters.json"
 FRONTEND_COPY_PATH = "frontend/public/data/wuwa_characters.json"
 
-# Qingxiao (1413) -- new resonator, guide id 14131.
-NEW_ROLE_IDS = [1413]
+# Jingran (1212, Fusion/Broadblade) and Hsin (1311, Electro/Rectifier) --
+# both confirmed live via guide-server as of 2026-10-07 (brute-force probed
+# via the Arikatsu datamine's roleinfo.json first, which revealed these two
+# plus a third still-unreleased id, 1312 "Suoming" -- not included here).
+NEW_ROLE_IDS = [1212, 1311]
 
 
 def fetch_json(url):

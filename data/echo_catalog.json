@@ -7,16 +7,6 @@
   },
   "echoes": [
     {
-      "name": "Thousand-Puppet Pavilion",
-      "cost": 4,
-      "category": "Calamity",
-      "setNames": [
-        "Song of Feathered Trace"
-      ],
-      "kuroGbId": "60002185",
-      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/01df3b8679baec0ef6c69d49152d3c91/65ef1dcbfed1327b010b48ed74d92d96.png"
-    },
-    {
       "name": "Feilian Beringal",
       "cost": 4,
       "category": "Overlord",
@@ -57,16 +47,6 @@
       "pictureUrl": "/echo-images/3d61962c3053a6ef5dd93ef335995798.png"
     },
     {
-      "name": "Nightmare: Mourning Aix",
-      "cost": 4,
-      "category": "Overlord",
-      "setNames": [
-        "Eternal Radiance"
-      ],
-      "kuroGbId": "60000925",
-      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/9aadf508ea76f4577c22141efe8d39d9.png"
-    },
-    {
       "name": "Mourning Aix",
       "cost": 4,
       "category": "Overlord",
@@ -75,6 +55,16 @@
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/80903c8dbfbb66b0e0687d09c7d0a054.png"
+    },
+    {
+      "name": "Nightmare: Mourning Aix",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Eternal Radiance"
+      ],
+      "kuroGbId": "60000925",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/9aadf508ea76f4577c22141efe8d39d9.png"
     },
     {
       "name": "Lampylumen Myriad",
@@ -149,6 +139,17 @@
       "pictureUrl": "/echo-images/fa13eb97d73d1e84ad90ac595b92addb.png"
     },
     {
+      "name": "Thousand-Puppet Pavilion",
+      "cost": 4,
+      "category": "Calamity",
+      "setNames": [
+        "Song of Feathered Trace",
+        "Flower of Tinged Yearning"
+      ],
+      "kuroGbId": "60002185",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/01df3b8679baec0ef6c69d49152d3c91/65ef1dcbfed1327b010b48ed74d92d96.png"
+    },
+    {
       "name": "Mech Abomination",
       "cost": 4,
       "category": "Overlord",
@@ -188,8 +189,8 @@
         "Heart of Evil's Purge",
         "Lamp of Nether Road"
       ],
-      "kuroGbId": null,
-      "pictureUrl": "/echo-images/c8c5e35c2290152c2e2418105be50f72.png"
+      "kuroGbId": "60002175",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/01df3b8679baec0ef6c69d49152d3c91/786293d9ec44f9ed335cb45ab94b6331.png"
     },
     {
       "name": "Tempest Mephis",
@@ -233,16 +234,6 @@
       "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/a01dd069a584a959af6692a4e47fd176.png"
     },
     {
-      "name": "Inferno Rider",
-      "cost": 4,
-      "category": "Overlord",
-      "setNames": [
-        "Molten Rift"
-      ],
-      "kuroGbId": null,
-      "pictureUrl": "/echo-images/913556794499a8f9f15bbd17bd4c7a16.png"
-    },
-    {
       "name": "Nightmare: Inferno Rider",
       "cost": 4,
       "category": "Overlord",
@@ -251,6 +242,16 @@
       ],
       "kuroGbId": "60000915",
       "pictureUrl": "https://guide-res.aki-game.net/introduction/material/526f4dcd93bf086e215372c967ae67b5/f7e254be0eacd91a0f0f1d26fa471317.png"
+    },
+    {
+      "name": "Inferno Rider",
+      "cost": 4,
+      "category": "Overlord",
+      "setNames": [
+        "Molten Rift"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "/echo-images/913556794499a8f9f15bbd17bd4c7a16.png"
     },
     {
       "name": "Lorelei",
@@ -449,6 +450,17 @@
       "pictureUrl": "https://guide-res.aki-game.net/introduction/material/04082f72b98685d77b2c17dcf63417e2/8081238c0445080be0decacbf34552f0.png"
     },
     {
+      "name": "Reminiscence: Suhsin the Inevitable",
+      "cost": 4,
+      "category": "Calamity",
+      "setNames": [
+        "Heart of Sworn Vigil",
+        "Flash of Electric Reflection"
+      ],
+      "kuroGbId": "60002255",
+      "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1c27ce1fe7e633679092f5e5500e55c5/cbd6adafcc618566b3afa059291c182b.png"
+    },
+    {
       "name": "Abyssal Gladius",
       "cost": 3,
       "category": "Elite",
@@ -628,6 +640,17 @@
       ],
       "kuroGbId": "60002165",
       "pictureUrl": "https://guide-res.aki-game.net/introduction/material/01df3b8679baec0ef6c69d49152d3c91/08f38655b6997ddc317fd657898288eb.png"
+    },
+    {
+      "name": "Formrender",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Heart of Sworn Vigil",
+        "Flower of Tinged Yearning"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "/echo-images/331182a3162ea69d7e09b32f4d15165f.png"
     },
     {
       "name": "Frostbite Coleoid",
@@ -918,6 +941,28 @@
       "pictureUrl": "/echo-images/38622c6067e4d79d4ca30eb9cf61be8c.png"
     },
     {
+      "name": "Skywatch Lancer",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Flash of Electric Reflection",
+        "Flower of Tinged Yearning"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "/echo-images/ffff91dca62dca3414e0696e2db538de.png"
+    },
+    {
+      "name": "Soulfrayer",
+      "cost": 3,
+      "category": "Elite",
+      "setNames": [
+        "Heart of Sworn Vigil",
+        "Flash of Electric Reflection"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "/echo-images/8dd73655c2ec1d7e46bcc70077c2e9bd.png"
+    },
+    {
       "name": "Spacetrek Explorer",
       "cost": 3,
       "category": "Elite",
@@ -1078,7 +1123,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Heart of Evil's Purge"
+        "Heart of Evil's Purge",
+        "Flash of Electric Reflection"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/c656031b72d5866a6ce59ad9f0ff19c0.png"
@@ -1094,6 +1140,16 @@
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/01a543c0df96f4aa67fbcb45379d026d.png"
+    },
+    {
+      "name": "Bloomburst Puppet",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Heart of Sworn Vigil"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "/echo-images/9d682e3a1fe326077d70a52430ad1493.png"
     },
     {
       "name": "Calcified Junrock",
@@ -1307,7 +1363,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Song of Feathered Trace"
+        "Song of Feathered Trace",
+        "Heart of Sworn Vigil"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/d21562055c1edba9331bd32828f47f97.png"
@@ -1317,7 +1374,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Song of Feathered Trace"
+        "Song of Feathered Trace",
+        "Heart of Sworn Vigil"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/17cf53411de7e3ce4366d67e9fa61edc.png"
@@ -1540,11 +1598,22 @@
       "pictureUrl": "/echo-images/3a2c7cc8fd58aa262026ef0bf5133dfc.png"
     },
     {
+      "name": "Jade Nether Serpent",
+      "cost": 1,
+      "category": "Common",
+      "setNames": [
+        "Heart of Sworn Vigil"
+      ],
+      "kuroGbId": null,
+      "pictureUrl": "/echo-images/a41713602105369be8f1ea052164ba98.png"
+    },
+    {
       "name": "Kernel Puppet: Anger",
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Heart of Evil's Purge"
+        "Heart of Evil's Purge",
+        "Heart of Sworn Vigil"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/08eb89a2e743ddbb14a77f4d76444602.png"
@@ -1554,7 +1623,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Lamp of Nether Road"
+        "Lamp of Nether Road",
+        "Flower of Tinged Yearning"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/7853d5d965b326d7dd5d335bdfb29b26.png"
@@ -1564,7 +1634,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Lamp of Nether Road"
+        "Lamp of Nether Road",
+        "Flower of Tinged Yearning"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/6d79a02e83e95fe4a182fe9598dfdd4d.png"
@@ -1574,7 +1645,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Song of Feathered Trace"
+        "Song of Feathered Trace",
+        "Flower of Tinged Yearning"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/b596923ca510c57ceb9a2ba1ec907dc0.png"
@@ -1584,7 +1656,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Heart of Evil's Purge"
+        "Heart of Evil's Purge",
+        "Flower of Tinged Yearning"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/e63822663b5982c72ba40475d1da8bee.png"
@@ -1594,7 +1667,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Heart of Evil's Purge"
+        "Heart of Evil's Purge",
+        "Flash of Electric Reflection"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/b3466ea5d52ee0ded1ab47d4bf992c3a.png"
@@ -1763,7 +1837,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Lamp of Nether Road"
+        "Lamp of Nether Road",
+        "Flash of Electric Reflection"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/462e71d3b2f5eb839e9097fdcdbfc3d6.png"
@@ -1875,7 +1950,8 @@
       "cost": 1,
       "category": "Common",
       "setNames": [
-        "Lamp of Nether Road"
+        "Lamp of Nether Road",
+        "Flash of Electric Reflection"
       ],
       "kuroGbId": null,
       "pictureUrl": "/echo-images/b7c7ecc545b0c76b1de65291e29acc2a.png"
