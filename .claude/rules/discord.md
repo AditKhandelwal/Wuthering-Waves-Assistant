@@ -130,17 +130,63 @@ filesystem access (`fs` doesn't exist there) and the full
 response budget. Rerun that script (and redeploy) whenever
 `agent_character_guides.json` changes.
 
-**Reply is a Discord embed, not plain text** — inline `fields` (name +
-element emoji / value = level) render as a grid, with a gold-accent color
-matching the site theme and a footer noting the build count. Discord
-embeds have no per-field icon slot (only one thumbnail/image for the
-*whole* embed), so a real per-character portrait next to each line isn't
-available without either >10 separate embeds (Discord's per-message cap —
-too few for a full roster) or a composed image (real server-side
-rendering, worth revisiting once `/build`'s screenshot pipeline exists and
-that infra can be reused) — element emoji is the practical substitute for
-now. Also capped at Discord's 25-field embed limit (`MAX_FIELDS`), showing
-the most-recently-updated builds first if a roster ever exceeds that.
+**Reply is a composed grid image of real character portraits, not text or
+an embed with fields** (switched 2026-10-16 — the user explicitly wanted
+actual photos, not an emoji substitute). Discord embeds have no per-field
+icon slot (only one thumbnail/image for the *whole* embed) and a message
+can hold at most 10 embeds, too few for a full roster — so the only way to
+get a real portrait next to every name is to render one single image
+server-side. Built with `@vercel/og`'s `ImageResponse`
+(`frontend/api/discord/_buildsImage.ts`, no default export — leading
+underscore is Vercel's own convention for "not a route" files under
+`api/`): Satori (layout) + resvg (rasterize to PNG), both pure JS/WASM, so
+this stays on the Edge runtime rather than needing a separate Node
+function. The element tree is written as plain `{type, props}` object
+literals, not JSX — `ImageResponse` accepts anything shaped like a React
+element, and a plain object is exactly that shape without needing a
+`.tsx` extension or a JSX pragma in `tsconfig.api.json`. Satori requires
+an explicit `display: "flex"` (or `"none"`) on every element with
+children; it doesn't support default block layout like a real browser.
+Portraits come from `cardPictureUrl` in `frontend/api/discord/
+characters.json` (added to the extract alongside name/element 2026-10-16,
+pulled from `data/wuwa_characters.json`'s `role.cardPictureUrl` — same
+field the frontend's own `CharacterCard.tsx` uses, so the Discord image
+matches the site's real portraits), fetched directly by Satori at render
+time (remote `<img src>` is a supported, core use case). A character with
+no picture URL gets a plain dark circle instead of a broken image. No
+field/count cap — image real estate scales with rows, unlike the earlier
+embed-fields approach's 25-field ceiling.
+
+**Deferred response, not an immediate one.** Composing the image means
+fetching every portrait URL plus the DB lookups, which can easily exceed
+Discord's 3-second initial-response budget — especially for a large
+roster. `handleBuilds()` now returns
+`DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE` (type 5) immediately and kicks off
+the real work (`sendBuildsFollowup()`) via `waitUntil()` from
+`@vercel/functions` (Edge-compatible background continuation after the
+response is sent). The follow-up work edits the deferred placeholder via
+Discord's webhook message-edit endpoint (`PATCH
+.../webhooks/{application_id}/{interaction_token}/messages/@original`,
+multipart with a `payload_json` + `files[0]` part for the PNG) — no bot
+token needed for this call, the interaction's own token authorizes it,
+and it's valid for 15 minutes, far more headroom than the original 3
+seconds. This is the first use of the deferred-response pattern in this
+project; `/build`'s screenshot piece (see below) will reuse it.
+
+**Verifying this locally, since it's genuinely new territory (first image
+generation in this project):** `@vercel/og`'s own wrapper doesn't resolve
+cleanly under a plain Node/tsx harness (it dynamic-`require`s `fs` inside
+what Node treats as an ESM edge-light-conditional module, and forcing
+`--conditions=edge-light` then trips on a WASM import). Worked around by
+calling `satori` + `@resvg/resvg-wasm` directly instead — the same
+pipeline `@vercel/og`'s edge build uses internally, just without its
+runtime-detection wrapper — which rendered a 7-portrait test grid in
+~500ms including a real remote image fetch and produced a valid PNG,
+visually confirmed correct (gold-ringed circular portraits, grid layout,
+placeholder circle for a missing picture). Good enough confidence to ship
+without a true end-to-end Vercel Edge test, which isn't locally viable
+(same "test against the real deployed thing" limitation as the Supabase
+agent function and the interactions endpoint itself).
 
 **Gotcha hit building this — do NOT use `with { type: "json" }` on JSON
 imports in `frontend/api/`:** it satisfies Vercel's build-time type-check

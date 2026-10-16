@@ -8,9 +8,9 @@
 // within 3 seconds of a command being invoked.
 //
 // PING/PONG handshake and /link verified end-to-end in production
-// 2026-10-16 (see discord.md); /builds added same day, not yet verified
-// live. /build (the screenshot one) still lands on the fallback reply
-// below.
+// 2026-10-16 (see discord.md); /builds (now a deferred response + a
+// composed grid image, added same day) not yet verified live. /build (the
+// screenshot one) still lands on the fallback reply below.
 import {
   InteractionResponseFlags,
   InteractionResponseType,
@@ -18,6 +18,8 @@ import {
   verifyKey,
 } from "discord-interactions";
 import { createClient } from "@supabase/supabase-js";
+import { waitUntil } from "@vercel/functions";
+import { renderBuildsGrid, type BuildCell } from "./_buildsImage";
 // Vercel's build-time type-check reports a TS1543 here (resolves `module`
 // as NodeNext for api/ functions regardless of tsconfig.api.json's
 // "esnext" setting, which wants an import attribute) -- that's a
@@ -36,23 +38,10 @@ const LINK_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 // int -- Discord embed colors take int, not hex string.
 const EMBED_COLOR = 0xc9a24b;
 
-// Discord embeds have no per-field icon slot (only one thumbnail/image for
-// the whole embed), so a per-character portrait next to each line isn't
-// available without either >10 separate embeds (Discord's per-message cap,
-// too few for a full roster) or a composed image (real server-side
-// rendering -- saved for when /build's screenshot pipeline exists and can
-// be reused). Element emoji is the practical substitute.
-const ELEMENT_EMOJI: Record<string, string> = {
-  Glacio: "❄️",
-  Fusion: "🔥",
-  Electro: "⚡",
-  Aero: "🌪️",
-  Spectro: "✨",
-  Havoc: "🌑",
-};
-
 interface DiscordInteraction {
   type: number;
+  application_id: string;
+  token: string;
   data?: { name?: string };
   member?: { user?: { id: string; username: string } };
   user?: { id: string; username: string };
@@ -65,11 +54,45 @@ function ephemeralReply(content: string): Response {
   });
 }
 
-function ephemeralEmbedReply(embed: Record<string, unknown>): Response {
+function deferredReply(): Response {
   return Response.json({
-    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-    data: { embeds: [embed], flags: InteractionResponseFlags.EPHEMERAL },
+    type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+    data: { flags: InteractionResponseFlags.EPHEMERAL },
   });
+}
+
+// The webhook endpoint for editing a deferred response -- no bot token
+// needed, the interaction's own token authorizes this. Valid for 15
+// minutes after the interaction fires, far more headroom than the
+// original 3-second budget, which is the whole point of deferring.
+function originalMessageUrl(interaction: DiscordInteraction): string {
+  return `https://discord.com/api/v10/webhooks/${interaction.application_id}/${interaction.token}/messages/@original`;
+}
+
+async function editOriginalText(interaction: DiscordInteraction, content: string): Promise<void> {
+  await fetch(originalMessageUrl(interaction), {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content }),
+  });
+}
+
+async function editOriginalWithImage(
+  interaction: DiscordInteraction,
+  imageBuffer: ArrayBuffer,
+  footerText: string,
+): Promise<void> {
+  const formData = new FormData();
+  formData.append(
+    "payload_json",
+    JSON.stringify({
+      embeds: [{ color: EMBED_COLOR, image: { url: "attachment://builds.png" }, footer: { text: footerText } }],
+      attachments: [{ id: 0, filename: "builds.png" }],
+    }),
+  );
+  formData.append("files[0]", new Blob([imageBuffer], { type: "image/png" }), "builds.png");
+
+  await fetch(originalMessageUrl(interaction), { method: "PATCH", body: formData });
 }
 
 // Reuses the frontend's own Supabase project config -- VITE_-prefixed env
@@ -130,12 +153,18 @@ async function handleLink(interaction: DiscordInteraction): Promise<Response> {
   return ephemeralReply(`Click to link your account (expires in 10 minutes): ${SITE_URL}/link/${code}`);
 }
 
-async function handleBuilds(interaction: DiscordInteraction): Promise<Response> {
+// The real work here -- DB lookups plus composing a grid image that
+// fetches ~N remote portrait URLs -- can easily exceed Discord's 3-second
+// initial-response budget, so handleBuilds() defers immediately and this
+// runs afterward via waitUntil(), editing the deferred placeholder once
+// it's done (up to 15 minutes allowed).
+async function sendBuildsFollowup(interaction: DiscordInteraction): Promise<void> {
   const discordUser = interaction.member?.user ?? interaction.user;
   const supabase = getServiceClient();
 
   if (!discordUser || !supabase) {
-    return ephemeralReply("Something's misconfigured -- try again later.");
+    await editOriginalText(interaction, "Something's misconfigured -- try again later.");
+    return;
   }
 
   const { data: link } = await supabase
@@ -145,7 +174,8 @@ async function handleBuilds(interaction: DiscordInteraction): Promise<Response> 
     .maybeSingle();
 
   if (!link) {
-    return ephemeralReply("You haven't linked your account yet -- run /link first.");
+    await editOriginalText(interaction, "You haven't linked your account yet -- run /link first.");
+    return;
   }
 
   const { data: builds, error } = await supabase
@@ -155,40 +185,34 @@ async function handleBuilds(interaction: DiscordInteraction): Promise<Response> 
     .order("updated_at", { ascending: false });
 
   if (error) {
-    return ephemeralReply("Couldn't load your builds -- try again later.");
+    await editOriginalText(interaction, "Couldn't load your builds -- try again later.");
+    return;
   }
   if (!builds || builds.length === 0) {
-    return ephemeralReply("No saved builds yet -- go build a character on the site first.");
+    await editOriginalText(interaction, "No saved builds yet -- go build a character on the site first.");
+    return;
   }
 
-  const charMap: Record<string, { name: string; element: string | null }> = characters;
-  // Discord hard-caps embeds at 25 fields -- builds is already sorted
-  // most-recently-updated first, so a truncation keeps the most relevant
-  // ones.
-  const MAX_FIELDS = 25;
-  const shown = builds.slice(0, MAX_FIELDS);
-  const fields = shown.map((b) => {
+  const charMap: Record<string, { name: string; cardPictureUrl: string | null }> = characters;
+  const cells: BuildCell[] = builds.map((b) => {
     const char = charMap[b.role_gb_id];
-    const emoji = char?.element ? (ELEMENT_EMOJI[char.element] ?? "") : "";
-    const name = char?.name ?? `Unknown (${b.role_gb_id})`;
     return {
-      name: `${emoji} ${name}`.trim(),
-      value: `Lv ${b.character_level}/90`,
-      inline: true,
+      name: char?.name ?? `Unknown (${b.role_gb_id})`,
+      level: b.character_level,
+      pictureUrl: char?.cardPictureUrl ?? null,
     };
   });
 
-  const footerText =
-    builds.length > MAX_FIELDS
-      ? `Showing ${MAX_FIELDS} most recently updated of ${builds.length} saved builds`
-      : `${builds.length} saved build${builds.length === 1 ? "" : "s"}`;
+  const imageResponse = await renderBuildsGrid(`${discordUser.username}'s Builds`, cells);
+  const imageBuffer = await imageResponse.arrayBuffer();
+  const footerText = `${builds.length} saved build${builds.length === 1 ? "" : "s"}`;
 
-  return ephemeralEmbedReply({
-    title: `${discordUser.username}'s Builds`,
-    color: EMBED_COLOR,
-    fields,
-    footer: { text: footerText },
-  });
+  await editOriginalWithImage(interaction, imageBuffer, footerText);
+}
+
+function handleBuilds(interaction: DiscordInteraction): Response {
+  waitUntil(sendBuildsFollowup(interaction));
+  return deferredReply();
 }
 
 export default async function handler(req: Request): Promise<Response> {

@@ -325,11 +325,14 @@ wuwa-agent/
     ├── .env.example               # VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY -- copy to .env (gitignored)
     ├── api/                       # Vercel serverless functions -- NOT part of the Vite app, own tsconfig.api.json
     │   └── discord/
-    │       └── interactions.ts   # Discord's HTTP interactions endpoint (Edge runtime) -- see discord.md.
-    │                              # Only the PING/PONG handshake exists so far, no real commands yet.
+    │       ├── interactions.ts   # Discord's HTTP interactions endpoint (Edge runtime) -- see discord.md.
+    │       │                      # PING, /link, /builds done; /build (screenshot) not yet.
+    │       ├── _buildsImage.ts   # composes /builds' portrait grid PNG (@vercel/og) -- not a route
+    │       │                      # (no default export, hence the leading underscore)
+    │       └── characters.json   # lean roleGbId -> {name, element, cardPictureUrl}, bundled no-runtime-fetch
     ├── public/data/              # frontend's own copy of data/*.json — see frontend.md
     ├── src/
-    │   ├── App.tsx                # react-router-dom: "/" (select), "/build/:characterId", "/builds", "/chat"
+    │   ├── App.tsx                # react-router-dom: "/" (select), "/build/:characterId", "/builds", "/chat", "/link/:code"
     │   ├── components/           # BuildCard, TalentGrid, EchoPicker, EchoImportModal, FinalStatsGrid,
     │   │                         #   Header, AuthModal, etc.
     │   ├── pages/                # CharacterSelectPage, BuildScreenPage, MyBuildsPage, ChatPage
