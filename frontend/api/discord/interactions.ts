@@ -7,9 +7,10 @@
 // lower cold-start, which matters because Discord requires a response
 // within 3 seconds of a command being invoked.
 //
-// PING/PONG handshake verified end-to-end in production 2026-10-16 (see
-// discord.md). /link is the first real command; /builds and /build still
-// land on the fallback reply below.
+// PING/PONG handshake and /link verified end-to-end in production
+// 2026-10-16 (see discord.md); /builds added same day, not yet verified
+// live. /build (the screenshot one) still lands on the fallback reply
+// below.
 import {
   InteractionResponseFlags,
   InteractionResponseType,
@@ -17,12 +18,27 @@ import {
   verifyKey,
 } from "discord-interactions";
 import { createClient } from "@supabase/supabase-js";
+import characterNames from "./character_names.json";
 
 export const config = { runtime: "edge" };
 
 const SITE_URL = "https://wuthering-waves-assistant.vercel.app";
 // No 0/O/1/I -- avoids visual ambiguity when a user retypes the code by hand.
 const LINK_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+interface DiscordInteraction {
+  type: number;
+  data?: { name?: string };
+  member?: { user?: { id: string; username: string } };
+  user?: { id: string; username: string };
+}
+
+function ephemeralReply(content: string): Response {
+  return Response.json({
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: { content, flags: InteractionResponseFlags.EPHEMERAL },
+  });
+}
 
 // Reuses the frontend's own Supabase project config -- VITE_-prefixed env
 // vars are still readable via process.env here, since that prefix only
@@ -31,11 +47,27 @@ const LINK_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 // client only ever touches discord_link_codes, a short-lived,
 // low-sensitivity table with its own permissive RLS policy -- see
 // discord.md and database.md.
-function getSupabase() {
+function getAnonClient() {
   const url = process.env.VITE_SUPABASE_URL;
   const anonKey = process.env.VITE_SUPABASE_ANON_KEY;
   if (!url || !anonKey) return null;
   return createClient(url, anonKey);
+}
+
+// /builds and /build have no site session to RLS-scope against at all --
+// only a Discord interaction, verified by its Ed25519 signature instead of
+// a Supabase JWT. The service-role key bypasses RLS entirely, so every
+// query made with it below is deliberately scoped in code: first resolve
+// discord_user_id (from the verified interaction payload, unspoofable) to
+// a user_id via discord_links, then filter user_characters by that
+// resolved user_id -- never by anything else a client could influence. A
+// documented, narrow exception to this app's general "no service-role key"
+// posture -- see database.md's discord_link_codes/discord_links section.
+function getServiceClient() {
+  const url = process.env.VITE_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !serviceKey) return null;
+  return createClient(url, serviceKey);
 }
 
 function generateLinkCode(): string {
@@ -44,21 +76,12 @@ function generateLinkCode(): string {
   return Array.from(bytes, (b) => LINK_CODE_ALPHABET[b % LINK_CODE_ALPHABET.length]).join("");
 }
 
-async function handleLink(interaction: {
-  member?: { user?: { id: string; username: string } };
-  user?: { id: string; username: string };
-}): Promise<Response> {
+async function handleLink(interaction: DiscordInteraction): Promise<Response> {
   const discordUser = interaction.member?.user ?? interaction.user;
-  const supabase = getSupabase();
+  const supabase = getAnonClient();
 
   if (!discordUser || !supabase) {
-    return Response.json({
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: "Linking isn't available right now -- try again later.",
-        flags: InteractionResponseFlags.EPHEMERAL,
-      },
-    });
+    return ephemeralReply("Linking isn't available right now -- try again later.");
   }
 
   const code = generateLinkCode();
@@ -69,22 +92,50 @@ async function handleLink(interaction: {
   });
 
   if (error) {
-    return Response.json({
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: "Couldn't generate a link code -- try again later.",
-        flags: InteractionResponseFlags.EPHEMERAL,
-      },
-    });
+    return ephemeralReply("Couldn't generate a link code -- try again later.");
   }
 
-  return Response.json({
-    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-    data: {
-      content: `Click to link your account (expires in 10 minutes): ${SITE_URL}/link/${code}`,
-      flags: InteractionResponseFlags.EPHEMERAL,
-    },
+  return ephemeralReply(`Click to link your account (expires in 10 minutes): ${SITE_URL}/link/${code}`);
+}
+
+async function handleBuilds(interaction: DiscordInteraction): Promise<Response> {
+  const discordUser = interaction.member?.user ?? interaction.user;
+  const supabase = getServiceClient();
+
+  if (!discordUser || !supabase) {
+    return ephemeralReply("Something's misconfigured -- try again later.");
+  }
+
+  const { data: link } = await supabase
+    .from("discord_links")
+    .select("user_id")
+    .eq("discord_user_id", discordUser.id)
+    .maybeSingle();
+
+  if (!link) {
+    return ephemeralReply("You haven't linked your account yet -- run /link first.");
+  }
+
+  const { data: builds, error } = await supabase
+    .from("user_characters")
+    .select("role_gb_id, character_level, updated_at")
+    .eq("user_id", link.user_id)
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    return ephemeralReply("Couldn't load your builds -- try again later.");
+  }
+  if (!builds || builds.length === 0) {
+    return ephemeralReply("No saved builds yet -- go build a character on the site first.");
+  }
+
+  const names: Record<string, string> = characterNames;
+  const lines = builds.map((b) => {
+    const name = names[b.role_gb_id] ?? `Unknown (${b.role_gb_id})`;
+    return `• **${name}** — Lv ${b.character_level}/90`;
   });
+
+  return ephemeralReply(lines.join("\n"));
 }
 
 export default async function handler(req: Request): Promise<Response> {
@@ -115,13 +166,11 @@ export default async function handler(req: Request): Promise<Response> {
     return Response.json({ type: InteractionResponseType.PONG });
   }
 
-  if (interaction.type === InteractionType.APPLICATION_COMMAND && interaction.data?.name === "link") {
-    return handleLink(interaction);
+  if (interaction.type === InteractionType.APPLICATION_COMMAND) {
+    if (interaction.data?.name === "link") return handleLink(interaction);
+    if (interaction.data?.name === "builds") return handleBuilds(interaction);
   }
 
-  // /builds and /build land here next.
-  return Response.json({
-    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-    data: { content: "This command isn't wired up yet." },
-  });
+  // /build lands here next.
+  return ephemeralReply("This command isn't wired up yet.");
 }

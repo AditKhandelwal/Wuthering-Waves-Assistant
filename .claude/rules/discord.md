@@ -107,15 +107,33 @@ knows the Discord user's id/username from the interaction itself.
   testing) via Discord's REST API — see "Registering commands" below for
   the exact request shape. Not yet registered globally.
 
-**Not built yet:** `/builds` and `/build {character_name}`. Both need the
-interactions function to resolve `discord_user_id -> user_id ->
-user_characters` with *no site session either* — anon-key RLS can't do
-that cross-table lookup safely, so this is expected to introduce a
-service-role key as a deliberate, narrowly-scoped exception (see
-`database.md`'s note at the end of that section). The screenshot-rendering
-piece for `/build` (headless Chromium, separate Node function + deferred
-response, see "Why Vercel Edge runtime" above) also isn't designed yet
-beyond that one paragraph.
+**`/builds` implemented 2026-10-16 (not yet verified live — just built).**
+`handleBuilds()` in `interactions.ts` resolves `discord_user_id -> user_id`
+via `discord_links`, then `user_id -> user_characters` rows, using a
+**service-role Supabase client** (`getServiceClient()`) — this is the
+deliberate, narrowly-scoped exception flagged in `database.md`: there's no
+site session to RLS-scope against at all here, only the Discord
+interaction's own (signature-verified, unspoofable) `discord_user_id`.
+Every query made with that client is scoped in code by a value derived
+from that verified identity, never by raw client input. New Vercel secret:
+`SUPABASE_SERVICE_ROLE_KEY` (Supabase dashboard → Project Settings → API →
+`service_role` key — **secret**, full DB access bypassing RLS, never paste
+it in chat, set directly in Vercel same as `DISCORD_BOT_TOKEN`). Character
+names resolved via `frontend/api/discord/character_names.json`, a lean
+`roleGbId -> name` map built by `scripts/build_discord_character_names.py`
+from `data/agent_character_guides.json` — same "small bundled extract, no
+runtime fetch" pattern as the agent's `weapon_names.json`/
+`character_guides.json`, needed because the Edge runtime has no
+filesystem access (`fs` doesn't exist there) and the full
+`wuwa_characters.json` is 4.6MB, nowhere near fitting Discord's 3-second
+response budget. Rerun that script (and redeploy) whenever
+`agent_character_guides.json` changes.
+
+**Not built yet:** `/build {character_name}` — the screenshot-rendering
+piece (headless Chromium, separate Node function + deferred response, see
+"Why Vercel Edge runtime" above) isn't designed yet beyond that one
+paragraph. It'll reuse the same service-role lookup pattern `/builds` now
+established.
 
 ## Registering commands
 

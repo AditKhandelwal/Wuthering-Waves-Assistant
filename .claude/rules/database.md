@@ -132,16 +132,16 @@ create policy "delete own link" on public.discord_links
   for delete using (auth.uid() = user_id);
 ```
 
-Not yet needed: a service-role key anywhere in the Discord function. That
-changes once `/builds`/`/build` get built — those need the interactions
-function to resolve `discord_user_id -> user_id -> user_characters` with
-**no site session either**, and anon-key RLS can't do that lookup across
-tables without leaking data more broadly. Expect that to introduce
-`SUPABASE_SERVICE_ROLE_KEY` as a new Vercel secret, used narrowly (only
-for a lookup keyed by the verified Discord interaction's own user id,
-never arbitrary client input) — a deliberate, documented exception to this
-app's general "no service-role key" posture (see `architecture.md`), not
-an oversight.
+`SUPABASE_SERVICE_ROLE_KEY` (implemented 2026-10-16, for `/builds`) — a
+new Vercel secret, used narrowly in `getServiceClient()`
+(`frontend/api/discord/interactions.ts`) only for lookups keyed by the
+verified Discord interaction's own user id, never arbitrary client input.
+`/builds` needs it because it resolves `discord_user_id -> user_id ->
+user_characters` with **no site session at all** — anon-key RLS can't do
+that lookup across tables without leaking data more broadly. A deliberate,
+documented exception to this app's general "no service-role key" posture
+(see `architecture.md`), not an oversight. `/build` (screenshot rendering)
+will reuse the same client once built.
 
 ### knowledge_chunks (RAG) — Phase 3, not built
 ```sql
