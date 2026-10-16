@@ -186,6 +186,7 @@ and structured echo set-bonus effects are the main remaining gaps).
 @.claude/rules/api.md
 @.claude/rules/database.md
 @.claude/rules/agent.md
+@.claude/rules/discord.md
 @.claude/rules/conventions.md
 @.claude/rules/frontend.md
 
@@ -279,6 +280,7 @@ wuwa-agent/
 │       ├── api.md               # Kuro guide API + dotgg.gg + Arikatsu datamine — accurate, actively used
 │       ├── database.md          # user_characters + Auth are LIVE; RAG tables deliberately not built
 │       ├── agent.md             # agent + chat UI design — LIVE, matches supabase/functions/agent/index.ts
+│       ├── discord.md           # Discord bot — JUST STARTED 2026-10-16, only the PING handshake exists
 │       ├── conventions.md
 │       └── frontend.md          # accurate, actively used
 ├── docs/
@@ -319,6 +321,10 @@ wuwa-agent/
 │             ARE auto-mirrored by fetch_echo_data.py now, echo_catalog.json needs download_echo_images.py, see Commands)
 └── frontend/
     ├── .env.example               # VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY -- copy to .env (gitignored)
+    ├── api/                       # Vercel serverless functions -- NOT part of the Vite app, own tsconfig.api.json
+    │   └── discord/
+    │       └── interactions.ts   # Discord's HTTP interactions endpoint (Edge runtime) -- see discord.md.
+    │                              # Only the PING/PONG handshake exists so far, no real commands yet.
     ├── public/data/              # frontend's own copy of data/*.json — see frontend.md
     ├── src/
     │   ├── App.tsx                # react-router-dom: "/" (select), "/build/:characterId", "/builds", "/chat"
