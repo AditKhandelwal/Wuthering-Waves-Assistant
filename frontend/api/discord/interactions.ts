@@ -8,11 +8,11 @@
 // within 3 seconds of a command being invoked.
 //
 // PING/PONG handshake and /link verified end-to-end in production
-// 2026-10-16. /builds is back to a plain-text reply -- a composed grid
-// image was tried the same day (see discord.md's git history / earlier
-// notes if revisiting) but scrapped to get functionality working first;
-// revisit the visual version later. /build (the screenshot one) still
-// lands on the fallback reply below.
+// 2026-10-16. /builds and /build are both plain-text replies for now --
+// a composed grid image for /builds was tried the same day (see
+// discord.md if revisiting) but scrapped to get functionality working
+// first. A real Build Card screenshot for /build is the eventual goal,
+// same reasoning, not built yet.
 import {
   InteractionResponseFlags,
   InteractionResponseType,
@@ -28,6 +28,7 @@ import { createClient } from "@supabase/supabase-js";
 // support that syntax and hard-fails the deploy ("Expected ';' but found
 // 'with'") -- confirmed 2026-10-16. Leave this plain; it works.
 import characters from "./characters.json";
+import weaponNames from "./weapon_names.json";
 
 export const config = { runtime: "edge" };
 
@@ -37,9 +38,22 @@ const LINK_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 interface DiscordInteraction {
   type: number;
-  data?: { name?: string };
+  data?: { name?: string; options?: { name: string; value?: string }[] };
   member?: { user?: { id: string; username: string } };
   user?: { id: string; username: string };
+}
+
+// Case-insensitive, exact match first then substring -- same resolution
+// order the agent's resolveCharacterId() uses (see agent.md), so a typo- or
+// casing-tolerant lookup behaves consistently across both surfaces.
+function resolveCharacterId(query: string): string | null {
+  const q = query.trim().toLowerCase();
+  if (!q) return null;
+  const entries = Object.entries(characters as Record<string, { name: string }>);
+  const exact = entries.find(([, c]) => c.name.toLowerCase() === q);
+  if (exact) return exact[0];
+  const partial = entries.find(([, c]) => c.name.toLowerCase().includes(q));
+  return partial ? partial[0] : null;
 }
 
 function ephemeralReply(content: string): Response {
@@ -147,6 +161,75 @@ async function handleBuilds(interaction: DiscordInteraction): Promise<Response> 
   return ephemeralReply(lines.join("\n"));
 }
 
+// Plain-text build summary for now -- a rendered Build Card screenshot
+// (matching the site's own BuildCard.tsx) is the eventual goal but needs
+// either headless Chromium (a separate Node function, Edge can't run it)
+// or a composed image, which /builds already tried and scrapped once for
+// being real complexity before the simple version even worked. Same
+// reasoning applies here: ship the data first.
+async function handleBuild(interaction: DiscordInteraction): Promise<Response> {
+  const discordUser = interaction.member?.user ?? interaction.user;
+  const characterQuery = interaction.data?.options?.find((o) => o.name === "character")?.value;
+  const supabase = getServiceClient();
+
+  if (!discordUser || !supabase) {
+    return ephemeralReply("Something's misconfigured -- try again later.");
+  }
+  if (!characterQuery) {
+    return ephemeralReply("Usage: /build character:<name>");
+  }
+
+  const roleGbId = resolveCharacterId(characterQuery);
+  if (!roleGbId) {
+    return ephemeralReply(`Couldn't find a character matching "${characterQuery}".`);
+  }
+
+  const { data: link } = await supabase
+    .from("discord_links")
+    .select("user_id")
+    .eq("discord_user_id", discordUser.id)
+    .maybeSingle();
+
+  if (!link) {
+    return ephemeralReply("You haven't linked your account yet -- run /link first.");
+  }
+
+  const charName = (characters as Record<string, { name: string }>)[roleGbId]?.name ?? roleGbId;
+
+  const { data: build, error } = await supabase
+    .from("user_characters")
+    .select("character_level, weapon_gb_id, weapon_level, weapon_rank, resonance_level, talent_levels")
+    .eq("user_id", link.user_id)
+    .eq("role_gb_id", roleGbId)
+    .maybeSingle();
+
+  if (error) {
+    return ephemeralReply("Couldn't load that build -- try again later.");
+  }
+  if (!build) {
+    return ephemeralReply(`You haven't saved a build for **${charName}** yet.`);
+  }
+
+  const names: Record<string, string> = weaponNames;
+  const weaponLine = build.weapon_gb_id
+    ? `${names[build.weapon_gb_id] ?? `Unknown (${build.weapon_gb_id})`} (Lv ${build.weapon_level}, Rank ${build.weapon_rank})`
+    : "None equipped";
+
+  // addPointTarget order -- see database.md's talent_levels column comment.
+  const [normalAttack, resonanceSkill, forteCircuit, resonanceLiberation, introSkill] = build.talent_levels ?? [
+    1, 1, 1, 1, 1,
+  ];
+
+  const lines = [
+    `**${charName}** — Lv ${build.character_level}/90`,
+    `Weapon: ${weaponLine}`,
+    `Resonance Chain: ${build.resonance_level}/6 unlocked`,
+    `Talents: Normal Attack ${normalAttack} | Resonance Skill ${resonanceSkill} | Forte Circuit ${forteCircuit} | Resonance Liberation ${resonanceLiberation} | Intro Skill ${introSkill}`,
+  ];
+
+  return ephemeralReply(lines.join("\n"));
+}
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
@@ -178,8 +261,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     if (interaction.data?.name === "link") return handleLink(interaction);
     if (interaction.data?.name === "builds") return handleBuilds(interaction);
+    if (interaction.data?.name === "build") return handleBuild(interaction);
   }
 
-  // /build lands here next.
   return ephemeralReply("This command isn't wired up yet.");
 }

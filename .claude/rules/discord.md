@@ -169,11 +169,22 @@ deploy (`Expected ';' but found 'with'`). A plain `import x from
 "./y.json"` works fine at runtime despite the cosmetic TS1543 — leave it
 alone.
 
-**Not built yet:** `/build {character_name}` — the screenshot-rendering
-piece (headless Chromium, separate Node function + deferred response, see
-"Why Vercel Edge runtime" above) isn't designed yet beyond that one
-paragraph. It'll reuse the same service-role lookup pattern `/builds` now
-established.
+**`/build {character}` implemented as a plain-text summary.** Takes a
+required string option (`character`), resolved to a `roleGbId` via
+`resolveCharacterId()` (case-insensitive, exact match first then
+substring — same order the agent's own resolver uses) against
+`characters.json`. Same `discord_user_id -> user_id` resolution as
+`/builds` (service-role client), then a single `user_characters` row
+filtered by `role_gb_id` too. Replies with level, weapon (resolved via
+`weapon_names.json`, newly mirrored into this directory by
+`scripts/build_agent_weapon_names.py` — see `api.md`), weapon level/rank,
+resonance chain progress, and all 5 talent levels labeled in
+`addPointTarget` order (see `database.md`'s `talent_levels` column
+comment). **Not built:** a real Build Card screenshot (headless
+Chromium, separate Node function + deferred response, see "Why Vercel
+Edge runtime" above) — deliberately deferred for the same reason
+`/builds`' image attempt got scrapped: ship the data first, visuals
+later.
 
 ## Registering commands
 
