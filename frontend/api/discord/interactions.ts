@@ -18,13 +18,14 @@ import {
   verifyKey,
 } from "discord-interactions";
 import { createClient } from "@supabase/supabase-js";
-// Vercel's own build-time type-check resolves `module` as NodeNext for
-// api/ functions regardless of tsconfig.api.json's "esnext" setting (seen
-// as a real TS1543 in deploy logs, non-fatal since the actual bundler
-// tolerated it, but a real mismatch worth fixing) -- the explicit import
-// attribute satisfies NodeNext and still works fine under bundler
-// resolution either way.
-import characterNames from "./character_names.json" with { type: "json" };
+// Vercel's build-time type-check reports a TS1543 here (resolves `module`
+// as NodeNext for api/ functions regardless of tsconfig.api.json's
+// "esnext" setting, which wants an import attribute) -- that's a
+// non-fatal diagnostic only. Do NOT add `with { type: "json" }` to
+// "fix" it: the actual bundler esbuild uses for api/ functions doesn't
+// support that syntax and hard-fails the deploy ("Expected ';' but found
+// 'with'") -- confirmed 2026-10-16. Leave this plain; it works.
+import characterNames from "./character_names.json";
 
 export const config = { runtime: "edge" };
 
