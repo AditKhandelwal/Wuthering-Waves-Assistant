@@ -77,6 +77,72 @@ character's 5-slot loadout. Echoes only ever exist as part of
 `user_characters.echoes` today. Reintroduce a separate table if a standalone
 inventory feature actually gets built.
 
+### discord_link_codes / discord_links (implemented 2026-10-16)
+
+Back the Discord bot's `/link` command (see `discord.md`) — code-based
+account linking, not OAuth2. Two tables because the two writers have
+different trust levels: `discord_link_codes` is written by the Discord
+Edge Function (`frontend/api/discord/interactions.ts`), which has **no
+Supabase session** at all (Discord's own Ed25519 signature is the only
+identity proof at that point, not a Supabase JWT) — so it talks to
+Supabase with the plain anon key, as the `anon` role. `discord_links` is
+written from the browser on the `/link/:code` confirm step, where the user
+already has a real signed-in session — same `auth.uid() = user_id` RLS
+pattern as `user_characters`, no anon access needed.
+
+```sql
+create table if not exists public.discord_link_codes (
+  code text primary key,                 -- 8 random chars, generated in interactions.ts
+  discord_user_id text not null,
+  discord_username text not null,
+  created_at timestamptz not null default now(),  -- 10-minute expiry checked at
+                                                    -- query time (lib/discordLink.ts),
+                                                    -- no cron/cleanup job
+  used_at timestamptz                    -- set on successful confirm; makes a code
+                                          -- single-use instead of deleting the row
+);
+
+alter table public.discord_link_codes enable row level security;
+
+-- Low-sensitivity, short-lived rows (a Discord id/username pair, not a
+-- credential) -- anon read/insert is an acceptable trade for not needing a
+-- service-role key in the Discord function. See discord.md.
+create policy "anon can insert a code" on public.discord_link_codes
+  for insert to anon with check (true);
+create policy "anyone can read a code by id" on public.discord_link_codes
+  for select using (true);
+create policy "authenticated can mark a code used" on public.discord_link_codes
+  for update to authenticated using (used_at is null) with check (used_at is not null);
+
+create table if not exists public.discord_links (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  discord_user_id text not null unique,  -- one Discord account links to one site account,
+                                          -- both directions (primary key + unique)
+  discord_username text not null,
+  linked_at timestamptz not null default now()
+);
+
+alter table public.discord_links enable row level security;
+
+create policy "select own link" on public.discord_links
+  for select using (auth.uid() = user_id);
+create policy "insert own link" on public.discord_links
+  for insert with check (auth.uid() = user_id);
+create policy "delete own link" on public.discord_links
+  for delete using (auth.uid() = user_id);
+```
+
+Not yet needed: a service-role key anywhere in the Discord function. That
+changes once `/builds`/`/build` get built — those need the interactions
+function to resolve `discord_user_id -> user_id -> user_characters` with
+**no site session either**, and anon-key RLS can't do that lookup across
+tables without leaking data more broadly. Expect that to introduce
+`SUPABASE_SERVICE_ROLE_KEY` as a new Vercel secret, used narrowly (only
+for a lookup keyed by the verified Discord interaction's own user id,
+never arbitrary client input) — a deliberate, documented exception to this
+app's general "no service-role key" posture (see `architecture.md`), not
+an oversight.
+
 ### knowledge_chunks (RAG) — Phase 3, not built
 ```sql
 CREATE TABLE knowledge_chunks (

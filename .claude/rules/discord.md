@@ -1,10 +1,16 @@
 # Discord Bot
 
-**Status: just started (2026-10-16) — only the PING/PONG handshake
-exists.** No slash commands are registered or implemented yet. This file
-will grow alongside `agent.md`/`api.md`/`database.md` as the feature does;
-right now it mostly records decisions made before any real command exists,
-so the next session doesn't re-litigate them.
+**Status: interactions endpoint verified end-to-end in production
+(2026-10-16).** A guild-scoped `/ping` test command was registered via
+Discord's REST API and invoked for real in a test server — Discord signed
+and POSTed the interaction, `verifyKey()` accepted the signature, and the
+fallback "This command isn't wired up yet." reply round-tripped back and
+rendered in Discord. That confirms the whole plumbing (Edge Function
+deploy, env vars, signature verification, response shape) works; no real
+command (`/link`, `/builds`, `/build`) is implemented yet — `interactions.ts`
+still only branches on `InteractionType.PING` vs. everything else. This
+file will grow alongside `agent.md`/`api.md`/`database.md` as the feature
+does.
 
 ## Why an HTTP interactions endpoint, not a persistent bot process
 
@@ -72,26 +78,61 @@ deployed thing" pattern as the Supabase agent function, see
 could theoretically be used for a staging interactions endpoint later, not
 set up yet.
 
-## Account linking (designed, not built yet)
+## Account linking (`/link` implemented 2026-10-16; `/builds`/`/build` not yet)
 
 Code-based linking, not Discord OAuth2 — chosen because it needs no
 registered OAuth redirect URI or consent-screen setup, and the bot already
-knows the Discord user's id/username from the interaction itself. Planned
-shape:
-- `/link` generates a short code, stores `{code, discord_user_id,
-  discord_username, created_at}` in a new `discord_link_codes` table
-  (short expiry, ~10 min), replies **ephemerally**
-  (`InteractionResponseFlags.EPHEMERAL`) with a link to
-  `/link/:code` on the live site.
-- That frontend route: if signed out, shows login/signup and continues
-  into the confirm step after success (same URL survives the redirect);
-  if signed in, shows "Link this account to Discord user X? [Confirm]".
-- Confirm writes `{user_id: auth.uid(), discord_user_id}` into a
-  `discord_links` table (one-to-one both directions) and deletes the code.
-- `/builds`/`/build` then resolve `discord_user_id -> user_id ->
-  user_characters`, same data `get_user_roster`/`get_character_build`
-  already expose to the agent.
+knows the Discord user's id/username from the interaction itself.
 
-Neither table exists yet. Not built: the `/link/:code` page, the two
-Supabase tables/migration, or any slash command beyond the bare PING
-handshake.
+**As built:**
+- `/link` (`handleLink()` in `interactions.ts`) generates an 8-char code
+  (`crypto.getRandomValues`, a 32-symbol alphabet with `0/O/1/I` excluded),
+  inserts `{code, discord_user_id, discord_username}` into
+  `discord_link_codes`, and replies **ephemerally**
+  (`InteractionResponseFlags.EPHEMERAL`) with a link to
+  `{SITE_URL}/link/:code`. This insert runs as the Supabase `anon` role —
+  no service-role key, no site session exists at this point (see
+  `database.md`'s "discord_link_codes / discord_links" section for the RLS
+  reasoning and the exact schema).
+- `frontend/src/pages/LinkDiscordPage.tsx` (route `/link/:code`,
+  `frontend/src/lib/discordLink.ts` for the Supabase calls): looks up the
+  code (`not_found`/`expired` [10 min]/`used`/`valid`), then — if signed
+  out — shows the existing `AuthModal`; if signed in — shows "Link this
+  account ({email}) to Discord user X? [Confirm Link]". Confirm upserts
+  `{user_id: auth.uid(), discord_user_id, discord_username}` into
+  `discord_links` (RLS-scoped exactly like `user_characters`, this step
+  *does* have a real session) and marks the code `used_at` instead of
+  deleting it.
+- Command registered as a **guild command** (instant propagation, for
+  testing) via Discord's REST API — see "Registering commands" below for
+  the exact request shape. Not yet registered globally.
+
+**Not built yet:** `/builds` and `/build {character_name}`. Both need the
+interactions function to resolve `discord_user_id -> user_id ->
+user_characters` with *no site session either* — anon-key RLS can't do
+that cross-table lookup safely, so this is expected to introduce a
+service-role key as a deliberate, narrowly-scoped exception (see
+`database.md`'s note at the end of that section). The screenshot-rendering
+piece for `/build` (headless Chromium, separate Node function + deferred
+response, see "Why Vercel Edge runtime" above) also isn't designed yet
+beyond that one paragraph.
+
+## Registering commands
+
+Guild-scoped (instant, for dev/testing):
+```
+PUT https://discord.com/api/v10/applications/{DISCORD_APPLICATION_ID}/guilds/{guild_id}/commands
+Authorization: Bot <token>          -- NEVER paste the real token into chat; set it as a
+Content-Type: application/json      -- local env var or type it directly into the command
+```
+Body is a JSON array of command objects, e.g.
+`[{"name": "link", "description": "Link your Discord account to your WuWa Build Planner account", "type": 1}]`.
+Drop `/guilds/{guild_id}` for a global command (~1hr propagation instead of
+instant) once a command is ready for everyone. On Windows PowerShell 5.1,
+write the body to a file first (`Set-Content -Path command.json -Encoding
+ASCII -Value '...'` — note `utf8NoBOM` is PS7+-only, 5.1 only has
+`UTF8`/`ASCII`/etc., and plain `UTF8` in 5.1 prepends a BOM that can
+corrupt the JSON) and pass it via `curl.exe -d "@command.json"`, since
+PowerShell's own escaping (and `Invoke-RestMethod`/`Invoke-WebRequest`,
+which hit real TLS-renegotiation issues on this machine) made inline
+JSON unreliable during initial testing.

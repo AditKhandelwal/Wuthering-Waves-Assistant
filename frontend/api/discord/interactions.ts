@@ -7,15 +7,85 @@
 // lower cold-start, which matters because Discord requires a response
 // within 3 seconds of a command being invoked.
 //
-// FIRST MILESTONE (current state): only the PING/PONG verification
-// handshake is implemented. Discord refuses to save an Interactions
-// Endpoint URL in the dev portal until it round-trips a signed PING
-// correctly -- this is the actual thing to test before any real command
-// exists. Command dispatch (/link, /builds, /build) is deliberately not
-// built yet.
-import { InteractionResponseType, InteractionType, verifyKey } from "discord-interactions";
+// PING/PONG handshake verified end-to-end in production 2026-10-16 (see
+// discord.md). /link is the first real command; /builds and /build still
+// land on the fallback reply below.
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+  InteractionType,
+  verifyKey,
+} from "discord-interactions";
+import { createClient } from "@supabase/supabase-js";
 
 export const config = { runtime: "edge" };
+
+const SITE_URL = "https://wuthering-waves-assistant.vercel.app";
+// No 0/O/1/I -- avoids visual ambiguity when a user retypes the code by hand.
+const LINK_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+// Reuses the frontend's own Supabase project config -- VITE_-prefixed env
+// vars are still readable via process.env here, since that prefix only
+// gates what Vite bundles into the CLIENT build, not what a Vercel
+// serverless/edge function can read server-side. No service-role key: this
+// client only ever touches discord_link_codes, a short-lived,
+// low-sensitivity table with its own permissive RLS policy -- see
+// discord.md and database.md.
+function getSupabase() {
+  const url = process.env.VITE_SUPABASE_URL;
+  const anonKey = process.env.VITE_SUPABASE_ANON_KEY;
+  if (!url || !anonKey) return null;
+  return createClient(url, anonKey);
+}
+
+function generateLinkCode(): string {
+  const bytes = new Uint8Array(8);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => LINK_CODE_ALPHABET[b % LINK_CODE_ALPHABET.length]).join("");
+}
+
+async function handleLink(interaction: {
+  member?: { user?: { id: string; username: string } };
+  user?: { id: string; username: string };
+}): Promise<Response> {
+  const discordUser = interaction.member?.user ?? interaction.user;
+  const supabase = getSupabase();
+
+  if (!discordUser || !supabase) {
+    return Response.json({
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: "Linking isn't available right now -- try again later.",
+        flags: InteractionResponseFlags.EPHEMERAL,
+      },
+    });
+  }
+
+  const code = generateLinkCode();
+  const { error } = await supabase.from("discord_link_codes").insert({
+    code,
+    discord_user_id: discordUser.id,
+    discord_username: discordUser.username,
+  });
+
+  if (error) {
+    return Response.json({
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: "Couldn't generate a link code -- try again later.",
+        flags: InteractionResponseFlags.EPHEMERAL,
+      },
+    });
+  }
+
+  return Response.json({
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      content: `Click to link your account (expires in 10 minutes): ${SITE_URL}/link/${code}`,
+      flags: InteractionResponseFlags.EPHEMERAL,
+    },
+  });
+}
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") {
@@ -45,7 +115,11 @@ export default async function handler(req: Request): Promise<Response> {
     return Response.json({ type: InteractionResponseType.PONG });
   }
 
-  // Real command handling (/link, /builds, /build) lands here next.
+  if (interaction.type === InteractionType.APPLICATION_COMMAND && interaction.data?.name === "link") {
+    return handleLink(interaction);
+  }
+
+  // /builds and /build land here next.
   return Response.json({
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: { content: "This command isn't wired up yet." },
