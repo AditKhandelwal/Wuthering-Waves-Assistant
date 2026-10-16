@@ -180,6 +180,38 @@ supplied both internally:
   bundled copy of the font — vendored as a static asset, not a code
   dependency on that package.
 
+**`satori` is pinned to exactly `0.32.0` (`--save-exact`, not a caret
+range) — do NOT upgrade without checking this first.** Satori 0.33.0 added
+`harfbuzzjs` as a dependency for complex-script text shaping, and that
+package's WASM loader hard-breaks on Edge/Workers runtimes: it reads
+`self.location.href`, needs `__dirname`, and compiles WASM from raw bytes
+at runtime — all things Edge sandboxes forbid. This is exactly what
+Vercel's deploy-time Edge-compatibility check caught *after* the
+`@vercel/og` fix above (same category of error, one dependency layer
+deeper): *"The Edge Function 'api/discord/interactions' is referencing
+unsupported modules: - harfbuzzjs: fs"*. 0.32.0 is the last version
+before `harfbuzzjs` was introduced — it only handles simpler text shaping
+without it, an acceptable trade here since every character name in
+`characters.json` is plain ASCII Latin, nothing complex-script. A
+well-documented, widely-hit issue for anyone using
+satori outside `@vercel/og`'s own wrapper (which bundles a patched,
+edge-safe harfbuzz build internally) — see satori issues #794/#878/#796 on
+GitHub if this needs revisiting.
+
+**Vercel's build-time type-check (the same NodeNext-vs-our-"esnext"
+mismatch noted elsewhere in this file) also flags two more cosmetic,
+non-blocking diagnostics here** — confirmed non-blocking because the
+build log shows "Build Completed" immediately after both, same as the
+JSON-import TS1543 case: relative imports without explicit `.js`
+extensions (`TS2835` — fixed anyway, `.js` works fine under both NodeNext
+and this project's own `bundler` resolution, so there was no reason not
+to) and `TS2307: Cannot find module './resvg.wasm?module'` (NOT fixed —
+our local `wasm-module.d.ts` ambient declaration satisfies `bundler`
+resolution, used for `npx tsc -b` and for real editor/CI feedback, but
+Vercel's separate NodeNext-mode check doesn't pick it up the same way;
+left as a known, harmless log line rather than risk breaking the
+resolution that's actually used).
+
 The element tree itself is written as plain `{type, props}` object
 literals, not JSX — satori accepts anything shaped like a React element,
 and a plain object is exactly that shape without needing a `.tsx`

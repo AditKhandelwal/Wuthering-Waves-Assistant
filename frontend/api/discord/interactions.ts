@@ -19,7 +19,7 @@ import {
 } from "discord-interactions";
 import { createClient } from "@supabase/supabase-js";
 import { waitUntil } from "@vercel/functions";
-import { renderBuildsGrid, type BuildCell } from "./_buildsImage";
+import { renderBuildsGrid, type BuildCell } from "./_buildsImage.js";
 // Vercel's build-time type-check reports a TS1543 here (resolves `module`
 // as NodeNext for api/ functions regardless of tsconfig.api.json's
 // "esnext" setting, which wants an import attribute) -- that's a

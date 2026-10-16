@@ -26,7 +26,7 @@
 // real browser.
 import satori from "satori";
 import { Resvg, initWasm } from "@resvg/resvg-wasm";
-import { geistRegularFont } from "./_fontData";
+import { geistRegularFont } from "./_fontData.js";
 // Vendored copy of @resvg/resvg-wasm's own wasm binary (see that file's
 // header) -- imported via Vercel's documented "?module" precompiled-Wasm
 // convention (https://vercel.com/docs/functions/wasm), the only Wasm
