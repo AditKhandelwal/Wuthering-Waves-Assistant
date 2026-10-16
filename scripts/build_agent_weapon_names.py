@@ -16,8 +16,13 @@ user's real build showed as "Unknown (id 21020076)" in an agent response
 until this existed.
 
 Output is copied into supabase/functions/agent/ so the function can bundle
-it directly (no runtime fetch). Rerun this whenever data/weapon_catalog.json
-or data/wuwa_characters.json changes, then redeploy the function.
+it directly (no runtime fetch), and (added 2026-10-16) into
+frontend/api/discord/ for the Discord bot's /build command -- same
+resolution need (a saved build's weapon_gb_id -> a real name), same
+"small bundled extract, no runtime fetch" reasoning, just a second
+consumer now. Rerun this whenever data/weapon_catalog.json or
+data/wuwa_characters.json changes, then redeploy both the function and
+the frontend.
 """
 
 import json
@@ -30,6 +35,7 @@ WEAPON_CATALOG_PATH = "data/weapon_catalog.json"
 CHARS_PATH = "data/wuwa_characters.json"
 OUT_PATH = "data/agent_weapon_names.json"
 FUNCTION_COPY_PATH = "supabase/functions/agent/weapon_names.json"
+DISCORD_COPY_PATH = "frontend/api/discord/weapon_names.json"
 
 
 def en_text(texts, key):
@@ -64,9 +70,11 @@ def main():
         json.dump(names, f, ensure_ascii=False, indent=2)
     with open(FUNCTION_COPY_PATH, "w", encoding="utf-8") as f:
         json.dump(names, f, ensure_ascii=False)  # no indent -- smaller deploy bundle
+    with open(DISCORD_COPY_PATH, "w", encoding="utf-8") as f:
+        json.dump(names, f, ensure_ascii=False)
 
     print(f"Resolved {len(names)} weapon names ({added_from_kuro} from Kuro data beyond dotgg's catalog)")
-    print(f"Wrote {OUT_PATH} and {FUNCTION_COPY_PATH}")
+    print(f"Wrote {OUT_PATH}, {FUNCTION_COPY_PATH}, and {DISCORD_COPY_PATH}")
 
 
 if __name__ == "__main__":
