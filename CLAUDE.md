@@ -326,13 +326,11 @@ wuwa-agent/
     ├── api/                       # Vercel serverless functions -- NOT part of the Vite app, own tsconfig.api.json
     │   └── discord/
     │       ├── interactions.ts   # Discord's HTTP interactions endpoint (Edge runtime) -- see discord.md.
-    │       │                      # PING, /link, /builds done; /build (screenshot) not yet.
-    │       ├── _buildsImage.ts   # composes /builds' portrait grid PNG, satori + @resvg/resvg-wasm directly
-    │       │                      # (NOT @vercel/og -- see discord.md for why) -- not a route (no default
-    │       │                      # export, hence the leading underscore)
-    │       ├── resvg.wasm        # vendored copy of @resvg/resvg-wasm's binary, imported via "?module"
-    │       ├── _fontData.ts      # Geist-Regular.ttf, base64-embedded (satori needs a font explicitly)
-    │       ├── wasm-module.d.ts  # ambient type for the "*.wasm?module" import form
+    │       │                      # PING, /link, /builds (plain-text reply) done; /build (screenshot) not yet.
+    │       │                      # A composed portrait-grid image for /builds was tried and scrapped
+    │       │                      # 2026-10-16 to get functionality working first -- see discord.md before
+    │       │                      # retrying (satori/@resvg/resvg-wasm/@vercel/og all hit real Edge-runtime
+    │       │                      # compatibility issues).
     │       └── characters.json   # lean roleGbId -> {name, element, cardPictureUrl}, bundled no-runtime-fetch
     ├── public/data/              # frontend's own copy of data/*.json — see frontend.md
     ├── src/
