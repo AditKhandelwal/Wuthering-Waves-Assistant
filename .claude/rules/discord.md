@@ -107,27 +107,50 @@ knows the Discord user's id/username from the interaction itself.
   testing) via Discord's REST API — see "Registering commands" below for
   the exact request shape. Not yet registered globally.
 
-**`/builds` implemented 2026-10-16 (not yet verified live — just built).**
-`handleBuilds()` in `interactions.ts` resolves `discord_user_id -> user_id`
-via `discord_links`, then `user_id -> user_characters` rows, using a
+**`/builds` verified end-to-end in production 2026-10-16.** `handleBuilds()`
+in `interactions.ts` resolves `discord_user_id -> user_id` via
+`discord_links`, then `user_id -> user_characters` rows, using a
 **service-role Supabase client** (`getServiceClient()`) — this is the
 deliberate, narrowly-scoped exception flagged in `database.md`: there's no
 site session to RLS-scope against at all here, only the Discord
 interaction's own (signature-verified, unspoofable) `discord_user_id`.
 Every query made with that client is scoped in code by a value derived
 from that verified identity, never by raw client input. New Vercel secret:
-`SUPABASE_SERVICE_ROLE_KEY` (Supabase dashboard → Project Settings → API →
-`service_role` key — **secret**, full DB access bypassing RLS, never paste
-it in chat, set directly in Vercel same as `DISCORD_BOT_TOKEN`). Character
-names resolved via `frontend/api/discord/character_names.json`, a lean
-`roleGbId -> name` map built by `scripts/build_discord_character_names.py`
-from `data/agent_character_guides.json` — same "small bundled extract, no
+`SUPABASE_SERVICE_ROLE_KEY` (Supabase dashboard → Project Settings → API
+Keys → `service_role`/`secret` key — **secret**, full DB access bypassing
+RLS, never paste it in chat, set directly in Vercel same as
+`DISCORD_BOT_TOKEN`). Character name + element resolved via
+`frontend/api/discord/characters.json`, a lean `roleGbId -> {name,
+element}` map built by `scripts/build_discord_character_names.py` from
+`data/agent_character_guides.json` — same "small bundled extract, no
 runtime fetch" pattern as the agent's `weapon_names.json`/
 `character_guides.json`, needed because the Edge runtime has no
 filesystem access (`fs` doesn't exist there) and the full
 `wuwa_characters.json` is 4.6MB, nowhere near fitting Discord's 3-second
 response budget. Rerun that script (and redeploy) whenever
 `agent_character_guides.json` changes.
+
+**Reply is a Discord embed, not plain text** — inline `fields` (name +
+element emoji / value = level) render as a grid, with a gold-accent color
+matching the site theme and a footer noting the build count. Discord
+embeds have no per-field icon slot (only one thumbnail/image for the
+*whole* embed), so a real per-character portrait next to each line isn't
+available without either >10 separate embeds (Discord's per-message cap —
+too few for a full roster) or a composed image (real server-side
+rendering, worth revisiting once `/build`'s screenshot pipeline exists and
+that infra can be reused) — element emoji is the practical substitute for
+now. Also capped at Discord's 25-field embed limit (`MAX_FIELDS`), showing
+the most-recently-updated builds first if a roster ever exceeds that.
+
+**Gotcha hit building this — do NOT use `with { type: "json" }` on JSON
+imports in `frontend/api/`:** it satisfies Vercel's build-time type-check
+(which resolves `module` as NodeNext for `api/` functions regardless of
+`tsconfig.api.json`'s `"esnext"` setting, surfacing as a non-fatal TS1543
+in deploy logs) but the actual bundler Vercel uses to produce the deployed
+function (esbuild) does NOT support that syntax and hard-fails the whole
+deploy (`Expected ';' but found 'with'`). A plain `import x from
+"./y.json"` works fine at runtime despite the cosmetic TS1543 — leave it
+alone.
 
 **Not built yet:** `/build {character_name}` — the screenshot-rendering
 piece (headless Chromium, separate Node function + deferred response, see

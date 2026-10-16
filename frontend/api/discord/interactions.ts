@@ -25,13 +25,31 @@ import { createClient } from "@supabase/supabase-js";
 // "fix" it: the actual bundler esbuild uses for api/ functions doesn't
 // support that syntax and hard-fails the deploy ("Expected ';' but found
 // 'with'") -- confirmed 2026-10-16. Leave this plain; it works.
-import characterNames from "./character_names.json";
+import characters from "./characters.json";
 
 export const config = { runtime: "edge" };
 
 const SITE_URL = "https://wuthering-waves-assistant.vercel.app";
 // No 0/O/1/I -- avoids visual ambiguity when a user retypes the code by hand.
 const LINK_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+// Matches the site's gold accent (--color-gold in index.css), as a decimal
+// int -- Discord embed colors take int, not hex string.
+const EMBED_COLOR = 0xc9a24b;
+
+// Discord embeds have no per-field icon slot (only one thumbnail/image for
+// the whole embed), so a per-character portrait next to each line isn't
+// available without either >10 separate embeds (Discord's per-message cap,
+// too few for a full roster) or a composed image (real server-side
+// rendering -- saved for when /build's screenshot pipeline exists and can
+// be reused). Element emoji is the practical substitute.
+const ELEMENT_EMOJI: Record<string, string> = {
+  Glacio: "❄️",
+  Fusion: "🔥",
+  Electro: "⚡",
+  Aero: "🌪️",
+  Spectro: "✨",
+  Havoc: "🌑",
+};
 
 interface DiscordInteraction {
   type: number;
@@ -44,6 +62,13 @@ function ephemeralReply(content: string): Response {
   return Response.json({
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: { content, flags: InteractionResponseFlags.EPHEMERAL },
+  });
+}
+
+function ephemeralEmbedReply(embed: Record<string, unknown>): Response {
+  return Response.json({
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: { embeds: [embed], flags: InteractionResponseFlags.EPHEMERAL },
   });
 }
 
@@ -136,13 +161,34 @@ async function handleBuilds(interaction: DiscordInteraction): Promise<Response> 
     return ephemeralReply("No saved builds yet -- go build a character on the site first.");
   }
 
-  const names: Record<string, string> = characterNames;
-  const lines = builds.map((b) => {
-    const name = names[b.role_gb_id] ?? `Unknown (${b.role_gb_id})`;
-    return `• **${name}** — Lv ${b.character_level}/90`;
+  const charMap: Record<string, { name: string; element: string | null }> = characters;
+  // Discord hard-caps embeds at 25 fields -- builds is already sorted
+  // most-recently-updated first, so a truncation keeps the most relevant
+  // ones.
+  const MAX_FIELDS = 25;
+  const shown = builds.slice(0, MAX_FIELDS);
+  const fields = shown.map((b) => {
+    const char = charMap[b.role_gb_id];
+    const emoji = char?.element ? (ELEMENT_EMOJI[char.element] ?? "") : "";
+    const name = char?.name ?? `Unknown (${b.role_gb_id})`;
+    return {
+      name: `${emoji} ${name}`.trim(),
+      value: `Lv ${b.character_level}/90`,
+      inline: true,
+    };
   });
 
-  return ephemeralReply(lines.join("\n"));
+  const footerText =
+    builds.length > MAX_FIELDS
+      ? `Showing ${MAX_FIELDS} most recently updated of ${builds.length} saved builds`
+      : `${builds.length} saved build${builds.length === 1 ? "" : "s"}`;
+
+  return ephemeralEmbedReply({
+    title: `${discordUser.username}'s Builds`,
+    color: EMBED_COLOR,
+    fields,
+    footer: { text: footerText },
+  });
 }
 
 export default async function handler(req: Request): Promise<Response> {

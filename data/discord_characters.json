@@ -1,0 +1,246 @@
+{
+  "1102": {
+    "name": "Sanhua",
+    "element": "Glacio"
+  },
+  "1105": {
+    "name": "Zhezhi",
+    "element": "Glacio"
+  },
+  "1107": {
+    "name": "Carlotta",
+    "element": "Glacio"
+  },
+  "1108": {
+    "name": "Hiyuki",
+    "element": "Glacio"
+  },
+  "1109": {
+    "name": "Lucilla",
+    "element": "Glacio"
+  },
+  "1203": {
+    "name": "Encore",
+    "element": "Fusion"
+  },
+  "1204": {
+    "name": "Mortefi",
+    "element": "Fusion"
+  },
+  "1206": {
+    "name": "Brant",
+    "element": "Fusion"
+  },
+  "1207": {
+    "name": "Lupa",
+    "element": "Fusion"
+  },
+  "1208": {
+    "name": "Galbrena",
+    "element": "Fusion"
+  },
+  "1209": {
+    "name": "Mornye",
+    "element": "Fusion"
+  },
+  "1210": {
+    "name": "Aemeath",
+    "element": "Fusion"
+  },
+  "1211": {
+    "name": "Denia",
+    "element": "Fusion"
+  },
+  "1303": {
+    "name": "Yuanwu",
+    "element": "Electro"
+  },
+  "1304": {
+    "name": "Jinhsi",
+    "element": "Spectro"
+  },
+  "1305": {
+    "name": "Xiangli Yao",
+    "element": "Electro"
+  },
+  "1306": {
+    "name": "Augusta",
+    "element": "Electro"
+  },
+  "1307": {
+    "name": "Buling",
+    "element": "Electro"
+  },
+  "1308": {
+    "name": "Rebecca",
+    "element": "Electro"
+  },
+  "1403": {
+    "name": "Aalto",
+    "element": "Aero"
+  },
+  "1404": {
+    "name": "Jiyan",
+    "element": "Aero"
+  },
+  "1405": {
+    "name": "Jianxin",
+    "element": "Aero"
+  },
+  "1406": {
+    "name": "Rover: Aero",
+    "element": "Aero"
+  },
+  "1408": {
+    "name": "Rover: Aero",
+    "element": "Aero"
+  },
+  "1409": {
+    "name": "Cartethyia",
+    "element": "Aero"
+  },
+  "1410": {
+    "name": "Iuno",
+    "element": "Aero"
+  },
+  "1411": {
+    "name": "Qiuyuan",
+    "element": "Aero"
+  },
+  "1412": {
+    "name": "Sigrika",
+    "element": "Aero"
+  },
+  "1501": {
+    "name": "Rover: Spectro",
+    "element": "Spectro"
+  },
+  "1502": {
+    "name": "Rover: Spectro",
+    "element": "Spectro"
+  },
+  "1503": {
+    "name": "Verina",
+    "element": "Spectro"
+  },
+  "1504": {
+    "name": "Lumi",
+    "element": "Electro"
+  },
+  "1505": {
+    "name": "Shorekeeper",
+    "element": "Spectro"
+  },
+  "1506": {
+    "name": "Phoebe",
+    "element": "Spectro"
+  },
+  "1507": {
+    "name": "Zani",
+    "element": "Spectro"
+  },
+  "1508": {
+    "name": "Chisa",
+    "element": "Havoc"
+  },
+  "1509": {
+    "name": "Lynae",
+    "element": "Spectro"
+  },
+  "1510": {
+    "name": "Luuk Herssen",
+    "element": "Spectro"
+  },
+  "1511": {
+    "name": "Lucy",
+    "element": "Spectro"
+  },
+  "1103": {
+    "name": "Baizhi",
+    "element": "Glacio"
+  },
+  "1104": {
+    "name": "Lingyang",
+    "element": "Glacio"
+  },
+  "1202": {
+    "name": "Chixia",
+    "element": "Fusion"
+  },
+  "1205": {
+    "name": "Changli",
+    "element": "Fusion"
+  },
+  "1301": {
+    "name": "Calcharo",
+    "element": "Electro"
+  },
+  "1302": {
+    "name": "Yinlin",
+    "element": "Electro"
+  },
+  "1407": {
+    "name": "Ciaccona",
+    "element": "Aero"
+  },
+  "1601": {
+    "name": "Taoqi",
+    "element": "Havoc"
+  },
+  "1602": {
+    "name": "Danjin",
+    "element": "Havoc"
+  },
+  "1603": {
+    "name": "Camellya",
+    "element": "Havoc"
+  },
+  "1604": {
+    "name": "Rover: Havoc",
+    "element": "Havoc"
+  },
+  "1605": {
+    "name": "Rover: Havoc",
+    "element": "Havoc"
+  },
+  "1606": {
+    "name": "Roccia",
+    "element": "Havoc"
+  },
+  "1607": {
+    "name": "Cantarella",
+    "element": "Havoc"
+  },
+  "1608": {
+    "name": "Phrolova",
+    "element": "Havoc"
+  },
+  "1110": {
+    "name": "Suisui",
+    "element": "Glacio"
+  },
+  "1309": {
+    "name": "Rover: Electro",
+    "element": "Electro"
+  },
+  "1310": {
+    "name": "Rover: Electro",
+    "element": "Electro"
+  },
+  "1610": {
+    "name": "Yangyang: Xuanling",
+    "element": "Havoc"
+  },
+  "1413": {
+    "name": "Qingxiao",
+    "element": "Aero"
+  },
+  "1212": {
+    "name": "Jingran",
+    "element": "Fusion"
+  },
+  "1311": {
+    "name": "Hsin",
+    "element": "Electro"
+  }
+}
