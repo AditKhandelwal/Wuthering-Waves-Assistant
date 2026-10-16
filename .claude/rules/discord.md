@@ -78,7 +78,7 @@ deployed thing" pattern as the Supabase agent function, see
 could theoretically be used for a staging interactions endpoint later, not
 set up yet.
 
-## Account linking (`/link` implemented 2026-10-16; `/builds`/`/build` not yet)
+## Account linking (`/link` verified end-to-end in production 2026-10-16; `/builds`/`/build` not yet)
 
 Code-based linking, not Discord OAuth2 — chosen because it needs no
 registered OAuth redirect URI or consent-screen setup, and the bot already
