@@ -6,24 +6,24 @@ Function), `frontend/src/pages/ChatPage.tsx` (route `/chat`, a "Chat" link
 in `Header.tsx` next to "My Builds"). Everything below describes the
 *code as committed*, not necessarily what's live right now.
 
-**As of 2026-08-20, the last `npx supabase functions deploy agent` ran
-right after the commit that added Qingxiao's character-guide data only**
-(commit `c1c2be1`). Three later commits on `main` touch
-`supabase/functions/agent/` and have NOT been deployed yet:
-- Sequence-node stat bonuses (`sequenceBonusTotals` in `stats.ts`/
-  `index.ts`) — chat answers about a character's Crit Rate etc. won't
-  reflect any curated sequence-chain bonus (e.g. Qingxiao's chain-1 +16%
-  Crit. Rate) until this deploys.
-- Qingxiao's new echo "Calamity Effigy" + the `echo_sets.json`/
-  `echo_stat_curves.json` agent-mirror fix.
-- The weapon stat-curve/passive-bonus fixes (Qingxiao's "Glint of Clouds",
-  Kumokiri's previously-missing +12% ATK passive, 18 more weapons added to
-  the catalog).
-
-Run `npx supabase functions deploy agent` to catch the live function up,
-then this note can be removed/updated. Check `git log
-supabase/functions/agent -1` vs. the last deploy if this note itself has
-gone stale by the time you're reading it.
+**As of 2026-08-20, the last confirmed `npx supabase functions deploy
+agent` ran right after commit `c1c2be1` (Qingxiao's character-guide data
+only).** Every commit on `main` since then that touches
+`supabase/functions/agent/` is presumed undeployed — as of 2026-10-16
+that's at minimum the sequence-node stat bonus feature, Qingxiao's/Jingran's/
+Hsin's echo + weapon data, and the echo-pipeline agent-mirror fix, likely
+more by the time this is read. **Don't hand-maintain this list again** —
+it goes stale immediately and nobody notices. Instead, before trusting a
+live chat answer, run:
+```bash
+git log --oneline main -- supabase/functions/agent/
+```
+and compare against whenever `npx supabase functions deploy agent` was
+last actually run (ask the user if unknown, or just redeploy — it's cheap
+and idempotent). The frontend auto-deploys on push (Vercel, see
+`CLAUDE.md`'s Project Status) but this function never has — that
+asymmetry is the actual thing worth remembering here, not any specific
+commit list.
 
 ## Architecture
 Raw ReAct loop using the Claude API's tool calling, running as a Supabase

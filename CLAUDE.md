@@ -8,26 +8,35 @@ A personalized Wuthering Waves AI agent that reasons over a user's actual roster
 
 ## Project Status
 
-**Current phase: agent + chat UI implemented, not yet deployed live.**
-Build screen + accounts/persistence (Supabase Auth + `user_characters`)
-were pulled ahead of the original phase ordering once the goal became a
-hosted multi-user app, and the agent (Supabase Edge Function + Claude API
-tool calling, 4 structured tools, `/chat` chat UI) followed the same path —
-built as a Supabase Edge Function instead of the originally-planned FastAPI
-backend (see `.claude/rules/architecture.md`'s "Decision: Edge Function,
-not FastAPI"), with RAG/embeddings deliberately dropped for v1 (see that
-same file's "Decision: no RAG in v1"). What's left: deploying the frontend
-+ this Edge Function together (they launch as one product, not
-separately — see `.claude/rules/agent.md`).
+**Current phase: live.** The frontend is deployed on Vercel
+(`https://wuthering-waves-assistant.vercel.app/`, confirmed working
+2026-10-16 — real data, no console errors), auto-deploying from `main` on
+every push (confirmed: a same-day push landed Jingran/Hsin on the live
+site with no manual deploy step). No `vercel.json` or `.vercel/` in the
+repo — the Vercel project was connected via its GitHub integration
+dashboard-side, zero-config-detected as a Vite app in `frontend/`, not
+committed config. Build screen + accounts/persistence (Supabase Auth +
+`user_characters`) were pulled ahead of the original phase ordering once
+the goal became a hosted multi-user app, and the agent (Supabase Edge
+Function + Claude API tool calling, 4 structured tools, `/chat` chat UI)
+followed the same path — built as a Supabase Edge Function instead of the
+originally-planned FastAPI backend (see `.claude/rules/architecture.md`'s
+"Decision: Edge Function, not FastAPI"), with RAG/embeddings deliberately
+dropped for v1 (see that same file's "Decision: no RAG in v1").
 
-**⚠ Pick-up note (2026-08-20):** the deployed agent function is currently
-STALE — see `.claude/rules/agent.md`'s top note for exactly which 3 commits
-haven't been pushed live yet (`npx supabase functions deploy agent` to fix).
-Also: a local, **unpushed** branch `feature/sonata-set-icon-detection`
-exists with a finished feature (OCR-anchored + trained-YOLOv8-model sonata
-set detection from an echo screenshot) that was deliberately kept separate
-from the Qingxiao/weapon/sequence-bonus work on `main` this session — see
-"In-progress / not on `main` yet" below before assuming it's live.
+**⚠ Pick-up note (2026-08-20, NOT re-verified since):** the deployed agent
+function was STALE as of that date — see `.claude/rules/agent.md`'s top
+note for exactly which commits hadn't been pushed live yet (`npx supabase
+functions deploy agent` to fix). Unlike the frontend, the Edge Function
+does NOT auto-deploy on push — it needs that command run by hand. Given
+how much has landed on `main` since (Jingran/Hsin, more weapon/echo
+fixes), treat it as stale until confirmed otherwise; don't assume live
+chat answers reflect current data without checking. Also: a local,
+**unpushed** branch `feature/sonata-set-icon-detection` exists with a
+finished feature (OCR-anchored + trained-YOLOv8-model sonata set detection
+from an echo screenshot) that was deliberately kept separate from the
+Qingxiao/weapon/sequence-bonus work on `main` — see "In-progress / not on
+`main` yet" below before assuming it's live.
 
 Done:
 - **Agent + chat UI** — `supabase/functions/agent/index.ts` (Deno Edge
