@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@resvg/resvg-wasm": "^2.4.1",
     "@supabase/supabase-js": "^2.112.2",
     "@vercel/functions": "^3.10.1",
-    "@vercel/og": "^1.0.3",
     "discord-interactions": "^4.4.0",
     "html-to-image": "^1.11.13",
     "react": "^19.2.7",
@@ -20,6 +20,7 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.18.1",
     "remark-gfm": "^4.0.1",
+    "satori": "^0.33.5",
     "tesseract.js": "^7.0.0"
   },
   "devDependencies": {

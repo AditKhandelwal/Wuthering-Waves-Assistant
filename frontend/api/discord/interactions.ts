@@ -79,7 +79,7 @@ async function editOriginalText(interaction: DiscordInteraction, content: string
 
 async function editOriginalWithImage(
   interaction: DiscordInteraction,
-  imageBuffer: ArrayBuffer,
+  imageBytes: Uint8Array,
   footerText: string,
 ): Promise<void> {
   const formData = new FormData();
@@ -90,7 +90,10 @@ async function editOriginalWithImage(
       attachments: [{ id: 0, filename: "builds.png" }],
     }),
   );
-  formData.append("files[0]", new Blob([imageBuffer], { type: "image/png" }), "builds.png");
+  // TS's DOM lib types BlobPart as a non-generic ArrayBufferView, but
+  // resvg's asPng() return type is the newer generic Uint8Array<ArrayBufferLike>
+  // -- structurally identical at runtime, just a type-modeling mismatch.
+  formData.append("files[0]", new Blob([imageBytes] as BlobPart[], { type: "image/png" }), "builds.png");
 
   await fetch(originalMessageUrl(interaction), { method: "PATCH", body: formData });
 }
@@ -203,11 +206,10 @@ async function sendBuildsFollowup(interaction: DiscordInteraction): Promise<void
     };
   });
 
-  const imageResponse = await renderBuildsGrid(`${discordUser.username}'s Builds`, cells);
-  const imageBuffer = await imageResponse.arrayBuffer();
+  const imageBytes = await renderBuildsGrid(`${discordUser.username}'s Builds`, cells);
   const footerText = `${builds.length} saved build${builds.length === 1 ? "" : "s"}`;
 
-  await editOriginalWithImage(interaction, imageBuffer, footerText);
+  await editOriginalWithImage(interaction, imageBytes, footerText);
 }
 
 function handleBuilds(interaction: DiscordInteraction): Response {

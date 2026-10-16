@@ -136,36 +136,75 @@ actual photos, not an emoji substitute). Discord embeds have no per-field
 icon slot (only one thumbnail/image for the *whole* embed) and a message
 can hold at most 10 embeds, too few for a full roster — so the only way to
 get a real portrait next to every name is to render one single image
-server-side. Built with `@vercel/og`'s `ImageResponse`
-(`frontend/api/discord/_buildsImage.ts`, no default export — leading
-underscore is Vercel's own convention for "not a route" files under
-`api/`): Satori (layout) + resvg (rasterize to PNG), both pure JS/WASM, so
-this stays on the Edge runtime rather than needing a separate Node
-function. The element tree is written as plain `{type, props}` object
-literals, not JSX — `ImageResponse` accepts anything shaped like a React
-element, and a plain object is exactly that shape without needing a
-`.tsx` extension or a JSX pragma in `tsconfig.api.json`. Satori requires
-an explicit `display: "flex"` (or `"none"`) on every element with
-children; it doesn't support default block layout like a real browser.
-Portraits come from `cardPictureUrl` in `frontend/api/discord/
-characters.json` (added to the extract alongside name/element 2026-10-16,
-pulled from `data/wuwa_characters.json`'s `role.cardPictureUrl` — same
-field the frontend's own `CharacterCard.tsx` uses, so the Discord image
-matches the site's real portraits), fetched directly by Satori at render
-time (remote `<img src>` is a supported, core use case). A character with
-no picture URL gets a plain dark circle instead of a broken image. No
-field/count cap — image real estate scales with rows, unlike the earlier
-embed-fields approach's 25-field ceiling.
+server-side.
+
+**Built with `satori` + `@resvg/resvg-wasm` directly, NOT `@vercel/og`.**
+`@vercel/og`'s `ImageResponse` is the usual way to do this on Vercel and
+was tried first, but its `package.json` only resolves to its
+Edge-compatible build (`dist/index.edge.js`) when a bundler sets the
+`"edge"`/`"edge-light"` export condition. Next.js's build sets that
+automatically for edge routes; Vercel's bundler for a plain (non-Next.js)
+project's `api/` Edge Functions apparently does not, so it silently
+resolved to the Node-targeted build instead (dynamic `require("fs")`
+inside) — which Vercel's own deploy-time Edge-compatibility check then
+rejected outright: *"The Edge Function 'api/discord/interactions' is
+referencing unsupported modules: - @vercel: module"*. `satori` and
+`@resvg/resvg-wasm` (what `@vercel/og` uses internally anyway) have no
+such edge/node branching — plain universal JS/WASM, both listed as direct
+dependencies now — so calling them directly sidesteps the problem
+entirely. `frontend/api/discord/_buildsImage.ts` (no default export —
+leading underscore is Vercel's own convention for "not a route" files
+under `api/`) does the actual rendering; it stays on the Edge runtime
+rather than needing a separate Node function.
+
+Two things had to be vendored as a result, since `@vercel/og` previously
+supplied both internally:
+- **`frontend/api/discord/resvg.wasm`** — a copy of `@resvg/resvg-wasm`'s
+  own wasm binary, imported via Vercel's documented precompiled-Wasm
+  convention, `import x from "./resvg.wasm?module"`
+  (https://vercel.com/docs/functions/wasm — confirmed via WebSearch, the
+  only Wasm-loading path that actually works in a Vercel Edge Function; a
+  Node `fs` read, which local testing uses instead, isn't available at
+  all). Typed by `frontend/api/discord/wasm-module.d.ts` (no built-in TS
+  types exist for the `?module` import form). `initWasm()` is memoized at
+  module scope so a warm function instance doesn't re-initialize it on
+  every invocation.
+- **`frontend/api/discord/_fontData.ts`** — Geist-Regular.ttf (Vercel's
+  own open-source font, SIL licensed; satori needs a font explicitly, it
+  doesn't bundle a default the way `@vercel/og` did) base64-embedded as a
+  string constant, decoded to an `ArrayBuffer` at call time. Base64 rather
+  than a bundler-specific asset import: unlike the wasm case, there's no
+  confirmed-documented Vercel Edge convention for importing a raw `.ttf`,
+  and base64 is guaranteed to work identically on any JS runtime with zero
+  bundler-specific risk. Sourced originally from `@vercel/og`'s own
+  bundled copy of the font — vendored as a static asset, not a code
+  dependency on that package.
+
+The element tree itself is written as plain `{type, props}` object
+literals, not JSX — satori accepts anything shaped like a React element,
+and a plain object is exactly that shape without needing a `.tsx`
+extension or a JSX pragma in `tsconfig.api.json`. Satori requires an
+explicit `display: "flex"` (or `"none"`) on every element with children;
+it doesn't support default block layout like a real browser. Portraits
+come from `cardPictureUrl` in `frontend/api/discord/characters.json`
+(added to the extract alongside name/element 2026-10-16, pulled from
+`data/wuwa_characters.json`'s `role.cardPictureUrl` — same field the
+frontend's own `CharacterCard.tsx` uses, so the Discord image matches the
+site's real portraits), fetched directly by satori at render time (remote
+`<img src>` is a supported, core use case). A character with no picture
+URL gets a plain dark circle instead of a broken image. No field/count
+cap — image real estate scales with rows, unlike the earlier embed-fields
+approach's 25-field ceiling.
 
 **Deferred response, not an immediate one.** Composing the image means
 fetching every portrait URL plus the DB lookups, which can easily exceed
 Discord's 3-second initial-response budget — especially for a large
-roster. `handleBuilds()` now returns
-`DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE` (type 5) immediately and kicks off
-the real work (`sendBuildsFollowup()`) via `waitUntil()` from
-`@vercel/functions` (Edge-compatible background continuation after the
-response is sent). The follow-up work edits the deferred placeholder via
-Discord's webhook message-edit endpoint (`PATCH
+roster. `handleBuilds()` returns `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`
+(type 5) immediately and kicks off the real work
+(`sendBuildsFollowup()`) via `waitUntil()` from `@vercel/functions`
+(Edge-compatible background continuation after the response is sent). The
+follow-up work edits the deferred placeholder via Discord's webhook
+message-edit endpoint (`PATCH
 .../webhooks/{application_id}/{interaction_token}/messages/@original`,
 multipart with a `payload_json` + `files[0]` part for the PNG) — no bot
 token needed for this call, the interaction's own token authorizes it,
@@ -174,19 +213,20 @@ seconds. This is the first use of the deferred-response pattern in this
 project; `/build`'s screenshot piece (see below) will reuse it.
 
 **Verifying this locally, since it's genuinely new territory (first image
-generation in this project):** `@vercel/og`'s own wrapper doesn't resolve
-cleanly under a plain Node/tsx harness (it dynamic-`require`s `fs` inside
-what Node treats as an ESM edge-light-conditional module, and forcing
-`--conditions=edge-light` then trips on a WASM import). Worked around by
-calling `satori` + `@resvg/resvg-wasm` directly instead — the same
-pipeline `@vercel/og`'s edge build uses internally, just without its
-runtime-detection wrapper — which rendered a 7-portrait test grid in
-~500ms including a real remote image fetch and produced a valid PNG,
-visually confirmed correct (gold-ringed circular portraits, grid layout,
-placeholder circle for a missing picture). Good enough confidence to ship
-without a true end-to-end Vercel Edge test, which isn't locally viable
-(same "test against the real deployed thing" limitation as the Supabase
-agent function and the interactions endpoint itself).
+generation in this project):** the production wasm-loading path
+(`?module` import) is a Vercel-bundler-specific convention plain Node/tsx
+doesn't understand, so it can't be exercised byte-for-byte locally —
+same "test against the real deployed thing" limitation as the Supabase
+agent function and the interactions endpoint itself. Verified everything
+*else* instead: called `satori` + `@resvg/resvg-wasm` directly with the
+wasm bytes loaded via `WebAssembly.compile()` over an `fs` read (a
+reasonable substitute — both paths end at the same
+`initWasm(WebAssembly.Module)` call) and the real `_fontData.ts` import
+unchanged. Rendered a 5-7 portrait test grid in ~500ms including a real
+remote image fetch, produced a valid PNG both times (before and after
+dropping `@vercel/og`), visually confirmed correct (gold-ringed circular
+portraits, grid layout, placeholder circle for a missing picture, text
+rendering with the embedded font).
 
 **Gotcha hit building this — do NOT use `with { type: "json" }` on JSON
 imports in `frontend/api/`:** it satisfies Vercel's build-time type-check

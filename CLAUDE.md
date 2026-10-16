@@ -327,8 +327,12 @@ wuwa-agent/
     │   └── discord/
     │       ├── interactions.ts   # Discord's HTTP interactions endpoint (Edge runtime) -- see discord.md.
     │       │                      # PING, /link, /builds done; /build (screenshot) not yet.
-    │       ├── _buildsImage.ts   # composes /builds' portrait grid PNG (@vercel/og) -- not a route
-    │       │                      # (no default export, hence the leading underscore)
+    │       ├── _buildsImage.ts   # composes /builds' portrait grid PNG, satori + @resvg/resvg-wasm directly
+    │       │                      # (NOT @vercel/og -- see discord.md for why) -- not a route (no default
+    │       │                      # export, hence the leading underscore)
+    │       ├── resvg.wasm        # vendored copy of @resvg/resvg-wasm's binary, imported via "?module"
+    │       ├── _fontData.ts      # Geist-Regular.ttf, base64-embedded (satori needs a font explicitly)
+    │       ├── wasm-module.d.ts  # ambient type for the "*.wasm?module" import form
     │       └── characters.json   # lean roleGbId -> {name, element, cardPictureUrl}, bundled no-runtime-fetch
     ├── public/data/              # frontend's own copy of data/*.json — see frontend.md
     ├── src/

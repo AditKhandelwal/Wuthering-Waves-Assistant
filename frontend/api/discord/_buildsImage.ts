@@ -1,17 +1,39 @@
 // Composes a real grid image of character portraits for /builds (see
 // discord.md) -- not a Discord route itself (no default export, hence the
 // leading underscore, Vercel's own convention for "not an endpoint" files
-// under api/). Built with @vercel/og: Satori (layout) + resvg (rasterize),
-// both pure-JS/WASM and Edge-compatible, so this stays in the same Edge
-// runtime as interactions.ts rather than needing a separate Node function.
+// under api/).
 //
-// Deliberately NOT JSX -- @vercel/og's ImageResponse accepts any
-// React-element-shaped tree, and a plain {type, props} object literal is
-// exactly that shape without needing a .tsx extension or a JSX pragma in
-// tsconfig.api.json. Satori requires an explicit `display: "flex"` (or
-// "none") on every element with children -- it doesn't support default
-// block layout, unlike a real browser.
-import { ImageResponse } from "@vercel/og";
+// Built directly from satori (layout) + @resvg/resvg-wasm (rasterize to
+// PNG), NOT @vercel/og. @vercel/og was tried first (it's the usual way to
+// do this on Vercel) but its package.json only resolves to its
+// Edge-compatible build when a bundler sets the "edge"/"edge-light"
+// export condition -- Next.js's build does this automatically for edge
+// routes, but Vercel's bundler for a plain (non-Next.js) project's api/
+// Edge Functions apparently does not, so it silently pulled in the
+// Node-targeted build (dynamic `require("fs")` inside), which Vercel's
+// own deploy-time Edge-compatibility check then rejected outright
+// ("referencing unsupported modules: @vercel"). satori and
+// @resvg/resvg-wasm have no such edge/node branching -- plain universal
+// JS/WASM -- so calling them directly sidesteps the problem entirely.
+// Confirmed working via a standalone local test before this was written
+// (see discord.md).
+//
+// Deliberately NOT JSX -- satori accepts any React-element-shaped tree,
+// and a plain {type, props} object literal is exactly that shape without
+// needing a .tsx extension or a JSX pragma in tsconfig.api.json. Satori
+// requires an explicit `display: "flex"` (or "none") on every element
+// with children -- it doesn't support default block layout, unlike a
+// real browser.
+import satori from "satori";
+import { Resvg, initWasm } from "@resvg/resvg-wasm";
+import { geistRegularFont } from "./_fontData";
+// Vendored copy of @resvg/resvg-wasm's own wasm binary (see that file's
+// header) -- imported via Vercel's documented "?module" precompiled-Wasm
+// convention (https://vercel.com/docs/functions/wasm), the only Wasm
+// loading path confirmed to work in a Vercel Edge Function; a Node fs
+// read (what local testing used) isn't available here at all. Typed by
+// wasm-module.d.ts.
+import resvgWasmModule from "./resvg.wasm?module";
 
 const COLS = 5;
 const CELL_WIDTH = 170;
@@ -25,6 +47,17 @@ export interface BuildCell {
   name: string;
   level: number;
   pictureUrl: string | null;
+}
+
+// initWasm throws if called twice on an already-initialized module, so
+// this is memoized -- a warm function instance reuses it across
+// invocations, a cold one initializes once.
+let wasmReady: Promise<void> | null = null;
+function ensureWasmInit(): Promise<void> {
+  if (!wasmReady) {
+    wasmReady = initWasm(resvgWasmModule);
+  }
+  return wasmReady;
 }
 
 function cellNode(cell: BuildCell) {
@@ -92,7 +125,9 @@ function cellNode(cell: BuildCell) {
   };
 }
 
-export async function renderBuildsGrid(title: string, cells: BuildCell[]): Promise<Response> {
+export async function renderBuildsGrid(title: string, cells: BuildCell[]): Promise<Uint8Array> {
+  await ensureWasmInit();
+
   const cols = Math.min(COLS, cells.length) || 1;
   const rows = Math.ceil(cells.length / cols);
   const width = cols * CELL_WIDTH + PADDING * 2;
@@ -128,8 +163,15 @@ export async function renderBuildsGrid(title: string, cells: BuildCell[]): Promi
     },
   };
 
-  // @vercel/og's typings want a real React element; this tree is the plain
-  // object-literal equivalent Satori actually consumes (see file header).
+  // satori's typings want a real React element; this tree is the plain
+  // object-literal equivalent it actually consumes (see file header).
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return new ImageResponse(element as any, { width, height });
+  const svg = await satori(element as any, {
+    width,
+    height,
+    fonts: [{ name: "Geist", data: geistRegularFont(), weight: 600, style: "normal" }],
+  });
+
+  const resvg = new Resvg(svg);
+  return resvg.render().asPng();
 }
