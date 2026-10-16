@@ -148,6 +148,25 @@ hits this yet (only Crit. Rate, which is unambiguous), but don't blindly
 copy Forte's percentage-only assumption if one ever gets added; check the
 source text.
 
+## SPA deep links need a Vercel rewrite
+
+Found 2026-10-16 via the Discord `/link` flow — the first time any route in
+this app was opened via a fresh outside link (from Discord) rather than
+in-app client-side navigation. A cold browser load of e.g. `/link/abc123`
+(or `/builds`, `/chat`, `/build/:id`) 404s on Vercel's own platform error
+page, not React's — Vercel's static file server only serves requests that
+match an actual file, and `/link/abc123` isn't one, so it 404s before
+React Router ever gets a chance to render anything. In-app navigation
+never hit this because it's all client-side `<Link>`/`useNavigate`, no
+real HTTP request. Fixed by `frontend/vercel.json`:
+```json
+{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
+```
+Vercel's routing precedence gives static files and `api/` serverless/edge
+functions priority over rewrites, so this doesn't affect
+`/api/discord/interactions` — only paths with no matching file fall back
+to `index.html`, letting React Router take over.
+
 ## Verifying UI changes
 
 No project-specific run skill exists yet. Pattern used throughout: start

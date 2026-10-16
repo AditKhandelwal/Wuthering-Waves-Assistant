@@ -12,10 +12,12 @@ A personalized Wuthering Waves AI agent that reasons over a user's actual roster
 (`https://wuthering-waves-assistant.vercel.app/`, confirmed working
 2026-10-16 — real data, no console errors), auto-deploying from `main` on
 every push (confirmed: a same-day push landed Jingran/Hsin on the live
-site with no manual deploy step). No `vercel.json` or `.vercel/` in the
-repo — the Vercel project was connected via its GitHub integration
-dashboard-side, zero-config-detected as a Vite app in `frontend/`, not
-committed config. Build screen + accounts/persistence (Supabase Auth +
+site with no manual deploy step). The Vercel project was connected via its
+GitHub integration dashboard-side, zero-config-detected as a Vite app in
+`frontend/` — no `.vercel/` in the repo. `frontend/vercel.json` **does**
+exist now (added 2026-10-16, a SPA-deep-link rewrite — see
+`.claude/rules/frontend.md`'s "SPA deep links need a Vercel rewrite"),
+the first committed Vercel config in the project. Build screen + accounts/persistence (Supabase Auth +
 `user_characters`) were pulled ahead of the original phase ordering once
 the goal became a hosted multi-user app, and the agent (Supabase Edge
 Function + Claude API tool calling, 4 structured tools, `/chat` chat UI)
