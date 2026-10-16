@@ -18,7 +18,13 @@ import {
   verifyKey,
 } from "discord-interactions";
 import { createClient } from "@supabase/supabase-js";
-import characterNames from "./character_names.json";
+// Vercel's own build-time type-check resolves `module` as NodeNext for
+// api/ functions regardless of tsconfig.api.json's "esnext" setting (seen
+// as a real TS1543 in deploy logs, non-fatal since the actual bundler
+// tolerated it, but a real mismatch worth fixing) -- the explicit import
+// attribute satisfies NodeNext and still works fine under bundler
+// resolution either way.
+import characterNames from "./character_names.json" with { type: "json" };
 
 export const config = { runtime: "edge" };
 
