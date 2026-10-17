@@ -63,6 +63,18 @@ secondary reason Edge was the easy choice here.
 - `DISCORD_PUBLIC_KEY` — not secret, used by `verifyKey()`.
 - `DISCORD_APPLICATION_ID` — not secret, needed once slash commands get
   registered via Discord's REST API.
+- `SUPABASE_SERVICE_ROLE_KEY` (added 2026-10-16, for `/builds`/`/build`) —
+  secret, full DB access bypassing RLS, used only in `getServiceClient()`
+  (`_shared.ts`) — see `database.md`'s discord_link_codes/discord_links
+  section for why this is a deliberate, narrow exception to this app's
+  general "no service-role key" posture.
+- `DISCORD_INTERNAL_SECRET` (added 2026-10-16, for `/build`'s card render)
+  — a shared secret gating `build-card.ts`'s internal endpoint, checked
+  against the `X-Internal-Secret` header `interactions.ts` sends. Not tied
+  to any external provider (self-issued, revocable anytime by just
+  changing the value) — unlike the other secrets here, it's fine to
+  generate it with any local random-bytes command, since nothing outside
+  this app's own two functions ever needs to know it.
 
 ## Testing so far
 
@@ -169,22 +181,122 @@ deploy (`Expected ';' but found 'with'`). A plain `import x from
 "./y.json"` works fine at runtime despite the cosmetic TS1543 — leave it
 alone.
 
-**`/build {character}` implemented as a plain-text summary.** Takes a
-required string option (`character`), resolved to a `roleGbId` via
-`resolveCharacterId()` (case-insensitive, exact match first then
-substring — same order the agent's own resolver uses) against
-`characters.json`. Same `discord_user_id -> user_id` resolution as
-`/builds` (service-role client), then a single `user_characters` row
-filtered by `role_gb_id` too. Replies with level, weapon (resolved via
-`weapon_names.json`, newly mirrored into this directory by
-`scripts/build_agent_weapon_names.py` — see `api.md`), weapon level/rank,
-resonance chain progress, and all 5 talent levels labeled in
-`addPointTarget` order (see `database.md`'s `talent_levels` column
-comment). **Not built:** a real Build Card screenshot (headless
-Chromium, separate Node function + deferred response, see "Why Vercel
-Edge runtime" above) — deliberately deferred for the same reason
-`/builds`' image attempt got scrapped: ship the data first, visuals
-later.
+**`/build {character}` renders a real Build Card image with computed
+final stats.** Takes a required string option (`character`), resolved to
+a `roleGbId` via `resolveCharacterId()` (case-insensitive, exact match
+first then substring — same order the agent's own resolver uses) against
+`characters.json`.
+
+**Two-function split, Edge + Node**, because the image render needs real
+Node APIs that Edge doesn't provide (see the "Gotcha" note below) but
+Discord still requires a response within 3 seconds:
+- `interactions.ts`'s `handleBuild()` (Edge, fast) does only the cheap
+  validation — resolve the character, resolve `discord_user_id ->
+  user_id` via `discord_links` (service-role client, same as `/builds`).
+  If either fails, replies immediately with a plain error, no deferral
+  needed. If both succeed, returns `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`
+  (type 5) right away and fires `waitUntil(triggerBuildCard(...))` — a
+  fire-and-forget internal `fetch()` to `build-card.ts`, carrying
+  `{userId, roleGbId, applicationId, interactionToken}`.
+- `frontend/api/discord/build-card.ts` (plain Node — no `runtime: "edge"`
+  config, which is what makes a Vercel `api/` file Edge; omitting it
+  defaults to Node) does everything else: fetches the saved
+  `user_characters` row (service-role client, all fields needed for the
+  math — `forte_node_active`, `echoes`, not just the summary columns
+  `/builds` uses), computes echo totals / active set bonuses / forte
+  bonus totals / sequence bonus totals / final stats via
+  `frontend/api/discord/stats.ts`, composes the card image, then edits
+  the deferred placeholder itself via Discord's webhook message-edit
+  endpoint (multipart `payload_json` + `files[0]`) — same pattern
+  `/builds`' scrapped image attempt already worked out. **Never called
+  directly by Discord** — protected by a shared-secret header
+  (`X-Internal-Secret` / `DISCORD_INTERNAL_SECRET`, a new Vercel secret,
+  self-issued — not tied to any external provider, so it's fine to
+  generate locally and never needs to touch chat). Without this check,
+  anyone could hit this route directly and either burn compute or read
+  another linked user's build data, since Discord user ids aren't secret
+  and this bypasses Discord's own interaction-signature verification
+  entirely.
+- `frontend/api/discord/_shared.ts` (no default export, not a route) —
+  `getAnonClient()`/`getServiceClient()`/`editOriginalText()`/
+  `editOriginalWithImage()`, used by both functions so the webhook-edit
+  and Supabase-client logic isn't duplicated across them. Nothing
+  runtime-specific in it (`createClient`/`fetch`/`FormData`/`Blob` all
+  work identically on Edge and Node), so one file is safe to import from
+  either.
+
+**Stat computation: `frontend/api/discord/stats.ts` is a byte-identical
+copy of `supabase/functions/agent/stats.ts`** (the agent's already-working
+port of `frontend/src/lib/{stats,weapons,echoes,finalStats}.ts`'s pure
+compute functions), not a fresh re-derivation — confirmed via investigation
+that direct cross-package import from `frontend/src/lib` was technically
+*possible* (no browser globals, no `import.meta.env` usage in that chain)
+but would still need adapting every `fetch("/data/...")` call to an
+absolute URL, and the forte-bonus aggregation loop isn't in `lib/` at all
+(it's inlined in `BuildCard.tsx`) — the agent's `stats.ts` had already done
+all of that adaptation once, correctly, including that exact loop as
+`computeForteBonusTotals`. Copying it was less risk than re-deriving a
+third implementation. **Do NOT let the two copies drift** — diff against
+`supabase/functions/agent/stats.ts` if either needs a fix and apply it to
+both; re-copy + redeploy both whenever `frontend/src/lib`'s originals
+change. Needed data files
+(`character_stat_curves/weapon_stat_curves/weapon_passive_bonuses/
+echo_catalog/echo_stat_curves/echo_sets/sequence_stat_nodes/
+sequence_node_stat_bonuses.json`) are bundled directly into
+`frontend/api/discord/` too, same reasoning as `characters.json` — no
+runtime fetch, no network-latency cost, consistent with wanting this
+near-instant.
+
+**Card rendering: `frontend/api/discord/_buildCardImage.ts`**, satori +
+`@resvg/resvg-js` — the **native** binary addon this time, not
+`@resvg/resvg-wasm`. This is the key difference from `/builds`' scrapped
+Edge-runtime image attempt: running on a real Node function removes every
+Edge-compatibility problem that attempt hit. `satori` is unpinned (latest,
+`^0.62.0` as of this writing) — its `harfbuzzjs` dependency (the thing
+that broke Edge) needs real Node `fs`/no-`self.location` assumptions that
+a genuine Node runtime actually has, so there's no reason to hold it back
+anymore. Font: still base64-embedded (`_fontData.ts`, same Geist font,
+regenerated the same way — temporarily install `@vercel/og` just to copy
+its bundled `.ttf`, then uninstall it again) rather than
+`fs.readFileSync()`'d from a bundled asset file, specifically to avoid
+*any* uncertainty over whether Vercel's build-time file tracer would
+reliably include a binary asset referenced only via a runtime path — untested,
+and not worth the risk after this session's deploy-cycle track record.
+`@resvg/resvg-js` itself needs no such treatment at all: normal `npm
+install` on Vercel's own Linux build machines resolves the correct
+platform binary automatically, no manual asset bundling of any kind.
+
+Card shows: portrait (element-ring-colored, `cardPictureUrl`), name +
+level, weapon + level/rank, resonance chain progress, a computed final-stats
+grid (HP/ATK/DEF/Energy Regen/Crit Rate/Crit DMG/elemental DMG bonus,
+element-accent-colored), and active echo set badges (name + piece count).
+Deliberately NOT included (scope cut, not an oversight): the Forte tree
+diagram and individual echo slot/substat detail — the two most
+visually/layout-complex parts of the real site's `BuildCard.tsx`, and the
+least essential for a quick Discord glance. Falls back cleanly when data's
+missing: no portrait → plain bordered box, no `finalStats` (a genuine
+character/level data gap, same as the site) → "Final stats unavailable"
+text instead of the grid, no weapon → "No weapon equipped", no active
+sets → the badge row is just omitted.
+
+**This is NOT a screenshot of the live site** — it's an independently
+composed image built from the same underlying data, not literally
+`BuildCard.tsx` rendered. Won't be pixel-identical and won't auto-track
+future site redesigns (a real headless-Chromium screenshot was the other
+option considered — rejected for being far higher latency/compute and
+needing new auth-bridging infrastructure to view one user's card without
+a live login session; see git history around 2026-10-16 if that tradeoff
+is ever worth revisiting).
+
+**Verified locally before deploying**, same discipline as `/builds`'
+scrapped attempt: called `renderBuildCard()` directly with realistic mock
+data (including the no-portrait/no-finalStats/no-weapon/no-echo-sets
+fallback paths) via a scratch `tsx` script. Render time: ~950ms with a
+real remote portrait fetch, ~130ms without one — comfortably "near
+instant" per the user's stated priority, and this path has NO Edge-WASM
+loading tricks to go wrong the way `/builds`' attempt did, so local
+verification here is a much stronger signal that production will behave
+the same way.
 
 ## Registering commands
 

@@ -7,19 +7,20 @@
 // lower cold-start, which matters because Discord requires a response
 // within 3 seconds of a command being invoked.
 //
-// PING/PONG handshake and /link verified end-to-end in production
-// 2026-10-16. /builds and /build are both plain-text replies for now --
-// a composed grid image for /builds was tried the same day (see
-// discord.md if revisiting) but scrapped to get functionality working
-// first. A real Build Card screenshot for /build is the eventual goal,
-// same reasoning, not built yet.
+// PING/PONG, /link, and /builds verified end-to-end in production.
+// /build now triggers build-card.ts (a separate Node function -- see that
+// file's header) for the real stats-driven card image; this file only
+// does the fast validation (character resolution, link lookup) and
+// defers immediately, since the image render can't fit Discord's
+// 3-second budget reliably.
 import {
   InteractionResponseFlags,
   InteractionResponseType,
   InteractionType,
   verifyKey,
 } from "discord-interactions";
-import { createClient } from "@supabase/supabase-js";
+import { waitUntil } from "@vercel/functions";
+import { getAnonClient, getServiceClient, editOriginalText } from "./_shared.js";
 // Vercel's build-time type-check reports a TS1543 here (resolves `module`
 // as NodeNext for api/ functions regardless of tsconfig.api.json's
 // "esnext" setting, which wants an import attribute) -- that's a
@@ -28,7 +29,6 @@ import { createClient } from "@supabase/supabase-js";
 // support that syntax and hard-fails the deploy ("Expected ';' but found
 // 'with'") -- confirmed 2026-10-16. Leave this plain; it works.
 import characters from "./characters.json";
-import weaponNames from "./weapon_names.json";
 
 export const config = { runtime: "edge" };
 
@@ -38,6 +38,8 @@ const LINK_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 interface DiscordInteraction {
   type: number;
+  application_id: string;
+  token: string;
   data?: { name?: string; options?: { name: string; value?: string }[] };
   member?: { user?: { id: string; username: string } };
   user?: { id: string; username: string };
@@ -63,34 +65,11 @@ function ephemeralReply(content: string): Response {
   });
 }
 
-// Reuses the frontend's own Supabase project config -- VITE_-prefixed env
-// vars are still readable via process.env here, since that prefix only
-// gates what Vite bundles into the CLIENT build, not what a Vercel
-// serverless/edge function can read server-side. No service-role key: this
-// client only ever touches discord_link_codes, a short-lived,
-// low-sensitivity table with its own permissive RLS policy -- see
-// discord.md and database.md.
-function getAnonClient() {
-  const url = process.env.VITE_SUPABASE_URL;
-  const anonKey = process.env.VITE_SUPABASE_ANON_KEY;
-  if (!url || !anonKey) return null;
-  return createClient(url, anonKey);
-}
-
-// /builds and /build have no site session to RLS-scope against at all --
-// only a Discord interaction, verified by its Ed25519 signature instead of
-// a Supabase JWT. The service-role key bypasses RLS entirely, so every
-// query made with it below is deliberately scoped in code: first resolve
-// discord_user_id (from the verified interaction payload, unspoofable) to
-// a user_id via discord_links, then filter user_characters by that
-// resolved user_id -- never by anything else a client could influence. A
-// documented, narrow exception to this app's general "no service-role key"
-// posture -- see database.md's discord_link_codes/discord_links section.
-function getServiceClient() {
-  const url = process.env.VITE_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !serviceKey) return null;
-  return createClient(url, serviceKey);
+function deferredReply(): Response {
+  return Response.json({
+    type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+    data: { flags: InteractionResponseFlags.EPHEMERAL },
+  });
 }
 
 function generateLinkCode(): string {
@@ -161,18 +140,42 @@ async function handleBuilds(interaction: DiscordInteraction): Promise<Response> 
   return ephemeralReply(lines.join("\n"));
 }
 
-// Plain-text build summary for now -- a rendered Build Card screenshot
-// (matching the site's own BuildCard.tsx) is the eventual goal but needs
-// either headless Chromium (a separate Node function, Edge can't run it)
-// or a composed image, which /builds already tried and scrapped once for
-// being real complexity before the simple version even worked. Same
-// reasoning applies here: ship the data first.
+// Fires the actual card render off to build-card.ts (a Node function --
+// satori/resvg need real Node APIs, see that file's header) and does NOT
+// wait for it to finish; that function edits this deferred placeholder
+// itself once the image is ready. Protected by a shared-secret header,
+// since Discord user ids aren't secret -- without this, anyone could hit
+// that endpoint directly and either burn compute or read another linked
+// user's build data, bypassing Discord's own signature verification
+// entirely.
+async function triggerBuildCard(interaction: DiscordInteraction, userId: string, roleGbId: string): Promise<void> {
+  const secret = process.env.DISCORD_INTERNAL_SECRET;
+  if (!secret) {
+    await editOriginalText(
+      interaction.application_id,
+      interaction.token,
+      "Something's misconfigured -- try again later.",
+    );
+    return;
+  }
+
+  await fetch(`${SITE_URL}/api/discord/build-card`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Internal-Secret": secret },
+    body: JSON.stringify({
+      userId,
+      roleGbId,
+      applicationId: interaction.application_id,
+      interactionToken: interaction.token,
+    }),
+  });
+}
+
 async function handleBuild(interaction: DiscordInteraction): Promise<Response> {
   const discordUser = interaction.member?.user ?? interaction.user;
   const characterQuery = interaction.data?.options?.find((o) => o.name === "character")?.value;
-  const supabase = getServiceClient();
 
-  if (!discordUser || !supabase) {
+  if (!discordUser) {
     return ephemeralReply("Something's misconfigured -- try again later.");
   }
   if (!characterQuery) {
@@ -182,6 +185,11 @@ async function handleBuild(interaction: DiscordInteraction): Promise<Response> {
   const roleGbId = resolveCharacterId(characterQuery);
   if (!roleGbId) {
     return ephemeralReply(`Couldn't find a character matching "${characterQuery}".`);
+  }
+
+  const supabase = getServiceClient();
+  if (!supabase) {
+    return ephemeralReply("Something's misconfigured -- try again later.");
   }
 
   const { data: link } = await supabase
@@ -194,40 +202,8 @@ async function handleBuild(interaction: DiscordInteraction): Promise<Response> {
     return ephemeralReply("You haven't linked your account yet -- run /link first.");
   }
 
-  const charName = (characters as Record<string, { name: string }>)[roleGbId]?.name ?? roleGbId;
-
-  const { data: build, error } = await supabase
-    .from("user_characters")
-    .select("character_level, weapon_gb_id, weapon_level, weapon_rank, resonance_level, talent_levels")
-    .eq("user_id", link.user_id)
-    .eq("role_gb_id", roleGbId)
-    .maybeSingle();
-
-  if (error) {
-    return ephemeralReply("Couldn't load that build -- try again later.");
-  }
-  if (!build) {
-    return ephemeralReply(`You haven't saved a build for **${charName}** yet.`);
-  }
-
-  const names: Record<string, string> = weaponNames;
-  const weaponLine = build.weapon_gb_id
-    ? `${names[build.weapon_gb_id] ?? `Unknown (${build.weapon_gb_id})`} (Lv ${build.weapon_level}, Rank ${build.weapon_rank})`
-    : "None equipped";
-
-  // addPointTarget order -- see database.md's talent_levels column comment.
-  const [normalAttack, resonanceSkill, forteCircuit, resonanceLiberation, introSkill] = build.talent_levels ?? [
-    1, 1, 1, 1, 1,
-  ];
-
-  const lines = [
-    `**${charName}** — Lv ${build.character_level}/90`,
-    `Weapon: ${weaponLine}`,
-    `Resonance Chain: ${build.resonance_level}/6 unlocked`,
-    `Talents: Normal Attack ${normalAttack} | Resonance Skill ${resonanceSkill} | Forte Circuit ${forteCircuit} | Resonance Liberation ${resonanceLiberation} | Intro Skill ${introSkill}`,
-  ];
-
-  return ephemeralReply(lines.join("\n"));
+  waitUntil(triggerBuildCard(interaction, link.user_id, roleGbId));
+  return deferredReply();
 }
 
 export default async function handler(req: Request): Promise<Response> {

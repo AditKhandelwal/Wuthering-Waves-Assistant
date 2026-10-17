@@ -325,13 +325,28 @@ wuwa-agent/
     ├── .env.example               # VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY -- copy to .env (gitignored)
     ├── api/                       # Vercel serverless functions -- NOT part of the Vite app, own tsconfig.api.json
     │   └── discord/
-    │       ├── interactions.ts   # Discord's HTTP interactions endpoint (Edge runtime) -- see discord.md.
-    │       │                      # PING, /link, /builds (plain-text reply) done; /build (screenshot) not yet.
+    │       ├── interactions.ts   # Discord's HTTP interactions endpoint (Edge runtime). PING, /link, /builds
+    │       │                      # (plain-text), /build (fast validation + defers to build-card.ts) all done.
     │       │                      # A composed portrait-grid image for /builds was tried and scrapped
-    │       │                      # 2026-10-16 to get functionality working first -- see discord.md before
-    │       │                      # retrying (satori/@resvg/resvg-wasm/@vercel/og all hit real Edge-runtime
-    │       │                      # compatibility issues).
-    │       └── characters.json   # lean roleGbId -> {name, element, cardPictureUrl}, bundled no-runtime-fetch
+    │       │                      # 2026-10-16 to get functionality working first -- see discord.md.
+    │       ├── build-card.ts     # /build's real Build Card image -- a NODE function (not Edge, see
+    │       │                      # discord.md), triggered internally by interactions.ts, never by Discord
+    │       │                      # directly. Computes real final stats via stats.ts, renders via
+    │       │                      # _buildCardImage.ts, edits the deferred Discord reply itself.
+    │       ├── _shared.ts        # getAnonClient/getServiceClient/editOriginalText/editOriginalWithImage --
+    │       │                      # shared by interactions.ts (Edge) and build-card.ts (Node), nothing
+    │       │                      # runtime-specific. Not a route (no default export).
+    │       ├── _buildCardImage.ts # composes the Build Card PNG: satori + @resvg/resvg-js (NATIVE, not the
+    │       │                      # WASM variant /builds' scrapped attempt hit Edge trouble with) -- works
+    │       │                      # cleanly here since this runs on real Node, not Edge. Not a route.
+    │       ├── _fontData.ts      # Geist-Regular.ttf, base64-embedded (satori needs a font explicitly)
+    │       ├── stats.ts          # byte-identical copy of supabase/functions/agent/stats.ts's stat-aggregation
+    │       │                      # port -- see discord.md before letting the two drift
+    │       ├── characters.json   # lean roleGbId -> {name, element, cardPictureUrl}, bundled no-runtime-fetch
+    │       ├── weapon_names.json # gbId -> name, mirrored from data/agent_weapon_names.json
+    │       └── (+ character_stat_curves/weapon_stat_curves/weapon_passive_bonuses/echo_catalog/
+    │             echo_stat_curves/echo_sets/sequence_stat_nodes/sequence_node_stat_bonuses.json --
+    │             bundled copies stats.ts needs, same files the agent function also bundles)
     ├── public/data/              # frontend's own copy of data/*.json — see frontend.md
     ├── src/
     │   ├── App.tsx                # react-router-dom: "/" (select), "/build/:characterId", "/builds", "/chat", "/link/:code"
