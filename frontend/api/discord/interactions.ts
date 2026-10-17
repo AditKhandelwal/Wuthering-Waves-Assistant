@@ -8,11 +8,11 @@
 // within 3 seconds of a command being invoked.
 //
 // PING/PONG, /link, and /builds verified end-to-end in production.
-// /build now triggers build-card.ts (a separate Node function -- see that
-// file's header) for the real stats-driven card image; this file only
-// does the fast validation (character resolution, link lookup) and
-// defers immediately, since the image render can't fit Discord's
-// 3-second budget reliably.
+// /stats (renamed from /build) now triggers build-card.ts (a separate Node
+// function -- see that file's header) for the real stats-driven card
+// image; this file only does the fast validation (character resolution,
+// link lookup) and defers immediately, since the image render can't fit
+// Discord's 3-second budget reliably.
 import {
   InteractionResponseFlags,
   InteractionResponseType,
@@ -171,7 +171,7 @@ async function triggerBuildCard(interaction: DiscordInteraction, userId: string,
   });
 }
 
-async function handleBuild(interaction: DiscordInteraction): Promise<Response> {
+async function handleStats(interaction: DiscordInteraction): Promise<Response> {
   const discordUser = interaction.member?.user ?? interaction.user;
   const characterQuery = interaction.data?.options?.find((o) => o.name === "character")?.value;
 
@@ -179,7 +179,7 @@ async function handleBuild(interaction: DiscordInteraction): Promise<Response> {
     return ephemeralReply("Something's misconfigured -- try again later.");
   }
   if (!characterQuery) {
-    return ephemeralReply("Usage: /build character:<name>");
+    return ephemeralReply("Usage: /stats character:<name>");
   }
 
   const roleGbId = resolveCharacterId(characterQuery);
@@ -237,7 +237,7 @@ export default async function handler(req: Request): Promise<Response> {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     if (interaction.data?.name === "link") return handleLink(interaction);
     if (interaction.data?.name === "builds") return handleBuilds(interaction);
-    if (interaction.data?.name === "build") return handleBuild(interaction);
+    if (interaction.data?.name === "stats") return handleStats(interaction);
   }
 
   return ephemeralReply("This command isn't wired up yet.");

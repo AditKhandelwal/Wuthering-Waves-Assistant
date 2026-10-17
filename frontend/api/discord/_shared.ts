@@ -42,24 +42,20 @@ export async function editOriginalText(applicationId: string, token: string, con
   });
 }
 
-// Wires the image attachment into the embed automatically (`image.url:
-// "attachment://<filename>"` is Discord's required convention for
-// referencing an uploaded file from within an embed) -- callers only
-// need to pass additional embed fields (color, etc.), not that convention
-// itself, so it can't be forgotten at a call site.
+// Sends the rendered card as a plain attached image -- no embed wrapper.
+// An embed was the original shape (Discord's documented convention for
+// showing an image alongside styled metadata via `image.url:
+// "attachment://<filename>"`), but a user asked for the image as its own
+// message instead of boxed inside an embed card, so this just attaches the
+// file directly with no `embeds` field at all.
 export async function editOriginalWithImage(
   applicationId: string,
   token: string,
   imageBytes: Uint8Array,
   filename: string,
-  embedExtra: Record<string, unknown> = {},
 ): Promise<void> {
-  const embed = { ...embedExtra, image: { url: `attachment://${filename}` } };
   const formData = new FormData();
-  formData.append(
-    "payload_json",
-    JSON.stringify({ embeds: [embed], attachments: [{ id: 0, filename }] }),
-  );
+  formData.append("payload_json", JSON.stringify({ attachments: [{ id: 0, filename }] }));
   // TS's DOM lib types BlobPart as a non-generic ArrayBufferView, but
   // resvg's asPng() return type is the newer generic
   // Uint8Array<ArrayBufferLike> -- structurally identical at runtime,

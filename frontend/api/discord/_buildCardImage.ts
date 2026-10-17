@@ -73,22 +73,34 @@ const ELEMENT_COLOR: Record<string, string> = {
 // an echo's small portrait circle, by cost tier.
 const COST_RING_COLOR: Record<1 | 3 | 4, string> = { 4: GOLD, 3: `${GOLD_SOFT}99`, 1: BORDER };
 
-// Computed, not guessed: right column needs to fit 5 fixed-310px echo
-// tiles + 4x6px gaps = 1574px (see echoTile's width comment for why
-// fixed, not flex:1). Right column = WIDTH - 32 (padding) - 240
-// (portrait) - 16 (gap) -- so WIDTH must be >= 1574 + 288 = 1862. A
-// previous version of this constant was tuned by incrementally widening
-// in response to a persistent clipped edge that turned out to be this
-// exact miscalculation (flex:1's partial shrinking was masking the real
-// shortfall) -- computing it directly instead of guessing again.
-const WIDTH = 1880;
+// v5 used a much wider canvas (1880px) sized to fit 5 echo tiles at a
+// generous 310px each -- real enough to avoid satori's box-sizing/overflow
+// bugs (see the comment on flexCol/flexRow below), but far wider than the
+// real site ever renders this card: BuildScreenPage.tsx renders BuildCard
+// inside `mx-auto max-w-6xl px-8` (1152px, minus 64px of padding = 1088px
+// of actual content width), not anything close to 1880px. That mismatch is
+// what a user flagged as "spacing where it doesn't need to be" -- the
+// talent row's `justify-content: space-between` (an exact copy of the real
+// TalentTree's `justify-between`, see talentColumn() below) is correct
+// Tailwind, but on a canvas 800px wider than the real card it spreads 5
+// talent columns across a enormous gap that never exists on the actual
+// site. Fix: match the real card's proportions instead of sizing the
+// canvas off an arbitrarily generous echo-tile width. WIDTH is now
+// computed the same direction as before (right column's needs -> overall
+// width) but off a tile width close to the real site's own (see
+// ECHO_TILE_WIDTH below) instead of a padded-out guess.
+const PORTRAIT_WIDTH = 240; // grid-cols-[240px_1fr] in BuildCard.tsx
+const PORTRAIT_HEIGHT = 260;
+const ECHO_TILE_WIDTH = 160;
+const ECHO_TILE_GAP = 6; // gap-1.5 in EchoCardTile's real grid
+const TALENT_COLUMN_WIDTH = 78;
+const RIGHT_COLUMN_WIDTH = 5 * ECHO_TILE_WIDTH + 4 * ECHO_TILE_GAP; // 824
+const WIDTH = PORTRAIT_WIDTH + 16 /* gap */ + RIGHT_COLUMN_WIDTH + 32 /* card padding */; // 1112
 // satori requires an explicit height (no dynamic content-based sizing the
 // way a real browser would do) -- generous enough to comfortably fit the
 // richest case with some margin; a sparser build just leaves blank space
 // within the card border rather than being cut off.
-const HEIGHT = 580;
-const PORTRAIT_WIDTH = 240; // grid-cols-[240px_1fr] in BuildCard.tsx
-const PORTRAIT_HEIGHT = 300;
+const HEIGHT = 500;
 
 // Blends `front` over `back` at `ratio` (0-1), same visual role as the
 // real card's CSS `color-mix(in srgb, var(--card-glow-color) 26%, var(--color-bg))`
@@ -444,8 +456,11 @@ function echoTile(slot: EchoTileData, statIcons: Record<string, string>) {
     // space" problem -- almost certainly a flex-equal-distribution
     // rounding edge case in satori specific to the final item. Explicit
     // fixed widths (same fix that resolved the talent-column overflow
-    // above) sidestep it entirely.
-    { width: "310px", gap: "6px", border: `1px solid ${BORDER}`, backgroundColor: PANEL_ALT, padding: "8px" },
+    // above) sidestep it entirely. ECHO_TILE_WIDTH (160px) matches the
+    // real site's proportions -- see WIDTH's comment -- relying on the
+    // same truncate-on-overflow text treatment echoStatLine already has,
+    // same as the real EchoCardTile.tsx's `truncate` class.
+    { width: `${ECHO_TILE_WIDTH}px`, gap: "6px", border: `1px solid ${BORDER}`, backgroundColor: PANEL_ALT, padding: "8px" },
     [
       flexRow({ alignItems: "center", gap: "6px" }, [
         {
@@ -547,8 +562,10 @@ function talentColumn(talent: TalentData | undefined, forte: ForteColumnNodes | 
     // column and 5th echo tile silently fell off the canvas edge even
     // after widening the card twice and adding minWidth:0 everywhere
     // else; satori doesn't clip overflowing content visibly, it's simply
-    // absent from the fixed-size raster output.
-    { alignItems: "center", gap: "8px", width: "120px" },
+    // absent from the fixed-size raster output. TALENT_COLUMN_WIDTH
+    // (78px) matches the real TalentTree's content-driven column width --
+    // see WIDTH's comment for why the canvas shrank from 1880px.
+    { alignItems: "center", gap: "8px", width: `${TALENT_COLUMN_WIDTH}px` },
     [
       ...topNodes,
       talentDiamond(talent?.pictureUrl ?? null),
@@ -632,24 +649,38 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
 
   // FinalStatsGrid: ONE bordered box, bg-panel-alt, inline-grid
   // grid-cols-2 gap-x-5 (20px), px-4 py-2, self-start (hugs content).
+  // Every value here goes through formatStatValue, exactly like the real
+  // FinalStatsGrid.tsx's Row component does -- raw string interpolation
+  // (e.g. `${stats.critDmg}%`) used to run directly off floating-point sums
+  // with no truncation, producing values like "272.59999999999997%" (a real
+  // bug a user caught live). formatStatValue truncates every percentage
+  // stat to 1 decimal, matching the game's own display convention.
   const leftRows = stats
     ? [
-        ["HP", "HP", String(stats.hp)],
-        ["ATK", "ATK", String(stats.atk)],
-        ["DEF", "DEF", String(stats.def)],
-        ["Energy Regen", "Energy Regen", `${stats.energyRegen}%`],
-        ["Crit Rate", "Crit. Rate", `${stats.critRate}%`],
-        ["Crit DMG", "Crit. DMG", `${stats.critDmg}%`],
+        ["HP", "HP", formatStatValue(stats.hp, "HP")],
+        ["ATK", "ATK", formatStatValue(stats.atk, "ATK")],
+        ["DEF", "DEF", formatStatValue(stats.def, "DEF")],
+        ["Energy Regen", "Energy Regen", formatStatValue(stats.energyRegen, "Energy Regen")],
+        ["Crit Rate", "Crit. Rate", formatStatValue(stats.critRate, "Crit. Rate")],
+        ["Crit DMG", "Crit. DMG", formatStatValue(stats.critDmg, "Crit. DMG")],
       ]
     : [];
   const rightRows = stats
     ? [
-        ["Basic Atk DMG", "Basic Attack DMG Bonus", `${extra.basicAttackDmgBonus}%`],
-        ["Heavy Atk DMG", "Heavy Attack DMG Bonus", `${extra.heavyAttackDmgBonus}%`],
-        ["Skill DMG", "Resonance Skill DMG Bonus", `${extra.skillDmgBonus}%`],
-        ["Liberation DMG", "Resonance Liberation DMG Bonus", `${extra.liberationDmgBonus}%`],
-        [stats.elementalDmgBonusName.replace(" Bonus", ""), stats.elementalDmgBonusName, `${stats.elementalDmgBonus}%`],
-        ["Healing Bonus", "Healing Bonus", `${stats.healingBonus}%`],
+        ["Basic Atk DMG", "Basic Attack DMG Bonus", formatStatValue(extra.basicAttackDmgBonus, "Basic Attack DMG Bonus")],
+        ["Heavy Atk DMG", "Heavy Attack DMG Bonus", formatStatValue(extra.heavyAttackDmgBonus, "Heavy Attack DMG Bonus")],
+        ["Skill DMG", "Resonance Skill DMG Bonus", formatStatValue(extra.skillDmgBonus, "Resonance Skill DMG Bonus")],
+        [
+          "Liberation DMG",
+          "Resonance Liberation DMG Bonus",
+          formatStatValue(extra.liberationDmgBonus, "Resonance Liberation DMG Bonus"),
+        ],
+        [
+          stats.elementalDmgBonusName.replace(" Bonus", ""),
+          stats.elementalDmgBonusName,
+          formatStatValue(stats.elementalDmgBonus, stats.elementalDmgBonusName),
+        ],
+        ["Healing Bonus", "Healing Bonus", formatStatValue(stats.healingBonus, "Healing Bonus")],
       ]
     : [];
 

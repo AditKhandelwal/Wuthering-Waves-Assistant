@@ -301,9 +301,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   };
 
   // No title/text here -- the card image itself already shows name, level,
-  // weapon, and stats; a duplicate embed title would just repeat it.
+  // weapon, and stats. Sent as a plain attached image, not an embed (a
+  // user asked for it as its own message rather than boxed in an embed).
   const imageBytes = await renderBuildCard(cardData);
-  await editOriginalWithImage(applicationId, interactionToken, imageBytes, "build-card.png", { color: 0xc9a24b });
+  await editOriginalWithImage(applicationId, interactionToken, imageBytes, "build-card.png");
 
   res.status(200).send("ok");
 }
