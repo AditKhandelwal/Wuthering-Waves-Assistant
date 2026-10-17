@@ -91,6 +91,23 @@ const sequenceNodeStatBonuses = (
 // guide API at save time) reliably matches this catalog's punctuation --
 // same tolerance as findEchoByName in frontend/src/lib/echoes.ts and the
 // agent's own echoByNormalizedName.
+const SITE_URL = "https://wuthering-waves-assistant.vercel.app";
+
+// Unlike character portraits and weapon icons (absolute Kuro/dotgg CDN
+// URLs), echo images are self-hosted under frontend/public/echo-images/
+// (download_echo_images.py -- avoids CORS issues with their original
+// game8.co source), so echo_catalog.json's pictureUrl is a site-RELATIVE
+// path like "/echo-images/....png". Satori has no "current page" to
+// resolve a relative URL against and hard-fails on one ("Image source
+// must be an absolute URL") -- confirmed via a real deploy failure, the
+// echo tile row silently never appeared at all (not even empty tiles) on
+// the first live /build test. Must prepend SITE_URL before handing a
+// pictureUrl to satori.
+function absoluteUrl(url: string | null): string | null {
+  if (!url) return null;
+  return url.startsWith("/") ? `${SITE_URL}${url}` : url;
+}
+
 const echoByNormalizedName = new Map<string, EchoCatalogEntry>();
 // pictureUrl isn't part of stats.ts's EchoCatalogEntry type (the agent
 // doesn't render images, so it was never added there, and stats.ts must
@@ -167,7 +184,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   const activeEchoSets = computeActiveSetBonuses(echoSlots, echoSets);
   const echoSlotBreakdown = computeEchoSlotBreakdown(echoSlots, echoByNormalizedName, echoStatCurves);
   const echoes = echoSlotBreakdown.map((slot) => ({
-    pictureUrl: slot.echoName ? (echoPictureByNormalizedName.get(normalizeEchoName(slot.echoName)) ?? null) : null,
+    pictureUrl: slot.echoName ? absoluteUrl(echoPictureByNormalizedName.get(normalizeEchoName(slot.echoName)) ?? null) : null,
     cost: slot.cost,
   }));
   const forteBonusTotals = computeForteBonusTotals(

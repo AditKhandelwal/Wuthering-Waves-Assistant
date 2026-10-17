@@ -319,6 +319,26 @@ bordered box, no `finalStats` → "Final stats unavailable" text, no weapon
 circles with no label, no active sets → the badge row omitted, an empty
 echo slot → a plain bordered tile with no cost badge).
 
+**Gotcha, confirmed via a real deploy failure on the first live echo-tile
+render: echo image URLs are relative, every other image source isn't.**
+Character portraits (`guide-res.aki-game.net`) and weapon icons
+(`static.dotgg.gg`) are absolute Kuro/dotgg CDN URLs, but echo images are
+self-hosted under `frontend/public/echo-images/`
+(`scripts/download_echo_images.py` — avoids CORS issues with their
+original game8.co source), so `echo_catalog.json`'s `pictureUrl` is a
+site-relative path like `/echo-images/....png`. Satori has no "current
+page" to resolve a relative URL against and hard-fails outright (`Image
+source must be an absolute URL`) — the whole echo tile row silently never
+appeared at all on the first live test (not even empty bordered tiles),
+which is what made this confusing to diagnose purely from a screenshot;
+the real signal was in Vercel's Runtime Logs. Fixed by
+`absoluteUrl()` in `build-card.ts`, prepending `SITE_URL` to any
+`pictureUrl` starting with `/` before it reaches `renderBuildCard()`.
+Checked the other three image sources (weapon catalog, character
+portraits, stat icons, talent/inherent-skill icons) directly against
+`data/*.json` afterward and confirmed none of them have this problem —
+echo images are the only relative one.
+
 **New data extract: `frontend/api/discord/talent_data.json`**, a lean
 `roleGbId -> {talents: [...5], inherentSkills: [...2]}` map built by
 `scripts/build_discord_talent_data.py` from `data/wuwa_characters.json`,
