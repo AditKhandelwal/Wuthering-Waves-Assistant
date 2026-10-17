@@ -11,15 +11,27 @@ export function AuthModal({ onClose }: AuthModalProps) {
   const [mode, setMode] = useState<"sign-in" | "sign-up">("sign-in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
 
+  function switchMode(next: "sign-in" | "sign-up") {
+    setMode(next);
+    setError(null);
+    setConfirmPassword("");
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    setSubmitting(true);
 
+    if (mode === "sign-up" && password !== confirmPassword) {
+      setError("Passwords don't match.");
+      return;
+    }
+
+    setSubmitting(true);
     const result = mode === "sign-in" ? await signIn(email, password) : await signUp(email, password);
 
     setSubmitting(false);
@@ -62,6 +74,17 @@ export function AuthModal({ onClose }: AuthModalProps) {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-sm border border-border bg-panel px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-gold-soft focus:outline-none"
           />
+          {mode === "sign-up" && (
+            <input
+              type="password"
+              required
+              minLength={6}
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full rounded-sm border border-border bg-panel px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-gold-soft focus:outline-none"
+            />
+          )}
 
           {error && <p className="text-xs text-red-400">{error}</p>}
 
@@ -75,10 +98,7 @@ export function AuthModal({ onClose }: AuthModalProps) {
 
           <button
             type="button"
-            onClick={() => {
-              setMode(mode === "sign-in" ? "sign-up" : "sign-in");
-              setError(null);
-            }}
+            onClick={() => switchMode(mode === "sign-in" ? "sign-up" : "sign-in")}
             className="text-xs text-text-muted underline-offset-2 hover:text-gold-soft hover:underline"
           >
             {mode === "sign-in" ? "Need an account? Sign up" : "Already have an account? Sign in"}
