@@ -37,7 +37,13 @@ export function AuthModal({ onClose }: AuthModalProps) {
     setSubmitting(false);
     if (result.error) {
       setError(result.error);
-    } else if (mode === "sign-up") {
+    } else if (result.confirmationRequired) {
+      // Supabase actually withheld a session pending email confirmation
+      // -- only show this when that's genuinely true. Previously this
+      // branch fired on every successful sign-up unconditionally, which
+      // told a real user to go check an email that was never coming:
+      // "Confirm email" was off, so Supabase had already signed them in,
+      // but the UI didn't know that and showed the wrong message anyway.
       setSignedUp(true);
     } else {
       onClose();

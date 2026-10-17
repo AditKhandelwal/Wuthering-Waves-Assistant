@@ -8,8 +8,17 @@ const NOT_CONFIGURED_ERROR =
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
-  signUp: (email: string, password: string) => Promise<{ error: string | null }>;
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>;
+  // confirmationRequired: true only when Supabase actually withheld a
+  // session pending email confirmation. When "Confirm email" is off in
+  // the Supabase dashboard, signUp() signs the user in immediately (a
+  // session comes back right away) -- the caller needs to know which
+  // happened to show the right message, since "check your email" is
+  // wrong and confusing when no confirmation was ever going to be
+  // required. A real user hit exactly this: confirmation was already
+  // off, they were signed in immediately, but the UI told them to go
+  // check an email that was never coming.
+  signUp: (email: string, password: string) => Promise<{ error: string | null; confirmationRequired: boolean }>;
+  signIn: (email: string, password: string) => Promise<{ error: string | null; confirmationRequired: boolean }>;
   signOut: () => Promise<void>;
 }
 
@@ -40,15 +49,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   async function signUp(email: string, password: string) {
-    if (!isSupabaseConfigured) return { error: NOT_CONFIGURED_ERROR };
-    const { error } = await supabase.auth.signUp({ email, password });
-    return { error: error?.message ?? null };
+    if (!isSupabaseConfigured) return { error: NOT_CONFIGURED_ERROR, confirmationRequired: false };
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    // data.session is non-null the moment signUp() succeeds if "Confirm
+    // email" is off (the user is signed in immediately) -- null means
+    // Supabase is actually waiting on a confirmation click.
+    return { error: error?.message ?? null, confirmationRequired: !error && !data.session };
   }
 
   async function signIn(email: string, password: string) {
-    if (!isSupabaseConfigured) return { error: NOT_CONFIGURED_ERROR };
+    // confirmationRequired is always false here -- it only exists so
+    // AuthModal can share one result shape across both sign-in and
+    // sign-up instead of branching on which function was called.
+    if (!isSupabaseConfigured) return { error: NOT_CONFIGURED_ERROR, confirmationRequired: false };
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error: error?.message ?? null };
+    return { error: error?.message ?? null, confirmationRequired: false };
   }
 
   async function signOut() {
