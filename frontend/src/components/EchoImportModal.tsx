@@ -154,7 +154,16 @@ export function EchoImportModal({
       setDraft(nextDraft);
       setConfidence(nextConfidence);
       setStep("review");
-    } catch {
+    } catch (err) {
+      // Previously a bare `catch {}` -- any failure (CDN fetch timeout for
+      // tesseract.js's wasm/lang-data payload, a corrupted file, a worker
+      // crash) was swallowed into this one generic message with zero
+      // trace left anywhere. A user hit this once and it couldn't be
+      // reproduced locally or against the live site with their exact
+      // screenshot, which means whatever actually happened for them is
+      // now unrecoverable information -- logging it here so a repeat
+      // leaves something to look at instead of flying blind again.
+      console.error("Echo screenshot OCR failed:", err);
       setError("Couldn't read that image. Try a clearer screenshot, or fill in the fields manually below.");
       setDraft(draftFromParsed(parseEchoCardLines([], buildEchoOcrVocab(catalog, curves), curves), catalog, curves).draft);
       setConfidence(
