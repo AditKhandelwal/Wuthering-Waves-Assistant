@@ -194,7 +194,8 @@ confirmed by two separate real failures, so get it right per file:
   ".../characters.json" needs an import attribute of "type: json"`,
   confirmed via `build-card.ts`'s first live test 2026-10-16.
 
-**`/build {character}` renders a real Build Card image with computed
+**`/stats {character}` (renamed from `/build` 2026-10-16 -- see the
+v6/v7 section below) renders a real Build Card image with computed
 final stats.** Takes a required string option (`character`), resolved to
 a `roleGbId` via `resolveCharacterId()` (case-insensitive, exact match
 first then substring — same order the agent's own resolver uses) against
@@ -203,7 +204,7 @@ first then substring — same order the agent's own resolver uses) against
 **Two-function split, Edge + Node**, because the image render needs real
 Node APIs that Edge doesn't provide (see the "Gotcha" note below) but
 Discord still requires a response within 3 seconds:
-- `interactions.ts`'s `handleBuild()` (Edge, fast) does only the cheap
+- `interactions.ts`'s `handleStats()` (Edge, fast) does only the cheap
   validation — resolve the character, resolve `discord_user_id ->
   user_id` via `discord_links` (service-role client, same as `/builds`).
   If either fails, replies immediately with a plain error, no deferral
@@ -569,6 +570,95 @@ talent/forte icons) need fetching — still comfortably within Discord's
 loading tricks to go wrong the way `/builds`' scrapped attempt did, so
 local verification here is a strong signal production will behave the
 same way.
+
+**v6/v7 (2026-10-16, after the first live screenshots came back) — renamed
+to `/stats`, made its reply public, and closed real gaps found from
+production renders, not screenshots this time:**
+- **`/build` renamed to `/stats`** (`handleStats()` in `interactions.ts`,
+  `command.json`'s registration payload) — re-registered as a global
+  command (`curl.exe -X PUT .../commands -d "@command.json"`, see
+  "Registering commands" below; PowerShell 5.1's `curl` alias to
+  `Invoke-WebRequest` doesn't support `-d @file` at all, `curl.exe`
+  bypasses that). Global command updates can take up to ~1hr to
+  propagate to every Discord client even though the API call itself
+  succeeds instantly — a stale `/build` autocomplete entry for a while
+  after re-registering is expected, not a sign anything failed.
+- **`/stats`'s reply is now public, `/builds` stays ephemeral.** Discord
+  ties a deferred interaction's visibility to its *initial* deferred
+  response, not the later webhook edit that fills in the real content —
+  `deferredReply()` (only ever used by `/stats`) no longer sets
+  `InteractionResponseFlags.EPHEMERAL`; `/builds` keeps using the
+  separate `ephemeralReply()` helper, untouched.
+- **Card sent as a plain attached image, not an embed.** `editOriginalWithImage`
+  used to wrap the PNG in a Discord embed (`image.url:
+  "attachment://..."`); now it's just `attachments` in the payload, no
+  `embeds` field at all, per request.
+- **Crit DMG (and every other percentage stat) could show raw
+  floating-point drift** — `272.59999999999997%` instead of `272.6%`,
+  caught live by a user. Root cause: the final-stats panel's left/right
+  row values were built with raw string interpolation
+  (`` `${stats.critDmg}%` ``) instead of going through the same
+  `formatStatValue()` the real `FinalStatsGrid.tsx`'s `Row` component
+  always uses for every single row, HP/ATK/DEF included. Fixed by routing
+  every value through it, matching the real component exactly.
+- **Portrait is a `flex: 1` box, not a fixed-height image.** The real
+  `BuildCard.tsx` wraps the portrait in `min-h-0 flex-1` so it fills
+  whatever vertical space is left in the left column after the name row
+  and weapon panel — a fixed `PORTRAIT_HEIGHT` constant (v5's approach)
+  left a visible blank gap below the weapon panel whenever the right
+  column's content was taller than that fixed value, and forced a more
+  aggressive `object-fit: cover` crop off the *bottom* of the portrait
+  art than the real flexible box ever produces. Both were exactly what a
+  user flagged from a live screenshot. `PORTRAIT_HEIGHT` is gone entirely
+  now; satori resolves the actual leftover height itself, same as a real
+  browser would, since the outer row's default `align-items: stretch`
+  already gives the left column the card's full height.
+- **Talent tree now has the real cascading arc AND real connector
+  lines**, found missing by comparing directly against a reference
+  screenshot of the real card's Forte tree. `ARC_OFFSET_BY_DISTANCE =
+  [0, 14, 46]` (indexed by a column's distance from the center Forte
+  Circuit column) is now applied as `marginTop` per column, same as
+  `BuildCard.tsx` — requires the talent-column row to use `alignItems:
+  "flex-start"` instead of the default `stretch`, or the offsets get
+  erased by every column being forced to the row's full height.
+  Separately, each stacked node (forte circles / inherent-skill diamonds)
+  is now followed by an actual 16px vertical line element
+  (`connector()`, matching the real `Connector()` component exactly,
+  `h-4 w-px bg-border`) instead of just flex-gap spacing — v5's uniform
+  8px gap had no visible line at all between nodes, which read as too
+  cramped against the reference. The Forte Circuit column's 2 inherent-
+  skill diamonds are now also rendered in the real REVERSED order
+  (`[...inherentSkills].reverse()` in `BuildCard.tsx`) — a real
+  discrepancy v5 had, not just a cosmetic difference.
+- **Element glyph added next to the character name**, matching
+  `BuildCard.tsx`'s `ElementIcon` placement. New `elementIconUrl` field
+  on the Discord character extract, sourced from
+  `wuwa_characters.json`'s `role.element.pictureUrl` (same field
+  `frontend/src/lib/characters.ts`'s `elementIcons` map already reads for
+  the real site) — `scripts/build_discord_character_names.py` now pulls
+  it alongside the existing name/element/picture fields. Rendered
+  **untinted and unglowed**: the real `ElementIcon.tsx` colors this
+  (already-white-silhouette) icon via a CSS `mask-image` + a colored
+  `drop-shadow` glow, and satori's CSS subset has no `mask-image` support
+  at all — a deliberate scope line, same category as `clip-path`/the
+  starfield background being skipped elsewhere in this file, not a bug.
+- **Echo tiles were getting their last substat row clipped at the
+  canvas's bottom edge** — caught from a real screenshot of a live
+  character (Hiyuki), not locally beforehand, because the local
+  verification fixture used at the time had an empty `sequenceNodes`
+  array. A real character's card includes a populated 6-node sequence
+  row, and that plus the new cascading arc's extra height push the top
+  row's natural height past what `HEIGHT=500` (tuned against that
+  under-populated fixture) actually had room for — the same "fixed
+  satori canvas silently drops anything past its edge" failure mode
+  documented in the v5 box-sizing section above, just triggered by a
+  fixture gap this time rather than a CSS gap. Fixed by bumping
+  `HEIGHT` to 560, re-verified locally with Hiyuki's real 6-node
+  sequence data included this time before landing on that number.
+  **Lesson for next time:** a verification fixture needs to exercise the
+  richest realistic case (populated sequence nodes, keynote skills, full
+  echo substats) or a local "looks fine" render can still miss a real
+  overflow that only shows up on an actual character.
 
 ## Registering commands
 
