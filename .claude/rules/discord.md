@@ -384,8 +384,61 @@ already being computed. An empty/unresolved substat slot renders as a
 plain `—` placeholder row instead of being omitted, keeping all 5 tiles'
 row counts visually aligned.
 
+**v4 (same day) — a direct side-by-side comparison against a real site
+screenshot surfaced real, concrete gaps beyond color, and one real bug:**
+- **Icons invisible against dark panels (the "some icons are black"
+  report) — root cause and fix.** The real site always wraps these icons
+  in `SolidIcon` (`BuildCard.tsx`), which applies `brightness-0 invert`
+  (see `.claude/rules/frontend.md`'s "Recoloring icon images") — without
+  it, these dark/semi-transparent line-art icons are nearly invisible on
+  a dark panel; some icons' artwork happened to show through faintly
+  (looked "almost fine"), others didn't (looked solid black), which is
+  exactly the inconsistent pattern reported. Confirmed satori supports
+  CSS `filter` via an isolated local test (one icon rendered with and
+  without `filter: "brightness(0) invert(1)"` side by side) *before*
+  applying it broadly. Now applied to every talent/inherent-skill/
+  forte-node/sequence-node/keynote-skill/stat icon (everything that goes
+  through `SolidIcon` on the real site) via an `invert` parameter on the
+  local `icon()` helper — deliberately NOT applied to the character
+  portrait, echo art, or weapon icon, which are real full-color artwork.
+- **Layout restructured to match `BuildCard.tsx`'s actual JSX, not just
+  its colors.** The real card is `flex items-start gap-4 border-b ...` 
+  containing `flex-col` (stats panel + resonance-chain diamond row,
+  stacked) next to `flex-1 border-l` (Forte talent tree + Outro Skill/
+  Tune Break row, stacked) — side by side, not stats-above-talents like
+  the v3 layout had. Rebuilt to match: `statsPanel` + `sequenceRow` in
+  one sub-column, `talentCols` + `keynoteRow` in the other, border-
+  separated. Card widened 1100px → 1900px to fit this properly (a first
+  attempt at 1760px still clipped the 5th talent column and 5th echo
+  tile off the right edge — satori doesn't clip overflowing content
+  visibly either, it just isn't present in the fixed-size raster output,
+  the same failure mode as the earlier HEIGHT-overflow bug on `/builds`'
+  grid attempt, just sideways this time).
+- **Final stats grew from 7 metrics to the real 12**, in a two-column
+  list-panel (icon + label + right-aligned value, uniform `TEXT` color —
+  the real card does NOT accent-color Crit Rate/DMG/elemental values the
+  way the v3 attempt did) instead of separate boxed tiles. The 4 new
+  ones — `basicAttackDmgBonus`/`heavyAttackDmgBonus`/`skillDmgBonus`/
+  `liberationDmgBonus` — aren't part of `stats.ts`'s `FinalStats` (the
+  agent doesn't need them, and `stats.ts` must stay byte-identical to the
+  agent's copy), so they're computed locally in `build-card.ts` instead,
+  replicating `frontend/src/lib/finalStats.ts`'s own formula exactly
+  (echo totals + the weapon's unconditional passive bonus, nothing else
+  contributes) via a sibling `ExtraDmgBonuses` object, not by widening
+  `FinalStats` itself.
+- **Resonance-chain row and Outro Skill/Tune Break row**, both entirely
+  missing before. New data: `talent_data.json`'s extract now also carries
+  `keynoteSkills`/`sequenceNodes` (same script, same `wuwa_characters.json`
+  source — `roleSkill.keynoteSkills`/`roleResonance.items`, mirroring
+  `loadKeynoteSkills()`/`loadSequenceNodes()`'s exact field extraction).
+- **Echo tiles gained the echo's real name and full stat *names*** next
+  to each value (`Crit. DMG 44.0%`, not just an icon), matching the real
+  card instead of showing icon+value alone.
+- Talent column labels are now uppercase, matching the real card.
+
 **New data extract: `frontend/api/discord/talent_data.json`**, a lean
-`roleGbId -> {talents: [...5], inherentSkills: [...2]}` map built by
+`roleGbId -> {talents: [...5], inherentSkills: [...2], keynoteSkills: [...2],
+sequenceNodes: [...6]}` map built by
 `scripts/build_discord_talent_data.py` from `data/wuwa_characters.json`,
 mirroring the exact field extraction + positional-skillType-fallback logic
 in `frontend/src/lib/talents.ts`'s `loadTalents()`/`loadInherentSkills()`

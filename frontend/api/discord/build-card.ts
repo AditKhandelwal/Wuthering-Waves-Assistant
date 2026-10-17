@@ -35,6 +35,7 @@ import {
   computeSequenceBonusTotals,
   computeWeaponAtk,
   computeWeaponSecondaryStat,
+  computeWeaponPassiveBonusTotals,
   normalizeEchoName,
   FORTE_COLUMN_ORDER,
   type StatCurveData,
@@ -74,6 +75,8 @@ const statIcons = statIconsRaw as Record<string, string>;
 interface TalentDataEntry {
   talents: { skillType: string; name: string; pictureUrl: string | null }[];
   inherentSkills: { name: string; pictureUrl: string | null }[];
+  keynoteSkills: { skillType: string; name: string; pictureUrl: string | null }[];
+  sequenceNodes: { sequence: number; name: string; pictureUrl: string | null }[];
 }
 const talentData = talentDataRaw as Record<string, TalentDataEntry>;
 const echoStatCurves = echoStatCurvesRaw as unknown as EchoStatCurves;
@@ -185,6 +188,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   const echoSlotBreakdown = computeEchoSlotBreakdown(echoSlots, echoByNormalizedName, echoStatCurves);
   const echoes = echoSlotBreakdown.map((slot) => ({
     pictureUrl: slot.echoName ? absoluteUrl(echoPictureByNormalizedName.get(normalizeEchoName(slot.echoName)) ?? null) : null,
+    echoName: slot.echoName,
     cost: slot.cost,
     setName: slot.setName,
     mainStats: slot.mainStats,
@@ -212,6 +216,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     forteBonusTotals,
     sequenceBonusTotals,
   });
+
+  // basicAttackDmgBonus/heavyAttackDmgBonus/skillDmgBonus/liberationDmgBonus
+  // aren't part of stats.ts's FinalStats (the agent doesn't need them, and
+  // stats.ts must stay byte-identical to the agent's copy -- see that
+  // file's header), so these are computed locally here, replicating
+  // frontend/src/lib/finalStats.ts's own formula exactly: echo totals +
+  // the weapon's unconditional passive bonus, nothing else contributes to
+  // these four. computeWeaponPassiveBonusTotals is already exported by
+  // stats.ts (computeFinalStats calls it internally too; calling it a
+  // second time here is cheap and pure, not worth threading the result
+  // back out of that function instead).
+  const weaponPassiveTotals = build.weapon_gb_id
+    ? computeWeaponPassiveBonusTotals(weaponPassiveBonuses, build.weapon_gb_id, build.weapon_rank)
+    : new Map<string, number>();
+  const extraDmgBonuses = {
+    basicAttackDmgBonus: (echoTotals.get("Basic Attack DMG Bonus") ?? 0) + (weaponPassiveTotals.get("Basic Attack DMG Bonus") ?? 0),
+    heavyAttackDmgBonus: (echoTotals.get("Heavy Attack DMG Bonus") ?? 0) + (weaponPassiveTotals.get("Heavy Attack DMG Bonus") ?? 0),
+    skillDmgBonus:
+      (echoTotals.get("Resonance Skill DMG Bonus") ?? 0) + (weaponPassiveTotals.get("Resonance Skill DMG Bonus") ?? 0),
+    liberationDmgBonus:
+      (echoTotals.get("Resonance Liberation DMG Bonus") ?? 0) +
+      (weaponPassiveTotals.get("Resonance Liberation DMG Bonus") ?? 0),
+  };
 
   const names: Record<string, string> = weaponNames;
   const weaponAtk = build.weapon_gb_id ? computeWeaponAtk(weaponStatCurves, build.weapon_gb_id, build.weapon_level) : null;
@@ -254,9 +281,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     weaponSecondaryStat,
     resonanceLevel: build.resonance_level,
     finalStats,
+    extraDmgBonuses,
     activeEchoSets: activeEchoSets.map((s) => ({ setName: s.setName, count: s.count })),
     talents,
     inherentSkills,
+    keynoteSkills: talentInfo?.keynoteSkills ?? [],
+    sequenceNodes: talentInfo?.sequenceNodes ?? [],
     forteColumns,
     statIcons,
     echoes,

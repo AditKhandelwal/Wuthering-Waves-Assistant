@@ -3,22 +3,23 @@
 // Vercel's own convention for "not an endpoint" files under api/).
 //
 // This is a composed re-creation pulling the same underlying DATA the
-// live site's BuildCard.tsx uses (portrait, weapon, final stats, forte
-// tree, echoes), NOT a screenshot of that component -- a real headless-
-// browser screenshot was considered and rejected: the full @sparticuz/
-// chromium binary (70MB unpacked) exceeds Vercel's standard Node function
-// size limit, and a hosted screenshot API trades that for an external
-// paid dependency with its own rate limits. This renders in under a
-// second with no browser at all. Styled to match the real site as
-// closely as satori's CSS subset allows: exact color tokens from
-// index.css, the same element-tinted gradient wash, and the same rotated-
-// diamond look for talent/forte/inherent-skill nodes (confirmed satori
-// supports `transform: rotate()` via an isolated local test before
-// committing to it across the whole tree). Two things from the real card
-// are still NOT replicated: the angular `clip-corner` panel shape (satori
-// has no clip-path support) and the starfield background dots (skipped,
-// not worth the satori-compatibility risk for a background flourish) --
-// plain rounded corners and a flat gradient stand in for those.
+// live site's BuildCard.tsx uses, NOT a screenshot of that component -- a
+// real headless-browser screenshot was considered and rejected: the full
+// @sparticuz/chromium binary (70MB unpacked) exceeds Vercel's standard
+// Node function size limit, and a hosted screenshot API trades that for
+// an external paid dependency with its own rate limits. This renders in
+// under a second with no browser at all.
+//
+// Layout mirrors BuildCard.tsx's real structure (not just its colors):
+// a left portrait column, then a row with TWO sub-columns -- stats panel
+// + resonance-chain diamond row on the left, Forte talent tree + Outro
+// Skill/Tune Break row on the right (border-separated, matching
+// `flex items-start gap-4 border-b ... > flex-col | flex-1 border-l`) --
+// then echo set badges and a full-width row of larger echo tiles (name +
+// full main/substat list) below. Earlier versions of this file stacked
+// stats above talents and used small icon-only echo tiles; both were
+// revised after a direct side-by-side comparison against a real site
+// screenshot showed real, concrete gaps, not just color differences.
 //
 // Built with satori (layout) + @resvg/resvg-js (rasterize to PNG, the
 // NATIVE binary addon, not the WASM variant) -- this renders inside
@@ -57,15 +58,15 @@ const ELEMENT_COLOR: Record<string, string> = {
   Havoc: "#b4467a",
 };
 
-const WIDTH = 1100;
+const WIDTH = 1900;
 // satori requires an explicit height (no dynamic content-based sizing the
 // way a real browser would do) -- generous enough to comfortably fit the
-// richest case (portrait + weapon panel + stats grid + talent columns +
-// echo tiles with full substats) with some margin; a sparser build just
-// leaves blank space within the card border rather than being cut off.
-const HEIGHT = 860;
+// richest case with some margin; a sparser build just leaves blank space
+// within the card border rather than being cut off.
+const HEIGHT = 1020;
 const PORTRAIT_WIDTH = 230;
-const ECHO_TILE_WIDTH = 140;
+const STAT_PANEL_COL_WIDTH = 280;
+const ECHO_TILE_WIDTH = 300;
 
 // Blends `front` over `back` at `ratio` (0-1), same visual role as the
 // real card's CSS `color-mix(in srgb, var(--card-glow-color) 26%, var(--color-bg))`
@@ -103,16 +104,37 @@ export interface InherentSkillData {
   pictureUrl: string | null;
   active: boolean;
 }
+export interface KeynoteSkillData {
+  skillType: string;
+  name: string;
+  pictureUrl: string | null;
+}
+export interface SequenceNodeData {
+  sequence: number;
+  name: string;
+  pictureUrl: string | null;
+}
 export interface ForteColumnNodes {
   nodes: [{ stat: string; value: number }, { stat: string; value: number }];
   active: [boolean, boolean];
 }
 export interface EchoTileData {
   pictureUrl: string | null;
+  echoName: string | null;
   cost: 1 | 3 | 4 | null;
   setName: string | null;
   mainStats: { statName: string; value: number }[];
   substats: { statName: string | null; value: number | null }[];
+}
+// basicAttackDmgBonus/heavyAttackDmgBonus/skillDmgBonus/liberationDmgBonus
+// aren't part of stats.ts's FinalStats (see build-card.ts's comment on why
+// they're computed separately) -- a sibling object instead of widening
+// FinalStats itself.
+export interface ExtraDmgBonuses {
+  basicAttackDmgBonus: number;
+  heavyAttackDmgBonus: number;
+  skillDmgBonus: number;
+  liberationDmgBonus: number;
 }
 
 export interface BuildCardData {
@@ -128,12 +150,15 @@ export interface BuildCardData {
   weaponSecondaryStat: { name: string; value: number } | null;
   resonanceLevel: number;
   finalStats: FinalStats | null;
+  extraDmgBonuses: ExtraDmgBonuses;
   activeEchoSets: { setName: string; count: number }[];
   // Index 0-4: Normal Attack / Resonance Skill / Forte Circuit /
   // Resonance Liberation / Intro Skill -- addPointTarget's fixed order
   // (see database.md's talent_levels column comment).
   talents: TalentData[];
   inherentSkills: InherentSkillData[];
+  keynoteSkills: KeynoteSkillData[];
+  sequenceNodes: SequenceNodeData[];
   // Keyed by the same 4 non-Forte-Circuit columns as CharacterForteNodes
   // (normal_attack/resonance_skill/resonance_liberation/intro_skill).
   forteColumns: Record<string, ForteColumnNodes>;
@@ -151,14 +176,31 @@ function flexRow(style: Record<string, unknown>, children: unknown) {
 function text(value: string, style: Record<string, unknown>) {
   return { type: "div", props: { style: { display: "flex", ...style }, children: value } };
 }
-function icon(src: string | null, size: number, style: Record<string, unknown> = {}) {
+// `invert`: the real site's convention for these dark/semi-transparent
+// line-art game icons (talents, forte nodes, sequence nodes, stat icons)
+// is `brightness-0 invert` (see .claude/rules/frontend.md's "Recoloring
+// icon images") -- without it they're nearly invisible against this
+// card's dark panels, which is exactly what the "some icons are black"
+// bug report turned out to be. Confirmed satori supports `filter` via an
+// isolated local test before applying this broadly. Character portraits,
+// echo art, and weapon icons are real full-color artwork and must NOT be
+// inverted -- callers opt in per icon, not a global default.
+function icon(src: string | null, size: number, style: Record<string, unknown> = {}, invert = false) {
   if (!src) return { type: "div", props: { style: { display: "flex", width: `${size}px`, height: `${size}px`, ...style } } };
-  return { type: "img", props: { src, width: size, height: size, style: { objectFit: "cover", ...style } } };
+  return {
+    type: "img",
+    props: {
+      src,
+      width: size,
+      height: size,
+      style: { objectFit: "cover", ...(invert ? { filter: "brightness(0) invert(1)" } : {}), ...style },
+    },
+  };
 }
 
 // Rotated-square "diamond" node, matching the real card's talent/forte/
-// inherent-skill icon shape (BuildCard.tsx's `rotate-45` + counter-
-// rotated `-rotate-45` icon inside). Confirmed satori supports
+// inherent-skill/sequence icon shape (BuildCard.tsx's `rotate-45` +
+// counter-rotated `-rotate-45` icon inside). Confirmed satori supports
 // `transform: rotate()` via an isolated local test before this was built.
 function diamondNode(size: number, borderColor: string, iconUrl: string | null, iconSize: number) {
   return {
@@ -174,21 +216,45 @@ function diamondNode(size: number, borderColor: string, iconUrl: string | null, 
         justifyContent: "center",
         transform: "rotate(45deg)",
       },
-      children: iconUrl ? [icon(iconUrl, iconSize, { transform: "rotate(-45deg)" })] : [],
+      children: iconUrl ? [icon(iconUrl, iconSize, { transform: "rotate(-45deg)" }, true)] : [],
     },
   };
 }
 
-function statBox(label: string, value: string, accent: string, iconUrl?: string) {
+function circleNode(size: number, borderColor: string, iconUrl: string | null, iconSize: number) {
+  return {
+    type: "div",
+    props: {
+      style: {
+        display: "flex",
+        width: `${size}px`,
+        height: `${size}px`,
+        borderRadius: "9999px",
+        border: `2px solid ${borderColor}`,
+        backgroundColor: PANEL,
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      children: iconUrl ? [icon(iconUrl, iconSize, {}, true)] : [],
+    },
+  };
+}
+
+// One row in the final-stats list panel -- icon + label on the left,
+// value right-aligned. Values are plain TEXT color (not accent-colored),
+// matching the real card -- only the card border/background wash and a
+// few headline labels (name, weapon, echo set badge) carry the element
+// accent there.
+function statRow(label: string, value: string, iconUrl?: string) {
   return flexRow(
-    { alignItems: "center", gap: "10px", width: "220px", padding: "9px 14px", backgroundColor: PANEL, borderRadius: "8px" },
+    { alignItems: "center", justifyContent: "space-between", width: `${STAT_PANEL_COL_WIDTH}px` },
     [
-      iconUrl ? icon(iconUrl, 22) : null,
-      flexCol({ flex: 1 }, [
+      flexRow({ alignItems: "center", gap: "8px" }, [
+        iconUrl ? icon(iconUrl, 16, {}, true) : null,
         text(label, { fontSize: "13px", color: TEXT_MUTED }),
-        text(value, { fontSize: "22px", fontWeight: 700, color: accent }),
-      ]),
-    ].filter(Boolean),
+      ].filter(Boolean)),
+      text(value, { fontSize: "14px", fontWeight: 600, color: TEXT }),
+    ],
   );
 }
 
@@ -202,23 +268,23 @@ function setBadge(label: string, accent: string) {
   });
 }
 
+function echoSubstatRow(sub: { statName: string | null; value: number | null }, statIcons: Record<string, string>) {
+  if (!sub.statName || sub.value === null) {
+    return text("—", { fontSize: "11px", color: TEXT_MUTED });
+  }
+  const iconUrl = statIcons[sub.statName];
+  return flexRow({ alignItems: "center", justifyContent: "space-between" }, [
+    flexRow({ alignItems: "center", gap: "5px" }, [
+      iconUrl ? icon(iconUrl, 12, {}, true) : null,
+      text(sub.statName, { fontSize: "11px", color: TEXT_MUTED }),
+    ].filter(Boolean)),
+    text(formatStatValue(sub.value, sub.statName), { fontSize: "11px", color: TEXT }),
+  ]);
+}
+
 function echoTile(slot: EchoTileData, accent: string, statIcons: Record<string, string>) {
   const borderColor = slot.pictureUrl ? accent : BORDER;
-  const mainStatLine = slot.mainStats.length
-    ? slot.mainStats.map((s) => formatStatValue(s.value, s.statName)).join(" / ")
-    : null;
-
-  const substatRows = Array.from({ length: 5 }, (_, i) => {
-    const sub = slot.substats[i];
-    if (!sub?.statName || sub.value === null) {
-      return text("—", { fontSize: "10px", color: TEXT_MUTED });
-    }
-    const iconUrl = statIcons[sub.statName];
-    return flexRow({ alignItems: "center", gap: "4px" }, [
-      iconUrl ? icon(iconUrl, 11) : null,
-      text(formatStatValue(sub.value, sub.statName), { fontSize: "10px", color: TEXT }),
-    ].filter(Boolean));
-  });
+  const substatRows = Array.from({ length: 5 }, (_, i) => echoSubstatRow(slot.substats[i] ?? { statName: null, value: null }, statIcons));
 
   return flexCol(
     { width: `${ECHO_TILE_WIDTH}px`, border: `2px solid ${borderColor}`, borderRadius: "10px", backgroundColor: PANEL, overflow: "hidden" },
@@ -226,10 +292,10 @@ function echoTile(slot: EchoTileData, accent: string, statIcons: Record<string, 
       {
         type: "div",
         props: {
-          style: { display: "flex", position: "relative", width: `${ECHO_TILE_WIDTH - 4}px`, height: "90px" },
+          style: { display: "flex", position: "relative", width: `${ECHO_TILE_WIDTH - 4}px`, height: "150px" },
           children: [
             slot.pictureUrl
-              ? { type: "img", props: { src: slot.pictureUrl, width: ECHO_TILE_WIDTH - 4, height: 90, style: { objectFit: "cover" } } }
+              ? { type: "img", props: { src: slot.pictureUrl, width: ECHO_TILE_WIDTH - 4, height: 150, style: { objectFit: "cover" } } }
               : null,
             slot.cost
               ? {
@@ -238,15 +304,15 @@ function echoTile(slot: EchoTileData, accent: string, statIcons: Record<string, 
                     style: {
                       display: "flex",
                       position: "absolute",
-                      bottom: "2px",
-                      right: "2px",
-                      width: "18px",
-                      height: "18px",
+                      bottom: "4px",
+                      right: "4px",
+                      width: "22px",
+                      height: "22px",
                       borderRadius: "9999px",
-                      backgroundColor: `${BG}cc`,
+                      backgroundColor: `${BG}dd`,
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "11px",
+                      fontSize: "12px",
                       fontWeight: 700,
                       color: GOLD_SOFT,
                     },
@@ -257,9 +323,18 @@ function echoTile(slot: EchoTileData, accent: string, statIcons: Record<string, 
           ].filter(Boolean),
         },
       },
-      flexCol({ gap: "3px", padding: "6px 8px" }, [
-        mainStatLine ? text(mainStatLine, { fontSize: "11px", fontWeight: 600, color: GOLD_SOFT }) : null,
-        ...substatRows,
+      flexCol({ gap: "6px", padding: "10px 12px" }, [
+        text(slot.echoName ?? "Empty", { fontSize: "14px", fontWeight: 700, color: GOLD_SOFT }),
+        slot.setName ? text(slot.setName, { fontSize: "11px", color: TEXT_MUTED }) : null,
+        slot.mainStats.length
+          ? flexCol(
+              { gap: "2px", marginTop: "2px" },
+              slot.mainStats.map((s) =>
+                text(`${s.statName} ${formatStatValue(s.value, s.statName)}`, { fontSize: "13px", fontWeight: 600, color: TEXT }),
+              ),
+            )
+          : null,
+        flexCol({ gap: "4px", marginTop: "4px", borderTop: `1px solid ${BORDER}`, paddingTop: "6px" }, substatRows),
       ].filter(Boolean)),
     ],
   );
@@ -281,11 +356,19 @@ function talentColumn(talent: TalentData | undefined, forte: ForteColumnNodes | 
       : [];
 
   return flexCol(
-    { alignItems: "center", gap: "10px", width: "140px" },
+    { alignItems: "center", gap: "10px", width: "150px" },
     [
       ...topNodes,
       diamondNode(46, GOLD, talent?.pictureUrl ?? null, 22),
-      talent ? text(talent.skillType, { fontSize: "11px", color: TEXT_MUTED, textAlign: "center" }) : null,
+      talent
+        ? text(talent.skillType.toUpperCase(), {
+            fontSize: "10px",
+            fontWeight: 600,
+            letterSpacing: "0.04em",
+            color: TEXT_MUTED,
+            textAlign: "center",
+          })
+        : null,
       talent ? text(`Lv.${talent.level}`, { fontSize: "13px", color: GOLD_SOFT }) : null,
     ].filter(Boolean),
   );
@@ -294,6 +377,7 @@ function talentColumn(talent: TalentData | undefined, forte: ForteColumnNodes | 
 export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> {
   const accent = (data.element && ELEMENT_COLOR[data.element]) || GOLD;
   const stats = data.finalStats;
+  const extra = data.extraDmgBonuses;
   const si = data.statIcons;
 
   const portrait = data.illustrationPictureUrl
@@ -344,28 +428,62 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
     ],
   );
 
-  const statsGrid = stats
-    ? flexCol({ gap: "8px" }, [
-        flexRow({ gap: "8px" }, [statBox("HP", String(stats.hp), TEXT, si.HP), statBox("ATK", String(stats.atk), TEXT, si.ATK)]),
-        flexRow({ gap: "8px" }, [
-          statBox("DEF", String(stats.def), TEXT, si.DEF),
-          statBox("Energy Regen", `${stats.energyRegen}%`, TEXT, si["Energy Regen"]),
-        ]),
-        flexRow({ gap: "8px" }, [
-          statBox("Crit Rate", `${stats.critRate}%`, accent, si["Crit. Rate"]),
-          statBox("Crit DMG", `${stats.critDmg}%`, accent, si["Crit. DMG"]),
-        ]),
-        flexRow({ gap: "8px" }, [
-          statBox(stats.elementalDmgBonusName, `${stats.elementalDmgBonus}%`, accent, si[stats.elementalDmgBonusName]),
-        ]),
-      ])
-    : text("Final stats unavailable for this character/level.", { fontSize: "16px", color: TEXT_MUTED });
+  const statsPanel = stats
+    ? flexCol(
+        { gap: "10px", padding: "16px 18px", backgroundColor: PANEL, borderRadius: "10px", border: `1px solid ${BORDER}` },
+        [
+          flexRow({ gap: "24px" }, [
+            flexCol({ gap: "10px" }, [
+              statRow("HP", String(stats.hp), si.HP),
+              statRow("ATK", String(stats.atk), si.ATK),
+              statRow("DEF", String(stats.def), si.DEF),
+              statRow("Energy Regen", `${stats.energyRegen}%`, si["Energy Regen"]),
+              statRow("Crit Rate", `${stats.critRate}%`, si["Crit. Rate"]),
+              statRow("Crit DMG", `${stats.critDmg}%`, si["Crit. DMG"]),
+            ]),
+            flexCol({ gap: "10px" }, [
+              statRow("Basic Atk DMG", `${extra.basicAttackDmgBonus}%`),
+              statRow("Heavy Atk DMG", `${extra.heavyAttackDmgBonus}%`),
+              statRow("Skill DMG", `${extra.skillDmgBonus}%`),
+              statRow("Liberation DMG", `${extra.liberationDmgBonus}%`),
+              statRow(stats.elementalDmgBonusName, `${stats.elementalDmgBonus}%`, si[stats.elementalDmgBonusName]),
+              statRow("Healing Bonus", `${stats.healingBonus}%`, si["Healing Bonus"]),
+            ]),
+          ]),
+        ],
+      )
+    : flexCol(
+        { padding: "16px 18px", backgroundColor: PANEL, borderRadius: "10px", border: `1px solid ${BORDER}`, width: `${STAT_PANEL_COL_WIDTH * 2 + 24}px` },
+        [text("Final stats unavailable for this character/level.", { fontSize: "16px", color: TEXT_MUTED })],
+      );
+
+  const sequenceRow = data.sequenceNodes.length
+    ? flexRow(
+        { gap: "10px" },
+        data.sequenceNodes.map((node) => {
+          const unlocked = node.sequence <= data.resonanceLevel;
+          return diamondNode(40, unlocked ? GOLD : BORDER, node.pictureUrl, 18);
+        }),
+      )
+    : null;
 
   const talentCols = [0, 1, 2, 3, 4].map((i) => {
     const talent = data.talents[i];
     const forte = talent ? data.forteColumns[forteColumnKey(talent.skillType)] : undefined;
     return talentColumn(talent, forte, data);
   });
+
+  const keynoteRow = data.keynoteSkills.length
+    ? flexRow(
+        { gap: "24px", justifyContent: "center", borderTop: `1px solid ${BORDER}`, paddingTop: "14px" },
+        data.keynoteSkills.map((skill) =>
+          flexCol({ alignItems: "center", gap: "6px" }, [
+            circleNode(40, GOLD, skill.pictureUrl, 20),
+            text(skill.skillType.toUpperCase(), { fontSize: "10px", fontWeight: 600, letterSpacing: "0.04em", color: TEXT_MUTED }),
+          ]),
+        ),
+      )
+    : null;
 
   const element = {
     type: "div",
@@ -390,18 +508,22 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
             text(`Lv ${data.level}/90`, { fontSize: "15px", color: TEXT_MUTED }),
           ]),
           weaponPanel,
-          text(`Resonance Chain: ${data.resonanceLevel}/6 unlocked`, { fontSize: "14px", color: TEXT }),
         ]),
-        flexCol({ flex: 1, gap: "16px" }, [
-          statsGrid,
-          flexRow({ gap: "10px", justifyContent: "space-between" }, talentCols),
+        flexCol({ flex: 1, gap: "20px" }, [
+          flexRow({ gap: "24px", alignItems: "flex-start", borderBottom: `1px solid ${BORDER}`, paddingBottom: "20px" }, [
+            flexCol({ gap: "14px" }, [statsPanel, sequenceRow].filter(Boolean)),
+            flexCol({ flex: 1, gap: "14px", borderLeft: `1px solid ${BORDER}`, paddingLeft: "24px" }, [
+              flexRow({ gap: "10px", justifyContent: "space-between" }, talentCols),
+              keynoteRow,
+            ].filter(Boolean)),
+          ]),
           data.activeEchoSets.length
             ? flexRow(
                 { gap: "8px" },
                 data.activeEchoSets.map((s) => setBadge(`${s.setName} ${s.count}pc`, accent)),
               )
             : null,
-          flexRow({ gap: "10px" }, data.echoes.map((e) => echoTile(e, accent, si))),
+          flexRow({ gap: "14px" }, data.echoes.map((e) => echoTile(e, accent, si))),
         ].filter(Boolean)),
       ],
     },

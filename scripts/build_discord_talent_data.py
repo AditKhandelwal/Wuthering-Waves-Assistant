@@ -1,13 +1,15 @@
 """
-Build a lean per-character talent + inherent-skill icon extract for the
-Discord bot's /build card (frontend/api/discord/build-card.ts), which
-needs real talent icons/names/levels and inherent-skill icons to draw a
-Forte tree closely matching the real site's BuildCard.tsx -- without
-bundling the full 4.6MB data/wuwa_characters.json into that function.
-Mirrors the exact field extraction + fallback logic in
-frontend/src/lib/talents.ts's loadTalents()/loadInherentSkills() (see that
-file's comments for why the positional fallback exists -- some
-characters' skillType text is zh-Hans-only).
+Build a lean per-character talent/inherent-skill/keynote-skill/sequence-node
+icon extract for the Discord bot's /build card
+(frontend/api/discord/build-card.ts), which needs real icons/names/levels
+to draw a Forte tree + resonance chain row closely matching the real
+site's BuildCard.tsx -- without bundling the full 4.6MB
+data/wuwa_characters.json into that function. Mirrors the exact field
+extraction + fallback logic in frontend/src/lib/talents.ts's
+loadTalents()/loadInherentSkills()/loadKeynoteSkills() and
+frontend/src/lib/sequenceNodes.ts's loadSequenceNodes() (see talents.ts's
+comments for why the positional fallback exists -- some characters'
+skillType text is zh-Hans-only).
 
 Output is bundled directly into frontend/api/discord/ as a static JSON
 import (no runtime fetch). Rerun whenever data/wuwa_characters.json
@@ -27,6 +29,7 @@ POSITIONAL_SKILL_TYPES = [
     "Resonance Liberation",
     "Intro Skill",
 ]
+POSITIONAL_KEYNOTE_SKILL_TYPES = ["Outro Skill", "Tune Break"]
 
 
 def en_text(texts, key="name"):
@@ -41,6 +44,7 @@ def main():
     out = {}
     for role_gb_id, entry in chars.items():
         role_skill = entry.get("roleSkill", {})
+        role_resonance = entry.get("roleResonance", {})
 
         talents = []
         for i, item in enumerate(role_skill.get("addPointTarget", [])):
@@ -58,15 +62,44 @@ def main():
             for item in role_skill.get("fixedSkills", [])
         ]
 
-        if talents or inherent_skills:
-            out[role_gb_id] = {"talents": talents, "inherentSkills": inherent_skills}
+        keynote_skills = []
+        for i, item in enumerate(role_skill.get("keynoteSkills", [])):
+            skill_type = en_text(item.get("skillType", {}).get("texts", []))
+            keynote_skills.append(
+                {
+                    "skillType": skill_type
+                    or (POSITIONAL_KEYNOTE_SKILL_TYPES[i] if i < len(POSITIONAL_KEYNOTE_SKILL_TYPES) else "Skill"),
+                    "name": en_text(item.get("texts", [])) or "Unknown",
+                    "pictureUrl": item.get("pictureUrl"),
+                }
+            )
+
+        sequence_nodes = sorted(
+            (
+                {
+                    "sequence": item.get("resonanceSequence"),
+                    "name": en_text(item.get("texts", [])) or "Unknown",
+                    "pictureUrl": item.get("pictureUrl"),
+                }
+                for item in role_resonance.get("items", [])
+            ),
+            key=lambda n: n["sequence"],
+        )
+
+        if talents or inherent_skills or keynote_skills or sequence_nodes:
+            out[role_gb_id] = {
+                "talents": talents,
+                "inherentSkills": inherent_skills,
+                "keynoteSkills": keynote_skills,
+                "sequenceNodes": sequence_nodes,
+            }
 
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
     with open(FUNCTION_COPY_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False)
 
-    print(f"Extracted talent/inherent-skill data for {len(out)} characters")
+    print(f"Extracted talent/inherent/keynote/sequence-node data for {len(out)} characters")
     print(f"Wrote {OUT_PATH} and {FUNCTION_COPY_PATH}")
 
 
