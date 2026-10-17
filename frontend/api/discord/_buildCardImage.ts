@@ -2,24 +2,34 @@
 // Discord route itself (no default export, hence the leading underscore,
 // Vercel's own convention for "not an endpoint" files under api/).
 //
+// v5 (same day as v3/v4) -- a direct comparison against a real site
+// screenshot wasn't enough; this version instead transcribes EXACT
+// Tailwind values from the real component source
+// (frontend/src/components/BuildCard.tsx, FinalStatsGrid.tsx,
+// EchoCardTile.tsx, StatIcon.tsx, TalentGrid.tsx) rather than
+// approximating by eye. Concrete corrections this found: forte stat-bonus
+// nodes are CIRCLES (ForteNodeDisplay, rounded-full), not diamonds --
+// only the main talent icon, inherent-skill nodes, and sequence/
+// resonance nodes are rotated diamonds. The main talent diamond is 32px
+// (h-8 w-8), not 46px. The weapon icon is 64px (h-16 w-16), not 48px.
+// StatIcon (used in the final-stats panel, weapon panel, and echo tiles)
+// is NEVER inverted -- only SolidIcon (talent/inherent/forte/sequence/
+// keynote icons) gets brightness-0 invert. Echo portraits are small 36px
+// circles with a cost-tier-colored ring (COST_DISC_CLASS) and a small
+// sonata-set badge overlaid on the corner, not a large rectangular hero
+// image. The final-stats panel is ONE bordered box with an internal
+// 2-column CSS grid and divider lines between rows, not separate boxed
+// tiles. Every spacing value below (gaps, padding) is the literal pixel
+// value of the Tailwind class in the real source, at 1rem = 16px.
+//
 // This is a composed re-creation pulling the same underlying DATA the
 // live site's BuildCard.tsx uses, NOT a screenshot of that component -- a
 // real headless-browser screenshot was considered and rejected: the full
 // @sparticuz/chromium binary (70MB unpacked) exceeds Vercel's standard
 // Node function size limit, and a hosted screenshot API trades that for
 // an external paid dependency with its own rate limits. This renders in
-// under a second with no browser at all.
-//
-// Layout mirrors BuildCard.tsx's real structure (not just its colors):
-// a left portrait column, then a row with TWO sub-columns -- stats panel
-// + resonance-chain diamond row on the left, Forte talent tree + Outro
-// Skill/Tune Break row on the right (border-separated, matching
-// `flex items-start gap-4 border-b ... > flex-col | flex-1 border-l`) --
-// then echo set badges and a full-width row of larger echo tiles (name +
-// full main/substat list) below. Earlier versions of this file stacked
-// stats above talents and used small icon-only echo tiles; both were
-// revised after a direct side-by-side comparison against a real site
-// screenshot showed real, concrete gaps, not just color differences.
+// under a second of actual compute (network image fetches dominate wall
+// time) with no browser at all.
 //
 // Built with satori (layout) + @resvg/resvg-js (rasterize to PNG, the
 // NATIVE binary addon, not the WASM variant) -- this renders inside
@@ -33,7 +43,8 @@
 // needing a .tsx extension or a JSX pragma in tsconfig.api.json. Satori
 // requires an explicit `display: "flex"` (or "none") on every element
 // with children -- it doesn't support default block layout like a real
-// browser.
+// browser. clip-path (the real card's `.clip-corner` panel shape) has no
+// satori support at all -- plain rounded corners stand in for it.
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
 import { geistRegularFont } from "./_fontData.js";
@@ -44,6 +55,7 @@ import type { FinalStats } from "./stats.js";
 // that file if this card's palette ever looks off from the real site.
 const BG = "#0d0d0f";
 const PANEL = "#161618";
+const PANEL_ALT = "#1c1c1f";
 const BORDER = "#2a2a2e";
 const GOLD = "#c9a24b";
 const GOLD_SOFT = "#d4af6a";
@@ -57,16 +69,26 @@ const ELEMENT_COLOR: Record<string, string> = {
   Spectro: "#e8c25f",
   Havoc: "#b4467a",
 };
+// COST_DISC_CLASS in frontend/src/lib/echoes.ts -- the ring color around
+// an echo's small portrait circle, by cost tier.
+const COST_RING_COLOR: Record<1 | 3 | 4, string> = { 4: GOLD, 3: `${GOLD_SOFT}99`, 1: BORDER };
 
-const WIDTH = 1900;
+// Computed, not guessed: right column needs to fit 5 fixed-310px echo
+// tiles + 4x6px gaps = 1574px (see echoTile's width comment for why
+// fixed, not flex:1). Right column = WIDTH - 32 (padding) - 240
+// (portrait) - 16 (gap) -- so WIDTH must be >= 1574 + 288 = 1862. A
+// previous version of this constant was tuned by incrementally widening
+// in response to a persistent clipped edge that turned out to be this
+// exact miscalculation (flex:1's partial shrinking was masking the real
+// shortfall) -- computing it directly instead of guessing again.
+const WIDTH = 1880;
 // satori requires an explicit height (no dynamic content-based sizing the
 // way a real browser would do) -- generous enough to comfortably fit the
 // richest case with some margin; a sparser build just leaves blank space
 // within the card border rather than being cut off.
-const HEIGHT = 1020;
-const PORTRAIT_WIDTH = 230;
-const STAT_PANEL_COL_WIDTH = 280;
-const ECHO_TILE_WIDTH = 300;
+const HEIGHT = 580;
+const PORTRAIT_WIDTH = 240; // grid-cols-[240px_1fr] in BuildCard.tsx
+const PORTRAIT_HEIGHT = 300;
 
 // Blends `front` over `back` at `ratio` (0-1), same visual role as the
 // real card's CSS `color-mix(in srgb, var(--card-glow-color) 26%, var(--color-bg))`
@@ -123,6 +145,10 @@ export interface EchoTileData {
   echoName: string | null;
   cost: 1 | 3 | 4 | null;
   setName: string | null;
+  setIconUrl: string | null;
+  // [staticMainStat, chosenMainStat] -- echoes.ts/stats.ts always resolve
+  // the fixed static main stat first (if present) then the player-chosen
+  // variable one, matching computeEchoSlotBreakdown's own order.
   mainStats: { statName: string; value: number }[];
   substats: { statName: string | null; value: number | null }[];
 }
@@ -167,209 +193,377 @@ export interface BuildCardData {
   echoes: EchoTileData[];
 }
 
+// boxSizing: "border-box" on every container is the actual root cause of
+// a persistent, very confusing overflow bug: satori's default (like raw
+// CSS/SVG, unlike Tailwind's global reset the real site relies on) is
+// content-box, where an explicit width + padding/border ADDS the padding/
+// border on top of that width instead of including it. A tile declared
+// `width: "310px"` with `padding: "8px"` + a 1px border was actually
+// rendering at 328px -- confirmed by dumping satori's raw SVG output and
+// finding the 5th of 5 "fixed-width" echo tiles started at x=1593
+// instead of the expected ~1536, a gap explained exactly by 4 prior
+// tiles each being 18px wider than requested. This single fix replaces
+// three earlier "just add more WIDTH" attempts that never addressed the
+// actual cause.
 function flexCol(style: Record<string, unknown>, children: unknown) {
-  return { type: "div", props: { style: { display: "flex", flexDirection: "column", ...style }, children } };
+  return { type: "div", props: { style: { display: "flex", flexDirection: "column", boxSizing: "border-box", ...style }, children } };
 }
 function flexRow(style: Record<string, unknown>, children: unknown) {
-  return { type: "div", props: { style: { display: "flex", flexDirection: "row", ...style }, children } };
+  return { type: "div", props: { style: { display: "flex", flexDirection: "row", boxSizing: "border-box", ...style }, children } };
 }
 function text(value: string, style: Record<string, unknown>) {
   return { type: "div", props: { style: { display: "flex", ...style }, children: value } };
 }
-// `invert`: the real site's convention for these dark/semi-transparent
-// line-art game icons (talents, forte nodes, sequence nodes, stat icons)
-// is `brightness-0 invert` (see .claude/rules/frontend.md's "Recoloring
-// icon images") -- without it they're nearly invisible against this
-// card's dark panels, which is exactly what the "some icons are black"
-// bug report turned out to be. Confirmed satori supports `filter` via an
-// isolated local test before applying this broadly. Character portraits,
-// echo art, and weapon icons are real full-color artwork and must NOT be
-// inverted -- callers opt in per icon, not a global default.
-function icon(src: string | null, size: number, style: Record<string, unknown> = {}, invert = false) {
-  if (!src) return { type: "div", props: { style: { display: "flex", width: `${size}px`, height: `${size}px`, ...style } } };
+// StatIcon.tsx: a plain <img className="h-3.5 w-3.5">, NEVER inverted --
+// confirmed by reading that component directly (no filter class at all),
+// which contradicts an earlier assumption in this file's history that
+// every game icon needed brightness-0 invert. Used for HP/ATK/DEF/Crit/
+// elemental-bonus icons in the stats panel, weapon panel, and echo tiles.
+function statIconImg(src: string | null | undefined, size = 14) {
+  if (!src) return null;
+  return { type: "img", props: { src, width: size, height: size, style: { objectFit: "contain" } } };
+}
+// SolidIcon (BuildCard.tsx): double-stacked <img> with brightness-0
+// invert, for talent/inherent-skill/forte-node/sequence-node/keynote-
+// skill icons -- these are dark/semi-transparent line-art on this app's
+// dark theme and are nearly invisible without it (confirmed via an
+// isolated local satori filter test before this was relied on broadly).
+// A single filtered image (not literally double-stacked) is visually
+// equivalent for satori's purposes -- the real double-stack exists to
+// compound partial-alpha pixels in a real browser's compositing, which
+// doesn't apply the same way to a single rasterization pass here.
+function solidIcon(src: string | null, size: number, extraStyle: Record<string, unknown> = {}) {
+  if (!src) return null;
   return {
     type: "img",
-    props: {
-      src,
-      width: size,
-      height: size,
-      style: { objectFit: "cover", ...(invert ? { filter: "brightness(0) invert(1)" } : {}), ...style },
-    },
+    props: { src, width: size, height: size, style: { objectFit: "contain", filter: "brightness(0) invert(1)", ...extraStyle } },
   };
 }
 
-// Rotated-square "diamond" node, matching the real card's talent/forte/
-// inherent-skill/sequence icon shape (BuildCard.tsx's `rotate-45` +
-// counter-rotated `-rotate-45` icon inside). Confirmed satori supports
-// `transform: rotate()` via an isolated local test before this was built.
-function diamondNode(size: number, borderColor: string, iconUrl: string | null, iconSize: number) {
+// h-8 w-8 rotate-45 border border-gold bg-panel -- the main talent icon.
+function talentDiamond(iconUrl: string | null) {
   return {
     type: "div",
     props: {
       style: {
         display: "flex",
-        width: `${size}px`,
-        height: `${size}px`,
-        border: `2px solid ${borderColor}`,
+        boxSizing: "border-box",
+        width: "32px",
+        height: "32px",
+        border: `1px solid ${GOLD}`,
         backgroundColor: PANEL,
         alignItems: "center",
         justifyContent: "center",
         transform: "rotate(45deg)",
       },
-      children: iconUrl ? [icon(iconUrl, iconSize, { transform: "rotate(-45deg)" }, true)] : [],
+      children: [solidIcon(iconUrl, 20, { transform: "rotate(-45deg)" })].filter(Boolean),
     },
   };
 }
-
-function circleNode(size: number, borderColor: string, iconUrl: string | null, iconSize: number) {
+// h-7 w-7 rotate-45 border bg-panel -- inherent-skill nodes (Forte
+// Circuit's column).
+function inherentDiamond(iconUrl: string | null, active: boolean) {
   return {
     type: "div",
     props: {
       style: {
         display: "flex",
-        width: `${size}px`,
-        height: `${size}px`,
+        boxSizing: "border-box",
+        width: "28px",
+        height: "28px",
+        border: `1px solid ${active ? GOLD : BORDER}`,
+        backgroundColor: PANEL,
+        alignItems: "center",
+        justifyContent: "center",
+        transform: "rotate(45deg)",
+      },
+      children: [solidIcon(iconUrl, 16, { transform: "rotate(-45deg)" })].filter(Boolean),
+    },
+  };
+}
+// ForteNodeDisplay: h-7 w-7 rounded-full border bg-panel -- a CIRCLE, not
+// a diamond, unlike every other node on this card. Confirmed by reading
+// that component directly; an earlier version of this file wrongly made
+// every node type a diamond.
+function forteNodeCircle(iconUrl: string | null, active: boolean) {
+  return {
+    type: "div",
+    props: {
+      style: {
+        display: "flex",
+        boxSizing: "border-box",
+        width: "28px",
+        height: "28px",
         borderRadius: "9999px",
-        border: `2px solid ${borderColor}`,
+        border: `1px solid ${active ? GOLD : BORDER}`,
         backgroundColor: PANEL,
         alignItems: "center",
         justifyContent: "center",
       },
-      children: iconUrl ? [icon(iconUrl, iconSize, {}, true)] : [],
+      children: [solidIcon(iconUrl, 14)].filter(Boolean),
+    },
+  };
+}
+// CompactSequenceRow: h-11 w-11 rotate-45 border bg-panel-ALT (not
+// bg-panel like the other diamonds -- confirmed by reading that
+// component).
+function sequenceDiamond(iconUrl: string | null, unlocked: boolean) {
+  return {
+    type: "div",
+    props: {
+      style: {
+        display: "flex",
+        boxSizing: "border-box",
+        width: "44px",
+        height: "44px",
+        border: `1px solid ${unlocked ? GOLD : BORDER}`,
+        backgroundColor: PANEL_ALT,
+        alignItems: "center",
+        justifyContent: "center",
+        transform: "rotate(45deg)",
+      },
+      children: [solidIcon(iconUrl, 28, { transform: "rotate(-45deg)" })].filter(Boolean),
+    },
+  };
+}
+// Keynote skill (Outro Skill/Tune Break): h-8 w-8 rounded-full
+// border-gold bg-panel.
+function keynoteCircle(iconUrl: string | null) {
+  return {
+    type: "div",
+    props: {
+      style: {
+        display: "flex",
+        boxSizing: "border-box",
+        width: "32px",
+        height: "32px",
+        borderRadius: "9999px",
+        border: `1px solid ${GOLD}`,
+        backgroundColor: PANEL,
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      children: [solidIcon(iconUrl, 18)].filter(Boolean),
     },
   };
 }
 
-// One row in the final-stats list panel -- icon + label on the left,
-// value right-aligned. Values are plain TEXT color (not accent-colored),
-// matching the real card -- only the card border/background wash and a
-// few headline labels (name, weapon, echo set badge) carry the element
-// accent there.
-function statRow(label: string, value: string, iconUrl?: string) {
+// FinalStatsGrid's Row: flex items-center gap-2 py-2 text-xs, label
+// w-[7rem] (112px) shrink-0 truncate text-muted + StatIcon + value
+// tabular-nums text-text. `divider` replicates `divide-y divide-border/60`
+// (a real CSS sibling selector satori can't express) as an explicit
+// borderTop on every row after the first.
+function statPanelRow(label: string, value: string, iconUrl: string | undefined, divider: boolean) {
   return flexRow(
-    { alignItems: "center", justifyContent: "space-between", width: `${STAT_PANEL_COL_WIDTH}px` },
+    {
+      alignItems: "center",
+      gap: "8px",
+      padding: "8px 0",
+      fontSize: "12px",
+      ...(divider ? { borderTop: `1px solid ${BORDER}9a` } : {}),
+    },
     [
-      flexRow({ alignItems: "center", gap: "8px" }, [
-        iconUrl ? icon(iconUrl, 16, {}, true) : null,
-        text(label, { fontSize: "13px", color: TEXT_MUTED }),
+      flexRow({ alignItems: "center", gap: "6px", width: "112px", flexShrink: 0 }, [
+        statIconImg(iconUrl),
+        text(label, { color: TEXT_MUTED, fontSize: "12px" }),
       ].filter(Boolean)),
-      text(value, { fontSize: "14px", fontWeight: 600, color: TEXT }),
+      text(value, { color: TEXT, fontSize: "12px" }),
     ],
   );
 }
 
 function setBadge(label: string, accent: string) {
-  return text(label, {
-    fontSize: "14px",
-    color: accent,
+  return text(label.toUpperCase(), {
+    fontSize: "9px",
+    fontWeight: 600,
+    letterSpacing: "0.03em",
+    color: GOLD_SOFT,
     border: `1px solid ${accent}`,
-    borderRadius: "9999px",
-    padding: "4px 12px",
+    borderRadius: "4px",
+    padding: "2px 6px",
   });
 }
 
-function echoSubstatRow(sub: { statName: string | null; value: number | null }, statIcons: Record<string, string>) {
-  if (!sub.statName || sub.value === null) {
-    return text("—", { fontSize: "11px", color: TEXT_MUTED });
+// EchoCardTile's main/substat row: flex items-center justify-between
+// gap-1.5, label (StatIcon + name, truncate, text-muted) + value
+// (tabular-nums). `emphasis` matches the chosen main stat's text-gold-soft
+// (vs. every other row's plain text-text).
+function echoStatLine(
+  statName: string | null,
+  value: number | null,
+  size: "10px" | "9px",
+  statIcons: Record<string, string>,
+  emphasis = false,
+) {
+  if (!statName || value === null) {
+    return text("—", { fontSize: size, color: TEXT_MUTED });
   }
-  const iconUrl = statIcons[sub.statName];
-  return flexRow({ alignItems: "center", justifyContent: "space-between" }, [
-    flexRow({ alignItems: "center", gap: "5px" }, [
-      iconUrl ? icon(iconUrl, 12, {}, true) : null,
-      text(sub.statName, { fontSize: "11px", color: TEXT_MUTED }),
+  // The actual root cause of a persistent "clipped right edge" bug that
+  // survived three WIDTH increases and switching tiles to explicit fixed
+  // widths: a long stat name ("Resonance Liberation DMG Bonus" is a real
+  // one) has no wrap/truncation constraint here, so it renders at its
+  // full natural width regardless of any flex/minWidth settings on its
+  // ancestors -- forcing the row, and therefore the whole fixed-width
+  // tile, wider than intended. Confirmed by dumping satori's raw SVG
+  // output and finding the overflowing element was text, not an <image>
+  // (which is all an earlier diagnostic check happened to look for).
+  // overflow/whiteSpace/textOverflow here match frontend/src/components/
+  // EchoCardTile.tsx's own `truncate` utility class.
+  return flexRow({ alignItems: "center", justifyContent: "space-between", gap: "6px" }, [
+    flexRow({ alignItems: "center", gap: "4px", minWidth: 0 }, [
+      statIconImg(statIcons[statName], 11),
+      text(statName, {
+        fontSize: size,
+        color: TEXT_MUTED,
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        minWidth: 0,
+      }),
     ].filter(Boolean)),
-    text(formatStatValue(sub.value, sub.statName), { fontSize: "11px", color: TEXT }),
+    text(formatStatValue(value, statName), { fontSize: size, color: emphasis ? GOLD_SOFT : TEXT, flexShrink: 0 }),
   ]);
 }
 
-function echoTile(slot: EchoTileData, accent: string, statIcons: Record<string, string>) {
-  const borderColor = slot.pictureUrl ? accent : BORDER;
-  const substatRows = Array.from({ length: 5 }, (_, i) => echoSubstatRow(slot.substats[i] ?? { statName: null, value: null }, statIcons));
+// EchoCardTile: flex-col gap-1.5 border border-border bg-panel-alt p-2 --
+// a small 36px circular portrait (cost-tier-ring-colored) with a small
+// sonata-set badge on its corner, name + set name beside it, then main
+// stats and substats as compact rows below. NOT a large rectangular hero
+// image -- an earlier version of this file made the portrait the
+// dominant visual element, which isn't how the real card looks at all.
+function echoTile(slot: EchoTileData, statIcons: Record<string, string>) {
+  const ringColor = slot.cost ? COST_RING_COLOR[slot.cost] : BORDER;
+  const mainStats = slot.mainStats;
+  const substats = Array.from({ length: 5 }, (_, i) => slot.substats[i] ?? { statName: null, value: null });
 
   return flexCol(
-    { width: `${ECHO_TILE_WIDTH}px`, border: `2px solid ${borderColor}`, borderRadius: "10px", backgroundColor: PANEL, overflow: "hidden" },
+    // Explicit width, not flex:1 -- a persistent small overflow on the
+    // LAST of 5 equal-width flex:1 tiles survived three successive width
+    // increases on the overall card (1580 -> 1660px with no change in the
+    // clipped amount), which means it wasn't actually a "not enough
+    // space" problem -- almost certainly a flex-equal-distribution
+    // rounding edge case in satori specific to the final item. Explicit
+    // fixed widths (same fix that resolved the talent-column overflow
+    // above) sidestep it entirely.
+    { width: "310px", gap: "6px", border: `1px solid ${BORDER}`, backgroundColor: PANEL_ALT, padding: "8px" },
     [
-      {
-        type: "div",
-        props: {
-          style: { display: "flex", position: "relative", width: `${ECHO_TILE_WIDTH - 4}px`, height: "150px" },
-          children: [
-            slot.pictureUrl
-              ? { type: "img", props: { src: slot.pictureUrl, width: ECHO_TILE_WIDTH - 4, height: 150, style: { objectFit: "cover" } } }
-              : null,
-            slot.cost
-              ? {
-                  type: "div",
-                  props: {
-                    style: {
-                      display: "flex",
-                      position: "absolute",
-                      bottom: "4px",
-                      right: "4px",
-                      width: "22px",
-                      height: "22px",
-                      borderRadius: "9999px",
-                      backgroundColor: `${BG}dd`,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: GOLD_SOFT,
-                    },
-                    children: String(slot.cost),
+      flexRow({ alignItems: "center", gap: "6px" }, [
+        {
+          type: "div",
+          props: {
+            style: { display: "flex", position: "relative", flexShrink: 0 },
+            children: [
+              {
+                type: "div",
+                props: {
+                  style: {
+                    display: "flex",
+                    boxSizing: "border-box",
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "9999px",
+                    border: `1px solid ${ringColor}`,
+                    backgroundColor: PANEL,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
                   },
-                }
-              : null,
-          ].filter(Boolean),
+                  children: slot.pictureUrl
+                    ? [{ type: "img", props: { src: slot.pictureUrl, width: 36, height: 36, style: { objectFit: "cover" } } }]
+                    : slot.cost
+                      ? [text(String(slot.cost), { fontSize: "12px", fontWeight: 600, color: TEXT_MUTED })]
+                      : [],
+                },
+              },
+              slot.setIconUrl
+                ? {
+                    type: "img",
+                    props: {
+                      src: slot.setIconUrl,
+                      width: 15,
+                      height: 15,
+                      style: {
+                        position: "absolute",
+                        bottom: "-2px",
+                        right: "-2px",
+                        borderRadius: "9999px",
+                        border: `1px solid ${BORDER}`,
+                        backgroundColor: PANEL,
+                        objectFit: "cover",
+                      },
+                    },
+                  }
+                : null,
+            ].filter(Boolean),
+          },
         },
-      },
-      flexCol({ gap: "6px", padding: "10px 12px" }, [
-        text(slot.echoName ?? "Empty", { fontSize: "14px", fontWeight: 700, color: GOLD_SOFT }),
-        slot.setName ? text(slot.setName, { fontSize: "11px", color: TEXT_MUTED }) : null,
-        slot.mainStats.length
-          ? flexCol(
-              { gap: "2px", marginTop: "2px" },
-              slot.mainStats.map((s) =>
-                text(`${s.statName} ${formatStatValue(s.value, s.statName)}`, { fontSize: "13px", fontWeight: 600, color: TEXT }),
-              ),
-            )
-          : null,
-        flexCol({ gap: "4px", marginTop: "4px", borderTop: `1px solid ${BORDER}`, paddingTop: "6px" }, substatRows),
-      ].filter(Boolean)),
-    ],
+        flexCol({ flex: 1, minWidth: 0 }, [
+          text(slot.echoName ?? "Empty", {
+            fontSize: "11px",
+            fontWeight: 600,
+            color: GOLD_SOFT,
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }),
+          slot.setName
+            ? text(slot.setName, { fontSize: "9px", color: TEXT_MUTED, overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" })
+            : null,
+        ].filter(Boolean)),
+      ]),
+      mainStats.length
+        ? flexCol(
+            { gap: "2px", borderTop: `1px solid ${BORDER}`, paddingTop: "4px" },
+            mainStats.map((s, i) => echoStatLine(s.statName, s.value, "10px", statIcons, i === mainStats.length - 1)),
+          )
+        : null,
+      flexCol(
+        { gap: "2px", borderTop: `1px solid ${BORDER}`, paddingTop: "4px" },
+        substats.map((s) => echoStatLine(s.statName, s.value, "9px", statIcons)),
+      ),
+    ].filter(Boolean),
   );
 }
 
 function talentColumn(talent: TalentData | undefined, forte: ForteColumnNodes | undefined, data: BuildCardData) {
   const isForteCircuit = talent?.skillType === "Forte Circuit";
   const topNodes = isForteCircuit
-    ? data.inherentSkills.map((skill) =>
-        flexCol({ alignItems: "center" }, [diamondNode(30, skill.active ? GOLD : BORDER, skill.pictureUrl, 14)]),
-      )
+    ? data.inherentSkills.map((skill) => flexCol({ alignItems: "center" }, [inherentDiamond(skill.pictureUrl, skill.active)]))
     : forte
       ? [1, 0].map((tierIndex) => {
           const node = forte.nodes[tierIndex as 0 | 1];
           const active = forte.active[tierIndex as 0 | 1];
-          const iconUrl = data.statIcons[node.stat];
-          return flexCol({ alignItems: "center" }, [diamondNode(28, active ? GOLD : BORDER, iconUrl ?? null, 12)]);
+          return flexCol({ alignItems: "center" }, [forteNodeCircle(data.statIcons[node.stat] ?? null, active)]);
         })
       : [];
 
   return flexCol(
-    { alignItems: "center", gap: "10px", width: "150px" },
+    // Explicit width + wrapping label, not letting the column size itself
+    // off the label's unwrapped text -- "RESONANCE LIBERATION" at 9px
+    // uppercase has no wrap/overflow constraint otherwise, which forces
+    // the whole row wider than its allocated flex space regardless of
+    // flex-shrink/minWidth:0 (text has its own intrinsic minimum width
+    // when it can't wrap). Confirmed via a real overflow bug -- the 5th
+    // column and 5th echo tile silently fell off the canvas edge even
+    // after widening the card twice and adding minWidth:0 everywhere
+    // else; satori doesn't clip overflowing content visibly, it's simply
+    // absent from the fixed-size raster output.
+    { alignItems: "center", gap: "8px", width: "120px" },
     [
       ...topNodes,
-      diamondNode(46, GOLD, talent?.pictureUrl ?? null, 22),
+      talentDiamond(talent?.pictureUrl ?? null),
       talent
         ? text(talent.skillType.toUpperCase(), {
-            fontSize: "10px",
+            fontSize: "9px",
             fontWeight: 600,
-            letterSpacing: "0.04em",
+            letterSpacing: "0.03em",
             color: TEXT_MUTED,
             textAlign: "center",
+            whiteSpace: "normal",
+            wordBreak: "break-word",
           })
         : null,
-      talent ? text(`Lv.${talent.level}`, { fontSize: "13px", color: GOLD_SOFT }) : null,
+      talent ? text(`Lv.${talent.level}`, { fontSize: "11px", color: GOLD_SOFT }) : null,
     ].filter(Boolean),
   );
 }
@@ -386,8 +580,8 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
         props: {
           src: data.illustrationPictureUrl,
           width: PORTRAIT_WIDTH,
-          height: 300,
-          style: { borderRadius: "12px", objectFit: "cover", border: `3px solid ${accent}` },
+          height: PORTRAIT_HEIGHT,
+          style: { boxSizing: "border-box", borderRadius: "4px", objectFit: "cover", border: `2px solid ${accent}` },
         },
       }
     : {
@@ -395,31 +589,39 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
         props: {
           style: {
             display: "flex",
+            boxSizing: "border-box",
             width: `${PORTRAIT_WIDTH}px`,
-            height: "300px",
-            borderRadius: "12px",
-            border: `3px solid ${accent}`,
-            backgroundColor: PANEL,
+            height: `${PORTRAIT_HEIGHT}px`,
+            borderRadius: "4px",
+            border: `2px solid ${accent}`,
+            backgroundColor: PANEL_ALT,
           },
         },
       };
 
+  // Weapon panel: border border-border bg-panel-alt px-3 py-3, gap-3,
+  // icon h-16 w-16 object-contain.
   const weaponPanel = flexRow(
-    { alignItems: "center", gap: "12px", padding: "12px", backgroundColor: PANEL, borderRadius: "10px", width: `${PORTRAIT_WIDTH}px` },
+    { alignItems: "center", gap: "12px", padding: "12px", border: `1px solid ${BORDER}`, backgroundColor: PANEL_ALT },
     [
-      icon(data.weaponPictureUrl, 48, { borderRadius: "6px" }),
-      flexCol({ flex: 1, gap: "2px" }, [
+      { type: "div", props: { style: { display: "flex", width: "64px", height: "64px", flexShrink: 0 }, children: data.weaponPictureUrl ? [{ type: "img", props: { src: data.weaponPictureUrl, width: 64, height: 64, style: { objectFit: "contain" } } }] : [] } },
+      flexCol({ flex: 1, minWidth: 0 }, [
         text(data.weaponName ?? "No weapon equipped", { fontSize: "14px", fontWeight: 600, color: GOLD_SOFT }),
         data.weaponName
           ? text(`Lv.${data.weaponLevel} · Rank ${data.weaponRank}`, { fontSize: "12px", color: TEXT_MUTED })
           : null,
         data.weaponAtk !== null || data.weaponSecondaryStat
           ? flexRow(
-              { gap: "10px" },
+              { gap: "12px", marginTop: "6px", flexWrap: "wrap" },
               [
-                data.weaponAtk !== null ? text(`ATK ${data.weaponAtk}`, { fontSize: "12px", color: TEXT }) : null,
+                data.weaponAtk !== null
+                  ? flexRow({ alignItems: "center", gap: "4px" }, [statIconImg(si.ATK), text(String(data.weaponAtk), { fontSize: "12px", color: TEXT })].filter(Boolean))
+                  : null,
                 data.weaponSecondaryStat
-                  ? text(`${data.weaponSecondaryStat.name} ${data.weaponSecondaryStat.value}`, { fontSize: "12px", color: TEXT })
+                  ? flexRow({ alignItems: "center", gap: "4px" }, [
+                      statIconImg(si[data.weaponSecondaryStat.name]),
+                      text(formatStatValue(data.weaponSecondaryStat.value, data.weaponSecondaryStat.name), { fontSize: "12px", color: TEXT }),
+                    ].filter(Boolean))
                   : null,
               ].filter(Boolean),
             )
@@ -428,42 +630,46 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
     ],
   );
 
+  // FinalStatsGrid: ONE bordered box, bg-panel-alt, inline-grid
+  // grid-cols-2 gap-x-5 (20px), px-4 py-2, self-start (hugs content).
+  const leftRows = stats
+    ? [
+        ["HP", "HP", String(stats.hp)],
+        ["ATK", "ATK", String(stats.atk)],
+        ["DEF", "DEF", String(stats.def)],
+        ["Energy Regen", "Energy Regen", `${stats.energyRegen}%`],
+        ["Crit Rate", "Crit. Rate", `${stats.critRate}%`],
+        ["Crit DMG", "Crit. DMG", `${stats.critDmg}%`],
+      ]
+    : [];
+  const rightRows = stats
+    ? [
+        ["Basic Atk DMG", "Basic Attack DMG Bonus", `${extra.basicAttackDmgBonus}%`],
+        ["Heavy Atk DMG", "Heavy Attack DMG Bonus", `${extra.heavyAttackDmgBonus}%`],
+        ["Skill DMG", "Resonance Skill DMG Bonus", `${extra.skillDmgBonus}%`],
+        ["Liberation DMG", "Resonance Liberation DMG Bonus", `${extra.liberationDmgBonus}%`],
+        [stats.elementalDmgBonusName.replace(" Bonus", ""), stats.elementalDmgBonusName, `${stats.elementalDmgBonus}%`],
+        ["Healing Bonus", "Healing Bonus", `${stats.healingBonus}%`],
+      ]
+    : [];
+
   const statsPanel = stats
-    ? flexCol(
-        { gap: "10px", padding: "16px 18px", backgroundColor: PANEL, borderRadius: "10px", border: `1px solid ${BORDER}` },
+    ? flexRow(
+        { gap: "20px", padding: "8px 16px", border: `1px solid ${BORDER}`, backgroundColor: PANEL_ALT, alignSelf: "flex-start" },
         [
-          flexRow({ gap: "24px" }, [
-            flexCol({ gap: "10px" }, [
-              statRow("HP", String(stats.hp), si.HP),
-              statRow("ATK", String(stats.atk), si.ATK),
-              statRow("DEF", String(stats.def), si.DEF),
-              statRow("Energy Regen", `${stats.energyRegen}%`, si["Energy Regen"]),
-              statRow("Crit Rate", `${stats.critRate}%`, si["Crit. Rate"]),
-              statRow("Crit DMG", `${stats.critDmg}%`, si["Crit. DMG"]),
-            ]),
-            flexCol({ gap: "10px" }, [
-              statRow("Basic Atk DMG", `${extra.basicAttackDmgBonus}%`),
-              statRow("Heavy Atk DMG", `${extra.heavyAttackDmgBonus}%`),
-              statRow("Skill DMG", `${extra.skillDmgBonus}%`),
-              statRow("Liberation DMG", `${extra.liberationDmgBonus}%`),
-              statRow(stats.elementalDmgBonusName, `${stats.elementalDmgBonus}%`, si[stats.elementalDmgBonusName]),
-              statRow("Healing Bonus", `${stats.healingBonus}%`, si["Healing Bonus"]),
-            ]),
-          ]),
+          flexCol({}, leftRows.map((r, i) => statPanelRow(r[0], r[2], si[r[1]], i > 0))),
+          flexCol({}, rightRows.map((r, i) => statPanelRow(r[0], r[2], si[r[1]], i > 0))),
         ],
       )
     : flexCol(
-        { padding: "16px 18px", backgroundColor: PANEL, borderRadius: "10px", border: `1px solid ${BORDER}`, width: `${STAT_PANEL_COL_WIDTH * 2 + 24}px` },
-        [text("Final stats unavailable for this character/level.", { fontSize: "16px", color: TEXT_MUTED })],
+        { padding: "16px", border: `1px solid ${BORDER}`, backgroundColor: PANEL_ALT },
+        [text("Final stats unavailable for this character/level.", { fontSize: "14px", color: TEXT_MUTED })],
       );
 
   const sequenceRow = data.sequenceNodes.length
     ? flexRow(
-        { gap: "10px" },
-        data.sequenceNodes.map((node) => {
-          const unlocked = node.sequence <= data.resonanceLevel;
-          return diamondNode(40, unlocked ? GOLD : BORDER, node.pictureUrl, 18);
-        }),
+        { gap: "20px", flexWrap: "wrap", justifyContent: "center" },
+        data.sequenceNodes.map((node) => sequenceDiamond(node.pictureUrl, node.sequence <= data.resonanceLevel)),
       )
     : null;
 
@@ -475,11 +681,11 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
 
   const keynoteRow = data.keynoteSkills.length
     ? flexRow(
-        { gap: "24px", justifyContent: "center", borderTop: `1px solid ${BORDER}`, paddingTop: "14px" },
+        { gap: "32px", justifyContent: "center" },
         data.keynoteSkills.map((skill) =>
-          flexCol({ alignItems: "center", gap: "6px" }, [
-            circleNode(40, GOLD, skill.pictureUrl, 20),
-            text(skill.skillType.toUpperCase(), { fontSize: "10px", fontWeight: 600, letterSpacing: "0.04em", color: TEXT_MUTED }),
+          flexCol({ alignItems: "center", gap: "4px" }, [
+            keynoteCircle(skill.pictureUrl),
+            text(skill.skillType, { fontSize: "9px", color: TEXT_MUTED }),
           ]),
         ),
       )
@@ -491,39 +697,41 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
       style: {
         display: "flex",
         flexDirection: "row",
+        boxSizing: "border-box",
         width: `${WIDTH}px`,
         height: `${HEIGHT}px`,
         backgroundColor: BG,
         backgroundImage: `linear-gradient(165deg, ${hexBlend(accent, BG, 0.26)} 0%, ${BG} 85%)`,
-        border: `2px solid ${accent}`,
-        borderRadius: "16px",
-        padding: "28px",
-        gap: "28px",
+        border: `1px solid ${BORDER}`,
+        padding: "16px",
+        gap: "16px",
       },
       children: [
-        flexCol({ gap: "12px", width: `${PORTRAIT_WIDTH}px` }, [
+        // Left column: grid-cols-[240px_1fr]'s first track.
+        flexCol({ gap: "12px", width: `${PORTRAIT_WIDTH}px`, flexShrink: 0 }, [
           portrait,
-          flexRow({ alignItems: "baseline", gap: "10px" }, [
-            text(data.name, { fontSize: "26px", fontWeight: 700, color: GOLD_SOFT }),
-            text(`Lv ${data.level}/90`, { fontSize: "15px", color: TEXT_MUTED }),
+          flexRow({ alignItems: "center", gap: "8px" }, [
+            text(data.name, { fontSize: "14px", fontWeight: 600, color: GOLD_SOFT }),
+            text(`Lv.${data.level}`, { fontSize: "10px", color: TEXT_MUTED }),
           ]),
           weaponPanel,
         ]),
-        flexCol({ flex: 1, gap: "20px" }, [
-          flexRow({ gap: "24px", alignItems: "flex-start", borderBottom: `1px solid ${BORDER}`, paddingBottom: "20px" }, [
-            flexCol({ gap: "14px" }, [statsPanel, sequenceRow].filter(Boolean)),
-            flexCol({ flex: 1, gap: "14px", borderLeft: `1px solid ${BORDER}`, paddingLeft: "24px" }, [
-              flexRow({ gap: "10px", justifyContent: "space-between" }, talentCols),
+        // Right column: flex-col gap-3.
+        flexCol({ flex: 1, gap: "12px", minWidth: 0 }, [
+          flexRow({ gap: "16px", alignItems: "flex-start", borderBottom: `1px solid ${BORDER}`, paddingBottom: "12px" }, [
+            flexCol({ gap: "12px" }, [statsPanel, sequenceRow].filter(Boolean)),
+            flexCol({ flex: 1, minWidth: 0, gap: "12px", borderLeft: `1px solid ${BORDER}`, paddingLeft: "16px" }, [
+              flexRow({ gap: "8px", justifyContent: "space-between" }, talentCols),
               keynoteRow,
             ].filter(Boolean)),
           ]),
           data.activeEchoSets.length
             ? flexRow(
-                { gap: "8px" },
-                data.activeEchoSets.map((s) => setBadge(`${s.setName} ${s.count}pc`, accent)),
+                { gap: "6px", flexWrap: "wrap" },
+                data.activeEchoSets.map((s) => setBadge(`${s.setName} (${s.count})`, accent)),
               )
             : null,
-          flexRow({ gap: "14px" }, data.echoes.map((e) => echoTile(e, accent, si))),
+          flexRow({ gap: "6px" }, data.echoes.map((e) => echoTile(e, si))),
         ].filter(Boolean)),
       ],
     },

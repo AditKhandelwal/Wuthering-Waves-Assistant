@@ -436,6 +436,94 @@ screenshot surfaced real, concrete gaps beyond color, and one real bug:**
   card instead of showing icon+value alone.
 - Talent column labels are now uppercase, matching the real card.
 
+**v5 (same day) — rewrote by transcribing EXACT Tailwind values from the
+real component source** (`BuildCard.tsx`, `FinalStatsGrid.tsx`,
+`EchoCardTile.tsx`, `StatIcon.tsx`, `TalentGrid.tsx`) instead of
+approximating by eye, after v4's screenshot-comparison approach still
+wasn't close enough. Concrete corrections this found:
+- **Forte stat-bonus nodes are CIRCLES** (`ForteNodeDisplay`,
+  `rounded-full`), not diamonds — only the main talent icon, inherent-
+  skill nodes, and sequence/resonance nodes are rotated diamonds. An
+  earlier version made every node type a diamond.
+- Exact sizes: main talent diamond 32px (`h-8 w-8`, not 46px), inherent-
+  skill/forte-node 28px, sequence/resonance diamond 44px
+  (`bg-panel-ALT`, unlike every other diamond which uses plain `bg-panel`
+  — confirmed by reading `CompactSequenceRow` directly), keynote-skill
+  circle 32px, weapon icon 64px (`h-16 w-16`, not 48px).
+- **`StatIcon.tsx` (used in the stats panel, weapon panel, and echo
+  tiles) is a plain `<img>`, NEVER inverted** — only `SolidIcon`
+  (talent/inherent/forte/sequence/keynote icons) gets `brightness-0
+  invert`. An earlier version inverted every icon uniformly; confirmed by
+  reading `StatIcon.tsx` directly (no filter class at all).
+- **Echo portraits are small 36px circles** with a cost-tier-colored ring
+  (`COST_DISC_CLASS`) and a small sonata-set badge overlaid on the
+  corner (now resolved via a new local `echoSetIconByName` map in
+  `build-card.ts`, same "separate local lookup" pattern as echo
+  pictures — `echo_sets.json`'s `iconUrl` isn't part of `stats.ts`'s
+  `EchoSet` type either), not a large rectangular hero image — a v4
+  version made the portrait the dominant visual element, which isn't how
+  the real tile looks at all.
+- **The final-stats panel is ONE bordered box** with an internal
+  2-column CSS grid and divider lines between rows (`divide-y
+  divide-border/60`, replicated as an explicit `borderTop` on every row
+  after the first, since satori can't express a real sibling-selector
+  divider), not separate boxed tiles.
+
+**A real, very confusing layout bug and its actual root cause — read
+this before touching width/height constants again.** A "5th item
+clipped off the right edge" symptom survived, in order: three
+successive `WIDTH` increases (1340→1900px), switching the talent
+columns and then the echo tiles to explicit fixed widths instead of
+`flex: 1`, and adding `minWidth: 0` everywhere a flex-shrink gotcha
+seemed plausible. None of it worked, because none of it was the actual
+cause. **The real cause: satori's default `box-sizing` is `content-box`
+(like raw CSS/SVG), not `border-box` the way Tailwind's global reset
+makes every element on the real site behave.** A container declared
+`width: "310px"` with `padding: "8px"` and a 1px border was actually
+*rendering* at 328px — padding and border add to the declared width
+under `content-box` instead of being carved out of it. Across 5 tiles
+plus gaps, that compounds into real, substantial drift, and the ROOT
+CARD ELEMENT ITSELF had the same problem (`width: WIDTH` + `padding:
+"16px"` + a 1px border), meaning the whole card was rendering a few
+dozen pixels larger than the fixed satori canvas it was being
+rasterized into — so the card's own right/bottom edges, and everything
+inside them, were being silently cut by the canvas boundary. Found by
+dumping satori's raw SVG output (`DEBUG_SVG=<path>` env var, temporarily
+wired into `renderBuildCard` and removed again) and discovering the
+root `<rect>` was `1934×684` against a declared `1900×650` canvas — not
+by guessing. Fixed with one change: `boxSizing: "border-box"` is now
+the default in the `flexCol`/`flexRow` helpers, plus every other
+raw-`div` element in this file that combines an explicit width/height
+with padding or a border got it added explicitly too (the root card
+element, the 5 diamond/circle node functions, the portrait image and
+its fallback box, the echo tile's circular portrait). **If a future
+edit to this file adds a new sized+bordered element without going
+through `flexCol`/`flexRow`, add `boxSizing: "border-box"` to it too,
+or risk reintroducing exactly this bug.**
+
+A second, smaller contributor to the same symptom (found and fixed
+first, before the box-sizing issue was known): `echoStatLine`'s stat-
+name label (`"Resonance Liberation DMG Bonus"` is a real one) had no
+wrap/truncation constraint, so long names forced their row wider
+regardless of any flex/minWidth setting on ancestors — same root-cause
+category as the talent-label overflow fixed in v4, just a second
+instance of it. Fixed with the same `overflow: hidden` / `whiteSpace:
+nowrap` / `textOverflow: ellipsis` treatment, matching `EchoCardTile
+.tsx`'s own `truncate` utility class.
+
+Also worth remembering for next time: a "content looks cut off"
+symptom that persists identically across multiple `WIDTH` increases is
+a signal to stop guessing and dump the raw SVG instead (`new
+Resvg(svg).render()`'s input `svg` string, or just add a temporary
+`DEBUG_SVG` env-var check like the one used here) — check the root
+`<svg>`'s own `width`/`viewBox` against the actual rendered `<rect>`/
+text bounding boxes. A "scale the whole PNG down and see if it's a
+preview-display artifact" test (via `new Resvg(svg, { fitTo: { mode:
+"width", value: N } })`) and a minimal reproduction with plain colored
+boxes (no text, no real data) were both tried first and were both
+useful for ruling things out, but didn't find the actual cause as
+quickly as just reading the SVG's own coordinates would have.
+
 **New data extract: `frontend/api/discord/talent_data.json`**, a lean
 `roleGbId -> {talents: [...5], inherentSkills: [...2], keynoteSkills: [...2],
 sequenceNodes: [...6]}` map built by

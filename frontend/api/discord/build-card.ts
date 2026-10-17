@@ -81,6 +81,13 @@ interface TalentDataEntry {
 const talentData = talentDataRaw as Record<string, TalentDataEntry>;
 const echoStatCurves = echoStatCurvesRaw as unknown as EchoStatCurves;
 const echoSets = (echoSetsRaw as { sets: EchoSet[] }).sets;
+// iconUrl isn't part of stats.ts's EchoSet type (the agent doesn't render
+// images, same reasoning as echoPictureByNormalizedName below) -- a
+// separate local lookup for the small sonata-set badge on each echo tile.
+const echoSetIconByName = new Map<string, string>();
+for (const s of (echoSetsRaw as { sets: (EchoSet & { iconUrl: string })[] }).sets) {
+  echoSetIconByName.set(s.name, s.iconUrl);
+}
 const sequenceStatNodes = (
   sequenceStatNodesRaw as unknown as {
     nodes: Record<string, Record<string, [{ stat: string; value: number }, { stat: string; value: number }]>>;
@@ -191,6 +198,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     echoName: slot.echoName,
     cost: slot.cost,
     setName: slot.setName,
+    setIconUrl: slot.setName ? (echoSetIconByName.get(slot.setName) ?? null) : null,
     mainStats: slot.mainStats,
     substats: slot.substats,
   }));
