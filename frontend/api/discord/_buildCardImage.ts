@@ -53,7 +53,7 @@ const WIDTH = 1100;
 // richest case (portrait + weapon panel + stats grid + talent columns +
 // echo badges) with some margin; a sparser build just leaves blank space
 // within the card border rather than being cut off.
-const HEIGHT = 620;
+const HEIGHT = 720;
 const PORTRAIT_WIDTH = 230;
 
 export interface TalentData {
@@ -95,6 +95,11 @@ export interface BuildCardData {
   // (normal_attack/resonance_skill/resonance_liberation/intro_skill).
   forteColumns: Record<string, ForteColumnNodes>;
   statIcons: Record<string, string>;
+  // 5 slots in saved-build order. pictureUrl/cost are null when the slot
+  // is empty or its saved echoName didn't resolve against the catalog --
+  // rendered as an empty bordered tile either way, same "don't guess"
+  // treatment as the rest of this card's fallbacks.
+  echoes: { pictureUrl: string | null; cost: 1 | 3 | 4 | null }[];
 }
 
 function flexCol(style: Record<string, unknown>, children: unknown) {
@@ -132,6 +137,53 @@ function setBadge(label: string, accent: string) {
     borderRadius: "9999px",
     padding: "4px 12px",
   });
+}
+
+function echoTile(slot: { pictureUrl: string | null; cost: 1 | 3 | 4 | null }, accent: string) {
+  const borderColor = slot.pictureUrl ? accent : BORDER;
+  return {
+    type: "div",
+    props: {
+      style: {
+        display: "flex",
+        position: "relative",
+        width: "84px",
+        height: "84px",
+        borderRadius: "10px",
+        border: `2px solid ${borderColor}`,
+        backgroundColor: PANEL,
+        overflow: "hidden",
+      },
+      children: [
+        slot.pictureUrl
+          ? { type: "img", props: { src: slot.pictureUrl, width: 84, height: 84, style: { objectFit: "cover" } } }
+          : null,
+        slot.cost
+          ? {
+              type: "div",
+              props: {
+                style: {
+                  display: "flex",
+                  position: "absolute",
+                  bottom: "2px",
+                  right: "2px",
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "9999px",
+                  backgroundColor: "#0d0d0dcc",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  color: GOLD_SOFT,
+                },
+                children: String(slot.cost),
+              },
+            }
+          : null,
+      ].filter(Boolean),
+    },
+  };
 }
 
 function talentColumn(talent: TalentData | undefined, forte: ForteColumnNodes | undefined, data: BuildCardData, accent: string) {
@@ -321,6 +373,7 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
                 data.activeEchoSets.map((s) => setBadge(`${s.setName} ${s.count}pc`, accent)),
               )
             : null,
+          flexRow({ gap: "10px" }, data.echoes.map((e) => echoTile(e, accent))),
         ].filter(Boolean)),
       ],
     },

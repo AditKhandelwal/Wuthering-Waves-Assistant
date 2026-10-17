@@ -28,6 +28,7 @@ import { getServiceClient, editOriginalText, editOriginalWithImage } from "./_sh
 import { renderBuildCard, type BuildCardData, type ForteColumnNodes } from "./_buildCardImage.js";
 import {
   computeEchoStatTotals,
+  computeEchoSlotBreakdown,
   computeActiveSetBonuses,
   computeFinalStats,
   computeForteBonusTotals,
@@ -91,8 +92,15 @@ const sequenceNodeStatBonuses = (
 // same tolerance as findEchoByName in frontend/src/lib/echoes.ts and the
 // agent's own echoByNormalizedName.
 const echoByNormalizedName = new Map<string, EchoCatalogEntry>();
-for (const e of (echoCatalogRaw as { echoes: EchoCatalogEntry[] }).echoes) {
+// pictureUrl isn't part of stats.ts's EchoCatalogEntry type (the agent
+// doesn't render images, so it was never added there, and stats.ts must
+// stay byte-identical to supabase/functions/agent/stats.ts -- see that
+// file's header) -- kept as a separate local lookup instead of extending
+// the shared type for a Discord-only need.
+const echoPictureByNormalizedName = new Map<string, string>();
+for (const e of (echoCatalogRaw as { echoes: (EchoCatalogEntry & { pictureUrl: string })[] }).echoes) {
   echoByNormalizedName.set(normalizeEchoName(e.name), e);
+  echoPictureByNormalizedName.set(normalizeEchoName(e.name), e.pictureUrl);
 }
 
 interface RenderBody {
@@ -157,6 +165,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   const echoSlots = (build.echoes ?? []) as SavedEchoSlot[];
   const echoTotals = computeEchoStatTotals(echoSlots, echoByNormalizedName, echoStatCurves);
   const activeEchoSets = computeActiveSetBonuses(echoSlots, echoSets);
+  const echoSlotBreakdown = computeEchoSlotBreakdown(echoSlots, echoByNormalizedName, echoStatCurves);
+  const echoes = echoSlotBreakdown.map((slot) => ({
+    pictureUrl: slot.echoName ? (echoPictureByNormalizedName.get(normalizeEchoName(slot.echoName)) ?? null) : null,
+    cost: slot.cost,
+  }));
   const forteBonusTotals = computeForteBonusTotals(
     (build.forte_node_active ?? []) as boolean[],
     sequenceStatNodes[roleGbId],
@@ -226,6 +239,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     inherentSkills,
     forteColumns,
     statIcons,
+    echoes,
   };
 
   // No title/text here -- the card image itself already shows name, level,

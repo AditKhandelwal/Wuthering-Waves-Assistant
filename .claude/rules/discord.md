@@ -301,15 +301,23 @@ column, Forte Circuit showing the 2 real inherent-skill icons with
 active/inactive styling, the other 4 columns showing their real forte
 stat-bonus node icons with the same active/inactive styling — all sourced
 from the new `talent_data.json` extract + the already-bundled
-`sequence_stat_nodes.json`), and active echo set badges (name + piece
-count). Still deliberately NOT included: the per-echo-slot substat tile
-grid and the resonance-chain diamond icon row — the two remaining most
-layout-complex parts of the real card, judged lower-value than the Forte
-tree for a quick Discord glance. Falls back cleanly when data's missing
-(no portrait → plain bordered box, no `finalStats` → "Final stats
-unavailable" text, no weapon → "No weapon equipped", empty
-talents/inherentSkills/forteColumns → bare circles with no label, no
-active sets → the badge row omitted).
+`sequence_stat_nodes.json`), active echo set badges (name + piece count),
+and **a row of 5 real echo portrait tiles** (added same day — resolved via
+a *local-to-`build-card.ts`* `echoPictureByNormalizedName` map built
+straight from `echo_catalog.json`'s own `pictureUrl` field, deliberately
+kept separate from `stats.ts`'s `EchoCatalogEntry` type rather than adding
+`pictureUrl` there, since `stats.ts` must stay byte-identical to
+`supabase/functions/agent/stats.ts` and the agent has no use for an image
+URL; `computeEchoSlotBreakdown` — already exported by `stats.ts` for the
+agent's own per-slot detail — supplies the cost-tier badge shown in each
+tile's corner). Still deliberately NOT included: the per-echo-slot
+substat detail and the resonance-chain diamond icon row — judged
+lower-value than real portraits/stats/Forte-tree for a quick Discord
+glance. Falls back cleanly when data's missing (no portrait → plain
+bordered box, no `finalStats` → "Final stats unavailable" text, no weapon
+→ "No weapon equipped", empty talents/inherentSkills/forteColumns → bare
+circles with no label, no active sets → the badge row omitted, an empty
+echo slot → a plain bordered tile with no cost badge).
 
 **New data extract: `frontend/api/discord/talent_data.json`**, a lean
 `roleGbId -> {talents: [...5], inherentSkills: [...2]}` map built by
