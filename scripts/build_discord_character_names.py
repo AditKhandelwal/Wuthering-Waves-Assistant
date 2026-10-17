@@ -1,21 +1,24 @@
 """
 Build a lean roleGbId -> {name, element, cardPictureUrl,
-illustrationPictureUrl} character map for the Discord bot's /builds and
-/build commands (frontend/api/discord/interactions.ts), which run in a
-Vercel Edge Function with no filesystem access at runtime (no fs module)
-and a 3-second response budget -- nowhere near enough to fetch or parse
-the 4.6MB data/wuwa_characters.json. name/element come from
+illustrationPictureUrl, elementIconUrl} character map for the Discord
+bot's /builds and /stats commands (frontend/api/discord/interactions.ts),
+which run in a Vercel Edge Function with no filesystem access at runtime
+(no fs module) and a 3-second response budget -- nowhere near enough to
+fetch or parse the 4.6MB data/wuwa_characters.json. name/element come from
 data/agent_character_guides.json (already a lean, committed extract built
 by build_agent_character_guides.py) -- same reasoning as
 build_agent_weapon_names.py, just one more consumer of the same pattern.
-Both picture URLs are pulled straight from data/wuwa_characters.json (this
-script runs locally at build time, not in the Edge runtime, so reading the
-4.6MB file here is fine -- only what gets bundled into the function needs
-to stay lean, and a few dozen short URL strings cost nothing). Same fields
-the frontend's own CharacterCard.tsx/BuildCard.tsx already use (cardPictureUrl
-for the roster grid, illustrationPictureUrl for the larger build-card
-portrait), so Discord's images match the site's own. Element is included
-so /build's card can be element-accent-themed.
+All three picture URLs are pulled straight from data/wuwa_characters.json
+(this script runs locally at build time, not in the Edge runtime, so
+reading the 4.6MB file here is fine -- only what gets bundled into the
+function needs to stay lean, and a few dozen short URL strings cost
+nothing). Same fields the frontend's own CharacterCard.tsx/BuildCard.tsx
+already use (cardPictureUrl for the roster grid, illustrationPictureUrl
+for the larger build-card portrait, role.element.pictureUrl for the
+element glyph shown next to the name -- see ElementIcon.tsx/
+frontend/src/lib/characters.ts's elementIcons map), so Discord's images
+match the site's own. Element is included so /stats's card can be
+element-accent-themed.
 
 Output is bundled directly into frontend/api/discord/ as a static JSON
 import (no runtime fetch -- the Vercel bundler inlines it at build time).
@@ -45,6 +48,7 @@ def main():
             "element": entry.get("element"),
             "cardPictureUrl": role.get("cardPictureUrl"),
             "illustrationPictureUrl": role.get("illustrationPictureUrl"),
+            "elementIconUrl": role.get("element", {}).get("pictureUrl"),
         }
 
     with open(OUT_PATH, "w", encoding="utf-8") as f:

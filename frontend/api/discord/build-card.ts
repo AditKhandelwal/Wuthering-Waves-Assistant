@@ -164,7 +164,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   const charInfo = (
     characters as Record<
       string,
-      { name: string; element: string | null; cardPictureUrl: string | null; illustrationPictureUrl: string | null }
+      {
+        name: string;
+        element: string | null;
+        cardPictureUrl: string | null;
+        illustrationPictureUrl: string | null;
+        elementIconUrl: string | null;
+      }
     >
   )[roleGbId];
   const charName = charInfo?.name ?? roleGbId;
@@ -279,6 +285,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   const cardData: BuildCardData = {
     name: charName,
     element: charInfo?.element ?? null,
+    elementIconUrl: charInfo?.elementIconUrl ?? null,
     illustrationPictureUrl: charInfo?.illustrationPictureUrl ?? null,
     level: build.character_level,
     weaponName: build.weapon_gb_id ? (names[build.weapon_gb_id] ?? `Unknown (${build.weapon_gb_id})`) : null,

@@ -90,7 +90,6 @@ const COST_RING_COLOR: Record<1 | 3 | 4, string> = { 4: GOLD, 3: `${GOLD_SOFT}99
 // width) but off a tile width close to the real site's own (see
 // ECHO_TILE_WIDTH below) instead of a padded-out guess.
 const PORTRAIT_WIDTH = 240; // grid-cols-[240px_1fr] in BuildCard.tsx
-const PORTRAIT_HEIGHT = 260;
 const ECHO_TILE_WIDTH = 160;
 const ECHO_TILE_GAP = 6; // gap-1.5 in EchoCardTile's real grid
 const TALENT_COLUMN_WIDTH = 78;
@@ -178,6 +177,7 @@ export interface ExtraDmgBonuses {
 export interface BuildCardData {
   name: string;
   element: string | null;
+  elementIconUrl: string | null;
   illustrationPictureUrl: string | null;
   level: number;
   weaponName: string | null;
@@ -540,7 +540,20 @@ function echoTile(slot: EchoTileData, statIcons: Record<string, string>) {
   );
 }
 
-function talentColumn(talent: TalentData | undefined, forte: ForteColumnNodes | undefined, data: BuildCardData) {
+// ARC_OFFSET_BY_DISTANCE in BuildCard.tsx: indexed by a column's distance
+// from the center column (Forte Circuit, always index 2 of 5) -- 0 at the
+// center, growing outward, so the tree reads as a shallow arc/wing
+// (center raised, outer columns lower), matching a real in-game Forte
+// tree screenshot. A user flagged this cascading shape as missing --
+// v5's talent row had every column at the same baseline.
+const ARC_OFFSET_BY_DISTANCE = [0, 14, 46];
+
+function talentColumn(
+  talent: TalentData | undefined,
+  forte: ForteColumnNodes | undefined,
+  data: BuildCardData,
+  offset: number,
+) {
   const isForteCircuit = talent?.skillType === "Forte Circuit";
   const topNodes = isForteCircuit
     ? data.inherentSkills.map((skill) => flexCol({ alignItems: "center" }, [inherentDiamond(skill.pictureUrl, skill.active)]))
@@ -565,7 +578,12 @@ function talentColumn(talent: TalentData | undefined, forte: ForteColumnNodes | 
     // absent from the fixed-size raster output. TALENT_COLUMN_WIDTH
     // (78px) matches the real TalentTree's content-driven column width --
     // see WIDTH's comment for why the canvas shrank from 1880px.
-    { alignItems: "center", gap: "8px", width: `${TALENT_COLUMN_WIDTH}px` },
+    // marginTop (ARC_OFFSET_BY_DISTANCE) replicates the real cascading
+    // arc -- requires the parent row to use alignItems: "flex-start"
+    // (set where talentCols is built in renderBuildCard), since the
+    // default "stretch" would otherwise force every column to the row's
+    // full height and erase the visual staggering.
+    { alignItems: "center", gap: "8px", width: `${TALENT_COLUMN_WIDTH}px`, marginTop: `${offset}px` },
     [
       ...topNodes,
       talentDiamond(talent?.pictureUrl ?? null),
@@ -591,30 +609,36 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
   const extra = data.extraDmgBonuses;
   const si = data.statIcons;
 
-  const portrait = data.illustrationPictureUrl
-    ? {
-        type: "img",
-        props: {
-          src: data.illustrationPictureUrl,
-          width: PORTRAIT_WIDTH,
-          height: PORTRAIT_HEIGHT,
-          style: { boxSizing: "border-box", borderRadius: "4px", objectFit: "cover", border: `2px solid ${accent}` },
-        },
-      }
-    : {
-        type: "div",
-        props: {
-          style: {
-            display: "flex",
-            boxSizing: "border-box",
-            width: `${PORTRAIT_WIDTH}px`,
-            height: `${PORTRAIT_HEIGHT}px`,
-            borderRadius: "4px",
-            border: `2px solid ${accent}`,
-            backgroundColor: PANEL_ALT,
-          },
-        },
-      };
+  // BuildCard.tsx's real structure: `min-h-0 flex-1` wrapper (fills
+  // whatever vertical space is left in the left column after the name
+  // row + weapon panel) around a `h-full w-full object-cover` image --
+  // NOT a fixed-height box. A fixed PORTRAIT_HEIGHT (first v5's approach)
+  // left a visible blank gap below the weapon panel whenever the right
+  // column's content was taller than that fixed height, and also forced
+  // a more aggressive object-fit:cover crop off the bottom of the
+  // portrait art than the real flexible box ever does -- a user flagged
+  // both ("bottom of the photo is cut off" / "picture should be longer
+  // so there isn't a gap"). `flex: 1, minHeight: 0` makes satori resolve
+  // the actual leftover height itself, same as a real browser would.
+  const portrait = {
+    type: "div",
+    props: {
+      style: {
+        display: "flex",
+        boxSizing: "border-box",
+        flex: 1,
+        minHeight: 0,
+        width: `${PORTRAIT_WIDTH}px`,
+        borderRadius: "4px",
+        overflow: "hidden",
+        border: `2px solid ${accent}`,
+        backgroundColor: PANEL_ALT,
+      },
+      children: data.illustrationPictureUrl
+        ? [{ type: "img", props: { src: data.illustrationPictureUrl, style: { width: "100%", height: "100%", objectFit: "cover" } } }]
+        : [],
+    },
+  };
 
   // Weapon panel: border border-border bg-panel-alt px-3 py-3, gap-3,
   // icon h-16 w-16 object-contain.
@@ -707,7 +731,8 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
   const talentCols = [0, 1, 2, 3, 4].map((i) => {
     const talent = data.talents[i];
     const forte = talent ? data.forteColumns[forteColumnKey(talent.skillType)] : undefined;
-    return talentColumn(talent, forte, data);
+    const offset = ARC_OFFSET_BY_DISTANCE[Math.abs(i - 2)] ?? 0;
+    return talentColumn(talent, forte, data, offset);
   });
 
   const keynoteRow = data.keynoteSkills.length
@@ -741,10 +766,23 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
         // Left column: grid-cols-[240px_1fr]'s first track.
         flexCol({ gap: "12px", width: `${PORTRAIT_WIDTH}px`, flexShrink: 0 }, [
           portrait,
-          flexRow({ alignItems: "center", gap: "8px" }, [
-            text(data.name, { fontSize: "14px", fontWeight: 600, color: GOLD_SOFT }),
-            text(`Lv.${data.level}`, { fontSize: "10px", color: TEXT_MUTED }),
-          ]),
+          flexRow(
+            { alignItems: "center", gap: "8px" },
+            [
+              // ElementIcon.tsx tints this (already a white silhouette on
+              // transparent background) via a CSS mask-image + colored
+              // drop-shadow glow -- satori's CSS subset has no
+              // mask-image support, so this renders the raw white icon
+              // untinted rather than attempting a lossy approximation. A
+              // deliberate scope line, same category as clip-path/the
+              // starfield background being skipped elsewhere in this file.
+              data.elementIconUrl
+                ? { type: "img", props: { src: data.elementIconUrl, width: 20, height: 20, style: { objectFit: "contain" } } }
+                : null,
+              text(data.name, { fontSize: "14px", fontWeight: 600, color: GOLD_SOFT }),
+              text(`Lv.${data.level}`, { fontSize: "10px", color: TEXT_MUTED }),
+            ].filter(Boolean),
+          ),
           weaponPanel,
         ]),
         // Right column: flex-col gap-3.
@@ -752,7 +790,11 @@ export async function renderBuildCard(data: BuildCardData): Promise<Uint8Array> 
           flexRow({ gap: "16px", alignItems: "flex-start", borderBottom: `1px solid ${BORDER}`, paddingBottom: "12px" }, [
             flexCol({ gap: "12px" }, [statsPanel, sequenceRow].filter(Boolean)),
             flexCol({ flex: 1, minWidth: 0, gap: "12px", borderLeft: `1px solid ${BORDER}`, paddingLeft: "16px" }, [
-              flexRow({ gap: "8px", justifyContent: "space-between" }, talentCols),
+              // alignItems: "flex-start" (matches the real TalentTree's
+              // `items-start`) -- required for each column's marginTop
+              // offset to actually stagger the row instead of being
+              // flattened by the default stretch behavior.
+              flexRow({ gap: "8px", justifyContent: "space-between", alignItems: "flex-start" }, talentCols),
               keynoteRow,
             ].filter(Boolean)),
           ]),
