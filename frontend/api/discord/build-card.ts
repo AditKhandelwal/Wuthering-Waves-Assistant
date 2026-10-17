@@ -186,6 +186,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   const echoes = echoSlotBreakdown.map((slot) => ({
     pictureUrl: slot.echoName ? absoluteUrl(echoPictureByNormalizedName.get(normalizeEchoName(slot.echoName)) ?? null) : null,
     cost: slot.cost,
+    setName: slot.setName,
+    mainStats: slot.mainStats,
+    substats: slot.substats,
   }));
   const forteBonusTotals = computeForteBonusTotals(
     (build.forte_node_active ?? []) as boolean[],

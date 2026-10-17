@@ -339,6 +339,51 @@ portraits, stat icons, talent/inherent-skill icons) directly against
 `data/*.json` afterward and confirmed none of them have this problem —
 echo images are the only relative one.
 
+**Styled to match the real site much more closely (v3, same day,
+following an explicit "I want it to be a 1:1" request) — exact color
+tokens, a gradient wash, and real diamond-shaped nodes:**
+- `BG`/`PANEL`/`BORDER`/`GOLD`/`GOLD_SOFT`/`TEXT`/`TEXT_MUTED` are now the
+  *exact* hex values from `frontend/src/index.css`'s `@theme` block, not
+  approximations — kept in sync by hand (no build-time import across the
+  Vite/satori boundary; check that file if this card's palette ever looks
+  off from the real site).
+- The card background is now a `linear-gradient` wash tinted with the
+  character's element color, echoing the real card's `.card-atmosphere`
+  CSS (`color-mix(in srgb, var(--card-glow-color) 26%, var(--color-bg))`
+  faded to `var(--color-bg)`) — satori's CSS parser doesn't evaluate
+  `color-mix()`, so `hexBlend()` precomputes the equivalent plain `rgb()`
+  string in JS instead. The real card's starfield dot layer (12 stacked
+  `radial-gradient`s) is deliberately NOT replicated — not worth the
+  satori-compatibility risk for a background flourish, per discussion.
+- **Talent/forte-node/inherent-skill icons are now rotated 45°
+  "diamonds"** (`diamondNode()`), matching `BuildCard.tsx`'s real
+  `rotate-45` + counter-rotated `-rotate-45` icon pattern, instead of
+  plain circles. Confirmed satori supports `transform: rotate()` via an
+  isolated local test *before* committing to it across the whole talent
+  tree — cheap to verify, would have been expensive to discover broken
+  after wiring it through five columns.
+- **Still NOT replicated, a deliberate scope line, not an oversight:**
+  the `clip-corner` angular panel shape (`clip-path: polygon(...)` —
+  satori has no clip-path support at all) and the starfield background
+  dots. Plain rounded corners and a flat gradient stand in for those.
+
+**Echo tiles now show real substats, not just a portrait + cost badge** —
+the thing the user explicitly flagged as "not there like they're supposed
+to be." Each tile is now a taller card (portrait + cost badge, the main
+stat line, then all 5 substat rows with icon + formatted value).
+`formatStatValue()`/`isFlatStat()` in `_buildCardImage.ts` mirror
+`frontend/src/lib/echoes.ts`'s exact convention (HP/ATK/DEF are flat
+integers, everything else is a *truncated*-to-1-decimal percentage, not
+rounded — the game truncates displayed percentages, confirmed against a
+real screenshot once already for the site's own version of this logic,
+see that file's comment). Main stat / substats come straight from
+`computeEchoSlotBreakdown()` (`stats.ts`, already exported for the
+agent's own per-slot detail) via `build-card.ts`'s existing call to it —
+no new data pipeline needed, just reading more fields off what was
+already being computed. An empty/unresolved substat slot renders as a
+plain `—` placeholder row instead of being omitted, keeping all 5 tiles'
+row counts visually aligned.
+
 **New data extract: `frontend/api/discord/talent_data.json`**, a lean
 `roleGbId -> {talents: [...5], inherentSkills: [...2]}` map built by
 `scripts/build_discord_talent_data.py` from `data/wuwa_characters.json`,
