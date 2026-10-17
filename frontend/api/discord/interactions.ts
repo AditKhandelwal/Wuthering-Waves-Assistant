@@ -65,10 +65,18 @@ function ephemeralReply(content: string): Response {
   });
 }
 
+// Only used by /stats's deferral -- deliberately NOT ephemeral, unlike
+// ephemeralReply above. A user asked for the rendered card to be visible
+// to everyone in the channel, not just the person who ran the command
+// (/builds' plain-text list stays private via ephemeralReply, untouched).
+// Discord ties a deferred interaction's visibility to this initial
+// response; the later webhook PATCH that fills in the real image
+// (editOriginalWithImage in build-card.ts) can't change it after the
+// fact, so the flag has to be omitted right here.
 function deferredReply(): Response {
   return Response.json({
     type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-    data: { flags: InteractionResponseFlags.EPHEMERAL },
+    data: {},
   });
 }
 
