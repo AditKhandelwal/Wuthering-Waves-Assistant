@@ -171,15 +171,28 @@ available at runtime. None of this is wrong, it's just real complexity
 that wasn't worth paying before the simple version even worked — revisit
 once `/builds`/`/build` are solid.
 
-**Gotcha hit building this — do NOT use `with { type: "json" }` on JSON
-imports in `frontend/api/`:** it satisfies Vercel's build-time type-check
-(which resolves `module` as NodeNext for `api/` functions regardless of
-`tsconfig.api.json`'s `"esnext"` setting, surfacing as a non-fatal TS1543
-in deploy logs) but the actual bundler Vercel uses to produce the deployed
-function (esbuild) does NOT support that syntax and hard-fails the whole
-deploy (`Expected ';' but found 'with'`). A plain `import x from
-"./y.json"` works fine at runtime despite the cosmetic TS1543 — leave it
-alone.
+**JSON import attributes — opposite requirement depending on which
+runtime the file is.** This genuinely differs between the two functions,
+confirmed by two separate real failures, so get it right per file:
+- **Edge** (`interactions.ts`): do NOT use `with { type: "json" }`.
+  Vercel's build-time type-check wants it (resolves `module` as NodeNext
+  for `api/` functions regardless of `tsconfig.api.json`'s `"esnext"`
+  setting, surfacing as a non-fatal TS1543 in deploy logs if you leave it
+  off) but the actual bundler Vercel uses for Edge functions (esbuild)
+  pre-inlines JSON at build time and does NOT support that syntax at
+  all — hard-fails the whole deploy (`Expected ';' but found 'with'`). A
+  plain `import x from "./y.json"` works fine at runtime despite the
+  cosmetic TS1543 — leave it alone.
+- **Node** (`build-card.ts`, and any future Node-runtime file here): DO
+  use `with { type: "json" }` — the opposite requirement. A real Node.js
+  runtime isn't pre-bundled into one inlined file the way Edge is; it
+  loads actual ES modules subject to Node's own strict import-attribute
+  rule for JSON, and a plain import fails at **runtime** (not caught by
+  local `tsc -b`, which doesn't enforce this under this project's
+  `bundler` moduleResolution — only surfaces as a real deploy/invocation
+  failure): `TypeError [ERR_IMPORT_ATTRIBUTE_MISSING]: Module
+  ".../characters.json" needs an import attribute of "type: json"`,
+  confirmed via `build-card.ts`'s first live test 2026-10-16.
 
 **`/build {character}` renders a real Build Card image with computed
 final stats.** Takes a required string option (`character`), resolved to

@@ -32,16 +32,23 @@ import {
   type EchoSet,
   type SavedEchoSlot,
 } from "./stats.js";
-import characters from "./characters.json";
-import weaponNames from "./weapon_names.json";
-import characterStatCurvesRaw from "./character_stat_curves.json";
-import weaponStatCurvesRaw from "./weapon_stat_curves.json";
-import weaponPassiveBonusesRaw from "./weapon_passive_bonuses.json";
-import echoCatalogRaw from "./echo_catalog.json";
-import echoStatCurvesRaw from "./echo_stat_curves.json";
-import echoSetsRaw from "./echo_sets.json";
-import sequenceStatNodesRaw from "./sequence_stat_nodes.json";
-import sequenceNodeStatBonusesRaw from "./sequence_node_stat_bonuses.json";
+// Real Node ESM (unlike Edge's esbuild-bundled functions, which pre-inline
+// JSON at build time and actively reject this syntax -- see interactions.ts's
+// comment) enforces import attributes on JSON imports at actual runtime,
+// confirmed via a real deploy failure: `ERR_IMPORT_ATTRIBUTE_MISSING:
+// Module ".../characters.json" needs an import attribute of "type: json"`.
+// Opposite requirement from the Edge function -- do NOT remove this here,
+// and do NOT add it in interactions.ts.
+import characters from "./characters.json" with { type: "json" };
+import weaponNames from "./weapon_names.json" with { type: "json" };
+import characterStatCurvesRaw from "./character_stat_curves.json" with { type: "json" };
+import weaponStatCurvesRaw from "./weapon_stat_curves.json" with { type: "json" };
+import weaponPassiveBonusesRaw from "./weapon_passive_bonuses.json" with { type: "json" };
+import echoCatalogRaw from "./echo_catalog.json" with { type: "json" };
+import echoStatCurvesRaw from "./echo_stat_curves.json" with { type: "json" };
+import echoSetsRaw from "./echo_sets.json" with { type: "json" };
+import sequenceStatNodesRaw from "./sequence_stat_nodes.json" with { type: "json" };
+import sequenceNodeStatBonusesRaw from "./sequence_node_stat_bonuses.json" with { type: "json" };
 
 const characterStatCurves = characterStatCurvesRaw as unknown as StatCurveData;
 const weaponStatCurves = weaponStatCurvesRaw as unknown as WeaponStatCurves;
