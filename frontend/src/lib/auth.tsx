@@ -20,6 +20,15 @@ interface AuthContextValue {
   signUp: (email: string, password: string) => Promise<{ error: string | null; confirmationRequired: boolean }>;
   signIn: (email: string, password: string) => Promise<{ error: string | null; confirmationRequired: boolean }>;
   signOut: () => Promise<void>;
+  // Sends a password-reset email with a link to /reset-password. There
+  // was previously no way to recover a forgotten password at all -- a
+  // real user hit this dead end directly.
+  resetPassword: (email: string) => Promise<{ error: string | null }>;
+  // Only valid when called from a session established by clicking that
+  // reset link (Supabase's recovery flow signs the user into a short-lived
+  // "recovery" session automatically on landing, via detectSessionInUrl --
+  // see ResetPasswordPage.tsx). Calling this with no such session fails.
+  updatePassword: (newPassword: string) => Promise<{ error: string | null }>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -71,8 +80,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut();
   }
 
+  async function resetPassword(email: string) {
+    if (!isSupabaseConfigured) return { error: NOT_CONFIGURED_ERROR };
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    return { error: error?.message ?? null };
+  }
+
+  async function updatePassword(newPassword: string) {
+    if (!isSupabaseConfigured) return { error: NOT_CONFIGURED_ERROR };
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    return { error: error?.message ?? null };
+  }
+
   return (
-    <AuthContext.Provider value={{ user: session?.user ?? null, loading, signUp, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user: session?.user ?? null, loading, signUp, signIn, signOut, resetPassword, updatePassword }}
+    >
       {children}
     </AuthContext.Provider>
   );

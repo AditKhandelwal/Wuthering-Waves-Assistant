@@ -6,25 +6,41 @@ interface AuthModalProps {
   onClose: () => void;
 }
 
+type Mode = "sign-in" | "sign-up" | "reset";
+
 export function AuthModal({ onClose }: AuthModalProps) {
-  const { signIn, signUp } = useAuth();
-  const [mode, setMode] = useState<"sign-in" | "sign-up">("sign-in");
+  const { signIn, signUp, resetPassword } = useAuth();
+  const [mode, setMode] = useState<Mode>("sign-in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
-  function switchMode(next: "sign-in" | "sign-up") {
+  function switchMode(next: Mode) {
     setMode(next);
     setError(null);
+    setPassword("");
     setConfirmPassword("");
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (mode === "reset") {
+      setSubmitting(true);
+      const result = await resetPassword(email);
+      setSubmitting(false);
+      if (result.error) {
+        setError(result.error);
+      } else {
+        setResetSent(true);
+      }
+      return;
+    }
 
     if (mode === "sign-up" && password !== confirmPassword) {
       setError("Passwords don't match.");
@@ -50,15 +66,18 @@ export function AuthModal({ onClose }: AuthModalProps) {
     }
   }
 
+  const title = mode === "sign-in" ? "Sign In" : mode === "sign-up" ? "Create Account" : "Reset Password";
+
   return (
     <Modal onClose={onClose}>
-      <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-text-muted">
-        {mode === "sign-in" ? "Sign In" : "Create Account"}
-      </h2>
+      <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-text-muted">{title}</h2>
 
       {signedUp ? (
+        <p className="text-sm text-text">Check your email to confirm your account, then sign in.</p>
+      ) : resetSent ? (
         <p className="text-sm text-text">
-          Check your email to confirm your account, then sign in.
+          If an account exists for <span className="text-gold-soft">{email}</span>, a password reset link has
+          been sent. Click it to set a new password.
         </p>
       ) : (
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -71,15 +90,17 @@ export function AuthModal({ onClose }: AuthModalProps) {
             onChange={(e) => setEmail(e.target.value)}
             className="w-full rounded-sm border border-border bg-panel px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-gold-soft focus:outline-none"
           />
-          <input
-            type="password"
-            required
-            minLength={6}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-sm border border-border bg-panel px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-gold-soft focus:outline-none"
-          />
+          {mode !== "reset" && (
+            <input
+              type="password"
+              required
+              minLength={6}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-sm border border-border bg-panel px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-gold-soft focus:outline-none"
+            />
+          )}
           {mode === "sign-up" && (
             <input
               type="password"
@@ -99,15 +120,29 @@ export function AuthModal({ onClose }: AuthModalProps) {
             disabled={submitting}
             className="mt-1 rounded-sm border border-gold px-3 py-2 text-sm text-gold-soft transition hover:bg-panel-alt disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {submitting ? "..." : mode === "sign-in" ? "Sign In" : "Create Account"}
+            {submitting ? "..." : mode === "sign-in" ? "Sign In" : mode === "sign-up" ? "Create Account" : "Send Reset Link"}
           </button>
+
+          {mode === "sign-in" && (
+            <button
+              type="button"
+              onClick={() => switchMode("reset")}
+              className="text-xs text-text-muted underline-offset-2 hover:text-gold-soft hover:underline"
+            >
+              Forgot password?
+            </button>
+          )}
 
           <button
             type="button"
-            onClick={() => switchMode(mode === "sign-in" ? "sign-up" : "sign-in")}
+            onClick={() => switchMode(mode === "sign-up" ? "sign-in" : mode === "reset" ? "sign-in" : "sign-up")}
             className="text-xs text-text-muted underline-offset-2 hover:text-gold-soft hover:underline"
           >
-            {mode === "sign-in" ? "Need an account? Sign up" : "Already have an account? Sign in"}
+            {mode === "sign-up"
+              ? "Already have an account? Sign in"
+              : mode === "reset"
+                ? "Back to sign in"
+                : "Need an account? Sign up"}
           </button>
         </form>
       )}

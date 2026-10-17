@@ -4,6 +4,7 @@ import { BuildScreenPage } from "./pages/BuildScreenPage";
 import { MyBuildsPage } from "./pages/MyBuildsPage";
 import { ChatPage } from "./pages/ChatPage";
 import { LinkDiscordPage } from "./pages/LinkDiscordPage";
+import { ResetPasswordPage } from "./pages/ResetPasswordPage";
 import { Header } from "./components/Header";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/builds" element={<MyBuildsPage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/link/:code" element={<LinkDiscordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
       </Routes>
     </div>
   );
