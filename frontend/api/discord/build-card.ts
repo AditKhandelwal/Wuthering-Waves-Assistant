@@ -7,6 +7,14 @@
 // discord.md) -- running this as a normal Node function sidesteps all of
 // that via plain npm package resolution.
 //
+// Uses VercelRequest/VercelResponse (the classic Node-function signature),
+// NOT the Fetch API Request/Response interactions.ts (Edge) uses --
+// confirmed via a real deploy failure that Vercel's Node.js function
+// runtime invokes the handler Express-style, not Fetch-style, even though
+// nothing in the Vercel docs flagged this as mandatory up front
+// (`TypeError: req.headers.get is not a function`). Edge and Node
+// functions are NOT interchangeable in handler shape on this platform.
+//
 // Never called directly by Discord. interactions.ts's handleBuild()
 // triggers this with a fire-and-forget internal fetch after deferring the
 // Discord response, since the DB reads + image render can't reliably fit
@@ -15,6 +23,7 @@
 // user ids aren't secret, so without this check anyone could hit this
 // route directly and either burn compute or read another linked user's
 // build data, bypassing Discord's own interaction signature entirely.
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getServiceClient, editOriginalText, editOriginalWithImage } from "./_shared.js";
 import { renderBuildCard, type BuildCardData } from "./_buildCardImage.js";
 import {
@@ -78,23 +87,28 @@ interface RenderBody {
   interactionToken: string;
 }
 
-export default async function handler(req: Request): Promise<Response> {
+export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
+    res.status(405).send("Method not allowed");
+    return;
   }
 
-  const secret = req.headers.get("x-internal-secret");
+  const secret = req.headers["x-internal-secret"];
   if (!secret || secret !== process.env.DISCORD_INTERNAL_SECRET) {
-    return new Response("Unauthorized", { status: 401 });
+    res.status(401).send("Unauthorized");
+    return;
   }
 
-  const body = (await req.json()) as RenderBody;
-  const { userId, roleGbId, applicationId, interactionToken } = body;
+  // Vercel's Node function runtime auto-parses a JSON body (matching
+  // Content-Type) into req.body -- interactions.ts always sends that
+  // header on this internal call.
+  const { userId, roleGbId, applicationId, interactionToken } = req.body as RenderBody;
 
   const supabase = getServiceClient();
   if (!supabase) {
     await editOriginalText(applicationId, interactionToken, "Something's misconfigured -- try again later.");
-    return new Response("ok");
+    res.status(200).send("ok");
+    return;
   }
 
   const charInfo = (characters as Record<string, { name: string; element: string | null; cardPictureUrl: string | null }>)[
@@ -113,11 +127,13 @@ export default async function handler(req: Request): Promise<Response> {
 
   if (error) {
     await editOriginalText(applicationId, interactionToken, "Couldn't load that build -- try again later.");
-    return new Response("ok");
+    res.status(200).send("ok");
+    return;
   }
   if (!build) {
     await editOriginalText(applicationId, interactionToken, `You haven't saved a build for **${charName}** yet.`);
-    return new Response("ok");
+    res.status(200).send("ok");
+    return;
   }
 
   const echoSlots = (build.echoes ?? []) as SavedEchoSlot[];
@@ -165,5 +181,5 @@ export default async function handler(req: Request): Promise<Response> {
   const imageBytes = await renderBuildCard(cardData);
   await editOriginalWithImage(applicationId, interactionToken, imageBytes, "build-card.png", { color: 0xc9a24b });
 
-  return new Response("ok");
+  res.status(200).send("ok");
 }

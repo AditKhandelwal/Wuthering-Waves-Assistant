@@ -229,7 +229,17 @@ Discord still requires a response within 3 seconds:
   anyone could hit this route directly and either burn compute or read
   another linked user's build data, since Discord user ids aren't secret
   and this bypasses Discord's own interaction-signature verification
-  entirely.
+  entirely. **Handler signature is `(req: VercelRequest, res:
+  VercelResponse)`, NOT `(req: Request) => Response`** — confirmed via a
+  real deploy failure (`TypeError: req.headers.get is not a function`):
+  Vercel's Node.js function runtime invokes the handler Express-style
+  (headers as a plain lowercased object, `req.body` auto-parsed when
+  `Content-Type: application/json`, response via `res.status(n).send(...)`
+  not `return new Response(...)`), unlike Edge's Fetch-API shape. Edge and
+  Node function handlers are NOT interchangeable in shape on this
+  platform — don't copy one's handler signature onto the other. Needs
+  `@vercel/node` installed (dev dependency) for the `VercelRequest`/
+  `VercelResponse` types.
 - `frontend/api/discord/_shared.ts` (no default export, not a route) —
   `getAnonClient()`/`getServiceClient()`/`editOriginalText()`/
   `editOriginalWithImage()`, used by both functions so the webhook-edit
