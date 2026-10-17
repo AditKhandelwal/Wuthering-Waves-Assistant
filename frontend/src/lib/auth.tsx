@@ -5,6 +5,17 @@ import { supabase, isSupabaseConfigured } from "./supabase";
 const NOT_CONFIGURED_ERROR =
   "Sign-in isn't set up yet -- Supabase isn't configured (see frontend/.env.example).";
 
+// Hardcoded, same as SITE_URL in frontend/api/discord/interactions.ts and
+// frontend/src/pages/LinkDiscordPage.tsx -- NOT window.location.origin.
+// resetPassword() originally used window.location.origin, which bakes
+// whatever URL the browser happened to be on into the actual email
+// Supabase sends. A real user hit this: the reset link in their email
+// pointed at a local dev server's localhost:PORT, which is never
+// reachable by anyone else and stops being reachable at all the moment
+// that dev server exits -- "Unable to connect... can't connect to the
+// server at localhost:3000". Always point at the real deployed site.
+const SITE_URL = "https://wuthering-waves-assistant.vercel.app";
+
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
@@ -83,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function resetPassword(email: string) {
     if (!isSupabaseConfigured) return { error: NOT_CONFIGURED_ERROR };
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: `${SITE_URL}/reset-password`,
     });
     return { error: error?.message ?? null };
   }
