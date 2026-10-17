@@ -98,8 +98,14 @@ const WIDTH = PORTRAIT_WIDTH + 16 /* gap */ + RIGHT_COLUMN_WIDTH + 32 /* card pa
 // satori requires an explicit height (no dynamic content-based sizing the
 // way a real browser would do) -- generous enough to comfortably fit the
 // richest case with some margin; a sparser build just leaves blank space
-// within the card border rather than being cut off.
-const HEIGHT = 500;
+// within the card border rather than being cut off. 500px clipped the
+// bottom row of every echo tile for a real character with a populated
+// 6-node sequence row + the cascading talent arc's extra height (both
+// absent from the test fixture that originally picked 500) -- found via
+// a real screenshot of a live character, not caught locally beforehand
+// because that fixture used an empty sequenceNodes array. Re-verified
+// with the real 6-node row included before landing on this value.
+const HEIGHT = 560;
 
 // Blends `front` over `back` at `ratio` (0-1), same visual role as the
 // real card's CSS `color-mix(in srgb, var(--card-glow-color) 26%, var(--color-bg))`
@@ -548,6 +554,19 @@ function echoTile(slot: EchoTileData, statIcons: Record<string, string>) {
 // v5's talent row had every column at the same baseline.
 const ARC_OFFSET_BY_DISTANCE = [0, 14, 46];
 
+// Connector(): a 16px vertical line (h-4 w-px bg-border) between each
+// stacked node and the one below it, down to the main talent diamond --
+// a real, visible connecting line in BuildCard.tsx's TalentTree, not just
+// gap spacing. v5's column used a uniform 8px flex gap with no line at
+// all between nodes, which read as too cramped and missing the
+// connecting-chain look a user pointed out against a reference
+// screenshot. The column below now matches the real DOM shape exactly:
+// (node, connector) pairs, then the main diamond, with no gap of its own
+// (the connectors already encode the vertical spacing).
+function connector() {
+  return { type: "div", props: { style: { width: "1px", height: "16px", backgroundColor: BORDER } } };
+}
+
 function talentColumn(
   talent: TalentData | undefined,
   forte: ForteColumnNodes | undefined,
@@ -555,15 +574,20 @@ function talentColumn(
   offset: number,
 ) {
   const isForteCircuit = talent?.skillType === "Forte Circuit";
-  const topNodes = isForteCircuit
-    ? data.inherentSkills.map((skill) => flexCol({ alignItems: "center" }, [inherentDiamond(skill.pictureUrl, skill.active)]))
+  // Forte Circuit's column shows the 2 real inherent skills in REVERSE
+  // order ([...inherentSkills].reverse() in BuildCard.tsx) -- the skill
+  // closer to the main diamond is inherentSkills[0], not [1]. v5 rendered
+  // them in forward order, a real discrepancy from the source.
+  const topNodes: unknown[] = isForteCircuit
+    ? [...data.inherentSkills].reverse().map((skill) => inherentDiamond(skill.pictureUrl, skill.active))
     : forte
       ? [1, 0].map((tierIndex) => {
           const node = forte.nodes[tierIndex as 0 | 1];
           const active = forte.active[tierIndex as 0 | 1];
-          return flexCol({ alignItems: "center" }, [forteNodeCircle(data.statIcons[node.stat] ?? null, active)]);
+          return forteNodeCircle(data.statIcons[node.stat] ?? null, active);
         })
       : [];
+  const nodesWithConnectors = topNodes.flatMap((node) => [node, connector()]);
 
   return flexCol(
     // Explicit width + wrapping label, not letting the column size itself
@@ -582,13 +606,15 @@ function talentColumn(
     // arc -- requires the parent row to use alignItems: "flex-start"
     // (set where talentCols is built in renderBuildCard), since the
     // default "stretch" would otherwise force every column to the row's
-    // full height and erase the visual staggering.
-    { alignItems: "center", gap: "8px", width: `${TALENT_COLUMN_WIDTH}px`, marginTop: `${offset}px` },
+    // full height and erase the visual staggering. gap: 0 here, not 8px
+    // -- the connector elements above now carry the real spacing.
+    { alignItems: "center", gap: "0px", width: `${TALENT_COLUMN_WIDTH}px`, marginTop: `${offset}px` },
     [
-      ...topNodes,
+      ...nodesWithConnectors,
       talentDiamond(talent?.pictureUrl ?? null),
       talent
         ? text(talent.skillType.toUpperCase(), {
+            marginTop: "6px",
             fontSize: "9px",
             fontWeight: 600,
             letterSpacing: "0.03em",
