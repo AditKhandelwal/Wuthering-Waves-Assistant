@@ -289,37 +289,72 @@ and not worth the risk after this session's deploy-cycle track record.
 install` on Vercel's own Linux build machines resolves the correct
 platform binary automatically, no manual asset bundling of any kind.
 
-Card shows: portrait (element-ring-colored, `cardPictureUrl`), name +
-level, weapon + level/rank, resonance chain progress, a computed final-stats
+**Card shows (v2, widened to a 1100px card, revised 2026-10-16):**
+portrait (`illustrationPictureUrl` — the larger build-card portrait the
+site itself uses, not the roster-grid `cardPictureUrl`), name + level, a
+weapon panel (icon from `weapon_catalog.json`, name, level/rank, computed
+ATK + secondary stat), resonance chain progress, a computed final-stats
 grid (HP/ATK/DEF/Energy Regen/Crit Rate/Crit DMG/elemental DMG bonus,
-element-accent-colored), and active echo set badges (name + piece count).
-Deliberately NOT included (scope cut, not an oversight): the Forte tree
-diagram and individual echo slot/substat detail — the two most
-visually/layout-complex parts of the real site's `BuildCard.tsx`, and the
-least essential for a quick Discord glance. Falls back cleanly when data's
-missing: no portrait → plain bordered box, no `finalStats` (a genuine
-character/level data gap, same as the site) → "Final stats unavailable"
-text instead of the grid, no weapon → "No weapon equipped", no active
-sets → the badge row is just omitted.
+stat-icon-labeled via `stat_icons.json`, element-accent-colored), **a real
+5-column Forte talent tree** (talent icon + skill-type label + level per
+column, Forte Circuit showing the 2 real inherent-skill icons with
+active/inactive styling, the other 4 columns showing their real forte
+stat-bonus node icons with the same active/inactive styling — all sourced
+from the new `talent_data.json` extract + the already-bundled
+`sequence_stat_nodes.json`), and active echo set badges (name + piece
+count). Still deliberately NOT included: the per-echo-slot substat tile
+grid and the resonance-chain diamond icon row — the two remaining most
+layout-complex parts of the real card, judged lower-value than the Forte
+tree for a quick Discord glance. Falls back cleanly when data's missing
+(no portrait → plain bordered box, no `finalStats` → "Final stats
+unavailable" text, no weapon → "No weapon equipped", empty
+talents/inherentSkills/forteColumns → bare circles with no label, no
+active sets → the badge row omitted).
 
-**This is NOT a screenshot of the live site** — it's an independently
-composed image built from the same underlying data, not literally
-`BuildCard.tsx` rendered. Won't be pixel-identical and won't auto-track
-future site redesigns (a real headless-Chromium screenshot was the other
-option considered — rejected for being far higher latency/compute and
-needing new auth-bridging infrastructure to view one user's card without
-a live login session; see git history around 2026-10-16 if that tradeoff
-is ever worth revisiting).
+**New data extract: `frontend/api/discord/talent_data.json`**, a lean
+`roleGbId -> {talents: [...5], inherentSkills: [...2]}` map built by
+`scripts/build_discord_talent_data.py` from `data/wuwa_characters.json`,
+mirroring the exact field extraction + positional-skillType-fallback logic
+in `frontend/src/lib/talents.ts`'s `loadTalents()`/`loadInherentSkills()`
+(some characters' skillType text is zh-Hans-only, same gotcha documented
+there). `characters.json` also gained `illustrationPictureUrl` (same
+script, `build_discord_character_names.py`). `weapon_catalog.json` and
+`stat_icons.json` are now bundled directly too (small enough — 62KB and
+2.4KB — not worth a leaner extract).
 
-**Verified locally before deploying**, same discipline as `/builds`'
-scrapped attempt: called `renderBuildCard()` directly with realistic mock
-data (including the no-portrait/no-finalStats/no-weapon/no-echo-sets
-fallback paths) via a scratch `tsx` script. Render time: ~950ms with a
-real remote portrait fetch, ~130ms without one — comfortably "near
-instant" per the user's stated priority, and this path has NO Edge-WASM
-loading tricks to go wrong the way `/builds`' attempt did, so local
-verification here is a much stronger signal that production will behave
-the same way.
+**Why not a real screenshot — the actual tradeoff considered and
+rejected, not skipped over:** a real headless-Chromium screenshot of the
+live `BuildCard.tsx` was seriously evaluated. Two blockers killed it: (1)
+the full `@sparticuz/chromium` binary is 70MB unpacked, over Vercel's
+standard Node function size limit, and the workaround
+(`@sparticuz/chromium-min`, fetching Chromium from an external host at
+every cold start) trades that for real cold-start latency and a new
+external-availability dependency; (2) even with that solved, `BuildCard.tsx`
+only renders for whoever's logged into the browser — reaching it headless
+for one specific Discord-linked user needs a whole new auth-bridging
+piece (a signed short-lived token, a new unauthenticated-but-scoped
+render route, a new endpoint to fetch that one user's row past RLS). A
+hosted screenshot API (ScreenshotOne/ApiFlash/etc.) was also considered —
+avoids the Chromium packaging problem, but adds a paid external SaaS
+dependency with its own rate limits for something that can be computed
+locally in under a second. Composing from the same underlying data wins
+on every axis the user actually cared about (latency, compute cost, no
+new external dependency) at the cost of not being pixel-identical and not
+auto-tracking future site redesigns.
+
+**Verified locally before deploying**, same discipline as every other
+piece of this feature: called `renderBuildCard()` directly with realistic
+mock data (including the empty-data fallback path) via a scratch `tsx`
+script, caught and fixed a real layout bug this way before it ever reached
+Vercel (the Forte tree columns had no room next to the stats grid and
+wrapped into an overflowing vertical stack — fixed by stacking stats
+above the talent row instead of beside it, and widening the card).
+Render time: ~570-1600ms depending on how many remote images (portrait +
+talent/forte icons) need fetching — still comfortably within Discord's
+15-minute deferred-response window, and this path has NO Edge-WASM
+loading tricks to go wrong the way `/builds`' scrapped attempt did, so
+local verification here is a strong signal production will behave the
+same way.
 
 ## Registering commands
 

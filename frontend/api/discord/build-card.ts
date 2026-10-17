@@ -25,14 +25,17 @@
 // build data, bypassing Discord's own interaction signature entirely.
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getServiceClient, editOriginalText, editOriginalWithImage } from "./_shared.js";
-import { renderBuildCard, type BuildCardData } from "./_buildCardImage.js";
+import { renderBuildCard, type BuildCardData, type ForteColumnNodes } from "./_buildCardImage.js";
 import {
   computeEchoStatTotals,
   computeActiveSetBonuses,
   computeFinalStats,
   computeForteBonusTotals,
   computeSequenceBonusTotals,
+  computeWeaponAtk,
+  computeWeaponSecondaryStat,
   normalizeEchoName,
+  FORTE_COLUMN_ORDER,
   type StatCurveData,
   type WeaponStatCurves,
   type WeaponPassiveBonuses,
@@ -50,6 +53,9 @@ import {
 // and do NOT add it in interactions.ts.
 import characters from "./characters.json" with { type: "json" };
 import weaponNames from "./weapon_names.json" with { type: "json" };
+import weaponCatalogRaw from "./weapon_catalog.json" with { type: "json" };
+import talentDataRaw from "./talent_data.json" with { type: "json" };
+import statIconsRaw from "./stat_icons.json" with { type: "json" };
 import characterStatCurvesRaw from "./character_stat_curves.json" with { type: "json" };
 import weaponStatCurvesRaw from "./weapon_stat_curves.json" with { type: "json" };
 import weaponPassiveBonusesRaw from "./weapon_passive_bonuses.json" with { type: "json" };
@@ -62,10 +68,19 @@ import sequenceNodeStatBonusesRaw from "./sequence_node_stat_bonuses.json" with 
 const characterStatCurves = characterStatCurvesRaw as unknown as StatCurveData;
 const weaponStatCurves = weaponStatCurvesRaw as unknown as WeaponStatCurves;
 const weaponPassiveBonuses = weaponPassiveBonusesRaw as unknown as WeaponPassiveBonuses;
+const weaponCatalog = weaponCatalogRaw as Record<string, { name: string; pictureUrl: string | null }>;
+const statIcons = statIconsRaw as Record<string, string>;
+interface TalentDataEntry {
+  talents: { skillType: string; name: string; pictureUrl: string | null }[];
+  inherentSkills: { name: string; pictureUrl: string | null }[];
+}
+const talentData = talentDataRaw as Record<string, TalentDataEntry>;
 const echoStatCurves = echoStatCurvesRaw as unknown as EchoStatCurves;
 const echoSets = (echoSetsRaw as { sets: EchoSet[] }).sets;
 const sequenceStatNodes = (
-  sequenceStatNodesRaw as { nodes: Record<string, Record<string, { stat: string; value: number }[]>> }
+  sequenceStatNodesRaw as unknown as {
+    nodes: Record<string, Record<string, [{ stat: string; value: number }, { stat: string; value: number }]>>;
+  }
 ).nodes;
 const sequenceNodeStatBonuses = (
   sequenceNodeStatBonusesRaw as { bonuses: Record<string, { sequence: number; stat: string; value: number }[]> }
@@ -111,15 +126,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return;
   }
 
-  const charInfo = (characters as Record<string, { name: string; element: string | null; cardPictureUrl: string | null }>)[
-    roleGbId
-  ];
+  const charInfo = (
+    characters as Record<
+      string,
+      { name: string; element: string | null; cardPictureUrl: string | null; illustrationPictureUrl: string | null }
+    >
+  )[roleGbId];
   const charName = charInfo?.name ?? roleGbId;
 
   const { data: build, error } = await supabase
     .from("user_characters")
     .select(
-      "character_level, weapon_gb_id, weapon_level, weapon_rank, resonance_level, forte_node_active, echoes",
+      "character_level, weapon_gb_id, weapon_level, weapon_rank, resonance_level, talent_levels, inherent_active, forte_node_active, echoes",
     )
     .eq("user_id", userId)
     .eq("role_gb_id", roleGbId)
@@ -163,17 +181,51 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   });
 
   const names: Record<string, string> = weaponNames;
+  const weaponAtk = build.weapon_gb_id ? computeWeaponAtk(weaponStatCurves, build.weapon_gb_id, build.weapon_level) : null;
+  const weaponSecondaryStat = build.weapon_gb_id
+    ? computeWeaponSecondaryStat(weaponStatCurves, build.weapon_gb_id, build.weapon_level)
+    : null;
+
+  const talentInfo = talentData[roleGbId];
+  const talentLevels = (build.talent_levels ?? []) as number[];
+  const talents = (talentInfo?.talents ?? []).map((t, i) => ({ ...t, level: talentLevels[i] ?? 1 }));
+
+  const inherentActiveArr = (build.inherent_active ?? []) as boolean[];
+  const inherentSkills = (talentInfo?.inherentSkills ?? []).map((s, i) => ({
+    ...s,
+    active: inherentActiveArr[i] ?? true,
+  }));
+
+  const forteNodeActiveArr = (build.forte_node_active ?? []) as boolean[];
+  const forteNodeData = sequenceStatNodes[roleGbId];
+  const forteColumns: Record<string, ForteColumnNodes> = {};
+  FORTE_COLUMN_ORDER.forEach((col, colIdx) => {
+    const nodes = forteNodeData?.[col];
+    if (!nodes) return;
+    forteColumns[col] = {
+      nodes,
+      active: [forteNodeActiveArr[colIdx * 2] ?? false, forteNodeActiveArr[colIdx * 2 + 1] ?? false],
+    };
+  });
+
   const cardData: BuildCardData = {
     name: charName,
     element: charInfo?.element ?? null,
-    pictureUrl: charInfo?.cardPictureUrl ?? null,
+    illustrationPictureUrl: charInfo?.illustrationPictureUrl ?? null,
     level: build.character_level,
     weaponName: build.weapon_gb_id ? (names[build.weapon_gb_id] ?? `Unknown (${build.weapon_gb_id})`) : null,
+    weaponPictureUrl: build.weapon_gb_id ? (weaponCatalog[build.weapon_gb_id]?.pictureUrl ?? null) : null,
     weaponLevel: build.weapon_level,
     weaponRank: build.weapon_rank,
+    weaponAtk,
+    weaponSecondaryStat,
     resonanceLevel: build.resonance_level,
     finalStats,
     activeEchoSets: activeEchoSets.map((s) => ({ setName: s.setName, count: s.count })),
+    talents,
+    inherentSkills,
+    forteColumns,
+    statIcons,
   };
 
   // No title/text here -- the card image itself already shows name, level,

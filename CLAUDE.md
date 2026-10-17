@@ -254,8 +254,16 @@ python scripts/build_agent_character_guides.py  # rebuild the agent's lean chara
                                                  # data/agent_character_guides.json + supabase/functions/agent/character_guides.json
                                                  # rerun whenever wuwa_characters.json changes, then redeploy the function
 python scripts/build_agent_weapon_names.py      # rebuild the agent's gbId -> weapon name map (dotgg + Kuro merged) ->
-                                                 # data/agent_weapon_names.json + supabase/functions/agent/weapon_names.json
+                                                 # data/agent_weapon_names.json + supabase/functions/agent/weapon_names.json +
+                                                 # frontend/api/discord/weapon_names.json (all 3 now, since 2026-10-16)
                                                  # rerun whenever weapon_catalog.json or wuwa_characters.json changes, then redeploy
+python scripts/build_discord_character_names.py # rebuild the Discord bot's lean character extract (name/element/
+                                                 # cardPictureUrl/illustrationPictureUrl) -> data/discord_characters.json +
+                                                 # frontend/api/discord/characters.json -- rerun whenever
+                                                 # agent_character_guides.json or wuwa_characters.json changes, then redeploy
+python scripts/build_discord_talent_data.py     # rebuild the Discord /build card's lean talent + inherent-skill icon
+                                                 # extract -> data/discord_talent_data.json + frontend/api/discord/talent_data.json
+                                                 # rerun whenever wuwa_characters.json changes, then redeploy
 
 # Agent (Supabase Edge Function -- works today, needs `npx supabase login` once)
 npx supabase secrets set GROQ_API_KEY=...   # one-time, or whenever the key rotates
@@ -342,8 +350,12 @@ wuwa-agent/
     │       ├── _fontData.ts      # Geist-Regular.ttf, base64-embedded (satori needs a font explicitly)
     │       ├── stats.ts          # byte-identical copy of supabase/functions/agent/stats.ts's stat-aggregation
     │       │                      # port -- see discord.md before letting the two drift
-    │       ├── characters.json   # lean roleGbId -> {name, element, cardPictureUrl}, bundled no-runtime-fetch
+    │       ├── characters.json   # lean roleGbId -> {name, element, cardPictureUrl, illustrationPictureUrl}
+    │       ├── talent_data.json  # lean roleGbId -> {talents[5], inherentSkills[2]} for the Forte tree,
+    │       │                      # built by scripts/build_discord_talent_data.py
     │       ├── weapon_names.json # gbId -> name, mirrored from data/agent_weapon_names.json
+    │       ├── weapon_catalog.json # full catalog (name + pictureUrl), bundled directly -- small enough
+    │       ├── stat_icons.json   # stat name -> icon URL, bundled directly -- small enough
     │       └── (+ character_stat_curves/weapon_stat_curves/weapon_passive_bonuses/echo_catalog/
     │             echo_stat_curves/echo_sets/sequence_stat_nodes/sequence_node_stat_bonuses.json --
     │             bundled copies stats.ts needs, same files the agent function also bundles)

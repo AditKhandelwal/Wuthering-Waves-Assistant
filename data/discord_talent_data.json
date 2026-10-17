@@ -1,0 +1,2381 @@
+{
+  "1102": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Frigid Light",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7db730a5b356340f62e84958c3f34d12/e32440dcabd2ac86197f773c84645d2a.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Eternal Frost",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7db730a5b356340f62e84958c3f34d12/737017bbe02a53dedf783de0a38f1a43.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Clarity of Mind",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7db730a5b356340f62e84958c3f34d12/7abe613673b84e2f500d81694448a742.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Glacial Gaze",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7db730a5b356340f62e84958c3f34d12/189ec919c3f9b50e190d752ba3f30a86.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Freezing Thorns",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7db730a5b356340f62e84958c3f34d12/0319ba13b1f2a531f622b305b1a32af9.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Condensation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/d1749f8be6c3219ab29dca06ba7e51dc.png"
+      },
+      {
+        "name": "Avalanche",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/d64cf2ba07575025cdca656d7aed10a4.png"
+      }
+    ]
+  },
+  "1105": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Dimming Brush",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9567d88e7b614cee2e963b0e02027b16/b115980464a7f52d98c2a1d95db3c38c.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Manifestation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9567d88e7b614cee2e963b0e02027b16/58d5aaf2a5e1e91b015d0416a97b96ff.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Ink and Wash",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9567d88e7b614cee2e963b0e02027b16/419d5db1c2e90669d1c1453a1b4edcf0.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Living Canvas",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9567d88e7b614cee2e963b0e02027b16/047c798bd3509366d309c3f2daab3e71.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Radiant Ruin",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9567d88e7b614cee2e963b0e02027b16/7c47db17addb12bdcce7baae0ce6db70.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Calligrapher's Touch",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/723d94ca6e186ea78c3be3c47f46e6c7.png"
+      },
+      {
+        "name": "Flourish",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/3810b155f0dd1b66de3ba4878c13c30a.png"
+      }
+    ]
+  },
+  "1107": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Silent Execution",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e2e1af9f6852fbbf7738285a16200486/0d5b07c27476404c9325d7d08dfe9f27.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Art of Violence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e2e1af9f6852fbbf7738285a16200486/c25f0c17edda8a46b993f9c87f730444.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Lethal Repertoire",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e2e1af9f6852fbbf7738285a16200486/8b6d2e33618fae2cfdc8b55a14f65cd6.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Era of New Wave",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e2e1af9f6852fbbf7738285a16200486/16bfb1c8434bc1cceea08d9cdcddede1.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Wintertime Aria",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e2e1af9f6852fbbf7738285a16200486/3d79101a1df04a7a1a26021fd72e73cb.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Flawless Purity",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/dd476fb5481d1f15e636fdb2236b15fa.png"
+      },
+      {
+        "name": "Ars Gratia Artis",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/df2381564a6b2f22a77a873d400e07bd.png"
+      }
+    ]
+  },
+  "1108": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Flaming Sakura Blade Art",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf92ab49b769674555ba9f0628428605/ac6a6e310866d7b9172e478c8fa852ec.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Frostblight",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf92ab49b769674555ba9f0628428605/bc8abd0f4326f01fac1b30a085b611fc.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Everfrost Dominion",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf92ab49b769674555ba9f0628428605/ac3af1597b74dfc5eacb340e5e8f9af3.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Foreclaiming",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf92ab49b769674555ba9f0628428605/b00e96acdca7ff301a997547aa533f58.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Frostedge",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf92ab49b769674555ba9f0628428605/7d95b986ef440c807ecd1220fc9ba0e0.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Fine Snow",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf92ab49b769674555ba9f0628428605/585d828ec96992de37036a059790322d.png"
+      },
+      {
+        "name": "Ephemeral Realm",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf92ab49b769674555ba9f0628428605/15650d0a9006137714d04fae5dd80fd6.png"
+      }
+    ]
+  },
+  "1109": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Snapshot",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b53a2783b6a8d267869799449d24d251/d4a0b876f873a00a02f9877fef351940.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Phantom Frame",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b53a2783b6a8d267869799449d24d251/d01faf7aeaa189d7968084ce7c13bb17.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Memory Palace",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b53a2783b6a8d267869799449d24d251/36ba12ae957a329844c7589424794edf.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Clear As Day",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b53a2783b6a8d267869799449d24d251/414257f69aee90a8cc742f9225b35c5f.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Clip It",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b53a2783b6a8d267869799449d24d251/a56a261d10af66aabdcedac08db15c96.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Slow Motion",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b53a2783b6a8d267869799449d24d251/c0cb14ec1684c22670592b69dddf51d4.png"
+      },
+      {
+        "name": "Remembrance",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b53a2783b6a8d267869799449d24d251/0a2da09dedd9b7d7e46bd7f0f8288cf6.png"
+      }
+    ]
+  },
+  "1203": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Wooly Attack",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7e4a03486760e3568176a2db875a2e7c/7e0f9edf3d499a137376ee5f0df94b67.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Flaming Woolies",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7e4a03486760e3568176a2db875a2e7c/35e0738f007b7514e6bc639eda5881d6.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Black & White Woolies",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7e4a03486760e3568176a2db875a2e7c/e522135e9e326fe8527dbca2eb9b00c8.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Cosmos Rave",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7e4a03486760e3568176a2db875a2e7c/d7277c6d7de531749719444b620b6d4e.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Woolies Helpers",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7e4a03486760e3568176a2db875a2e7c/445decb579c87172a984cd82b7a92531.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Angry Cosmos",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/825a66db4b5cb9a36e503c566d850a72.png"
+      },
+      {
+        "name": "Woolies Cheer Dance",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/b68eba072a0245299f129615fcc09bf9.png"
+      }
+    ]
+  },
+  "1204": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Impromptu Show",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4e9c9ff0405a4726e56176f1e8df904d/956c6258bc3e6c6cd9057600c1e7402c.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Passionate Variation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4e9c9ff0405a4726e56176f1e8df904d/35a2f380d7727f0257742bcb29d0004f.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Fury Fugue",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4e9c9ff0405a4726e56176f1e8df904d/49f6d5911ab3b45c814b1d2b472173c4.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Violent Finale",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4e9c9ff0405a4726e56176f1e8df904d/502a5ee4ac39f470ea6b59da4a924530.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Dissonance",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4e9c9ff0405a4726e56176f1e8df904d/162bf924fb91a983f35b5ce2d98a3fa3.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Harmonic Control",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/31669727dd5aaef83322832673aa20a2.png"
+      },
+      {
+        "name": "Rhythmic Vibrato",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/6e60b9a1576f0b538c857e8066dd40c0.png"
+      }
+    ]
+  },
+  "1206": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Captain's Rhapsody",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/25b19f7a355bdadd07ec7ba1f6b97516/c939f9c7bf7ba90a44d76dd971653762.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Anchors Aweigh!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/25b19f7a355bdadd07ec7ba1f6b97516/406f3ce04a27e43476a029d838f046c6.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Ocean Odyssey",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/25b19f7a355bdadd07ec7ba1f6b97516/db3a97015847471174f7fb20f4a8ccbd.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "To the Horizon",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/25b19f7a355bdadd07ec7ba1f6b97516/8d6329cd5d9e15b7d6432913f8065d51.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Applaud for Me!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/25b19f7a355bdadd07ec7ba1f6b97516/e5c0ee3b2559569d476311205307e935.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Voyager's Blaze",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/1a34dde39f264db606fdb08c6eb82f3c.png"
+      },
+      {
+        "name": "Trial by Fire and Tide",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/2a912557d257d7735828e74d622b4a62.png"
+      }
+    ]
+  },
+  "1207": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Flaming Star",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/28efed1d935b4c3e8cd717824c78d4c4/847bc4045bb5b8d5f849f5319b514556.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Shewolf's Hunt",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/28efed1d935b4c3e8cd717824c78d4c4/e95b532c81ef624dcdc24b7c692108e5.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Ignis Lupa",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/28efed1d935b4c3e8cd717824c78d4c4/937f1accb67d9457decf8380f1fb3f6a.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Fire-Kissed Glory",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/28efed1d935b4c3e8cd717824c78d4c4/f5621552e63808c381dac5a9f3107cf4.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Try Focusing, Eh?",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/28efed1d935b4c3e8cd717824c78d4c4/d3d0fa34ddc400f88f5e107ade4aa6c6.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Remember My Name",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e2bcd1e0aa4d74e97ea0e21817fa2316/78a7174cb30075a37f02e242c2b26f96.png"
+      },
+      {
+        "name": "Applause of Victory",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e2bcd1e0aa4d74e97ea0e21817fa2316/d4aac83630b99363b47162c81073c04d.png"
+      }
+    ]
+  },
+  "1208": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Slayer's Trigger",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/605ac3f9a80ecbc412447b96e97c35d6/254c3ff1d77703393280ec508ca4c0b4.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Edge Transcended",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/605ac3f9a80ecbc412447b96e97c35d6/09e65a5ed573b5db7611d5e7b2095585.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Beyond Threshold",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/be96a274e9fae1a8720d39b897630ac8/ee411e4e24077f9fdd7e14751451aa27.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Hellfire Absolution",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/605ac3f9a80ecbc412447b96e97c35d6/44726a4edc04980679424faf402d237b.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Hellflare Overload",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/605ac3f9a80ecbc412447b96e97c35d6/634c6e87fb61f310d86ecf81ef4a605f.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Oathbound Hunt",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/be96a274e9fae1a8720d39b897630ac8/695bc86af81e4da9def23ddef7a27bef.png"
+      },
+      {
+        "name": "Sin Feaster",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/605ac3f9a80ecbc412447b96e97c35d6/4c748840afb652fd8e64771a81c3c55e.png"
+      }
+    ]
+  },
+  "1209": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Ground State Calibration",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ef1732b67b8e6655a6e1f35f799c5d9d/e6487884d16233242d5819fec8e7c6d9.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Resolution",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ef1732b67b8e6655a6e1f35f799c5d9d/11417b611fb91876b7d821aa2c07d638.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Mass-Energy Equivalence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ef1732b67b8e6655a6e1f35f799c5d9d/34aba934744427384746acd48b7369c6.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Critical Protocol",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ef1732b67b8e6655a6e1f35f799c5d9d/4ad6b2bc644cc4ff23f55da99defa8f4.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Convergence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ef1732b67b8e6655a6e1f35f799c5d9d/fb4efb135bce764f2464b533b632c9e0.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Blueprint",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ef1732b67b8e6655a6e1f35f799c5d9d/e39d2d3b0ec8fcb2f28c5a6a2d38e653.png"
+      },
+      {
+        "name": "Boundedness",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ef1732b67b8e6655a6e1f35f799c5d9d/8e371a48933e963beb701582c83a4903.png"
+      }
+    ]
+  },
+  "1210": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Infinity Calibration",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/96bbbd93689984f67c5a4e0c9a967276/066a8860130c03b473e7a9ab62b6bebb.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Shared Voyage",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/96bbbd93689984f67c5a4e0c9a967276/0d0df50a40c8ccfabcb272b8116e76ba.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "To Sculpt the Silence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/96bbbd93689984f67c5a4e0c9a967276/cde1b8bb5f097bea2b951ae3c40e706c.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Towards the Daybreak",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/96bbbd93689984f67c5a4e0c9a967276/7a1fa795f23339f29a9cb6771f9df3e9.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Overture of Departure",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/96bbbd93689984f67c5a4e0c9a967276/c34529fb73b738e5f4a90e92bf98c2bd.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Before All Sounds",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/96bbbd93689984f67c5a4e0c9a967276/d00437159fe646b90c930b02a4565b26.png"
+      },
+      {
+        "name": "Between the Stars",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/96bbbd93689984f67c5a4e0c9a967276/0f173c326935b94cc1b4455b146522eb.png"
+      }
+    ]
+  },
+  "1211": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Dreamweaver's Banquet",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2faa50c62b63b2f2d7f52efe6d5be913/08c232ef5a2b4ebf32c54642c0806dfa.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Dummy Honey",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2faa50c62b63b2f2d7f52efe6d5be913/e36ac4efdf5131f4480cb69a17705efd.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "\"Flawless\"",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2faa50c62b63b2f2d7f52efe6d5be913/e617c8319082d4295b6b6430c50e386c.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Final Act",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2faa50c62b63b2f2d7f52efe6d5be913/c4a2b41fd2afb09d33a0310da6cd287f.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Formal Greetings",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2faa50c62b63b2f2d7f52efe6d5be913/47b00aa561d8eec7007c9ee19710df87.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Vestiges of Falsehood",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2faa50c62b63b2f2d7f52efe6d5be913/2758c20025a4843aab568d4948a81f5e.png"
+      },
+      {
+        "name": "Etched Colors",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2faa50c62b63b2f2d7f52efe6d5be913/0e316bd5632bc3c459b78fefd77512c5.png"
+      }
+    ]
+  },
+  "1303": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Leihuangquan",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4a225bed7108d530bf793eade3496300/ee5bd097b79dd654a0081567380565e5.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Leihuang Master",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4a225bed7108d530bf793eade3496300/0678c6b82e0544676db55054aa90a342.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Unassuming Blade",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4a225bed7108d530bf793eade3496300/a297f38f04da7d920ec3ef9a9bc68350.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Blazing Might",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4a225bed7108d530bf793eade3496300/c5b372ff9b89de0dd6fe5f7e45898a83.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Thunder Bombardment",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4a225bed7108d530bf793eade3496300/7ce58673e42dee08bb626c38c1394fb3.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Thunderous Determination",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/5099b05432fc0584f4b35f3910bf024b.png"
+      },
+      {
+        "name": "Reserved Confidence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/7337fc8a32ee7cd7841899710c14adb6.png"
+      }
+    ]
+  },
+  "1304": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Slash of Breaking Dawn",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/50860d82beb0a3d7ff753694a237967b.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Trailing Lights of Eons",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/b08dcb43643944b8964b44b2921f0414.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Luminal Synthesis",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/fa0bfe9832e2df48824de4d70da54666.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Purge of Light",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/5ea7566e883aeafab6227cc48284f0b6.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Loong's Halo",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/1558bdd1b87125edc8b31a6a98e4d52d.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Radiant Surge",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/ae3ea2d6bdf726e2679596e1f84b8047.png"
+      },
+      {
+        "name": "Converged Flash",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/618246f9d5a78418d88cd13e3cdb0578.png"
+      }
+    ]
+  },
+  "1305": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Probe",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/812e15e210972b10c4565acd78933a6f/8fe89085a4c2e610d955d61097c91c5c.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Deduction",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/812e15e210972b10c4565acd78933a6f/5834a5191daefed1fb625a605f28e9a2.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Forever Seeking",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/812e15e210972b10c4565acd78933a6f/b6bcb0c7554ed31cb01e3b1836f4e2f9.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Cogitation Model",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/812e15e210972b10c4565acd78933a6f/c4ce288bb280714b11f42965c36721f6.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Principle",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/812e15e210972b10c4565acd78933a6f/408251e66d103a9cdfbd690a00eb4fd9.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Knowing",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/ad9bb3f77b6f85ec498a2f735c40c60d.png"
+      },
+      {
+        "name": "Focus",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/c83df661432eb9874ad415ee95570708.png"
+      }
+    ]
+  },
+  "1306": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Hunter's Path",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/43c59f1bf7bd7460736d73e83422d780/02f4c86c246b3d5cd385a94cdce7ed8a.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Warrior's Blade",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/43c59f1bf7bd7460736d73e83422d780/a9b8564e6f10ddd08cdab4d1ccfd2754.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Call Me By the Sun",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/43c59f1bf7bd7460736d73e83422d780/05d46db1042980dc05bc7c8edb70e916.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Sunward Conquest",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/43c59f1bf7bd7460736d73e83422d780/50e54cf67f276a188ebdd0a4c7e1dc34.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Stride of Goldenflare",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/43c59f1bf7bd7460736d73e83422d780/690fa2790c85ef8a6424bc49949772b3.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Glory's Favor",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e0b3b8051515b3e68634d81c02a94702/7f05f04e6d77711c3b510e3de495f086.png"
+      },
+      {
+        "name": "Blazing Valor",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e0b3b8051515b3e68634d81c02a94702/9950cafe48f1fbc5d7fe788e8de77d85.png"
+      }
+    ]
+  },
+  "1307": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Hexagram Calls, Lightning Falls",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2a8647c0d7008f5e0770fc97fea314e8/299398d3d57da366a6ea604f3c856cec.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "In Shadow Thunder Stirs",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2a8647c0d7008f5e0770fc97fea314e8/12424fdb88670e64d40a132cc5f24e85.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Thunder Begets Life",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2a8647c0d7008f5e0770fc97fea314e8/049d0d952830abad5a9aa362566f5e55.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Flashing Thunder Spell",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2a8647c0d7008f5e0770fc97fea314e8/333132c6fc732f20b7b331a413b9769f.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Summon and Smite",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2a8647c0d7008f5e0770fc97fea314e8/a1edbe59ab8e3db0bb5db5de17e3e0b9.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Time Arrives, Evil Declines",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6781b07d48863ce592955d81afb7e619/96cecdf11ff845bdb6fa630eeaeeff75.png"
+      },
+      {
+        "name": "Earthly Immortal is Here!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6781b07d48863ce592955d81afb7e619/f567cd9feb047e0627a1b4b2afce927e.png"
+      }
+    ]
+  },
+  "1308": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Mix-'n'-Match",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/ba3a0a66915762ba75137867b29af065.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Tactical Tweaks",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/5f249e8da30b2caf32410bc5dcca5ff5.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Gloves Are Comin' Off!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/377f9fa024203acfa36c5bc658f8cbc2.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Party 'til Dawn!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/ec1687f00145837e265eef8f1d2a4dd6.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "My Turn!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/82eaa3278fcec6506745fe4285473019.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Tag, You're It!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/dc7339c8724a3592a3624796fee5ce74.png"
+      },
+      {
+        "name": "Left an Opening!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/d468b2e1c24b0f0e60e18b5cb8be374c.png"
+      }
+    ]
+  },
+  "1403": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Half Truths",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/29a8561eecabd0c0745d221da6ef15fc/4906f857d57a2b29580a016233185541.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Shift Trick",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/29a8561eecabd0c0745d221da6ef15fc/24bb3798ed9ac2104ad5191b5244fe18.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Misty Cover",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/29a8561eecabd0c0745d221da6ef15fc/bc6f3398774289eaa13417f225bbee91.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Flower in the Mist",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/29a8561eecabd0c0745d221da6ef15fc/efd58aa2c58a07eabca904f018342840.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Feint Shot",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/29a8561eecabd0c0745d221da6ef15fc/9c0598ca896992bf81ffc8c1401a7ee3.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Perfect Performance",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/e4b798dc94aeab30b69ca66bf0bb59ad.png"
+      },
+      {
+        "name": "Mid-game Break",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/aaad19c0e595aaa2ecad508cfd971d67.png"
+      }
+    ]
+  },
+  "1404": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Lone Lance",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/73409cd382b704b698419e482b10da3d/7fd5820c001b4f4612dfabd43046e406.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Windqueller",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/73409cd382b704b698419e482b10da3d/655354f6a13464100a04e90a9a3df71f.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Qingloong at War",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/73409cd382b704b698419e482b10da3d/f4a58bb96cb0799ec871f1555940718f.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Emerald Storm - Prelude",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/73409cd382b704b698419e482b10da3d/8e97a136ba36bc496a93f99f30225065.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Tactical Strike",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/73409cd382b704b698419e482b10da3d/9133167bacd6497ef5b5db0dddf050e5.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Heavenly Balance",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/c36da591bccb747aae92e7761bb7dd54.png"
+      },
+      {
+        "name": "Tempest Taming",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/0c33add904df465c00a944021523ac29.png"
+      }
+    ]
+  },
+  "1405": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Fengyiquan",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/e1c7a4e00eaef95c51eee1c359bb8663.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Calming Air",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/ca6c0c69eb115e1a9b8a3e9bc1213367.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Primordial Chi Spiral",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/e28e542cb94eb8c6664165a1fa987239.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Purification Force Field",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/98db6927a5da7a692d00c7f0b46283f2.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Essence of Tao",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/0d8ba0f72d5ba641c43cf59525babfd3.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Formless Release",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/175056ac3e5ed938242d8e3a80a56b92.png"
+      },
+      {
+        "name": "Reflection",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/2cb3cb57d1963b09c39901f9c3692bb5.png"
+      }
+    ]
+  },
+  "1406": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Wind Cutter",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/46230d19d7e858e963d4a9ef1fd75ae5.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Illusion Breaker",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/42279dd5b975cc338584a9cca6ce2465.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Cycle of Wind",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/8d5d8e6c41e296a50e6490dfa864ace3.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Omega Storm",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/b076685f3a07e3ac2b942b072f2be360.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Relentless Squall",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/f235c546fde4cf3ed8ff75d713efd869.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Sand in the Storm",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/6db77416da3154acca1fa1abf40c52b5.png"
+      },
+      {
+        "name": "Boundless Winds",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/e77a79c6b126a350ff48365f97f69cf0.png"
+      }
+    ]
+  },
+  "1408": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Wind Cutter",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/46230d19d7e858e963d4a9ef1fd75ae5.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Illusion Breaker",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/42279dd5b975cc338584a9cca6ce2465.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Cycle of Wind",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/8d5d8e6c41e296a50e6490dfa864ace3.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Omega Storm",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/b076685f3a07e3ac2b942b072f2be360.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Relentless Squall",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/4315700446fbe771f8731cc1d778e77e/f235c546fde4cf3ed8ff75d713efd869.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Sand in the Storm",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/6db77416da3154acca1fa1abf40c52b5.png"
+      },
+      {
+        "name": "Boundless Winds",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/e77a79c6b126a350ff48365f97f69cf0.png"
+      }
+    ]
+  },
+  "1409": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Sword to Carve My Forms",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/50467ea5df501d630f4266205c0c634d/7ab4d95c7834ac1e130492c2343e69ed.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Sword to Bear Their Names",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/50467ea5df501d630f4266205c0c634d/87bffe0f34aa269e6cc319919a19e985.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Tempest",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/50467ea5df501d630f4266205c0c634d/6c11943cb0cfa00e7363b04edba4ac60.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "A Knight's Heartfelt Prayers",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/50467ea5df501d630f4266205c0c634d/dc16fad15b4ddc330db9330962ea8777.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Sword to Mark Tide's Trace",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/50467ea5df501d630f4266205c0c634d/9872e7dd4bd9aa1a376066a40da52e59.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "A Heart's Truest Wishes",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e7067521c47052b6deef9ebb0f86dd5c/96afd1afe3f3554e1aca8d0a10e4aea7.png"
+      },
+      {
+        "name": "Wind's Indelible Imprint",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e7067521c47052b6deef9ebb0f86dd5c/16b63281aae17415e5439a46a5e85f9e.png"
+      }
+    ]
+  },
+  "1410": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Moon Steps",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1934a42f542b2c4e165f2582ea04a12e/3f04a035dac63f25e66f36250414df6c.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Foresight Fugue",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1934a42f542b2c4e165f2582ea04a12e/e5275fd542cd4a09d52a4e3d35caf19a.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Ebb and Flow",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1934a42f542b2c4e165f2582ea04a12e/337b0b753afd49638fb6f9bd04a8c835.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Beneath Lunar Tides",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1934a42f542b2c4e165f2582ea04a12e/74ef856e25ac0a59aa4a978ce5e755f4.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Illuminated Manifestation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1934a42f542b2c4e165f2582ea04a12e/7fe9e75e83866a8454bfd7af98243587.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Waxing Ascent",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e0b3b8051515b3e68634d81c02a94702/749f1cc1f17157d2ada7a1076911c7ae.png"
+      },
+      {
+        "name": "Derivation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/e0b3b8051515b3e68634d81c02a94702/287f2893b9e6d1007ac61f1801bcf63a.png"
+      }
+    ]
+  },
+  "1411": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Inkwash",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3101aa99662a00e55d3ccc236ec61a7c/cdbd73827ef0795479c39ee98d5932fb.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Through the Groves",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3101aa99662a00e55d3ccc236ec61a7c/06b974497d3d1d6c1af4a69a160a4c22.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Verdant Edge",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3101aa99662a00e55d3ccc236ec61a7c/6fad3c68c0543b7e127c85b02d87e9a1.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Sundering Strike",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3101aa99662a00e55d3ccc236ec61a7c/759be0043f89c8dc32447dafc5378201.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Attack the Must-Defend",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3101aa99662a00e55d3ccc236ec61a7c/cfdc57d3cd937f2944cba278ee6ea824.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Quietude Within",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/605ac3f9a80ecbc412447b96e97c35d6/c2f67f71db5cb53358f638bff686f697.png"
+      },
+      {
+        "name": "Drink Away Woes Age-Old",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/605ac3f9a80ecbc412447b96e97c35d6/5eb80f974accf5b2d6a9b0c5f1c9fcee.png"
+      }
+    ]
+  },
+  "1412": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "One, Two, Three",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/f4503bcdd74236c76075ed4fa7a5ae17/f71077793d351094803ca777d731975c.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Royan Close Quarters Combat",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/f4503bcdd74236c76075ed4fa7a5ae17/142a8da5e89e82b2fbdd5b30ea6d6f0f.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Within Infinity's Embrace",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/f4503bcdd74236c76075ed4fa7a5ae17/8e79c9c77cac46970bcbb3b1cc501637.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Where Trust Leads Me!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/f4503bcdd74236c76075ed4fa7a5ae17/05862b395699869fd72cf9c5a3b7d349.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Solsworn Etymology",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/f4503bcdd74236c76075ed4fa7a5ae17/23adc79e612a5626ff0d5114696d7d87.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "True Names Invoked",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/f4503bcdd74236c76075ed4fa7a5ae17/07d6e23f79833fe17a8aa9523f52dc90.png"
+      },
+      {
+        "name": "True Names Aligned",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/f4503bcdd74236c76075ed4fa7a5ae17/6e92c74f8f7fe70433f7fd5e3df7a825.png"
+      }
+    ]
+  },
+  "1501": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Vibration Manifestation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/a91c65944d0a47a64f9971050eb53671.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Resonating Slashes",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/49badded6c2dc8ffa48bba6d876f0204.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "World in a Grain of Sand",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/270ffca76df0877966c675361452b970.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Echoing Orchestra",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/1239acde50f37457069008d4e31fa11d.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Waveshock",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/73698ca020d9f9a1b4a40e050c36c2ea.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Reticence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/a94fe0c2600a7c25bad0b06e01ef3571.png"
+      },
+      {
+        "name": "Silent Listener",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/0ad57a9cb0ebb61325da0aaf83d715d5.png"
+      }
+    ]
+  },
+  "1502": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Vibration Manifestation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/a91c65944d0a47a64f9971050eb53671.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Resonating Slashes",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/49badded6c2dc8ffa48bba6d876f0204.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "World in a Grain of Sand",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/270ffca76df0877966c675361452b970.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Echoing Orchestra",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/1239acde50f37457069008d4e31fa11d.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Waveshock",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8e8d4136836d9893ad7ddd3f5bc33fab/73698ca020d9f9a1b4a40e050c36c2ea.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Reticence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/a94fe0c2600a7c25bad0b06e01ef3571.png"
+      },
+      {
+        "name": "Silent Listener",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/0ad57a9cb0ebb61325da0aaf83d715d5.png"
+      }
+    ]
+  },
+  "1503": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Cultivation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/daa261ba104bd8bcaadd28561cfcfb5e/db8458d5fee443768dbe0adcabfc2ac1.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Botany Experiment",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/daa261ba104bd8bcaadd28561cfcfb5e/318ba69ec3e24349afd3f742088c8c18.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Starflower Blooms",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/daa261ba104bd8bcaadd28561cfcfb5e/ceb9b7d87cb2b4de6dca30c576e8c8fa.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Arboreal Flourish",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/daa261ba104bd8bcaadd28561cfcfb5e/48d652b9c22c49642575aeed04446771.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Verdant Growth",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/daa261ba104bd8bcaadd28561cfcfb5e/1b2997c603c3f8ed338d62f12e3f9bb9.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Gift of Nature",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/cf81a528d5ed386ba1b3bc0382afa8a6.png"
+      },
+      {
+        "name": "Grace of Life",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/e8088b4a0576e5a1c2d4982095f58437.png"
+      }
+    ]
+  },
+  "1504": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Navigation Support",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5a6fb0f4f2413e7bf664c056fd0728e7/4ffb9be76729e474f155bfe7f0239ac4.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Searchlight Service",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5a6fb0f4f2413e7bf664c056fd0728e7/c0e59d973d7cd3289a17a005f4e60721.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Signal Light",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5a6fb0f4f2413e7bf664c056fd0728e7/aba80d54b2dfe4b8d7aa9de3401b9a18.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Squeakie Express",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5a6fb0f4f2413e7bf664c056fd0728e7/c536e0d24af18178ff23babc20e2c479.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Special Delivery",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5a6fb0f4f2413e7bf664c056fd0728e7/5d52e4d5a3f0cc7d6ae793df74ef09bd.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Pathfinding",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/7d7c101a1ba8848253a4f8aae70105ff.png"
+      },
+      {
+        "name": "Expediting",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/386e36b3212368f2fa8713f5c7004e0c.png"
+      }
+    ]
+  },
+  "1505": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Origin Calculus",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8c28e6408f92f18a5b1f0bc728a932ee/6c55511c5dc822f8650424861096dd88.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Chaos Theory",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8c28e6408f92f18a5b1f0bc728a932ee/1cd043e165e454f6a9ccf91d8edb7296.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Astral Chord",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8c28e6408f92f18a5b1f0bc728a932ee/9486c1cffd55205b33b5f21401c14baa.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "End Loop",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8c28e6408f92f18a5b1f0bc728a932ee/b0e5b1a80cc76208dd272748dd41b168.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Proof of Existence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8c28e6408f92f18a5b1f0bc728a932ee/7678ff79d9e3002d39a120248ba11eb6.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Life Entwined",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/9ae76bb16fcb84c5060e3b4d51bfa495.png"
+      },
+      {
+        "name": "Self Gravitation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/8d8e44e9bc1a9a90332c9d68a25097dd.png"
+      }
+    ]
+  },
+  "1506": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "O Come Divine Light",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ecd11a782c39f9801ff7084679f5cf6b/e4ab32abd7fafb744798c9180629cf07.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "To Where Light Shines",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ecd11a782c39f9801ff7084679f5cf6b/01e231083fbd095aee05aeaf14d340d7.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Radiant Invocation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ecd11a782c39f9801ff7084679f5cf6b/3bdaad1a2c0225f35b347e569d3953a1.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Dawn of Enlightenment",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ecd11a782c39f9801ff7084679f5cf6b/badd974f731d663530131b904d6c5f36.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Golden Grace",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ecd11a782c39f9801ff7084679f5cf6b/9381b73cd95807143a5efff73e8ec6a5.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Presence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3d77823e079011051d897902da6596a1/20afb74bf1abde5ac45dafec7868e260.png"
+      },
+      {
+        "name": "Revelation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/b4ef0abe094dafc3f9a52958c57275b3.png"
+      }
+    ]
+  },
+  "1507": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Routine Negotiation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/14ea1ca2fff4c2c6a0199fd3e984d601/bc2b30e64420c3845b115c63bf9d4f4d.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Restless Watch",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/14ea1ca2fff4c2c6a0199fd3e984d601/4d39f9dc65bad59191981a1755c0f2b7.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "There Will Be A Light",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/14ea1ca2fff4c2c6a0199fd3e984d601/111f3c677b6d456fc590a6ccdd3d675f.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Between Dawn and Dusk",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/14ea1ca2fff4c2c6a0199fd3e984d601/86e47b39d3521cc8cac6ec11d811bbd7.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Immediate Execution",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/14ea1ca2fff4c2c6a0199fd3e984d601/669aeee5fce9e1176188ae5d38c92486.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Quick Response",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3d77823e079011051d897902da6596a1/dc494d27945d2d279b08915823973676.png"
+      },
+      {
+        "name": "Fear No Pain",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/3d77823e079011051d897902da6596a1/32b24e05dfcba44c507ccc8b13f5936e.png"
+      }
+    ]
+  },
+  "1508": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Reign of Silence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/74817f688ac16bb6cfea14d592b92f87/a2e3c2fcefd0fe7fa87b74aed4b13bbc.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Fractured Composition",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/74817f688ac16bb6cfea14d592b92f87/c735f7f8b04053018648e44f8b9b0b9b.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Sight of Unraveling - Oblivion",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/74817f688ac16bb6cfea14d592b92f87/1c000719e4cfbcc67d662aa0c2592fd7.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Moment of Nihility",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/74817f688ac16bb6cfea14d592b92f87/af619e709f29d759eca53d012705a87a.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Reverberance - Return",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/74817f688ac16bb6cfea14d592b92f87/928e36539d87779e093957ab672d176f.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Inescapable Fate",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/74817f688ac16bb6cfea14d592b92f87/7cd0527e9ecadafb33d41a45229f74bb.png"
+      },
+      {
+        "name": "All Ends Here",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/74817f688ac16bb6cfea14d592b92f87/82a865aa5981d575fcd1c74adc4d84fe.png"
+      }
+    ]
+  },
+  "1509": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Chroma Drift",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b0570d7b7ffcdcc93401de25ca755c3f/d108feef6eaa282c29b0f563dc8a5809.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Lynae-Style Palettes",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b0570d7b7ffcdcc93401de25ca755c3f/e8c02866bf878359b0f9683c2ca12c1a.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Chromaticity Modeling",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b0570d7b7ffcdcc93401de25ca755c3f/37465b547f0d0c89b8efe96b39bd6416.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Prismatic Overblast",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b0570d7b7ffcdcc93401de25ca755c3f/623d26d1a5937a5428b37d29dd340c2b.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Time to Show Some Colors!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b0570d7b7ffcdcc93401de25ca755c3f/adb6836ed5c92e40b6b9da6f44daa557.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Colors Never Fade!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b0570d7b7ffcdcc93401de25ca755c3f/12b1a687003f7e239bce6109b4896ae5.png"
+      },
+      {
+        "name": "\"Adaptive Optics: Everyday Applications\"",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b0570d7b7ffcdcc93401de25ca755c3f/e0d8b98be29e687f6178e6371a5ece9c.png"
+      }
+    ]
+  },
+  "1510": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Such is Light",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/0ed7ceadba8fa98570e75e791c2506d9/13f57e2acf5d0122847ed02eb2708776.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Reunion of All the Fallen",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/0ed7ceadba8fa98570e75e791c2506d9/342e191fd6c448c3882407952f61761c.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Spark from the Frost",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/0ed7ceadba8fa98570e75e791c2506d9/22e0bf34428fa8e99813e23e1a07aa7f.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Rewritten in Winter's Margins",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/0ed7ceadba8fa98570e75e791c2506d9/071dc264023bd29890dddd64fd53b177.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Before Injection of Dawn",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/0ed7ceadba8fa98570e75e791c2506d9/bb18ec2ff068d9e2395928ac23ffb690.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "队伍中的角色直接造成的伤害击败带有\"【集谐·干涉】\"效果的目标时：\n如果陆·赫斯没有【续写白昼】效果，则获得【续写白昼】效果，且层数与目标的\"【集谐·干涉】\"层数相同。\n如果陆·赫斯已有【续写白昼】效果，且目标的\"【集谐·干涉】\"层数大于陆·赫斯的【续写白昼】层数，则使陆·赫斯的【续写白昼】层数变为与目标的\"【集谐·干涉】\"层数相同。\n\n【续写白昼】\n队伍中的角色施放\"【谐度破坏】\"时，如果目标有\"【集谐·偏移】\"效果，则陆·赫斯失去所有【续写白昼】层数，使目标额外获得相同层数的\"【集谐·干涉】\"，最高可叠加至当前目标的\"【集谐·干涉】\"层数上限，该效果冷却时间为{1}秒。\n陆赫斯失去意识时，不会继续获得【续写白昼】效果，同时已有的【续写白昼】效果失效。\n【续写白昼】效果最多可叠加{0}层。",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/0ed7ceadba8fa98570e75e791c2506d9/cea6cb2be4aa4f0f3978d814042f8cb5.png"
+      },
+      {
+        "name": "自身施放的技能对有\"【集谐·干涉】\"的目标直接造成伤害时，陆·赫斯每拥有{0}点谐度破坏增幅，本次伤害加深{1}，最高加深{2}。\n附近队伍中所有角色为敌方怪物附加\"【集谐·偏移】\"或造成\"【谐度破坏】\"伤害后，陆·赫斯攻击提升{3}，持续{4}秒。",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/0ed7ceadba8fa98570e75e791c2506d9/545e9bd83adea20fd27307055049b32a.png"
+      }
+    ]
+  },
+  "1511": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Locked Thread",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/934ccb6df63889e3810b456333fe3087.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Protocol Breach",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/f883f4e73178ffcdcae27750dd25c96a.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Depths of Blackwall",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/fce5553b50e22cd862eb97d7177236f0.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Netrunner",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/bd069badfe45690fb4b499236747db00.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Outdated Hallucination",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/d8c58fb1f0088ff3b4b42a51a9529dde.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Ghost Cyberware",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/3e32f06d3582d6f3283ef4086a832292.png"
+      },
+      {
+        "name": "Function Cracking",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/edeab26cf7424ac9c9b986c907a0ac2d/1fc740df777a4e66907f282d7dd7bca8.png"
+      }
+    ]
+  },
+  "1103": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a8e7b42c852e1c7877cae04013538be3/43e691e8ff9ceadd79b10421f346c496.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a8e7b42c852e1c7877cae04013538be3/16284edaf10f02537452b401be9a876f.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a8e7b42c852e1c7877cae04013538be3/c254f33341cdacf58f3ae57b4ca98244.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a8e7b42c852e1c7877cae04013538be3/821fc966a20fd36cf9c1b5143cfe7898.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a8e7b42c852e1c7877cae04013538be3/82427143e6231dcc186d0826bc1bdf86.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/21013d051151e2085ac57cd5399da99a.png"
+      },
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/acb6290be3573e5ba9e04f6037aeb648.png"
+      }
+    ]
+  },
+  "1104": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9c8d0656f45cf953af1fd5d68d100449/b0f04855ac9b2b4616ddcb8f312f15cf.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9c8d0656f45cf953af1fd5d68d100449/2217005bab7dc959b791fe1b4046afdf.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9c8d0656f45cf953af1fd5d68d100449/2cd56714d090960e7ae891560e992258.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9c8d0656f45cf953af1fd5d68d100449/0d56cf117914197b1ec231f03c2511ab.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9c8d0656f45cf953af1fd5d68d100449/dcf8646386993d832c81f337df476e07.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/7b9b6382ca721c421b250aaa2c4927ed.png"
+      },
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/1e22f1716b980af487fd3fa8cdd517c9.png"
+      }
+    ]
+  },
+  "1202": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7736edb4174080acb1188fb723e7e95a/8662d984d05c413e24c560e7368f14fe.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7736edb4174080acb1188fb723e7e95a/26efa6607e5852c7230b2ff76fd02069.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7736edb4174080acb1188fb723e7e95a/ffbd3555cf551cef9375c71e2a0e2aaf.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7736edb4174080acb1188fb723e7e95a/901a5f9967f0b6763623594b690f9ab2.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/7736edb4174080acb1188fb723e7e95a/fa838b020a1656918aab8774edc079cf.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/c6ce3e1c5262f3ca0b7f9155aa5f4c20.png"
+      },
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/5c989cac1f07db58c3dd83a5a81ab7ee.png"
+      }
+    ]
+  },
+  "1205": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6cd039e58ca483ea52d255a226897d3f/82c2a6dd9c09b1770be7e6264cf6bc80.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6cd039e58ca483ea52d255a226897d3f/eec2895c6f60113125bf3b56a278ad88.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6cd039e58ca483ea52d255a226897d3f/c478e7bbad71984b05ff7cf81c7f5b6f.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6cd039e58ca483ea52d255a226897d3f/30feed253aec88868fb4ad738339d9bc.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/6cd039e58ca483ea52d255a226897d3f/312b48ed90490256d2bc2d9f3a53e5fd.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/c1d7b5d9767fafa59695890fb0345ed7.png"
+      },
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/448c81c6b2878164b39c776d39e01d95.png"
+      }
+    ]
+  },
+  "1301": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2951532a31edfaec8dfc82981e03bed9/0dd56bc6dadc0c94f8c2db50697227e6.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2951532a31edfaec8dfc82981e03bed9/1a30609e42078a7ea8724dfce3fa250e.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2951532a31edfaec8dfc82981e03bed9/5994412a891f194a895953ad0ce758ec.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2951532a31edfaec8dfc82981e03bed9/e67c21291f9a6032f47513834ceb0c47.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/2951532a31edfaec8dfc82981e03bed9/4fb16558dc571f5614d79d9685f070e8.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/014334124258aef59518fe3a9670fd4f.png"
+      },
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/f36820872733fed4309e9126c268bdc3.png"
+      }
+    ]
+  },
+  "1302": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5f903ec063507bbf0ae3def42ce2fac8/1e508f11261d743139876fcaed06856c.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5f903ec063507bbf0ae3def42ce2fac8/6fffc35d2132480990a72e7cb318b410.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5f903ec063507bbf0ae3def42ce2fac8/34a087079202195f52546f4188fcfb15.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5f903ec063507bbf0ae3def42ce2fac8/9fb1d73a5326c62a8378f46447408591.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/5f903ec063507bbf0ae3def42ce2fac8/c505a956ecdc19cf8d66ec4fea4c8468.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/e1a600af3ce6ec899b1f2290b9e4e2c4.png"
+      },
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/e0c17150ec598b876eab8d18972d16a3.png"
+      }
+    ]
+  },
+  "1407": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/c127104d9898941d3a24577a07a9c703/67c5d2d148a4d7c5c6a8dbe027b469e0.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/c127104d9898941d3a24577a07a9c703/95b17224c57451f390795f0b11e8cc13.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/c127104d9898941d3a24577a07a9c703/fb57bae07b150a54b79d0ccfe3b4c4de.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/c127104d9898941d3a24577a07a9c703/e88b86005dc60daee4de5ac4b0937428.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/c127104d9898941d3a24577a07a9c703/66754d42a35761270d687228eb28faff.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf369e99c3be6ac4559d5297d20cd13f/08164aee8eaca47d24ab92dda94ef042.png"
+      },
+      {
+        "name": "Unknown",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/cf369e99c3be6ac4559d5297d20cd13f/3f4bcc7d7704dde935f70a3ca37a97d6.png"
+      }
+    ]
+  },
+  "1601": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Concealed Edge",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9ec415b97faf1f48288d74df57f135bd/37f100aa430692df4cb84d62b6e7c901.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Fortified Defense",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9ec415b97faf1f48288d74df57f135bd/8ac0bc043ba093c21a6b248c65fe086a.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Power Shift",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9ec415b97faf1f48288d74df57f135bd/c423cab1b524013c63db211c06ae240d.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Unmovable",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9ec415b97faf1f48288d74df57f135bd/38d2d9ec5bf57d2fcb71c022971d807f.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Defense Formation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/9ec415b97faf1f48288d74df57f135bd/843f7eafc335a901e249a7c14c1369c4.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Steadfast Protection",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/df01df2bf0107143bb7a36ef620026e7.png"
+      },
+      {
+        "name": "Unyielding",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/fc46f9eae450c1c1ed62e10d9979e0d5.png"
+      }
+    ]
+  },
+  "1602": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Execution",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1e861df8d71673b14547a4c611883be1/c7567fd7480a1dccc45d326e2a2c00e5.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Crimson Fragment",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1e861df8d71673b14547a4c611883be1/8040292099f50811caa903dfba3bb236.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Serene Vigil",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1e861df8d71673b14547a4c611883be1/166f086eee4dae1e784dc97114fdc8f5.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Crimson Bloom",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1e861df8d71673b14547a4c611883be1/83e7f0a3cf09cc46764796e82c3ce197.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Vindication",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/1e861df8d71673b14547a4c611883be1/2bf5ebe5cc47114e6337a0b784d196f0.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Crimson Light",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/27a48099141ee9ea6df87dfcf591302d.png"
+      },
+      {
+        "name": "Overflow",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/c6582ac031860deaa6e8433ff0e7cd72.png"
+      }
+    ]
+  },
+  "1603": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Burgeoning",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/47ab16ea4a145372eb0e864322d4fed8/f4080189dae4b74acad0ab8bc6c5acdc.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Valse of Bloom and Blight",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/47ab16ea4a145372eb0e864322d4fed8/4622f01c46629360ee022fd2fea342c0.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Vegetative Universe",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/47ab16ea4a145372eb0e864322d4fed8/69058bfd9091d873baf43c0dd14836b1.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Fervor Efflorescent",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/47ab16ea4a145372eb0e864322d4fed8/cacacd9b791d8a6700ad4fa43381b168.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Everblooming",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/47ab16ea4a145372eb0e864322d4fed8/59885d0ac3a1c0b85262d0fd4f5ace56.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Seedbed",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/9795edd9a5217b30d8c321477e8fbf29.png"
+      },
+      {
+        "name": "Epiphyte",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/21a8b2a267881008656defbf43db670c.png"
+      }
+    ]
+  },
+  "1604": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Tuneslayer",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/15595790ebf25f847aebb27144a194e1.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Wingblade",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/f2da0a1727dada5dc9b1022a5af57849.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Umbra Eclipse",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/b67f1199abf3aed1010a19e582329e78.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Deadening Abyss",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/393f7960439ec1e9fb2499ffc8fe44eb.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Instant of Annihilation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/a802e55a043f44d567e5b84fd4469026.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Metamorph",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/12048a8240a7e9d8a0be7869f869f17e.png"
+      },
+      {
+        "name": "Bleak Crescendo",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/2e872017c62a70071863f466434e13b5.png"
+      }
+    ]
+  },
+  "1605": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Tuneslayer",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/15595790ebf25f847aebb27144a194e1.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Wingblade",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/f2da0a1727dada5dc9b1022a5af57849.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Umbra Eclipse",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/b67f1199abf3aed1010a19e582329e78.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Deadening Abyss",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/393f7960439ec1e9fb2499ffc8fe44eb.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Instant of Annihilation",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a63318bba9e899fa246bfc232d5be602/a802e55a043f44d567e5b84fd4469026.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Metamorph",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/12048a8240a7e9d8a0be7869f869f17e.png"
+      },
+      {
+        "name": "Bleak Crescendo",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/2e872017c62a70071863f466434e13b5.png"
+      }
+    ]
+  },
+  "1606": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Pero, Easy",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a0eb497c078d8399e844be3de7d08f44/fee465727a68385f648dd64ee6653344.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Acrobatic Trick",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a0eb497c078d8399e844be3de7d08f44/bb230f847d36b0a92bc4716c9f26724b.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "A Prop Master Prepares",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a0eb497c078d8399e844be3de7d08f44/f8e1726296ed578644d8752f62d9f83d.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Commedia Improvviso!",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a0eb497c078d8399e844be3de7d08f44/e9e5dacfed7ff2b3010df2a52d74ff7a.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Pero, Help",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/a0eb497c078d8399e844be3de7d08f44/0465064cd4fd9aed940e5f3cd17a3b1f.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Immersive Performance",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/990c1f25dd919219f21f50cd02afefaa.png"
+      },
+      {
+        "name": "Super Attractive Magic Box",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/6ec8ec5d9322573a005aeda39026df2a.png"
+      }
+    ]
+  },
+  "1607": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Illusion Collapse",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8dd1bacf2befdc208b8a35f6cadb0993/e6c3abc6da677832666b94587dd0747e.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Dance with Shadows",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8dd1bacf2befdc208b8a35f6cadb0993/a04c97bc0825a689bc02e5a62209f731.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Between Illusion and Reality",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8dd1bacf2befdc208b8a35f6cadb0993/e6a47544521d05e5ae9575893aa38e7d.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Beneath the Sea",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8dd1bacf2befdc208b8a35f6cadb0993/fd43154161cfb447cdd5ee5142e1a18d.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Cruise",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/8dd1bacf2befdc208b8a35f6cadb0993/fe5e449773ef608025dba68ee4ff8dbc.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "\"Cure\"",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/c3a87678951fd674a3dae755d16a429f.png"
+      },
+      {
+        "name": "\"Poison\"",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/740d7a92784816301a1953ea87319437/ff3cf8e9eddac293a93264ad6ecd386c.png"
+      }
+    ]
+  },
+  "1608": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Movement of Life and Death",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ded4b2fbaef12187c6b3e4d4e8fcc6fc/76ce802e5ce7a9d332773e3cff959f6f.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Whispers in a Fleeting Dream",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ded4b2fbaef12187c6b3e4d4e8fcc6fc/17d0634667db43bcdf0ebc6fb501e770.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Rhapsody of a New World",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ded4b2fbaef12187c6b3e4d4e8fcc6fc/1967bca900fbfc425a73503af4946e3d.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Waltz of Forsaken Depths",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ded4b2fbaef12187c6b3e4d4e8fcc6fc/c208325109a9bf8f252ef26c044c2834.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Suite of Quietus",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ded4b2fbaef12187c6b3e4d4e8fcc6fc/2f4988f45450170207a731e8e90868e4.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Accidental",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ded4b2fbaef12187c6b3e4d4e8fcc6fc/0b29c6f2140fb12b12d1dc4e847aa67c.png"
+      },
+      {
+        "name": "Octet",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/ded4b2fbaef12187c6b3e4d4e8fcc6fc/1d11708472e511476775f7a5b54bdb1d.png"
+      }
+    ]
+  },
+  "1110": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Unraveled Spring",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/de0e75c231486761019cb3ddf1491b3e/8846d72033c66894c6e005c49345f674.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Vernal Screen",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/de0e75c231486761019cb3ddf1491b3e/989db3dbfe1dff7a41c98890fee30db8.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Lambent Gold",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/de0e75c231486761019cb3ddf1491b3e/6e4b5fb11d3bb33121b03ab290180f3f.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Song of Thoroughfare",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/de0e75c231486761019cb3ddf1491b3e/280a05ef38c5b22c22df573952785459.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Tinkling Jade",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/de0e75c231486761019cb3ddf1491b3e/6fa1428a23d265546a656cf69ae22bb4.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Sky Over Water",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/de0e75c231486761019cb3ddf1491b3e/98e8020e2550059b479df6b57c154182.png"
+      },
+      {
+        "name": "Glimmering Gold",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/de0e75c231486761019cb3ddf1491b3e/c058aa850368ad9d3e1f718be815da96.png"
+      }
+    ]
+  },
+  "1309": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Deterrence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/441a2478ee7e615974235c213ffe3ece.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Thunderclap",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/6e00e989dd778712a39cf68d1fe0d406.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Myriad Omens' Mandate",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/d1ac3814359911260fefd77f59500ad2.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Ultimate Tactics",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/38733810cad2125da53bfda2bafa515c.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Thunderous Fury",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/82d174ba082cd1d669354b11e55ad305.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Decipher",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/904d10e6852ba38b45bb4a20cd5316ad.png"
+      },
+      {
+        "name": "Regression",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/bc7b8061fdc1b8b5501129dc1bc964d6.png"
+      }
+    ]
+  },
+  "1310": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Deterrence",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/441a2478ee7e615974235c213ffe3ece.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Thunderclap",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/6e00e989dd778712a39cf68d1fe0d406.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Myriad Omens' Mandate",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/d1ac3814359911260fefd77f59500ad2.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Ultimate Tactics",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/38733810cad2125da53bfda2bafa515c.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Thunderous Fury",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/82d174ba082cd1d669354b11e55ad305.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Decipher",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/904d10e6852ba38b45bb4a20cd5316ad.png"
+      },
+      {
+        "name": "Regression",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/bc7b8061fdc1b8b5501129dc1bc964d6.png"
+      }
+    ]
+  },
+  "1610": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Succor and Smite",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/3b8217895336d016d40dc90dd4c8a83e.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Feather's Edge",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/21b9de59b79c2a66914a2747e544dc26.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "The Way of Ten Thousand Voices",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/65173673816e23f61bddcae1054a1328.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Hush of a Thousand Voices",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/873df3452384bb525476c6988db34ef4.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Skybound Feather",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/30f9a01d21567a67652239380f8d00c3.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Unbroken Vow",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/9c2fc61fedb01505e045635ac0f9d8c5.png"
+      },
+      {
+        "name": "One Life, One Blade",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/222862d948b62f07877df0f7262e1d31/9cfaa80b383584b61b5aa4ffab87f4e0.png"
+      }
+    ]
+  },
+  "1413": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Strings to Steel",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/19020d159898e1485e6f3e3b255fbb79/d1f938a05f4d5549620c54c225327ab0.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Severing Note",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/19020d159898e1485e6f3e3b255fbb79/bd049897e74d66433602fec0ee2ca9ef.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Formless Heart Sword",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/19020d159898e1485e6f3e3b255fbb79/81baa903c34414fa9b9f88b1b222466c.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Billows Beneath Heaven",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/19020d159898e1485e6f3e3b255fbb79/9a233aeac384b2b26f1b19f7853d3a92.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Tonality Shift",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/19020d159898e1485e6f3e3b255fbb79/cac7d7fad7b193c49bffa7751b5a080c.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Sea of Thought, World of Dust",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/19020d159898e1485e6f3e3b255fbb79/e44752c95aa2a7914a596f19d31c920d.png"
+      },
+      {
+        "name": "To Know, To Banish",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/19020d159898e1485e6f3e3b255fbb79/eb1ff38c5e7086ef8f0203a96b7c449f.png"
+      }
+    ]
+  },
+  "1212": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Edge of Life and Death",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b22ee9a96bc78ff2fe7274af5c5b2e6b/8cb9df56f56bd8f98ca03d6687211eea.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Malevolent Encounter",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b22ee9a96bc78ff2fe7274af5c5b2e6b/7c0915e0c7857cf30c01283fe44d25d1.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Upstream Along Santu",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b22ee9a96bc78ff2fe7274af5c5b2e6b/1f3e047526f13d2ee6a5853bc63b1e19.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Burial of Thousand Souls",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b22ee9a96bc78ff2fe7274af5c5b2e6b/4c34eb3264d2f482876239426b1e9f89.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Question the Tombs",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b22ee9a96bc78ff2fe7274af5c5b2e6b/3a88b77b86647c0a4d2867707a408942.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Hark the Dust",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b22ee9a96bc78ff2fe7274af5c5b2e6b/6ff5262bbf7851c0a5985a7853a74d93.png"
+      },
+      {
+        "name": "Trace the Vestige",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/b22ee9a96bc78ff2fe7274af5c5b2e6b/6412faa916ca636ca1a210602356ba4d.png"
+      }
+    ]
+  },
+  "1311": {
+    "talents": [
+      {
+        "skillType": "Normal Attack",
+        "name": "Manifold Bloom",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/231a2815f358129022528ee83f1c435c/f63100f5cef5373ac53595900af031c7.png"
+      },
+      {
+        "skillType": "Resonance Skill",
+        "name": "Heartward by Moon",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/231a2815f358129022528ee83f1c435c/4577e8d25a52715902d5c0de65d77510.png"
+      },
+      {
+        "skillType": "Forte Circuit",
+        "name": "Forms Turn, Heart Abides",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/231a2815f358129022528ee83f1c435c/4fa3c856578e673fec98876859cab3ab.png"
+      },
+      {
+        "skillType": "Resonance Liberation",
+        "name": "Nexus Alight",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/231a2815f358129022528ee83f1c435c/cd564f9896f466c0b23e34fca9c10eac.png"
+      },
+      {
+        "skillType": "Intro Skill",
+        "name": "Glance on a Whim",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/231a2815f358129022528ee83f1c435c/314e7522947024a15f6e5dea10f3b4ce.png"
+      }
+    ],
+    "inherentSkills": [
+      {
+        "name": "Tides of Succession",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/231a2815f358129022528ee83f1c435c/25f737c1b543d85481f9bc7974b692a7.png"
+      },
+      {
+        "name": "Gleaning Simple Joys",
+        "pictureUrl": "https://guide-res.aki-game.net/introduction/material/231a2815f358129022528ee83f1c435c/bf17fd18ae2515d84b57af1885101d1d.png"
+      }
+    ]
+  }
+}
